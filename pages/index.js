@@ -2,18 +2,26 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getMoviesAsync } from '../reducers/moviesSlice';
-import Movies from '../components/movies/Movies';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '../styles/HomeStyles';
+import Container from '@material-ui/core/Container';
+import Movies from '../components/movies/Movies';
 
-function Home({ classes }) {
+const useStyles = makeStyles(styles);
+
+function Home() {
+    const classes = useStyles();
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getMoviesAsync());
     }, [dispatch]);
 
-    return <Movies />;
+    return (
+        <Container>
+            <Movies />
+        </Container>
+    );
 }
 
-export default withStyles(styles)(Home);
+export default Home;

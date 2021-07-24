@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,7 +14,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { styles } from '../../styles/MainNavigationStyles';
 
-const MainNavigation = ({ classes }) => {
+const useStyles = makeStyles(styles);
+
+const MainNavigation = () => {
+    const classes = useStyles();
     const [open, setOpen] = useState(false);
 
     const list = (
@@ -47,7 +50,7 @@ const MainNavigation = ({ classes }) => {
 
                     {/* Title */}
                     <Typography className={classes.title} variant="h5" component="h2" noWrap>
-                        Netflix
+                        NETFLIX
                     </Typography>
 
                     {/* Search Bar */}
@@ -81,4 +84,4 @@ const MainNavigation = ({ classes }) => {
     );
 };
 
-export default withStyles(styles)(MainNavigation);
+export default MainNavigation;

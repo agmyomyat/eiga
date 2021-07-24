@@ -18,7 +18,7 @@ const moviesSlice = createSlice({
             return action.payload.map(movie => ({
                 id: movie.id,
                 title: movie.title,
-                releaseDate: movie.release_date,
+                releaseDate: movie.release_date.slice(0, 4),
                 quality: 'HD',
                 image: IMGPATH + (movie.poster_path || movie.backdrop_path),
             }));

@@ -1,5 +1,5 @@
-import MainNavigation from './MainNavigation';
 import { makeStyles } from '@material-ui/core/styles';
+import MainNavigation from './MainNavigation';
 
 const useStyles = makeStyles(theme => ({
     offset: theme.mixins.toolbar,

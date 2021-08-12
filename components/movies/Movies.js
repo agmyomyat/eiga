@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '../../styles/MoviesGrid';
 import Box from '@material-ui/core/Box';
@@ -9,22 +8,16 @@ import Movie from './Movie';
 
 const useStyles = makeStyles(styles);
 
-const Movies = () => {
-    const classes = useStyles();
-    const movies = useSelector(state => state.movies);
+const Movies = ({ movies }) => {
+   const classes = useStyles();
 
-    return (
-        <Box py={2}>
-            <Box display="flex" py={3}>
-                <Typography
-                    className={classes.title}
-                    variant="h5"
-                    component="h3"
-                    color="textSecondary"
-                >
-                    Trending
-                </Typography>
-                {/* <div className={classes.buttonGroup}>
+   return (
+      <div className={classes.root}>
+         <div className={classes.heading}>
+            <Typography className={classes.title} variant="h5" component="h3" color="textSecondary">
+               Trending
+            </Typography>
+            {/* <div className={classes.buttonGroup}>
                     <Button
                         className={classes.button}
                         variant="contained"
@@ -35,14 +28,14 @@ const Movies = () => {
                         Movies
                     </Button>
                 </div> */}
-            </Box>
-            <Box className={classes.grid} pt={2}>
-                {movies.map(movie => (
-                    <Movie key={movie.id} {...movie} />
-                ))}
-            </Box>
-        </Box>
-    );
+         </div>
+         <div className={classes.grid}>
+            {movies.map(movie => (
+               <Movie key={movie.id} {...movie} />
+            ))}
+         </div>
+      </div>
+   );
 };
 
 export default Movies;

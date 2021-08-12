@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,71 +17,71 @@ import { styles } from '../../styles/MainNavigationStyles';
 const useStyles = makeStyles(styles);
 
 const MainNavigation = () => {
-    const classes = useStyles();
-    const [open, setOpen] = useState(false);
+   const classes = useStyles();
+   const [open, setOpen] = useState(false);
 
-    const list = (
-        <ClickAwayListener onClickAway={() => setOpen(false)}>
-            <List className={classes.listItems}>
-                <ListItem button>
-                    <ListItemText primary="Home" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemText primary="Genere" />
-                </ListItem>
-            </List>
-        </ClickAwayListener>
-    );
+   const list = (
+      <ClickAwayListener onClickAway={() => setOpen(false)}>
+         <List className={classes.listItems}>
+            <ListItem button>
+               <ListItemText primary="Home" />
+            </ListItem>
+            <ListItem button>
+               <ListItemText primary="Genere" />
+            </ListItem>
+         </List>
+      </ClickAwayListener>
+   );
 
-    return (
-        <div className={classes.root}>
-            <AppBar className={classes.appbar} elevation={0} position="absolute">
-                <Toolbar component="nav">
-                    {/* Menu Icon */}
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="secondary"
-                        aria-label="open drawer"
-                        onClick={() => setOpen(prev => !prev)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+   return (
+      <div className={classes.root}>
+         <AppBar className={classes.appbar} elevation={0} position="absolute">
+            <Toolbar component="nav">
+               {/* Menu Icon */}
+               <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  color="secondary"
+                  aria-label="open drawer"
+                  onClick={() => setOpen(prev => !prev)}
+               >
+                  <MenuIcon />
+               </IconButton>
 
-                    {/* Title */}
-                    <Typography className={classes.title} variant="h5" component="h2" noWrap>
-                        NETFLIX
-                    </Typography>
+               {/* Title */}
+               <Typography className={classes.title} variant="h5" component="h2" noWrap>
+                  NETFLIX
+               </Typography>
 
-                    {/* Search Bar */}
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search..."
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
-                </Toolbar>
-            </AppBar>
+               {/* Search Bar */}
+               <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                     <SearchIcon />
+                  </div>
+                  <InputBase
+                     placeholder="Search..."
+                     classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput,
+                     }}
+                     inputProps={{ 'aria-label': 'search' }}
+                  />
+               </div>
+            </Toolbar>
+         </AppBar>
 
-            <Drawer
-                anchor="left"
-                open={open}
-                className={classes.drawer}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                {list}
-            </Drawer>
-        </div>
-    );
+         <Drawer
+            anchor="left"
+            open={open}
+            className={classes.drawer}
+            classes={{
+               paper: classes.drawerPaper,
+            }}
+         >
+            {list}
+         </Drawer>
+      </div>
+   );
 };
 
 export default MainNavigation;

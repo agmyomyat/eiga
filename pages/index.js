@@ -1,27 +1,32 @@
 // import Carousel from '../components/carousel/Carousel';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getMoviesAsync } from '../reducers/moviesSlice';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '../styles/HomeStyles';
 import Container from '@material-ui/core/Container';
 import Movies from '../components/movies/Movies';
+import { getMovies } from '../helpers/fetchMovies';
 
 const useStyles = makeStyles(styles);
 
-function Home() {
+function Home({ movies }) {
     const classes = useStyles();
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getMoviesAsync());
-    }, [dispatch]);
+    // const movies = useSelector(selectedMovies());
 
     return (
         <Container>
-            <Movies />
+            <Movies movies={movies} />
         </Container>
     );
 }
 
 export default Home;
+
+export async function getStaticProps() {
+    const movies = await getMovies();
+
+    return {
+        props: {
+            movies,
+        },
+    };
+}

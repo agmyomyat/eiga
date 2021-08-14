@@ -7,13 +7,12 @@ import Image from 'next/image';
 import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Box from '@material-ui/core/Box';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 const useStyles = makeStyles(styles);
 
 const Movie = ({ id, title, image, releaseDate }) => {
    const classes = useStyles();
-   const { push } = useRouter();
 
    // will delete later
    const [show, setShow] = useState(false);
@@ -25,7 +24,7 @@ const Movie = ({ id, title, image, releaseDate }) => {
    });
    //
    return (
-      <Box onClick={() => push(`/movies/${id}`)}>
+      <Box>
          {show ? (
             <Skeleton variant="rect" className={classes.skeletonImage} width="100%"></Skeleton>
          ) : (

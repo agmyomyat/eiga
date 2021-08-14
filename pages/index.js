@@ -23,6 +23,7 @@ function Home() {
       title: movie.name.toUpperCase(),
       image: movie.photo_url,
       releaseDate: new Date(movie.date).getFullYear(),
+      quality: movie.quality,
    }));
 
    return (

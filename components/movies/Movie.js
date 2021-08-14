@@ -11,7 +11,7 @@ import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(styles);
 
-const Movie = ({ id, title, image, releaseDate }) => {
+const Movie = ({ id, title, image, releaseDate, quality }) => {
    const classes = useStyles();
 
    // will delete later
@@ -37,7 +37,7 @@ const Movie = ({ id, title, image, releaseDate }) => {
                   height={900}
                   alt={title}
                />
-               <i className={classes.quality}>HD</i>
+               <i className={classes.quality}>{quality}</i>
             </Card>
          )}
 

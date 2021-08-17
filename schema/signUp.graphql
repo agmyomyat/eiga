@@ -1,0 +1,10 @@
+mutation signUp($uuid:String){
+  signupClient(uuid:$uuid){
+    ok
+    status
+    accessToken
+    
+    
+  }
+  
+}

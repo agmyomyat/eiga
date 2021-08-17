@@ -12,6 +12,7 @@ import Layout from '../components/layout/Layout';
 function MyApp(props) {
    const { Component, pageProps } = props;
    const apolloClient = useApollo(pageProps.initialApolloState);
+   console.log("pageProps",pageProps)
 
    React.useEffect(() => {
       // Remove the server-side injected CSS.

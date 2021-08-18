@@ -11,7 +11,7 @@ import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(styles);
 
-const Movie = ({ id, title, image, releaseDate, quality }) => {
+const Movie = ({ name, photo_url, date, quality }) => {
    const classes = useStyles();
 
    // will delete later
@@ -30,19 +30,19 @@ const Movie = ({ id, title, image, releaseDate, quality }) => {
          ) : (
             <Card className={classes.card}>
                <Image
-                  src={image}
+                  src={photo_url}
                   className={classes.media}
                   layout="responsive"
                   width={600}
                   height={900}
-                  alt={title}
+                  alt={name}
                />
                <i className={classes.quality}>{quality}</i>
             </Card>
          )}
 
          <Typography className={classes.title} variant="subtitle2" component="h4" noWrap>
-            {show ? <Skeleton /> : title}
+            {show ? <Skeleton /> : name}
          </Typography>
 
          <Box
@@ -55,7 +55,7 @@ const Movie = ({ id, title, image, releaseDate, quality }) => {
                <Skeleton width="50%" />
             ) : (
                <>
-                  {releaseDate}
+                  {new Date(date).getFullYear()}
                   <i className={classes.type}>Movie</i>
                </>
             )}

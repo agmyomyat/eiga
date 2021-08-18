@@ -18,17 +18,9 @@ function Home() {
       query: GET_ALL_MOVIES,
    });
 
-   const newMovies = movies.map(movie => ({
-      id: movie.id,
-      title: movie.name.toUpperCase(),
-      image: movie.photo_url,
-      releaseDate: new Date(movie.date).getFullYear(),
-      quality: movie.quality,
-   }));
-
    return (
       <Container>
-         <Movies movies={newMovies} />
+         <Movies movies={movies} />
       </Container>
    );
 }

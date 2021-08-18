@@ -6,7 +6,8 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "gen": "graphql-codegen --config codegen.yml"
     },
     "dependencies": {
         "@apollo/client": "^3.4.7",
@@ -14,6 +15,7 @@
         "@material-ui/icons": "4.11.2",
         "@material-ui/lab": "4.0.0-alpha.60",
         "firebase": "^8.9.1",
+        "firebaseui": "^4.8.1",
         "graphql": "^15.5.1",
         "next": "11.0.1",
         "prop-types": "^15.7.2",
@@ -23,7 +25,12 @@
         "swiper": "^6.8.0"
     },
     "devDependencies": {
+        "@graphql-codegen/cli": "2.0.1",
+        "@graphql-codegen/typescript": "2.0.0",
+        "@graphql-codegen/typescript-operations": "^2.0.1",
+        "@graphql-codegen/typescript-react-apollo": "3.0.0",
         "eslint": "7.31.0",
-        "eslint-config-next": "11.0.1"
+        "eslint-config-next": "11.0.1",
+        "typescript": "^4.3.5"
     }
 }

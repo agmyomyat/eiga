@@ -1,0 +1,7 @@
+query getUser($uuid: String!) {
+  userData(where: { uuid: $uuid }) {
+    uuid
+    verify
+    expire
+  }
+}

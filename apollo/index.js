@@ -7,7 +7,7 @@ function createApolloClient() {
    return new ApolloClient({
       ssrMode: typeof window === 'undefined',
       link: new HttpLink({
-         uri: 'http://api.eiga.sbs/graphql',
+         uri: 'http://api.eiga.sbs/graphql', // Add your Slash endpoint here
       }),
       cache: new InMemoryCache(),
    });

@@ -1,5 +1,5 @@
 // import Carousel from '../components/carousel/Carousel';
-import { useApolloClient } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { initializeApollo } from '../apollo/index';
 import { GET_ALL_MOVIES } from '../apollo/queries';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,15 +12,11 @@ const useStyles = makeStyles(styles);
 function Home() {
    const classes = useStyles();
 
-   const client = useApolloClient();
-
-   const { movies } = client.readQuery({
-      query: GET_ALL_MOVIES,
-   });
+   const { data } = useQuery(GET_ALL_MOVIES);
 
    return (
       <Container>
-         <Movies movies={movies} />
+         <Movies movies={data.movies} />
       </Container>
    );
 }
@@ -30,7 +26,7 @@ export default Home;
 export async function getStaticProps() {
    const apolloClient = initializeApollo();
 
-   await apolloClient.query({
+   const { data } = await apolloClient.query({
       query: GET_ALL_MOVIES,
    });
 
@@ -38,6 +34,5 @@ export async function getStaticProps() {
       props: {
          initialApolloState: apolloClient.cache.extract(),
       },
-      revalidate: 1,
    };
 }

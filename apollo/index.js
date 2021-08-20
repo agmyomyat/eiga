@@ -2,10 +2,7 @@ import { useMemo } from 'react';
 import { ApolloClient, createHttpLink, InMemoryCache,from,ApolloLink  } from '@apollo/client';
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import { onError } from "@apollo/client/link/error";
-
-
-
-
+import jwt_decode from 'jwt-decode'
 
 let apolloClient;
 const httpLink = createHttpLink({
@@ -22,16 +19,17 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 const tokenRefreshLink = new TokenRefreshLink({
-      accessTokenField: "accessToken",
+      accessTokenField: "access",
       isTokenValidOrUndefined: () => {
-        const token = localStorage.getItem("eigaAccess");
-
+        const token = localStorage.getItem("EigaAccess");
+        
+        
         if (!token) {
-          return true;
+          return false;
         }
-
         try {
-          const { exp } = jwtDecode(token);
+          const { exp } = jwt_decode(token);
+          
           if (Date.now() >= exp * 1000) {
             return false;
           } else {
@@ -42,13 +40,16 @@ const tokenRefreshLink = new TokenRefreshLink({
         }
       },
       fetchAccessToken: () => {
+         console.log("fetchToken")
         return fetch("http://localhost:1337/refreshtoken", {
           method: "POST",
           credentials: "include"
         });
       },
-      handleFetch: data => {
-        localStorage.setItem("eigaAccess",data.access);
+      handleFetch: accessToken => {
+         console.log("accesstoken",accessToken)
+        localStorage.setItem("EigaAccess",accessToken);
+        
       },
       handleError: err => {
         console.warn("Your refresh token is invalid. Try to relogin");
@@ -58,14 +59,13 @@ const tokenRefreshLink = new TokenRefreshLink({
 
 
 const authLink = new ApolloLink((operation, forward) => {
-   console.log("authlink",operation)
    const token = localStorage.getItem('EigaAccess');
+   console.log("authLink")
   operation.setContext(({ headers })=>({ headers: {
      ...headers,
      auth: token?`Bearer ${token}`:"", // however you get your token
   }}));
   return forward(operation).map(data=>{
-     console.log("obs",data)
      return data});
 });
 

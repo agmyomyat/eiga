@@ -15,24 +15,23 @@ const useStyles = makeStyles(styles);
 
 export default function Profile() {
    const { currentUser, authLoading, logOut } = useAuth();
-   const [getUser, { data, loading }] = useLazyQuery(GET_USER);
-   const [result, setResult] = useState(null);
+   const [getUser, { data, loading }] = useLazyQuery(GET_USER,{
+      fetchPolicy:"cache-and-network"
+   });
 
    const classes = useStyles();
 
    useEffect(() => {
       if (currentUser) {
          getUser({ variables: { uuid: currentUser.email } });
-         setResult(data);
       }
-   }, [currentUser, data, getUser]);
+   }, [currentUser , getUser]);
 
    //* userData from server
-   const userData = result && result.userData[0];
+   const userData = data?.userData[0];
 
    const handleSignOut = async () => {
       await logOut();
-      setResult(null);
    };
 
    if (authLoading || loading) {
@@ -63,7 +62,7 @@ export default function Profile() {
                      <label className={classes.label}>Phone Number</label>
                   </Grid>
                   <Grid item sm={9} xs={12}>
-                     <div className={classes.item}>{result ? userData.uuid : 'Loading...'}</div>
+                     <div className={classes.item}>{data? userData.uuid : 'Loading...'}</div>
                   </Grid>
 
                   <Grid item sm={3} xs={12}>
@@ -71,7 +70,7 @@ export default function Profile() {
                   </Grid>
                   <Grid item sm={9} xs={12}>
                      <div className={classes.item}>
-                        {result ? (userData.verify ? 'Yes' : 'No') : 'Loading...'}
+                        {data? (userData.verify ? 'Yes' : 'No') : 'Loading...'}
                      </div>
                   </Grid>
 

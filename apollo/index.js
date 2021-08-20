@@ -5,10 +5,11 @@ let apolloClient;
 
 function createApolloClient() {
    return new ApolloClient({
-      ssrMode: typeof window === 'undefined',
+      // ssrMode: typeof window === 'undefined',
       link: new HttpLink({
          // uri: 'http://api.eiga.sbs/graphql', // Add your Slash endpoint here
          uri: 'http://localhost:1337/graphql',
+         credentials:'include'
       }),
       cache: new InMemoryCache(),
    });

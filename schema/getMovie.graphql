@@ -1,0 +1,10 @@
+ query getMovie($id:String!) {
+      movies(where: { uuid: $id }) {
+         name
+         id
+         date
+         quality
+         photo_url
+      }
+   }
+

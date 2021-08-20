@@ -1,15 +1,78 @@
 import { useMemo } from 'react';
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import { ApolloClient, createHttpLink, InMemoryCache,from,ApolloLink  } from '@apollo/client';
+import { TokenRefreshLink } from "apollo-link-token-refresh";
+import { onError } from "@apollo/client/link/error";
+import jwt_decode from 'jwt-decode'
+import {getAccessToken,setAccessToken} from '../helpers/accessToken'
 
 let apolloClient;
+const httpLink = createHttpLink({
+   uri: 'http://localhost:1337/graphql',
+   credentials:'include'
+});
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.map(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+    );
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
+const tokenRefreshLink = new TokenRefreshLink({
+      accessTokenField: "access",
+      isTokenValidOrUndefined: () => {
+        const token = getAccessToken();
+       
+        if (!token) {
+          return false;
+        }
+        try {
+          const { exp } = jwt_decode(token);
+          
+          if (Date.now() >= exp * 1000) {
+            return false;
+          } else {
+            return true;
+          }
+        } catch {
+          return false;
+        }
+      },
+      fetchAccessToken: () => {
+         console.log("fetchToken")
+        return fetch("http://localhost:1337/refreshtoken", {
+          method: "POST",
+          credentials: "include"
+        });
+      },
+      handleFetch: accessToken => {
+         console.log("accesstoken",accessToken)
+        setAccessToken(accessToken);
+        
+      },
+      handleError: err => {
+        console.warn("Your refresh token is invalid. Try to relogin");
+        console.error(err);
+      }
+    })
+
+
+const authLink = new ApolloLink((operation, forward) => {
+   const token = getAccessToken()
+   console.log("authLink")
+  operation.setContext(({ headers })=>({ headers: {
+     ...headers,
+     auth: token?`Bearer ${token}`:"", // however you get your token
+  }}));
+  return forward(operation).map(data=>{
+     return data});
+});
 
 function createApolloClient() {
    return new ApolloClient({
-      ssrMode: typeof window === 'undefined',
-      link: new HttpLink({
-         // uri: 'http://api.eiga.sbs/graphql', // Add your Slash endpoint here
-         uri: 'http://localhost:1337/graphql',
-      }),
+      // ssrMode: typeof window === 'undefined',
+      link:from([tokenRefreshLink,errorLink,authLink,httpLink]),
       cache: new InMemoryCache(),
    });
 }

@@ -1,10 +1,5 @@
- query getMovie($id:String!) {
-      movies(where: { uuid: $id }) {
-         name
-         id
-         date
-         quality
-         photo_url
-      }
-   }
-
+query getMovie($uuid:String!){
+  getMovie(uuid:$uuid){
+    server2 
+  }
+}

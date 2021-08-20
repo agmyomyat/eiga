@@ -1872,11 +1872,11 @@ export type UpdateUserPayload = {
 };
 
 export type GetMovieQueryVariables = Exact<{
-  id: Scalars['String'];
+  uuid: Scalars['String'];
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, id: string, date?: Maybe<any>, quality: Enum_Movies_Quality, photo_url: string }>>> };
+export type GetMovieQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'getMovietype', server2: string }> };
 
 export type GetUserQueryVariables = Exact<{
   uuid: Scalars['String'];
@@ -1894,13 +1894,9 @@ export type SignUpMutation = { __typename?: 'Mutation', signupClient?: Maybe<{ _
 
 
 export const GetMovieDocument = gql`
-    query getMovie($id: String!) {
-  movies(where: {uuid: $id}) {
-    name
-    id
-    date
-    quality
-    photo_url
+    query getMovie($uuid: String!) {
+  getMovie(uuid: $uuid) {
+    server2
   }
 }
     `;
@@ -1917,7 +1913,7 @@ export const GetMovieDocument = gql`
  * @example
  * const { data, loading, error } = useGetMovieQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      uuid: // value for 'uuid'
  *   },
  * });
  */

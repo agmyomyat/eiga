@@ -3,6 +3,7 @@ import { ApolloClient, createHttpLink, InMemoryCache,from,ApolloLink  } from '@a
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import { onError } from "@apollo/client/link/error";
 import jwt_decode from 'jwt-decode'
+import {getAccessToken,setAccessToken} from '../helpers/accessToken'
 
 let apolloClient;
 const httpLink = createHttpLink({
@@ -21,9 +22,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 const tokenRefreshLink = new TokenRefreshLink({
       accessTokenField: "access",
       isTokenValidOrUndefined: () => {
-        const token = localStorage.getItem("EigaAccess");
-        
-        
+        const token = getAccessToken();
+       
         if (!token) {
           return false;
         }
@@ -48,7 +48,7 @@ const tokenRefreshLink = new TokenRefreshLink({
       },
       handleFetch: accessToken => {
          console.log("accesstoken",accessToken)
-        localStorage.setItem("EigaAccess",accessToken);
+        setAccessToken(accessToken);
         
       },
       handleError: err => {
@@ -59,7 +59,7 @@ const tokenRefreshLink = new TokenRefreshLink({
 
 
 const authLink = new ApolloLink((operation, forward) => {
-   const token = localStorage.getItem('EigaAccess');
+   const token = getAccessToken()
    console.log("authLink")
   operation.setContext(({ headers })=>({ headers: {
      ...headers,

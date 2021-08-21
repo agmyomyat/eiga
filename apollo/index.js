@@ -19,6 +19,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     );
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
+
 const tokenRefreshLink = new TokenRefreshLink({
       accessTokenField: "access",
       isTokenValidOrUndefined: () => {
@@ -47,20 +48,32 @@ const tokenRefreshLink = new TokenRefreshLink({
         });
       },
       handleFetch: accessToken => {
-         console.log("accesstoken",accessToken)
+        
+        console.log("accesstoken",accessToken)
         setAccessToken(accessToken);
         
       },
-      handleError: err => {
+      handleError:  async err => {
+        const {auth} = (await import('../lib/firebase'))
+        auth.signOut()
         console.warn("Your refresh token is invalid. Try to relogin");
         console.error(err);
       }
     })
+/*
+IgnoreTokenRefresh ignore tokenRefreshLink middleware
+if signUp or getUser operations so If any of that two 
+graphql name change,
+they should be changed here too.
+*/
+  const IgnoreTokenRefresh = ApolloLink.split(
+    (operation)=>operation.operationName!=="signUp"||'getUser', 
+    tokenRefreshLink
+    )
 
-
-const authLink = new ApolloLink((operation, forward) => {
+ const authLink = new ApolloLink((operation, forward) => {
    const token = getAccessToken()
-   console.log("authLink")
+   console.log("operation",operation)
   operation.setContext(({ headers })=>({ headers: {
      ...headers,
      auth: token?`Bearer ${token}`:"", // however you get your token
@@ -72,7 +85,7 @@ const authLink = new ApolloLink((operation, forward) => {
 function createApolloClient() {
    return new ApolloClient({
       // ssrMode: typeof window === 'undefined',
-      link:from([tokenRefreshLink,errorLink,authLink,httpLink]),
+      link:from([errorLink,IgnoreTokenRefresh,authLink,httpLink]),
       cache: new InMemoryCache(),
    });
 }

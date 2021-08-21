@@ -35,7 +35,7 @@ export default function AuthProvider({ children }) {
          .then(data => {
             if (!data.ok) {
                console.log('refresh token', data);
-               // return logOut();
+               return logOut();
             }
             console.log('refresh token', data);
          });

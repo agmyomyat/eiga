@@ -9,6 +9,7 @@ function createApolloClient() {
       link: new HttpLink({
          // uri: 'http://api.eiga.sbs/graphql', // Add your Slash endpoint here
          uri: 'http://localhost:1337/graphql',
+         credentials: 'include',
       }),
       cache: new InMemoryCache(),
    });

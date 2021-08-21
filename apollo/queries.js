@@ -14,8 +14,8 @@ export const GET_ALL_MOVIES = gql`
 `;
 
 export const GET_MOVIE = gql`
-   query getMovie($id: ID!) {
-      movies(where: { id: $id }) {
+   query getMovie($uuid: String!) {
+      movies(where: { uuid: $uuid }) {
          name
          id
          date

@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import { initializeApollo } from '../../apollo/index';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { GET_MOVIE } from '../../apollo/queries';
 import { useRouter } from 'next/router';
 
 export default function MoviePage() {
    const { query } = useRouter();
-   const { id } = query;
+   const { uuid } = query;
 
-   console.log(query);
+   const [getMovie, { data, loading }] = useLazyQuery(GET_MOVIE);
 
-   // const { data, loading } = useQuery(GET_MOVIE, {
-   //    variables: { id },
-   // });
-
-   // console.log(data);
+   useEffect(() => {
+      if (uuid) {
+         getMovie({ variables: { uuid } });
+      }
+   }, [uuid, getMovie]);
 
    return <div>Movie Page</div>;
 }

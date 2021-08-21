@@ -15,6 +15,7 @@ const useStyles = makeStyles(styles);
 
 export default function Profile() {
    const { currentUser, authLoading, logOut } = useAuth();
+
    const [getUser, { data, loading }] = useLazyQuery(GET_USER, {
       fetchPolicy: 'cache-and-network',
    });

@@ -1,0 +1,5 @@
+query getMovie($uuid:String!){
+  getMovie(uuid:$uuid){
+    server2 
+  }
+}

@@ -1,44 +1,48 @@
 import { useEffect, useState } from 'react';
-import { initializeApollo } from '../../apollo/index';
-import { useLazyQuery } from '@apollo/client';
-import { GET_MOVIE } from '../../apollo/queries';
+
+import { useGetMovieLazyQuery } from '../../graphgen/graphql';
+
 import { useRouter } from 'next/router';
+import { GET_MOVIE } from '../../apollo/queries';
+import { useLazyQuery } from '@apollo/client';
 
 export default function MoviePage() {
-   const { query } = useRouter();
-   const { uuid } = query;
+   const [getMovie, { data }] = useGetMovieLazyQuery({
+      fetchPolicy: 'network-only',
+   });
 
-   const [getMovie, { data, loading }] = useLazyQuery(GET_MOVIE);
-
+   const { id } = query;
+   console.log(query);
    useEffect(() => {
-      if (uuid) {
-         getMovie({ variables: { uuid } });
+      if (id && !data) {
+         getMovie({
+            variables: { uuid: id },
+         });
       }
-   }, [uuid, getMovie]);
+      console.log('data', data);
+   }, [data, getMovie, id]);
 
    return <div>Movie Page</div>;
 }
 
-// export async function getStaticPaths() {
-//    return {
-//       paths: [],
-//       fallback: 'blocking',
-//    };
-// }
+export async function getStaticPaths() {
+   return {
+      paths: [],
+      fallback: true,
+   };
+}
 
-// export async function getStaticProps() {
-//    // const { id } = params;
+export async function getStaticProps() {
+   // const { id } = params;
 
-//    const apolloClient = initializeApollo();
+   // await apolloClient.query({
+   //    query: GET_MOVIE,
+   //    variables: { id },
+   // });
 
-//    // await apolloClient.query({
-//    //    query: GET_MOVIE,
-//    //    variables: { id },
-//    // });
-
-//    return {
-//       props: {
-//          initialApolloState: apolloClient.cache.extract(),
-//       },
-//    };
-// }
+   return {
+      props: {
+         greeting: 'hello',
+      },
+   };
+}

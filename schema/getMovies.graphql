@@ -1,9 +1,0 @@
-query getMovies{
-  movies{
-    name
-    freeServer1
-    uuid
-    photo_url
-    quality
-  }
-}

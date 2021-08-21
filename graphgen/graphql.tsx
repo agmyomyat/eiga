@@ -1871,6 +1871,11 @@ export type UpdateUserPayload = {
   user?: Maybe<UsersPermissionsUser>;
 };
 
+export type GetAllMoviesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, date?: Maybe<any>, quality: Enum_Movies_Quality, photo_url: string }>>> };
+
 export type GetMovieQueryVariables = Exact<{
   uuid: Scalars['String'];
 }>;
@@ -1893,6 +1898,45 @@ export type SignUpMutationVariables = Exact<{
 export type SignUpMutation = { __typename?: 'Mutation', signupClient?: Maybe<{ __typename?: 'returnSignup', ok?: Maybe<boolean>, status?: Maybe<string>, accessToken?: Maybe<string> }> };
 
 
+export const GetAllMoviesDocument = gql`
+    query getAllMovies {
+  movies {
+    name
+    uuid
+    id
+    date
+    quality
+    photo_url
+  }
+}
+    `;
+
+/**
+ * __useGetAllMoviesQuery__
+ *
+ * To run a query within a React component, call `useGetAllMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllMoviesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllMoviesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllMoviesQuery, GetAllMoviesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllMoviesQuery, GetAllMoviesQueryVariables>(GetAllMoviesDocument, options);
+      }
+export function useGetAllMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllMoviesQuery, GetAllMoviesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllMoviesQuery, GetAllMoviesQueryVariables>(GetAllMoviesDocument, options);
+        }
+export type GetAllMoviesQueryHookResult = ReturnType<typeof useGetAllMoviesQuery>;
+export type GetAllMoviesLazyQueryHookResult = ReturnType<typeof useGetAllMoviesLazyQuery>;
+export type GetAllMoviesQueryResult = Apollo.QueryResult<GetAllMoviesQuery, GetAllMoviesQueryVariables>;
 export const GetMovieDocument = gql`
     query getMovie($uuid: String!) {
   getMovie(uuid: $uuid) {

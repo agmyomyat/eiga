@@ -1,0 +1,10 @@
+query getAllMovies {
+   movies {
+      name
+      uuid
+      id
+      date
+      quality
+      photo_url
+   }
+}

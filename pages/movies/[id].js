@@ -1,17 +1,12 @@
 import { useEffect, useState } from 'react';
-
 import { useGetMovieLazyQuery } from '../../graphgen/graphql';
-
 import { useRouter } from 'next/router';
-import { useLazyQuery } from '@apollo/client';
 
 export default function MoviePage() {
    const [getMovie, { data }] = useGetMovieLazyQuery({
       fetchPolicy: 'network-only',
    });
-
-   const query = useRouter();
-
+   const { query } = useRouter();
    const { id } = query;
    console.log(query);
    useEffect(() => {

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLazyQuery } from '@apollo/client';
-import { GET_USER } from '../apollo/queries';
+import { useGetUserLazyQuery } from '../graphgen/graphql';
 import { useAuth } from '../contexts/AuthContext';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { auth, uiConfig } from '../lib/firebase';
@@ -16,7 +15,7 @@ const useStyles = makeStyles(styles);
 export default function Profile() {
    const { currentUser, authLoading, logOut } = useAuth();
 
-   const [getUser, { data, loading }] = useLazyQuery(GET_USER, {
+   const [getUser, { data, loading }] = useGetUserLazyQuery({
       fetchPolicy: 'cache-and-network',
    });
 

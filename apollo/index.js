@@ -20,11 +20,13 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const tokenRefreshLink = new TokenRefreshLink({
    accessTokenField: 'access',
-   isTokenValidOrUndefined: () => {
+   isTokenValidOrUndefined: async () => {
+      const { auth } = await import('../lib/firebase');
       const token = getAccessToken();
 
       if (!token) {
-         return false;
+         auth.signOut(); //show warning about signOut reason
+         return true;
       }
       try {
          const { exp } = jwt_decode(token);
@@ -49,9 +51,8 @@ const tokenRefreshLink = new TokenRefreshLink({
       console.log('accesstoken', accessToken);
       setAccessToken(accessToken);
    },
-   handleError: async err => {
-      const { auth } = await import('../lib/firebase');
-      auth.signOut();
+   handleError: err => {
+      auth.signOut(); //show warning about signout reason
       console.warn('Your refresh token is invalid. Try to relogin');
       console.error(err);
    },

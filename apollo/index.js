@@ -63,7 +63,7 @@ graphql name change,
 they should be changed here too.
 */
 const IgnoreTokenRefresh = ApolloLink.split(
-   operation => operation.operationName !== 'signUp' || 'getUser',
+   operation => operation.operationName !== 'signUp' && operation.operationName !== 'getUser',
    tokenRefreshLink
 );
 

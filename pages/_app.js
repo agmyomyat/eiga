@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { ApolloProvider } from '@apollo/client';
-import { useApollo } from '../apollo/index';
+import { useApollo } from '../apollo';
 import { ThemeProvider } from '@material-ui/core/styles';
 import AuthProvider from '../contexts/AuthContext';
 import CssBaseline from '@material-ui/core/CssBaseline';

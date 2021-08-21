@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 import Movies from '../components/movies/Movies';
 
 const useStyles = makeStyles(styles);
+const apolloClient = initializeApollo();
 
 function Home() {
    const classes = useStyles();
@@ -24,7 +25,6 @@ function Home() {
 export default Home;
 
 export async function getStaticProps() {
-   const apolloClient = initializeApollo();
 
    const { data } = await apolloClient.query({
       query: GET_ALL_MOVIES,

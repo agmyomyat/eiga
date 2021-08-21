@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext, useContext } from 'react';
+import { setAccessToken } from '../helpers/accessToken';
 import { auth } from '../lib/firebase';
 
 const AuthContext = createContext();
@@ -14,6 +15,7 @@ export default function AuthProvider({ children }) {
    function logOut() {
       return (
          auth.signOut(),
+         setAccessToken(""),
          fetch('http://localhost:1337/logout', {
             method: 'POST',
             credentials: 'include',

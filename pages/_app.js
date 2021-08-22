@@ -8,6 +8,7 @@ import AuthProvider from '../contexts/AuthContext';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../components/ui/theme';
 import Layout from '../components/layout/Layout';
+// import 'instantsearch.css/themes/reset.css';
 
 function MyApp(props) {
    const { Component, pageProps } = props;

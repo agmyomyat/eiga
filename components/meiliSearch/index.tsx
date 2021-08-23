@@ -1,4 +1,5 @@
-import { instantMeiliSearch, InstantMeiliSearchInstance } from '@meilisearch/instant-meilisearch';
+import { instantMeiliSearch, InstantMeiliSearchInstance,} from '@meilisearch/instant-meilisearch';
+import {SearchBoxProvided, RefinementListProvided, HitsProvided } from 'react-instantsearch-core'
 import {
    InstantSearch,
    connectSearchBox,
@@ -17,16 +18,16 @@ import InputBase from '@material-ui/core/InputBase';
 
 const searchClient: InstantMeiliSearchInstance = instantMeiliSearch(
    'http://localhost:7700',
-   '2e2716d9058e8c26ab4c01f936fd66f16dd5efe785448d2e87bcb53ab9d69588'
+   '46bd992c4b247adc6414afdd55b094ece9869c88494b08a94fd014bd1bb0bd13'
 );
 
-const Hits = ({ hits }) => {
+const Hits = ({ hits }:HitsProvided<any>) => {
    return <Movies movies={hits} />;
 };
 
 const CustomHits = connectHits(Hits);
 
-const RefinementList = ({ items, refine }) => {
+const RefinementList = ({ items, refine }:RefinementListProvided) => {
    const theme = useTheme();
 
    return (
@@ -50,9 +51,9 @@ const RefinementList = ({ items, refine }) => {
 
 const CustomRefinementList = connectRefinementList(RefinementList);
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles(styles as any) ;
 
-const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => {
+const SearchBox = ({ currentRefinement, isSearchStalled, refine }:SearchBoxProvided)=> {
    const classes = useStyles();
 
    console.log(currentRefinement);

@@ -7,11 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import InputBase from '@material-ui/core/InputBase';
 import Drawer from '@material-ui/core/Drawer';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import { styles } from '../../styles/MainNavigationStyles';
 
 const useStyles = makeStyles(styles);
@@ -54,19 +52,6 @@ const MainNavigation = () => {
                </Typography>
 
                {/* Search Bar */}
-               <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                     <SearchIcon />
-                  </div>
-                  <InputBase
-                     placeholder="Search..."
-                     classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                     }}
-                     inputProps={{ 'aria-label': 'search' }}
-                  />
-               </div>
             </Toolbar>
          </AppBar>
 

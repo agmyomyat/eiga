@@ -13,22 +13,6 @@ const Movies = ({ movies }) => {
 
    return (
       <div className={classes.root}>
-         <div className={classes.heading}>
-            <Typography className={classes.title} variant="h5" component="h3" color="textSecondary">
-               Trending
-            </Typography>
-            {/* <div className={classes.buttonGroup}>
-                    <Button
-                        className={classes.button}
-                        variant="contained"
-                        color="secondary"
-                        size="small"
-                        active
-                    >
-                        Movies
-                    </Button>
-                </div> */}
-         </div>
          <div className={classes.grid}>
             {movies.map(movie => (
                <Movie key={movie.id} {...movie} />

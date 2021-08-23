@@ -5,6 +5,7 @@ export const styles = theme => ({
    heading: {
       paddingBottom: theme.spacing(3),
    },
+   // For Trending Title
    title: {
       fontWeight: theme.typography.fontWeightLight,
       display: 'inline-block',
@@ -19,6 +20,7 @@ export const styles = theme => ({
          background: '#343a40',
       },
    },
+
    // buttonGroup: {
    //     display: 'inline-block',
    //     marginLeft: theme.spacing(3),

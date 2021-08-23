@@ -20,6 +20,8 @@ const searchClient: InstantMeiliSearchInstance = instantMeiliSearch(
    '2e2716d9058e8c26ab4c01f936fd66f16dd5efe785448d2e87bcb53ab9d69588'
 );
 
+const useStyles = makeStyles(styles as any);
+
 const Hits = ({ hits }) => {
    return <Movies movies={hits} />;
 };
@@ -28,9 +30,23 @@ const CustomHits = connectHits(Hits);
 
 const RefinementList = ({ items, refine }) => {
    const theme = useTheme();
+   const classes = useStyles();
 
    return (
-      <Grid container spacing={1}>
+      <Grid container spacing={1} className={classes.grid}>
+         {items.map(item => (
+            <Grid item key={item.label}>
+               <Chip
+                  label={`${item.label}`}
+                  style={{
+                     backgroundColor: item.isRefined
+                        ? theme.palette.secondary.main
+                        : theme.palette.background.paper,
+                  }}
+                  onClick={() => refine(item.value)}
+               />
+            </Grid>
+         ))}
          {items.map(item => (
             <Grid item key={item.label}>
                <Chip
@@ -49,8 +65,6 @@ const RefinementList = ({ items, refine }) => {
 };
 
 const CustomRefinementList = connectRefinementList(RefinementList);
-
-const useStyles = makeStyles(styles);
 
 const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => {
    const classes = useStyles();

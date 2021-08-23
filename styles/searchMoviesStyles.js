@@ -1,9 +1,21 @@
 import { alpha } from '@material-ui/core/styles';
 
 export const styles = theme => ({
+   //refine
+   grid: {
+      [theme.breakpoints.between('xs', 'sm')]: {
+         flexWrap: 'nowrap',
+         overflowX: 'scroll',
+         '&::-webkit-scrollbar': {
+            display: 'none',
+         },
+      },
+   },
+
+   // search
    search: {
       position: 'relative',
-      borderRadius: 20,
+      borderRadius: theme.shape.borderRadius,
       backgroundColor: alpha(theme.palette.common.white, 0.15),
       '&:hover': {
          backgroundColor: alpha(theme.palette.common.white, 0.25),

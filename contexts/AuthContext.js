@@ -26,24 +26,7 @@ export default function AuthProvider({ children }) {
             .then(data => console.log(data))
       );
    }
-
-   // useEffect(() => {
-   //    fetch('http://localhost:1337/refreshtoken', {
-   //       method: 'POST',
-   //       credentials: 'include',
-   //    })
-   //       .then(response => {
-   //          return response.json();
-   //       })
-   //       .then(data => {
-   //          if (!data.ok) {
-   //             console.log('refresh token', data);
-   //             return logOut();
-   //          }
-   //         localStorage.setItem('EigaAccess',data.access)
-   //       });
-   // }, []);
-
+   
    useEffect(() => {
       setAuthLoading(true);
       const unsubscribe = auth.onAuthStateChanged(user => {

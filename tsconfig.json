@@ -2,6 +2,10 @@
    "compilerOptions": {
       "target": "es5",
       "lib": ["dom", "dom.iterable", "esnext"],
+      "baseUrl": ".",
+      "paths": {
+         "@graphgen": ["graphgen/graphql"]
+      },
       "allowJs": true,
       "skipLibCheck": true,
       "strict": false,
@@ -14,6 +18,6 @@
       "isolatedModules": true,
       "jsx": "preserve"
    },
-   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "styles/SearchMoviesStyles.js"],
+   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "styles/ProfileStyles.js"],
    "exclude": ["node_modules"]
 }

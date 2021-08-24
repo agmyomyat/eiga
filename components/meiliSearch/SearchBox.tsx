@@ -1,4 +1,5 @@
 import { connectSearchBox } from 'react-instantsearch-dom';
+import { SearchBoxProvided } from 'react-instantsearch-core';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '../../styles/SearchMoviesStyles';
 import SearchIcon from '@material-ui/icons/Search';
@@ -7,7 +8,7 @@ import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(styles as any);
 
-const SearchBox = ({ currentRefinement, refine }) => {
+const SearchBox = ({ currentRefinement, refine }: SearchBoxProvided) => {
    const classes = useStyles();
 
    return (

@@ -154,12 +154,6 @@ export enum Enum_Componentsharedfilm_Genre {
   Mistery = 'mistery'
 }
 
-export enum Enum_Movies_Quality {
-  Hd = 'Hd',
-  Cam = 'Cam',
-  Sd = 'SD'
-}
-
 export type FileInfoInput = {
   name?: Maybe<Scalars['String']>;
   alternativeText?: Maybe<Scalars['String']>;
@@ -186,40 +180,6 @@ export type FileInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
-export type Global = {
-  __typename?: 'Global';
-  id: Scalars['ID'];
-  created_at: Scalars['DateTime'];
-  updated_at: Scalars['DateTime'];
-  favicon?: Maybe<UploadFile>;
-  siteName: Scalars['String'];
-  defaultSeo?: Maybe<ComponentSharedSeo>;
-};
-
-export type GlobalInput = {
-  favicon?: Maybe<Scalars['ID']>;
-  siteName: Scalars['String'];
-  defaultSeo: ComponentSharedSeoInput;
-  created_by?: Maybe<Scalars['ID']>;
-  updated_by?: Maybe<Scalars['ID']>;
-};
-
-export type Homepage = {
-  __typename?: 'Homepage';
-  id: Scalars['ID'];
-  created_at: Scalars['DateTime'];
-  updated_at: Scalars['DateTime'];
-  seo?: Maybe<ComponentSharedSeo>;
-  hero?: Maybe<ComponentSectionsHero>;
-};
-
-export type HomepageInput = {
-  seo?: Maybe<ComponentSharedSeoInput>;
-  hero: ComponentSectionsHeroInput;
-  created_by?: Maybe<Scalars['ID']>;
-  updated_by?: Maybe<Scalars['ID']>;
-};
-
 export type I18NLocale = {
   __typename?: 'I18NLocale';
   id: Scalars['ID'];
@@ -242,7 +202,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | GetMovietype | ReturnSignup | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnectionCreated_At | CategoryConnectionUpdated_At | CategoryConnectionName | CategoryConnectionSlug | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Global | UpdateGlobalPayload | DeleteGlobalPayload | Homepage | UpdateHomepagePayload | DeleteHomepagePayload | Movies | MoviesConnection | MoviesAggregator | MoviesGroupBy | MoviesConnectionId | MoviesConnectionCreated_At | MoviesConnectionUpdated_At | MoviesConnectionName | MoviesConnectionBody | MoviesConnectionDate | MoviesConnectionUuid | MoviesConnectionFreeServer1 | MoviesConnectionPhoto_Url | MoviesConnectionQuality | MoviesConnectionFreeServer2 | MoviesConnectionVipServer1 | MoviesConnectionVipServer2 | MoviesConnectionPremiumOnly | MoviesConnectionRecommend | MoviesConnectionPublished_At | CreateMoviePayload | UpdateMoviePayload | DeleteMoviePayload | TvSeries | TvSeriesConnection | TvSeriesAggregator | TvSeriesGroupBy | TvSeriesConnectionId | TvSeriesConnectionCreated_At | TvSeriesConnectionUpdated_At | TvSeriesConnectionName | TvSeriesConnectionSeason | TvSeriesConnectionPublished_At | CreateTvSeryPayload | UpdateTvSeryPayload | DeleteTvSeryPayload | UserData | UserDataConnection | UserDataAggregator | UserDataAggregatorSum | UserDataAggregatorAvg | UserDataAggregatorMin | UserDataAggregatorMax | UserDataGroupBy | UserDataConnectionId | UserDataConnectionCreated_At | UserDataConnectionUpdated_At | UserDataConnectionUuid | UserDataConnectionVerify | UserDataConnectionExpire | UserDataConnectionTokenVersion | UserDataConnectionPublished_At | CreateUserDatumPayload | UpdateUserDatumPayload | DeleteUserDatumPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentSectionsHero | ComponentSharedFilm | ComponentSharedSeo;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | ReturnSignup | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnectionCreated_At | CategoryConnectionUpdated_At | CategoryConnectionName | CategoryConnectionSlug | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Movies | MoviesConnection | MoviesAggregator | MoviesGroupBy | MoviesConnectionId | MoviesConnectionCreated_At | MoviesConnectionUpdated_At | MoviesConnectionName | MoviesConnectionBody | MoviesConnectionDate | MoviesConnectionUuid | MoviesConnectionFreeServer1 | MoviesConnectionPhoto_Url | MoviesConnectionFreeServer2 | MoviesConnectionVipServer1 | MoviesConnectionVipServer2 | MoviesConnectionPremiumOnly | MoviesConnectionRecommend | MoviesConnectionQuality | MoviesConnectionPublished_At | CreateMoviePayload | UpdateMoviePayload | DeleteMoviePayload | TvSeries | TvSeriesConnection | TvSeriesAggregator | TvSeriesGroupBy | TvSeriesConnectionId | TvSeriesConnectionCreated_At | TvSeriesConnectionUpdated_At | TvSeriesConnectionName | TvSeriesConnectionSeason | TvSeriesConnectionSeasonVip | TvSeriesConnectionPublished_At | CreateTvSeryPayload | UpdateTvSeryPayload | DeleteTvSeryPayload | UserData | UserDataConnection | UserDataAggregator | UserDataAggregatorSum | UserDataAggregatorAvg | UserDataAggregatorMin | UserDataAggregatorMax | UserDataGroupBy | UserDataConnectionId | UserDataConnectionCreated_At | UserDataConnectionUpdated_At | UserDataConnectionUuid | UserDataConnectionVerify | UserDataConnectionExpire | UserDataConnectionTokenVersion | UserDataConnectionPublished_At | CreateUserDatumPayload | UpdateUserDatumPayload | DeleteUserDatumPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentSectionsHero | ComponentSharedFilm | ComponentSharedSeo;
 
 export type MovieInput = {
   name: Scalars['String'];
@@ -252,13 +212,13 @@ export type MovieInput = {
   freeServer1?: Maybe<Scalars['String']>;
   genres?: Maybe<Array<Maybe<Scalars['ID']>>>;
   photo_url: Scalars['String'];
-  quality: Enum_Movies_Quality;
   freeServer2?: Maybe<Scalars['String']>;
   vipServer1?: Maybe<Scalars['String']>;
   vipServer2?: Maybe<Scalars['String']>;
   premiumOnly?: Maybe<Scalars['Boolean']>;
   recommend?: Maybe<Scalars['Boolean']>;
   tv_series?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  quality: Scalars['String'];
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -275,15 +235,17 @@ export type Movies = {
   uuid?: Maybe<Scalars['String']>;
   freeServer1?: Maybe<Scalars['String']>;
   photo_url: Scalars['String'];
-  quality: Enum_Movies_Quality;
   freeServer2?: Maybe<Scalars['String']>;
   vipServer1?: Maybe<Scalars['String']>;
   vipServer2?: Maybe<Scalars['String']>;
   premiumOnly: Scalars['Boolean'];
   recommend?: Maybe<Scalars['Boolean']>;
+  quality: Scalars['String'];
   published_at?: Maybe<Scalars['DateTime']>;
   genres?: Maybe<Array<Maybe<Category>>>;
   tv_series?: Maybe<Array<Maybe<TvSeries>>>;
+  server1: Scalars['String'];
+  server2: Scalars['String'];
 };
 
 
@@ -422,12 +384,12 @@ export type MoviesGroupBy = {
   uuid?: Maybe<Array<Maybe<MoviesConnectionUuid>>>;
   freeServer1?: Maybe<Array<Maybe<MoviesConnectionFreeServer1>>>;
   photo_url?: Maybe<Array<Maybe<MoviesConnectionPhoto_Url>>>;
-  quality?: Maybe<Array<Maybe<MoviesConnectionQuality>>>;
   freeServer2?: Maybe<Array<Maybe<MoviesConnectionFreeServer2>>>;
   vipServer1?: Maybe<Array<Maybe<MoviesConnectionVipServer1>>>;
   vipServer2?: Maybe<Array<Maybe<MoviesConnectionVipServer2>>>;
   premiumOnly?: Maybe<Array<Maybe<MoviesConnectionPremiumOnly>>>;
   recommend?: Maybe<Array<Maybe<MoviesConnectionRecommend>>>;
+  quality?: Maybe<Array<Maybe<MoviesConnectionQuality>>>;
   published_at?: Maybe<Array<Maybe<MoviesConnectionPublished_At>>>;
 };
 
@@ -436,10 +398,6 @@ export type Mutation = {
   createCategory?: Maybe<CreateCategoryPayload>;
   updateCategory?: Maybe<UpdateCategoryPayload>;
   deleteCategory?: Maybe<DeleteCategoryPayload>;
-  updateGlobal?: Maybe<UpdateGlobalPayload>;
-  deleteGlobal?: Maybe<DeleteGlobalPayload>;
-  updateHomepage?: Maybe<UpdateHomepagePayload>;
-  deleteHomepage?: Maybe<DeleteHomepagePayload>;
   createMovie?: Maybe<CreateMoviePayload>;
   updateMovie?: Maybe<UpdateMoviePayload>;
   deleteMovie?: Maybe<DeleteMoviePayload>;
@@ -487,16 +445,6 @@ export type MutationUpdateCategoryArgs = {
 
 export type MutationDeleteCategoryArgs = {
   input?: Maybe<DeleteCategoryInput>;
-};
-
-
-export type MutationUpdateGlobalArgs = {
-  input?: Maybe<UpdateGlobalInput>;
-};
-
-
-export type MutationUpdateHomepageArgs = {
-  input?: Maybe<UpdateHomepageInput>;
 };
 
 
@@ -646,8 +594,6 @@ export type Query = {
   category?: Maybe<Category>;
   categories?: Maybe<Array<Maybe<Category>>>;
   categoriesConnection?: Maybe<CategoryConnection>;
-  global?: Maybe<Global>;
-  homepage?: Maybe<Homepage>;
   movie?: Maybe<Movies>;
   movies?: Maybe<Array<Maybe<Movies>>>;
   moviesConnection?: Maybe<MoviesConnection>;
@@ -668,7 +614,7 @@ export type Query = {
   usersConnection?: Maybe<UsersPermissionsUserConnection>;
   me?: Maybe<UsersPermissionsMe>;
   search?: Maybe<Array<Maybe<Movies>>>;
-  getMovie?: Maybe<GetMovietype>;
+  getMovie?: Maybe<Movies>;
 };
 
 
@@ -692,16 +638,6 @@ export type QueryCategoriesConnectionArgs = {
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
   where?: Maybe<Scalars['JSON']>;
-};
-
-
-export type QueryGlobalArgs = {
-  publicationState?: Maybe<PublicationState>;
-};
-
-
-export type QueryHomepageArgs = {
-  publicationState?: Maybe<PublicationState>;
 };
 
 
@@ -864,8 +800,11 @@ export type TvSeries = {
   updated_at: Scalars['DateTime'];
   name?: Maybe<Scalars['String']>;
   season?: Maybe<Scalars['JSON']>;
+  seasonVip?: Maybe<Scalars['JSON']>;
   published_at?: Maybe<Scalars['DateTime']>;
   movies?: Maybe<Array<Maybe<Movies>>>;
+  server1?: Maybe<Scalars['JSON']>;
+  server2?: Maybe<Scalars['JSON']>;
 };
 
 
@@ -919,6 +858,12 @@ export type TvSeriesConnectionSeason = {
   connection?: Maybe<TvSeriesConnection>;
 };
 
+export type TvSeriesConnectionSeasonVip = {
+  __typename?: 'TvSeriesConnectionSeasonVip';
+  key?: Maybe<Scalars['JSON']>;
+  connection?: Maybe<TvSeriesConnection>;
+};
+
 export type TvSeriesConnectionUpdated_At = {
   __typename?: 'TvSeriesConnectionUpdated_at';
   key?: Maybe<Scalars['DateTime']>;
@@ -932,6 +877,7 @@ export type TvSeriesGroupBy = {
   updated_at?: Maybe<Array<Maybe<TvSeriesConnectionUpdated_At>>>;
   name?: Maybe<Array<Maybe<TvSeriesConnectionName>>>;
   season?: Maybe<Array<Maybe<TvSeriesConnectionSeason>>>;
+  seasonVip?: Maybe<Array<Maybe<TvSeriesConnectionSeasonVip>>>;
   published_at?: Maybe<Array<Maybe<TvSeriesConnectionPublished_At>>>;
 };
 
@@ -939,6 +885,7 @@ export type TvSeryInput = {
   name?: Maybe<Scalars['String']>;
   season?: Maybe<Scalars['JSON']>;
   movies?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  seasonVip?: Maybe<Scalars['JSON']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1564,16 +1511,6 @@ export type DeleteFilePayload = {
   file?: Maybe<UploadFile>;
 };
 
-export type DeleteGlobalPayload = {
-  __typename?: 'deleteGlobalPayload';
-  global?: Maybe<Global>;
-};
-
-export type DeleteHomepagePayload = {
-  __typename?: 'deleteHomepagePayload';
-  homepage?: Maybe<Homepage>;
-};
-
 export type DeleteMovieInput = {
   where?: Maybe<InputId>;
 };
@@ -1665,21 +1602,6 @@ export type EditFileInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
-export type EditGlobalInput = {
-  favicon?: Maybe<Scalars['ID']>;
-  siteName?: Maybe<Scalars['String']>;
-  defaultSeo?: Maybe<EditComponentSharedSeoInput>;
-  created_by?: Maybe<Scalars['ID']>;
-  updated_by?: Maybe<Scalars['ID']>;
-};
-
-export type EditHomepageInput = {
-  seo?: Maybe<EditComponentSharedSeoInput>;
-  hero?: Maybe<EditComponentSectionsHeroInput>;
-  created_by?: Maybe<Scalars['ID']>;
-  updated_by?: Maybe<Scalars['ID']>;
-};
-
 export type EditLocaleInput = {
   name?: Maybe<Scalars['String']>;
   code?: Maybe<Scalars['String']>;
@@ -1695,13 +1617,13 @@ export type EditMovieInput = {
   freeServer1?: Maybe<Scalars['String']>;
   genres?: Maybe<Array<Maybe<Scalars['ID']>>>;
   photo_url?: Maybe<Scalars['String']>;
-  quality?: Maybe<Enum_Movies_Quality>;
   freeServer2?: Maybe<Scalars['String']>;
   vipServer1?: Maybe<Scalars['String']>;
   vipServer2?: Maybe<Scalars['String']>;
   premiumOnly?: Maybe<Scalars['Boolean']>;
   recommend?: Maybe<Scalars['Boolean']>;
   tv_series?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  quality?: Maybe<Scalars['String']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1721,6 +1643,7 @@ export type EditTvSeryInput = {
   name?: Maybe<Scalars['String']>;
   season?: Maybe<Scalars['JSON']>;
   movies?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  seasonVip?: Maybe<Scalars['JSON']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1750,42 +1673,6 @@ export type EditUserInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
-export type GetMovietype = {
-  __typename?: 'getMovietype';
-  id: Scalars['ID'];
-  created_at: Scalars['DateTime'];
-  updated_at: Scalars['DateTime'];
-  name: Scalars['String'];
-  body: Scalars['String'];
-  date?: Maybe<Scalars['DateTime']>;
-  uuid?: Maybe<Scalars['String']>;
-  server1: Scalars['String'];
-  server2: Scalars['String'];
-  photo_url: Scalars['String'];
-  quality: Enum_Movies_Quality;
-  premiumOnly: Scalars['Boolean'];
-  recommend?: Maybe<Scalars['Boolean']>;
-  published_at?: Maybe<Scalars['DateTime']>;
-  genres?: Maybe<Array<Maybe<Category>>>;
-  tv_series?: Maybe<Array<Maybe<TvSeries>>>;
-};
-
-
-export type GetMovietypeGenresArgs = {
-  sort?: Maybe<Scalars['String']>;
-  limit?: Maybe<Scalars['Int']>;
-  start?: Maybe<Scalars['Int']>;
-  where?: Maybe<Scalars['JSON']>;
-};
-
-
-export type GetMovietypeTv_SeriesArgs = {
-  sort?: Maybe<Scalars['String']>;
-  limit?: Maybe<Scalars['Int']>;
-  start?: Maybe<Scalars['Int']>;
-  where?: Maybe<Scalars['JSON']>;
-};
-
 export type ReturnSignup = {
   __typename?: 'returnSignup';
   ok?: Maybe<Scalars['Boolean']>;
@@ -1801,24 +1688,6 @@ export type UpdateCategoryInput = {
 export type UpdateCategoryPayload = {
   __typename?: 'updateCategoryPayload';
   category?: Maybe<Category>;
-};
-
-export type UpdateGlobalInput = {
-  data?: Maybe<EditGlobalInput>;
-};
-
-export type UpdateGlobalPayload = {
-  __typename?: 'updateGlobalPayload';
-  global?: Maybe<Global>;
-};
-
-export type UpdateHomepageInput = {
-  data?: Maybe<EditHomepageInput>;
-};
-
-export type UpdateHomepagePayload = {
-  __typename?: 'updateHomepagePayload';
-  homepage?: Maybe<Homepage>;
 };
 
 export type UpdateMovieInput = {
@@ -1874,14 +1743,14 @@ export type UpdateUserPayload = {
 export type GetAllMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, date?: Maybe<any>, quality: Enum_Movies_Quality, photo_url: string }>>> };
+export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, date?: Maybe<any>, quality: string, photo_url: string }>>> };
 
 export type GetMovieQueryVariables = Exact<{
   uuid: Scalars['String'];
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'getMovietype', server2: string }> };
+export type GetMovieQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'Movies', server2: string }> };
 
 export type GetUserQueryVariables = Exact<{
   uuid: Scalars['String'];

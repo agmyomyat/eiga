@@ -14,6 +14,6 @@
       "isolatedModules": true,
       "jsx": "preserve"
    },
-   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "styles/searchMoviesStyles.js"],
+   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "styles/SearchMoviesStyles.js"],
    "exclude": ["node_modules"]
 }

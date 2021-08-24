@@ -15,6 +15,8 @@ function Home() {
 
    const { data } = useGetAllMoviesQuery();
 
+   console.log(data);
+
    return (
       <Container>
          <Movies movies={data.movies} />

@@ -1,51 +1,50 @@
 import { alpha } from '@material-ui/core/styles';
 
 export const styles = theme => ({
-   //refine
-   grid: {
-      [theme.breakpoints.between('xs', 'sm')]: {
-         flexWrap: 'nowrap',
-         overflowX: 'scroll',
-         '&::-webkit-scrollbar': {
-            display: 'none',
-         },
-      },
+   searchContainer: {
+      maxWidth: 400,
+      margin: '0 auto',
    },
-
-   // search
    search: {
-      position: 'relative',
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: alpha(theme.palette.common.white, 0.15),
-      '&:hover': {
-         backgroundColor: alpha(theme.palette.common.white, 0.25),
-      },
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
       margin: theme.spacing(2, 0),
-      maxWidth: 300,
+      width: '100%',
    },
    searchIcon: {
-      padding: theme.spacing(0, 2),
+      padding: theme.spacing(0.95),
       height: '100%',
-      position: 'absolute',
+      height: '100%',
       pointerEvents: 'none',
+      borderRadius: '0 0.6rem 0.6rem 0px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      opacity: '0.5',
+      backgroundColor: alpha(theme.palette.common.white, 0.15),
    },
    inputRoot: {
       color: 'inherit',
+      width: '100%',
    },
    inputInput: {
-      padding: theme.spacing(1, 1, 1, 0),
+      padding: theme.spacing(1, 2),
       // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-      transition: theme.transitions.create('width'),
+      transition: theme.transitions.easing.easein,
+      borderRadius: '0.6rem 0px 0px 0.6rem',
+      // backgroundClip: 'padding-box',
       width: '100%',
-      [theme.breakpoints.up('sm')]: {
-         width: '18ch',
-         '&:focus': {
-            width: '24ch',
-         },
+      borderWidth: 2,
+      borderStyle: 'solid',
+      borderColor: alpha(theme.palette.common.white, 0.001),
+      backgroundColor: alpha(theme.palette.common.white, 0.2),
+      '&:hover': {
+         backgroundColor: alpha(theme.palette.common.white, 0.3),
+      },
+      '&:focus': {
+         backgroundColor: theme.palette.common.black,
+         borderColor: theme.palette.secondary.main,
       },
    },
 });

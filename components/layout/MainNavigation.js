@@ -48,7 +48,7 @@ const MainNavigation = () => {
 
                {/* Title */}
                <Typography className={classes.title} variant="h5" component="h2" noWrap>
-                  NETFLIX
+                  EIGA
                </Typography>
 
                {/* Search Bar */}

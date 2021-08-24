@@ -68,7 +68,8 @@ graphql name change,
 they should be changed here too.
 */
 const IgnoreTokenRefresh = ApolloLink.split(
-   (operation) => operation.operationName !== 'signUp' && operation.operationName !== 'getUser',
+   ({operationName}) => operationName !== 'signUp' 
+   && operationName !== 'getUser',
    tokenRefreshLink as any,
 );
 
@@ -111,7 +112,7 @@ export function initializeApollo(initialState = null) {
    return _apolloClient;
 }
 
-export function useApollo(initialState) {
+export function useApollo<T>(initialState:T) {
    const store = useMemo(() => initializeApollo(initialState), [initialState]);
    return store;
 }

@@ -154,12 +154,6 @@ export enum Enum_Componentsharedfilm_Genre {
   Mistery = 'mistery'
 }
 
-export enum Enum_Movies_Quality {
-  Hd = 'HD',
-  Cam = 'CAM',
-  Sd = 'SD'
-}
-
 export type FileInfoInput = {
   name?: Maybe<Scalars['String']>;
   alternativeText?: Maybe<Scalars['String']>;
@@ -224,7 +218,7 @@ export type MovieInput = {
   premiumOnly?: Maybe<Scalars['Boolean']>;
   recommend?: Maybe<Scalars['Boolean']>;
   tv_series?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  quality?: Maybe<Enum_Movies_Quality>;
+  quality: Scalars['String'];
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -246,7 +240,7 @@ export type Movies = {
   vipServer2?: Maybe<Scalars['String']>;
   premiumOnly: Scalars['Boolean'];
   recommend?: Maybe<Scalars['Boolean']>;
-  quality?: Maybe<Enum_Movies_Quality>;
+  quality: Scalars['String'];
   published_at?: Maybe<Scalars['DateTime']>;
   genres?: Maybe<Array<Maybe<Category>>>;
   tv_series?: Maybe<Array<Maybe<TvSeries>>>;
@@ -1629,7 +1623,7 @@ export type EditMovieInput = {
   premiumOnly?: Maybe<Scalars['Boolean']>;
   recommend?: Maybe<Scalars['Boolean']>;
   tv_series?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  quality?: Maybe<Enum_Movies_Quality>;
+  quality?: Maybe<Scalars['String']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1749,7 +1743,7 @@ export type UpdateUserPayload = {
 export type GetAllMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, date?: Maybe<any>, quality?: Maybe<Enum_Movies_Quality>, photo_url: string }>>> };
+export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, date?: Maybe<any>, quality: string, photo_url: string }>>> };
 
 export type GetMovieQueryVariables = Exact<{
   uuid: Scalars['String'];

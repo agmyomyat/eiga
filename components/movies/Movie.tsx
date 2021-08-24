@@ -12,7 +12,7 @@ import { Movies } from '../../graphgen/graphql';
 
 const useStyles = makeStyles(styles as any);
 
-const Movie = ({ uuid, name, photo_url, date, quality }:Movies) => {
+const Movie = ({ uuid, name, photo_url, date, quality }:Partial<Movies>) => {
    const classes = useStyles();
    const { push }:NextRouter = useRouter();
    // will delete later

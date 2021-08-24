@@ -6,6 +6,10 @@
       "dom.iterable",
       "esnext"
     ],
+    "baseUrl": ".",
+  "paths":{
+    "@graphgen":["graphgen/graphql"]
+  },
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -25,5 +29,6 @@
 , "styles/ProfileStyles.js"  ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  
 }

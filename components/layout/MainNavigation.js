@@ -30,14 +30,16 @@ const MainNavigation = () => {
    const [anchorEl, setAnchorEl] = React.useState(null);
    const openMenu = Boolean(anchorEl);
 
-   const { currentUser, logout } = useAuth();
+   const { currentUser, logOut, authLoading } = useAuth();
    const { push } = useRouter();
 
    const handleMenu = event => {
-      if (currentUser) {
-         setAnchorEl(event.currentTarget);
+      if (authLoading) return;
+      if (!currentUser) {
+         return push('/profile');
       }
-      push('/profile');
+      console.log('open menu');
+      setAnchorEl(event.currentTarget);
    };
 
    const handleClose = () => {
@@ -47,6 +49,10 @@ const MainNavigation = () => {
    const handleViewProfile = () => {
       setAnchorEl(null);
       push('/profile');
+   };
+
+   const handleSignOut = async () => {
+      await logOut();
    };
 
    const list = (
@@ -134,7 +140,7 @@ const MainNavigation = () => {
                            <MenuItem className={classes.menuItem}>
                               <FavoriteBorderIcon fontSize="small" /> Favourites
                            </MenuItem>
-                           <MenuItem className={classes.menuItem} onClick={logout}>
+                           <MenuItem className={classes.menuItem} onClick={handleSignOut}>
                               <ExitToAppIcon fontSize="small" /> Logout
                            </MenuItem>
                         </Box>

@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles(styles as any);
 
 export default function Profile() {
-   const { currentUser, authLoading, logOut} = useAuth();
+   const { currentUser, authLoading, logOut } = useAuth();
 
    const [getUser, { data, loading }] = useGetUserLazyQuery({
       fetchPolicy: 'cache-and-network',
@@ -32,10 +32,11 @@ export default function Profile() {
    const userData = data?.userData[0];
 
    const handleSignOut = async () => {
-      logOut().then((res)=>{
-         console.log(res)
-      })
-      .catch((err)=>alert(`err logging out${err}`))
+      logOut()
+         .then(res => {
+            console.log(res);
+         })
+         .catch(err => alert(`err logging out${err}`));
    };
 
    if (authLoading || loading) {
@@ -63,7 +64,7 @@ export default function Profile() {
                   className={classes.card}
                >
                   <Grid item sm={3} xs={12}>
-                     <label className={classes.label}>Phone Number</label>
+                     <label className={classes.label}>Email</label>
                   </Grid>
                   <Grid item sm={9} xs={12}>
                      <div className={classes.item}>{data ? userData.uuid : 'Loading...'}</div>

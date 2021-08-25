@@ -4,7 +4,7 @@ import { auth } from '../lib/firebase';
 import { default as firebaseUser } from 'firebase';
 interface IauthContext {
    currentUser: firebaseUser.User | null;
-   logOut:()=>Promise<[void,Response]>
+   logOut: () => Promise<[void, Response]>;
    authLoading: boolean;
 }
 const AuthContext: Context<IauthContext> = createContext(null);
@@ -17,7 +17,7 @@ export default function AuthProvider({ children }) {
    const [currentUser, setCurrentUser] = useState(null);
    const [authLoading, setAuthLoading] = useState(true);
 
-   const logOut=async()=> {
+   const logOut = async () => {
       setAccessToken('');
       console.log('logout works');
       const a = await auth.signOut();
@@ -26,11 +26,10 @@ export default function AuthProvider({ children }) {
          method: 'POST',
          credentials: 'include',
       });
-      return Promise.all([a,b]) 
-   }
-   
+      return Promise.all([a, b]);
+   };
 
-     useEffect(() => {
+   useEffect(() => {
       setAuthLoading(true);
       const unsubscribe = auth.onAuthStateChanged(user => {
          setCurrentUser(user);
@@ -40,7 +39,6 @@ export default function AuthProvider({ children }) {
          unsubscribe;
       };
    }, []);
-   
 
    const authContext = {
       currentUser,

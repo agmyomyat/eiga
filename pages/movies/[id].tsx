@@ -4,7 +4,7 @@ import { useGetMovieLazyQuery } from '../../graphgen/graphql';
 import { NextRouter, useRouter } from 'next/router';
 
 export default function MoviePage(){
-   const [getMovie, { data }] = useGetMovieLazyQuery({
+   const [getMovie, { data}] = useGetMovieLazyQuery({
       fetchPolicy: 'network-only',
    });
    const router:NextRouter = useRouter();
@@ -15,12 +15,20 @@ export default function MoviePage(){
          getMovie({
             variables: { uuid: id as string },
          });
+         console.log('data', );
       }
-      console.log('data', data);
    }, [data, getMovie, id]);
 
    return (
-      <div>movies</div>
+      <div>{router.isFallback&&!data&&
+      <h2>loading</h2>
+      }
+      {
+      data&&
+      <h1>{data.getMovie.server2}</h1>
+      }
+         
+         </div>
      );
 }
 

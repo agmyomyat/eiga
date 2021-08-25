@@ -9,7 +9,7 @@ import { transfromLabels } from '../../helpers/tranformGenereLabels';
 
 const searchClient: InstantMeiliSearchInstance = instantMeiliSearch(
    'http://localhost:7700',
-   '2e2716d9058e8c26ab4c01f936fd66f16dd5efe785448d2e87bcb53ab9d69588'
+   '46bd992c4b247adc6414afdd55b094ece9869c88494b08a94fd014bd1bb0bd13'
 );
 
 export const Search: React.FC = () => (

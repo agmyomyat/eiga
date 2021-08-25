@@ -6,10 +6,12 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Movie from './Movie';
 import { Movies as typeMovies } from '@graphgen';
-
+interface IMovies{
+   movies:Partial<typeMovies[]>
+}
 const useStyles = makeStyles(styles as any);
 
-const Movies = ({ movies }) => {
+const Movies = ({ movies }:IMovies) => {
    const classes = useStyles();
 
    return (

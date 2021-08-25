@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles(styles as any);
 
 export default function Profile() {
-   const { currentUser, authLoading, logOut } = useAuth();
+   const { currentUser, authLoading, logOut} = useAuth();
 
    const [getUser, { data, loading }] = useGetUserLazyQuery({
       fetchPolicy: 'cache-and-network',
@@ -32,7 +32,10 @@ export default function Profile() {
    const userData = data?.userData[0];
 
    const handleSignOut = async () => {
-      return logOut;
+      logOut().then((res)=>{
+         console.log(res)
+      })
+      .catch((err)=>alert(`err logging out${err}`))
    };
 
    if (authLoading || loading) {

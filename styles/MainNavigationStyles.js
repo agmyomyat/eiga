@@ -1,9 +1,10 @@
 export const styles = theme => ({
    root: {
       flexGrow: 1,
+      marginBottom: theme.spacing(3),
    },
    appbar: {
-      backgroundColor: 'transparent',
+      backgroundColor: theme.palette.primary.main,
       paddingTop: 10,
    },
    menuButton: {
@@ -16,6 +17,15 @@ export const styles = theme => ({
       flexGrow: 1,
       flexShrink: 0,
       marginRight: theme.spacing(2),
+   },
+   emailWrapper: {
+      padding: theme.spacing(1.5, 2),
+   },
+   menuItem: {
+      color: theme.palette.text.secondary,
+      padding: theme.spacing(0.5, 3),
+      margin: theme.spacing(0.5, 0),
+      fontSize: theme.typography.body2.fontSize,
    },
 
    drawer: {

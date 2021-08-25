@@ -4,12 +4,12 @@ export const styles = theme => ({
    searchContainer: {
       maxWidth: 400,
       margin: '0 auto',
+      padding: theme.spacing(2, 0),
    },
    search: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      margin: theme.spacing(2, 0),
       width: '100%',
    },
    searchIcon: {

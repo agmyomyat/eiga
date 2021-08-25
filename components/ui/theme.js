@@ -5,6 +5,9 @@ import { pink } from '@material-ui/core/colors';
 const theme = createTheme({
    palette: {
       type: 'dark',
+      primary: {
+         main: '#1a1a1c',
+      },
       secondary: {
          main: pink[400],
       },

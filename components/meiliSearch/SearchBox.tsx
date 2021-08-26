@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { connectSearchBox } from 'react-instantsearch-dom';
 import { SearchBoxProvided } from 'react-instantsearch-core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,17 +9,25 @@ import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(styles as any);
 
-const SearchBox = ({ currentRefinement, refine }: SearchBoxProvided) => {
+const SearchBox = ({ refine }: SearchBoxProvided) => {
    const classes = useStyles();
+   const [keywords, setKeywords] = useState('');
+
+   useEffect(() => {
+      const timeout = setTimeout(() => {
+         refine(keywords);
+      }, 1000);
+      return () => clearTimeout(timeout);
+   }, [keywords, refine]);
+
+   const handleSubmit = e => {
+      e.preventDefault();
+      refine(keywords);
+   };
 
    return (
       <Box className={classes.searchContainer} pb={3}>
-         <form
-            noValidate
-            role="search"
-            className={classes.search}
-            onSubmit={e => e.preventDefault()}
-         >
+         <form noValidate role="search" className={classes.search} onSubmit={handleSubmit}>
             <InputBase
                placeholder="Search..."
                classes={{
@@ -26,8 +35,8 @@ const SearchBox = ({ currentRefinement, refine }: SearchBoxProvided) => {
                   input: classes.inputInput,
                }}
                inputProps={{ 'aria-label': 'search' }}
-               value={currentRefinement}
-               onChange={e => refine(e.currentTarget.value)}
+               value={keywords}
+               onChange={e => setKeywords(e.currentTarget.value)}
             />
             <div className={classes.searchIcon}>
                <SearchIcon />

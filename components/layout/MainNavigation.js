@@ -21,6 +21,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
 const useStyles = makeStyles(styles);
 
@@ -30,15 +31,15 @@ const MainNavigation = () => {
    const [anchorEl, setAnchorEl] = React.useState(null);
    const openMenu = Boolean(anchorEl);
 
-   const { currentUser, logOut, authLoading } = useAuth();
+   const { currentUser, logOut } = useAuth();
    const { push } = useRouter();
 
    const handleMenu = event => {
-      if (authLoading) return;
-      if (!currentUser) {
-         return push('/profile');
-      }
-      console.log('open menu');
+      // if (authLoading) return;
+      // if (!currentUser) {
+      //    return push('/profile');
+      // }
+      // console.log('open menu');
       setAnchorEl(event.currentTarget);
    };
 
@@ -99,41 +100,50 @@ const MainNavigation = () => {
                   >
                      <AccountCircle fontSize="large" />
                   </IconButton>
-                  {currentUser && (
-                     <Menu
-                        id="menu-appbar"
-                        anchorEl={anchorEl}
-                        anchorOrigin={{
-                           vertical: 'top',
-                           horizontal: 'left',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                           vertical: 'top',
-                           horizontal: 'right',
-                        }}
-                        open={openMenu}
-                        onClose={handleClose}
+
+                  <Menu
+                     id="menu-appbar"
+                     anchorEl={anchorEl}
+                     anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                     }}
+                     keepMounted
+                     transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                     }}
+                     open={openMenu}
+                     onClose={handleClose}
+                  >
+                     <Box
+                        display="flex"
+                        flexDirection="column"
+                        component="li"
+                        className={classes.profileWrapper}
                      >
-                        <Box className={classes.profileMenu}>
-                           <Box
-                              display="flex"
-                              flexDirection="column"
-                              component="li"
-                              className={classes.emailWrapper}
-                           >
+                        {currentUser ? (
+                           <Box>
                               <Typography
                                  variant="subtitle2"
                                  component="label"
                                  color="textSecondary"
                               >
-                                 Signed in as
+                                 Signed In as
                               </Typography>
                               <Typography variant="body2" component="p">
                                  {currentUser.email}
                               </Typography>
                            </Box>
-                           <Divider />
+                        ) : (
+                           <Typography variant="subtitle2" component="label" color="textSecondary">
+                              You are not Signed In
+                           </Typography>
+                        )}
+                     </Box>
+                     <Divider />
+                     {currentUser ? (
+                        <Box>
                            <MenuItem className={classes.menuItem} onClick={handleViewProfile}>
                               <PersonOutlineIcon fontSize="small" /> View Profile
                            </MenuItem>
@@ -144,8 +154,12 @@ const MainNavigation = () => {
                               <ExitToAppIcon fontSize="small" /> Logout
                            </MenuItem>
                         </Box>
-                     </Menu>
-                  )}
+                     ) : (
+                        <MenuItem className={classes.menuItem} onClick={handleViewProfile}>
+                           <ArrowRightAltIcon /> Log In
+                        </MenuItem>
+                     )}
+                  </Menu>
                </Box>
             </Toolbar>
          </AppBar>

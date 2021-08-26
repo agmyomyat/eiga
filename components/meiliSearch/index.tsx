@@ -1,5 +1,5 @@
 import { instantMeiliSearch, InstantMeiliSearchInstance } from '@meilisearch/instant-meilisearch';
-import { InstantSearch } from 'react-instantsearch-dom';
+import { InstantSearch, Configure } from 'react-instantsearch-dom';
 import CustomHits from './Hits';
 import CustomRefinementList from './RefinementList';
 import CustomSearchBox from './SearchBox';
@@ -15,13 +15,9 @@ const searchClient: InstantMeiliSearchInstance = instantMeiliSearch(
 export const Search: React.FC = () => (
    <InstantSearch searchClient={searchClient} indexName="movies">
       <Container>
+         <Configure hitsPerPage={4} />
          <CustomSearchBox />
-         <CustomRefinementList
-            attribute="genres"
-            searchable
-            operator="and"
-            transformItems={transfromLabels}
-         />
+         <CustomRefinementList attribute="genres" searchable transformItems={transfromLabels} />
          <CustomHits />
       </Container>
    </InstantSearch>

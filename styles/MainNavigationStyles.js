@@ -18,7 +18,7 @@ export const styles = theme => ({
       flexShrink: 0,
       marginRight: theme.spacing(2),
    },
-   emailWrapper: {
+   profileWrapper: {
       padding: theme.spacing(1.5, 2),
    },
    menuItem: {

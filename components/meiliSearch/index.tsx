@@ -17,16 +17,7 @@ export const Search: React.FC = () => (
       <Container>
          <Configure hitsPerPage={4} />
          <CustomSearchBox />
-<<<<<<< HEAD
-         <CustomRefinementList
-            attribute="genres"
-            searchable
-            operator="and" 
-            transformItems={transfromLabels}
-         />
-=======
          <CustomRefinementList attribute="genres" searchable transformItems={transfromLabels} />
->>>>>>> main
          <CustomHits />
       </Container>
    </InstantSearch>

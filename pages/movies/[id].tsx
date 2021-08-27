@@ -20,7 +20,7 @@ export default function MoviePage() {
 
    return (
       <div>
-         {router.isFallback || !data && <h2>loading</h2>}
+         {router.isFallback || (!data && <h2>loading</h2>)}
          {data && <h1>{data.getMovie.server2}</h1>}
       </div>
    );

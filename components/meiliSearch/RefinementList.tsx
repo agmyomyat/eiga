@@ -1,5 +1,5 @@
-import { connectRefinementList } from 'react-instantsearch-dom';
-import { RefinementListProvided } from 'react-instantsearch-core';
+import { connectMenu } from 'react-instantsearch-dom';
+import { MenuProvided } from 'react-instantsearch-core';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import { styles } from '../../styles/RefinementListStyles';
 import Grid from '@material-ui/core/Grid';
@@ -7,16 +7,18 @@ import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles(styles as any);
 
-const RefinementList = ({ items, refine }: RefinementListProvided) => {
+const RefinementList = ({ items, refine }: MenuProvided) => {
    const theme = useTheme();
    const classes = useStyles();
+
+   console.table(items);
 
    return (
       <Grid container spacing={1} className={classes.grid}>
          {items.map(item => (
             <Grid item key={item.label}>
                <Chip
-                  label={`${item.label}`}
+                  label={`${item.label}(${item.count})`}
                   style={{
                      backgroundColor: item.isRefined
                         ? theme.palette.secondary.main
@@ -30,6 +32,6 @@ const RefinementList = ({ items, refine }: RefinementListProvided) => {
    );
 };
 
-const CustomRefinementList = connectRefinementList(RefinementList);
+const CustomRefinementList = connectMenu(RefinementList);
 
 export default CustomRefinementList;

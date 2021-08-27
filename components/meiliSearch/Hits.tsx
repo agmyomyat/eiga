@@ -1,9 +1,9 @@
 import { useEffect, useCallback, useRef } from 'react';
 import { connectInfiniteHits } from 'react-instantsearch-dom';
-import { HitsProvided } from 'react-instantsearch-core';
+import { InfiniteHitsProvided } from 'react-instantsearch-core';
 import Movies from '../movies/Movies';
 
-function Hits({ hits, hasMore, refineNext }: HitsProvided<any>) {
+function Hits({ hits, hasMore, refineNext }:InfiniteHitsProvided ) {
    const sentinel = useRef(null);
    // console.log('sentinel', sentinel);
 

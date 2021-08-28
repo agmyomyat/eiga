@@ -18,7 +18,7 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
          {items.map(item => (
             <Grid item key={item.label}>
                <Chip
-                  label={`${item.label}(${item.count})`}
+                  label={`${item.label}`}
                   style={{
                      backgroundColor: item.isRefined
                         ? theme.palette.secondary.main

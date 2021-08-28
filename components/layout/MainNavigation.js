@@ -72,7 +72,7 @@ const MainNavigation = () => {
    return (
       <div className={classes.root}>
          <AppBar className={classes.appbar} elevation={0} position="absolute">
-            <Toolbar component="nav">
+            <Toolbar component="nav" className={classes.toolbar}>
                {/* Menu Icon */}
                <IconButton
                   edge="start"

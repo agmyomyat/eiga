@@ -5,6 +5,7 @@ export const styles = theme => ({
       borderWidth: 3,
       borderStyle: 'solid',
       borderColor: theme.palette.secondary.main,
+      backgroundColor: '1d1e26',
       borderRadius: 20,
       paddingBottom: theme.spacing(5),
    },

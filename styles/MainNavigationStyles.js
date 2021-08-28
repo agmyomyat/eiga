@@ -7,6 +7,13 @@ export const styles = theme => ({
       backgroundColor: theme.palette.primary.main,
       paddingTop: 10,
    },
+   // for 4k devices, will fix later
+   // toolbar: {
+   //    width: '100%',
+   //    maxWidth: 1660,
+   //    margin: '0 auto',
+   // },
+   //
    menuButton: {
       marginRight: theme.spacing(2),
       [theme.breakpoints.up('sm')]: {

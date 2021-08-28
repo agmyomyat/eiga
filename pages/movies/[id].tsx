@@ -1,18 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useGetMovieLazyQuery } from '../../graphgen/graphql';
 import { NextRouter, useRouter } from 'next/router';
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Container } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { styles } from '../../styles/MoviePage';
+import Iframe from '../../components/movies/Iframe';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+
+const useStyles = makeStyles(styles as any);
+
 export default function MoviePage() {
    const [getMovie, { data }] = useGetMovieLazyQuery({
       fetchPolicy: 'network-only',
    });
-   const [iframe, setIframe] = useState(true)
+   const classes = useStyles();
    const router: NextRouter = useRouter();
    const { id } = router.query;
-   console.log(id);
+
    useEffect(() => {
       if (id && !data) {
          getMovie({
@@ -23,15 +28,24 @@ export default function MoviePage() {
    }, [data, getMovie, id]);
 
    return (
-      <div>
+      <div className={classes.root}>
          {router.isFallback || (!data && <h2>loading</h2>)}
-         {data && 
-         <Container maxWidth='md'>
-         <LoadingIframe open={iframe}/>
-            <iframe onLoad={()=>setIframe(false)} width="720" height="360" frameBorder="0" src={data.getMovie.server1}
-         scrolling="no" allowFullScreen></iframe>
-         </Container>
-}
+         {data && (
+            <Box>
+               <Breadcrumbs className={classes.breadcrumbs}>
+                  <Typography color="textSecondary" className={classes.breadItem}>
+                     Home
+                  </Typography>
+                  <Typography color="textSecondary" className={classes.breadItem}>
+                     Movies
+                  </Typography>
+                  <Typography color="textPrimary" className={classes.breadItem}>
+                     {id}
+                  </Typography>
+               </Breadcrumbs>
+               <Iframe data={data} />
+            </Box>
+         )}
       </div>
    );
 }
@@ -56,33 +70,4 @@ export async function getStaticProps() {
          greeting: 'hello',
       },
    };
-}
-
-
-
-interface ILoading {
-	open: boolean;
-}
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-     
-    backdrop: {
-       zIndex: theme.zIndex.drawer + 1,
-      color: '#fff',
-    },
-  }),
-);
-
-export const LoadingIframe:React.FC<ILoading>=({open})=>{
-	const classes = useStyles();
-	 return (
-    <div>
-       {open&&
-     <Backdrop className={classes.backdrop} open={open}>
-        <CircularProgress color="inherit" />
-      </Backdrop> 
-}
-    </div>
-  );
 }

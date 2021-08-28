@@ -11,8 +11,6 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
    const theme = useTheme();
    const classes = useStyles();
 
-   console.table(items);
-
    return (
       <Grid container spacing={1} className={classes.grid}>
          {items.map(item => (

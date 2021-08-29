@@ -34,84 +34,6 @@ export type AdminUser = {
   lastname: Scalars['String'];
 };
 
-export type Category = {
-  __typename?: 'Category';
-  id: Scalars['ID'];
-  created_at: Scalars['DateTime'];
-  updated_at: Scalars['DateTime'];
-  name: Scalars['String'];
-  slug?: Maybe<Scalars['String']>;
-  movies?: Maybe<Array<Maybe<Movies>>>;
-};
-
-
-export type CategoryMoviesArgs = {
-  sort?: Maybe<Scalars['String']>;
-  limit?: Maybe<Scalars['Int']>;
-  start?: Maybe<Scalars['Int']>;
-  where?: Maybe<Scalars['JSON']>;
-};
-
-export type CategoryAggregator = {
-  __typename?: 'CategoryAggregator';
-  count?: Maybe<Scalars['Int']>;
-  totalCount?: Maybe<Scalars['Int']>;
-};
-
-export type CategoryConnection = {
-  __typename?: 'CategoryConnection';
-  values?: Maybe<Array<Maybe<Category>>>;
-  groupBy?: Maybe<CategoryGroupBy>;
-  aggregate?: Maybe<CategoryAggregator>;
-};
-
-export type CategoryConnectionCreated_At = {
-  __typename?: 'CategoryConnectionCreated_at';
-  key?: Maybe<Scalars['DateTime']>;
-  connection?: Maybe<CategoryConnection>;
-};
-
-export type CategoryConnectionId = {
-  __typename?: 'CategoryConnectionId';
-  key?: Maybe<Scalars['ID']>;
-  connection?: Maybe<CategoryConnection>;
-};
-
-export type CategoryConnectionName = {
-  __typename?: 'CategoryConnectionName';
-  key?: Maybe<Scalars['String']>;
-  connection?: Maybe<CategoryConnection>;
-};
-
-export type CategoryConnectionSlug = {
-  __typename?: 'CategoryConnectionSlug';
-  key?: Maybe<Scalars['String']>;
-  connection?: Maybe<CategoryConnection>;
-};
-
-export type CategoryConnectionUpdated_At = {
-  __typename?: 'CategoryConnectionUpdated_at';
-  key?: Maybe<Scalars['DateTime']>;
-  connection?: Maybe<CategoryConnection>;
-};
-
-export type CategoryGroupBy = {
-  __typename?: 'CategoryGroupBy';
-  id?: Maybe<Array<Maybe<CategoryConnectionId>>>;
-  created_at?: Maybe<Array<Maybe<CategoryConnectionCreated_At>>>;
-  updated_at?: Maybe<Array<Maybe<CategoryConnectionUpdated_At>>>;
-  name?: Maybe<Array<Maybe<CategoryConnectionName>>>;
-  slug?: Maybe<Array<Maybe<CategoryConnectionSlug>>>;
-};
-
-export type CategoryInput = {
-  name: Scalars['String'];
-  slug?: Maybe<Scalars['String']>;
-  movies?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  created_by?: Maybe<Scalars['ID']>;
-  updated_by?: Maybe<Scalars['ID']>;
-};
-
 export type ComponentSectionsHero = {
   __typename?: 'ComponentSectionsHero';
   id: Scalars['ID'];
@@ -180,6 +102,83 @@ export type FileInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type GenreInput = {
+  name?: Maybe<Scalars['String']>;
+  uuid?: Maybe<Scalars['String']>;
+  published_at?: Maybe<Scalars['DateTime']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
+export type Genres = {
+  __typename?: 'Genres';
+  id: Scalars['ID'];
+  created_at: Scalars['DateTime'];
+  updated_at: Scalars['DateTime'];
+  name?: Maybe<Scalars['String']>;
+  uuid?: Maybe<Scalars['String']>;
+  published_at?: Maybe<Scalars['DateTime']>;
+};
+
+export type GenresAggregator = {
+  __typename?: 'GenresAggregator';
+  count?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type GenresConnection = {
+  __typename?: 'GenresConnection';
+  values?: Maybe<Array<Maybe<Genres>>>;
+  groupBy?: Maybe<GenresGroupBy>;
+  aggregate?: Maybe<GenresAggregator>;
+};
+
+export type GenresConnectionCreated_At = {
+  __typename?: 'GenresConnectionCreated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<GenresConnection>;
+};
+
+export type GenresConnectionId = {
+  __typename?: 'GenresConnectionId';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<GenresConnection>;
+};
+
+export type GenresConnectionName = {
+  __typename?: 'GenresConnectionName';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<GenresConnection>;
+};
+
+export type GenresConnectionPublished_At = {
+  __typename?: 'GenresConnectionPublished_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<GenresConnection>;
+};
+
+export type GenresConnectionUpdated_At = {
+  __typename?: 'GenresConnectionUpdated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<GenresConnection>;
+};
+
+export type GenresConnectionUuid = {
+  __typename?: 'GenresConnectionUuid';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<GenresConnection>;
+};
+
+export type GenresGroupBy = {
+  __typename?: 'GenresGroupBy';
+  id?: Maybe<Array<Maybe<GenresConnectionId>>>;
+  created_at?: Maybe<Array<Maybe<GenresConnectionCreated_At>>>;
+  updated_at?: Maybe<Array<Maybe<GenresConnectionUpdated_At>>>;
+  name?: Maybe<Array<Maybe<GenresConnectionName>>>;
+  uuid?: Maybe<Array<Maybe<GenresConnectionUuid>>>;
+  published_at?: Maybe<Array<Maybe<GenresConnectionPublished_At>>>;
+};
+
 export type I18NLocale = {
   __typename?: 'I18NLocale';
   id: Scalars['ID'];
@@ -202,7 +201,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | ReturnSignup | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnectionCreated_At | CategoryConnectionUpdated_At | CategoryConnectionName | CategoryConnectionSlug | CreateCategoryPayload | UpdateCategoryPayload | DeleteCategoryPayload | Movies | MoviesConnection | MoviesAggregator | MoviesGroupBy | MoviesConnectionId | MoviesConnectionCreated_At | MoviesConnectionUpdated_At | MoviesConnectionName | MoviesConnectionBody | MoviesConnectionDate | MoviesConnectionUuid | MoviesConnectionFreeServer1 | MoviesConnectionPhoto_Url | MoviesConnectionFreeServer2 | MoviesConnectionVipServer1 | MoviesConnectionVipServer2 | MoviesConnectionPremiumOnly | MoviesConnectionRecommend | MoviesConnectionQuality | MoviesConnectionViews | MoviesConnectionPublished_At | CreateMoviePayload | UpdateMoviePayload | DeleteMoviePayload | TvSeries | TvSeriesConnection | TvSeriesAggregator | TvSeriesGroupBy | TvSeriesConnectionId | TvSeriesConnectionCreated_At | TvSeriesConnectionUpdated_At | TvSeriesConnectionName | TvSeriesConnectionFreeServer1 | TvSeriesConnectionVipServer1 | TvSeriesConnectionFreeServer2 | TvSeriesConnectionVipServer2 | TvSeriesConnectionPublished_At | CreateTvSeryPayload | UpdateTvSeryPayload | DeleteTvSeryPayload | UserData | UserDataConnection | UserDataAggregator | UserDataAggregatorSum | UserDataAggregatorAvg | UserDataAggregatorMin | UserDataAggregatorMax | UserDataGroupBy | UserDataConnectionId | UserDataConnectionCreated_At | UserDataConnectionUpdated_At | UserDataConnectionUuid | UserDataConnectionVerify | UserDataConnectionExpire | UserDataConnectionTokenVersion | UserDataConnectionPublished_At | CreateUserDatumPayload | UpdateUserDatumPayload | DeleteUserDatumPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentSectionsHero | ComponentSharedFilm | ComponentSharedSeo;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | ReturnSignup | Genres | GenresConnection | GenresAggregator | GenresGroupBy | GenresConnectionId | GenresConnectionCreated_At | GenresConnectionUpdated_At | GenresConnectionName | GenresConnectionUuid | GenresConnectionPublished_At | CreateGenrePayload | UpdateGenrePayload | DeleteGenrePayload | Movies | MoviesConnection | MoviesAggregator | MoviesGroupBy | MoviesConnectionId | MoviesConnectionCreated_At | MoviesConnectionUpdated_At | MoviesConnectionName | MoviesConnectionBody | MoviesConnectionDate | MoviesConnectionUuid | MoviesConnectionFreeServer1 | MoviesConnectionPhoto_Url | MoviesConnectionFreeServer2 | MoviesConnectionVipServer1 | MoviesConnectionVipServer2 | MoviesConnectionPremiumOnly | MoviesConnectionRecommend | MoviesConnectionQuality | MoviesConnectionViews | MoviesConnectionPublished_At | CreateMoviePayload | UpdateMoviePayload | DeleteMoviePayload | TvSeries | TvSeriesConnection | TvSeriesAggregator | TvSeriesGroupBy | TvSeriesConnectionId | TvSeriesConnectionCreated_At | TvSeriesConnectionUpdated_At | TvSeriesConnectionName | TvSeriesConnectionFreeServer1 | TvSeriesConnectionVipServer1 | TvSeriesConnectionFreeServer2 | TvSeriesConnectionVipServer2 | TvSeriesConnectionPublished_At | CreateTvSeryPayload | UpdateTvSeryPayload | DeleteTvSeryPayload | UserData | UserDataConnection | UserDataAggregator | UserDataAggregatorSum | UserDataAggregatorAvg | UserDataAggregatorMin | UserDataAggregatorMax | UserDataGroupBy | UserDataConnectionId | UserDataConnectionCreated_At | UserDataConnectionUpdated_At | UserDataConnectionUuid | UserDataConnectionVerify | UserDataConnectionExpire | UserDataConnectionTokenVersion | UserDataConnectionPublished_At | CreateUserDatumPayload | UpdateUserDatumPayload | DeleteUserDatumPayload | WatchHistory | WatchHistoryConnection | WatchHistoryAggregator | WatchHistoryGroupBy | WatchHistoryConnectionId | WatchHistoryConnectionCreated_At | WatchHistoryConnectionUpdated_At | WatchHistoryConnectionUser_Data | WatchHistoryConnectionMovie | WatchHistoryConnectionEpisode | WatchHistoryConnectionPublished_At | CreateWatchHistoryPayload | UpdateWatchHistoryPayload | DeleteWatchHistoryPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentSectionsHero | ComponentSharedFilm | ComponentSharedSeo;
 
 export type MovieInput = {
   name: Scalars['String'];
@@ -210,7 +209,6 @@ export type MovieInput = {
   date?: Maybe<Scalars['DateTime']>;
   uuid?: Maybe<Scalars['String']>;
   freeServer1?: Maybe<Scalars['String']>;
-  genres?: Maybe<Array<Maybe<Scalars['ID']>>>;
   photo_url: Scalars['String'];
   freeServer2?: Maybe<Scalars['String']>;
   vipServer1?: Maybe<Scalars['String']>;
@@ -220,6 +218,7 @@ export type MovieInput = {
   tv_series?: Maybe<Array<Maybe<Scalars['ID']>>>;
   quality: Scalars['String'];
   views?: Maybe<Scalars['Long']>;
+  genres?: Maybe<Array<Maybe<Scalars['ID']>>>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -244,14 +243,16 @@ export type Movies = {
   quality: Scalars['String'];
   views?: Maybe<Scalars['Long']>;
   published_at?: Maybe<Scalars['DateTime']>;
-  genres?: Maybe<Array<Maybe<Category>>>;
   tv_series?: Maybe<Array<Maybe<TvSeries>>>;
+  genres?: Maybe<Array<Maybe<Genres>>>;
   server1: Scalars['String'];
   server2: Scalars['String'];
+  tvServer1?: Maybe<Scalars['JSON']>;
+  tvServer2?: Maybe<Scalars['JSON']>;
 };
 
 
-export type MoviesGenresArgs = {
+export type MoviesTv_SeriesArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -259,7 +260,7 @@ export type MoviesGenresArgs = {
 };
 
 
-export type MoviesTv_SeriesArgs = {
+export type MoviesGenresArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -404,9 +405,9 @@ export type MoviesGroupBy = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createCategory?: Maybe<CreateCategoryPayload>;
-  updateCategory?: Maybe<UpdateCategoryPayload>;
-  deleteCategory?: Maybe<DeleteCategoryPayload>;
+  createGenre?: Maybe<CreateGenrePayload>;
+  updateGenre?: Maybe<UpdateGenrePayload>;
+  deleteGenre?: Maybe<DeleteGenrePayload>;
   createMovie?: Maybe<CreateMoviePayload>;
   updateMovie?: Maybe<UpdateMoviePayload>;
   deleteMovie?: Maybe<DeleteMoviePayload>;
@@ -416,6 +417,9 @@ export type Mutation = {
   createUserDatum?: Maybe<CreateUserDatumPayload>;
   updateUserDatum?: Maybe<UpdateUserDatumPayload>;
   deleteUserDatum?: Maybe<DeleteUserDatumPayload>;
+  createWatchHistory?: Maybe<CreateWatchHistoryPayload>;
+  updateWatchHistory?: Maybe<UpdateWatchHistoryPayload>;
+  deleteWatchHistory?: Maybe<DeleteWatchHistoryPayload>;
   /** Delete one file */
   deleteFile?: Maybe<DeleteFilePayload>;
   /** Create a new role */
@@ -442,18 +446,18 @@ export type Mutation = {
 };
 
 
-export type MutationCreateCategoryArgs = {
-  input?: Maybe<CreateCategoryInput>;
+export type MutationCreateGenreArgs = {
+  input?: Maybe<CreateGenreInput>;
 };
 
 
-export type MutationUpdateCategoryArgs = {
-  input?: Maybe<UpdateCategoryInput>;
+export type MutationUpdateGenreArgs = {
+  input?: Maybe<UpdateGenreInput>;
 };
 
 
-export type MutationDeleteCategoryArgs = {
-  input?: Maybe<DeleteCategoryInput>;
+export type MutationDeleteGenreArgs = {
+  input?: Maybe<DeleteGenreInput>;
 };
 
 
@@ -499,6 +503,21 @@ export type MutationUpdateUserDatumArgs = {
 
 export type MutationDeleteUserDatumArgs = {
   input?: Maybe<DeleteUserDatumInput>;
+};
+
+
+export type MutationCreateWatchHistoryArgs = {
+  input?: Maybe<CreateWatchHistoryInput>;
+};
+
+
+export type MutationUpdateWatchHistoryArgs = {
+  input?: Maybe<UpdateWatchHistoryInput>;
+};
+
+
+export type MutationDeleteWatchHistoryArgs = {
+  input?: Maybe<DeleteWatchHistoryInput>;
 };
 
 
@@ -600,9 +619,9 @@ export enum PublicationState {
 
 export type Query = {
   __typename?: 'Query';
-  category?: Maybe<Category>;
-  categories?: Maybe<Array<Maybe<Category>>>;
-  categoriesConnection?: Maybe<CategoryConnection>;
+  genre?: Maybe<Genres>;
+  genres?: Maybe<Array<Maybe<Genres>>>;
+  genresConnection?: Maybe<GenresConnection>;
   movie?: Maybe<Movies>;
   movies?: Maybe<Array<Maybe<Movies>>>;
   moviesConnection?: Maybe<MoviesConnection>;
@@ -612,6 +631,9 @@ export type Query = {
   userDatum?: Maybe<UserData>;
   userData?: Maybe<Array<Maybe<UserData>>>;
   userDataConnection?: Maybe<UserDataConnection>;
+  watchHistory?: Maybe<WatchHistory>;
+  watchHistories?: Maybe<Array<Maybe<WatchHistory>>>;
+  watchHistoriesConnection?: Maybe<WatchHistoryConnection>;
   files?: Maybe<Array<Maybe<UploadFile>>>;
   filesConnection?: Maybe<UploadFileConnection>;
   role?: Maybe<UsersPermissionsRole>;
@@ -627,13 +649,13 @@ export type Query = {
 };
 
 
-export type QueryCategoryArgs = {
+export type QueryGenreArgs = {
   id: Scalars['ID'];
   publicationState?: Maybe<PublicationState>;
 };
 
 
-export type QueryCategoriesArgs = {
+export type QueryGenresArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -642,7 +664,7 @@ export type QueryCategoriesArgs = {
 };
 
 
-export type QueryCategoriesConnectionArgs = {
+export type QueryGenresConnectionArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -712,6 +734,29 @@ export type QueryUserDataArgs = {
 
 
 export type QueryUserDataConnectionArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryWatchHistoryArgs = {
+  id: Scalars['ID'];
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryWatchHistoriesArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryWatchHistoriesConnectionArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -814,8 +859,6 @@ export type TvSeries = {
   vipServer2?: Maybe<Scalars['JSON']>;
   published_at?: Maybe<Scalars['DateTime']>;
   movies?: Maybe<Array<Maybe<Movies>>>;
-  server1?: Maybe<Scalars['JSON']>;
-  server2?: Maybe<Scalars['JSON']>;
 };
 
 
@@ -1127,6 +1170,15 @@ export type UserData = {
   expire?: Maybe<Scalars['DateTime']>;
   tokenVersion?: Maybe<Scalars['Int']>;
   published_at?: Maybe<Scalars['DateTime']>;
+  watch_histories?: Maybe<Array<Maybe<WatchHistory>>>;
+};
+
+
+export type UserDataWatch_HistoriesArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
 };
 
 export type UserDataAggregator = {
@@ -1231,6 +1283,7 @@ export type UserDatumInput = {
   verify?: Maybe<Scalars['Boolean']>;
   expire?: Maybe<Scalars['DateTime']>;
   tokenVersion?: Maybe<Scalars['Int']>;
+  watch_histories?: Maybe<Array<Maybe<Scalars['ID']>>>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1466,13 +1519,109 @@ export type UsersPermissionsUserGroupBy = {
   role?: Maybe<Array<Maybe<UsersPermissionsUserConnectionRole>>>;
 };
 
-export type CreateCategoryInput = {
-  data?: Maybe<CategoryInput>;
+export type WatchHistory = {
+  __typename?: 'WatchHistory';
+  id: Scalars['ID'];
+  created_at: Scalars['DateTime'];
+  updated_at: Scalars['DateTime'];
+  user_data?: Maybe<UserData>;
+  movie?: Maybe<Scalars['String']>;
+  episode?: Maybe<Scalars['String']>;
+  published_at?: Maybe<Scalars['DateTime']>;
+  movies?: Maybe<Array<Maybe<Movies>>>;
 };
 
-export type CreateCategoryPayload = {
-  __typename?: 'createCategoryPayload';
-  category?: Maybe<Category>;
+
+export type WatchHistoryMoviesArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+export type WatchHistoryAggregator = {
+  __typename?: 'WatchHistoryAggregator';
+  count?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type WatchHistoryConnection = {
+  __typename?: 'WatchHistoryConnection';
+  values?: Maybe<Array<Maybe<WatchHistory>>>;
+  groupBy?: Maybe<WatchHistoryGroupBy>;
+  aggregate?: Maybe<WatchHistoryAggregator>;
+};
+
+export type WatchHistoryConnectionCreated_At = {
+  __typename?: 'WatchHistoryConnectionCreated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<WatchHistoryConnection>;
+};
+
+export type WatchHistoryConnectionEpisode = {
+  __typename?: 'WatchHistoryConnectionEpisode';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<WatchHistoryConnection>;
+};
+
+export type WatchHistoryConnectionId = {
+  __typename?: 'WatchHistoryConnectionId';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<WatchHistoryConnection>;
+};
+
+export type WatchHistoryConnectionMovie = {
+  __typename?: 'WatchHistoryConnectionMovie';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<WatchHistoryConnection>;
+};
+
+export type WatchHistoryConnectionPublished_At = {
+  __typename?: 'WatchHistoryConnectionPublished_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<WatchHistoryConnection>;
+};
+
+export type WatchHistoryConnectionUpdated_At = {
+  __typename?: 'WatchHistoryConnectionUpdated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<WatchHistoryConnection>;
+};
+
+export type WatchHistoryConnectionUser_Data = {
+  __typename?: 'WatchHistoryConnectionUser_data';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<WatchHistoryConnection>;
+};
+
+export type WatchHistoryGroupBy = {
+  __typename?: 'WatchHistoryGroupBy';
+  id?: Maybe<Array<Maybe<WatchHistoryConnectionId>>>;
+  created_at?: Maybe<Array<Maybe<WatchHistoryConnectionCreated_At>>>;
+  updated_at?: Maybe<Array<Maybe<WatchHistoryConnectionUpdated_At>>>;
+  user_data?: Maybe<Array<Maybe<WatchHistoryConnectionUser_Data>>>;
+  movie?: Maybe<Array<Maybe<WatchHistoryConnectionMovie>>>;
+  episode?: Maybe<Array<Maybe<WatchHistoryConnectionEpisode>>>;
+  published_at?: Maybe<Array<Maybe<WatchHistoryConnectionPublished_At>>>;
+};
+
+export type WatchHistoryInput = {
+  user_data?: Maybe<Scalars['ID']>;
+  movie?: Maybe<Scalars['String']>;
+  episode?: Maybe<Scalars['String']>;
+  movies?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  published_at?: Maybe<Scalars['DateTime']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
+export type CreateGenreInput = {
+  data?: Maybe<GenreInput>;
+};
+
+export type CreateGenrePayload = {
+  __typename?: 'createGenrePayload';
+  genre?: Maybe<Genres>;
 };
 
 export type CreateMovieInput = {
@@ -1520,13 +1669,13 @@ export type CreateUserPayload = {
   user?: Maybe<UsersPermissionsUser>;
 };
 
-export type DeleteCategoryInput = {
-  where?: Maybe<InputId>;
+export type CreateWatchHistoryInput = {
+  data?: Maybe<WatchHistoryInput>;
 };
 
-export type DeleteCategoryPayload = {
-  __typename?: 'deleteCategoryPayload';
-  category?: Maybe<Category>;
+export type CreateWatchHistoryPayload = {
+  __typename?: 'createWatchHistoryPayload';
+  watchHistory?: Maybe<WatchHistory>;
 };
 
 export type DeleteFileInput = {
@@ -1536,6 +1685,15 @@ export type DeleteFileInput = {
 export type DeleteFilePayload = {
   __typename?: 'deleteFilePayload';
   file?: Maybe<UploadFile>;
+};
+
+export type DeleteGenreInput = {
+  where?: Maybe<InputId>;
+};
+
+export type DeleteGenrePayload = {
+  __typename?: 'deleteGenrePayload';
+  genre?: Maybe<Genres>;
 };
 
 export type DeleteMovieInput = {
@@ -1583,12 +1741,13 @@ export type DeleteUserPayload = {
   user?: Maybe<UsersPermissionsUser>;
 };
 
-export type EditCategoryInput = {
-  name?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
-  movies?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  created_by?: Maybe<Scalars['ID']>;
-  updated_by?: Maybe<Scalars['ID']>;
+export type DeleteWatchHistoryInput = {
+  where?: Maybe<InputId>;
+};
+
+export type DeleteWatchHistoryPayload = {
+  __typename?: 'deleteWatchHistoryPayload';
+  watchHistory?: Maybe<WatchHistory>;
 };
 
 export type EditComponentSectionsHeroInput = {
@@ -1629,6 +1788,14 @@ export type EditFileInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type EditGenreInput = {
+  name?: Maybe<Scalars['String']>;
+  uuid?: Maybe<Scalars['String']>;
+  published_at?: Maybe<Scalars['DateTime']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
 export type EditLocaleInput = {
   name?: Maybe<Scalars['String']>;
   code?: Maybe<Scalars['String']>;
@@ -1642,7 +1809,6 @@ export type EditMovieInput = {
   date?: Maybe<Scalars['DateTime']>;
   uuid?: Maybe<Scalars['String']>;
   freeServer1?: Maybe<Scalars['String']>;
-  genres?: Maybe<Array<Maybe<Scalars['ID']>>>;
   photo_url?: Maybe<Scalars['String']>;
   freeServer2?: Maybe<Scalars['String']>;
   vipServer1?: Maybe<Scalars['String']>;
@@ -1652,6 +1818,7 @@ export type EditMovieInput = {
   tv_series?: Maybe<Array<Maybe<Scalars['ID']>>>;
   quality?: Maybe<Scalars['String']>;
   views?: Maybe<Scalars['Long']>;
+  genres?: Maybe<Array<Maybe<Scalars['ID']>>>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1684,6 +1851,7 @@ export type EditUserDatumInput = {
   verify?: Maybe<Scalars['Boolean']>;
   expire?: Maybe<Scalars['DateTime']>;
   tokenVersion?: Maybe<Scalars['Int']>;
+  watch_histories?: Maybe<Array<Maybe<Scalars['ID']>>>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1703,6 +1871,16 @@ export type EditUserInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type EditWatchHistoryInput = {
+  user_data?: Maybe<Scalars['ID']>;
+  movie?: Maybe<Scalars['String']>;
+  episode?: Maybe<Scalars['String']>;
+  movies?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  published_at?: Maybe<Scalars['DateTime']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
 export type ReturnSignup = {
   __typename?: 'returnSignup';
   ok?: Maybe<Scalars['Boolean']>;
@@ -1710,14 +1888,14 @@ export type ReturnSignup = {
   accessToken?: Maybe<Scalars['String']>;
 };
 
-export type UpdateCategoryInput = {
+export type UpdateGenreInput = {
   where?: Maybe<InputId>;
-  data?: Maybe<EditCategoryInput>;
+  data?: Maybe<EditGenreInput>;
 };
 
-export type UpdateCategoryPayload = {
-  __typename?: 'updateCategoryPayload';
-  category?: Maybe<Category>;
+export type UpdateGenrePayload = {
+  __typename?: 'updateGenrePayload';
+  genre?: Maybe<Genres>;
 };
 
 export type UpdateMovieInput = {
@@ -1768,6 +1946,16 @@ export type UpdateUserInput = {
 export type UpdateUserPayload = {
   __typename?: 'updateUserPayload';
   user?: Maybe<UsersPermissionsUser>;
+};
+
+export type UpdateWatchHistoryInput = {
+  where?: Maybe<InputId>;
+  data?: Maybe<EditWatchHistoryInput>;
+};
+
+export type UpdateWatchHistoryPayload = {
+  __typename?: 'updateWatchHistoryPayload';
+  watchHistory?: Maybe<WatchHistory>;
 };
 
 export type GetAllMoviesQueryVariables = Exact<{ [key: string]: never; }>;

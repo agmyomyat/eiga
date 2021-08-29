@@ -3,7 +3,7 @@ export const styles = theme => ({
       position: 'relative',
       width: '100%',
 
-      paddingBottom: '56.25%',
+  paddingBottom: '56.25%',
       // paddingTop: 25,
       [theme.breakpoints.up('xl')]: {
          maxWidth: 1920,

@@ -6,9 +6,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '../styles/HomeStyles';
 import Container from '@material-ui/core/Container';
 import Movies from '../components/movies/Movies';
+import {Movies as typeMovies} from '@graphgen'
 
 const useStyles = makeStyles(styles);
 const apolloClient = initializeApollo();
+
 
 function Home() {
    const classes = useStyles();
@@ -19,7 +21,7 @@ function Home() {
 
    return (
       <Container>
-         <Movies movies={data.movies} />
+         <Movies movies={data.movies as typeMovies[]} />
       </Container>
    );
 }

@@ -6,7 +6,6 @@ import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(styles as any);
-
 interface IframeProp {
    data: GetMovieQuery;
 }
@@ -23,7 +22,7 @@ const Iframe: React.FC<IframeProp> = ({ data }) => {
          <iframe
             className={classes.iframe}
             onLoad={() => setLoading(false)}
-            src={data.getMovie.server1}
+            src={data.getMovie.server2}
             scrolling="no"
             allowFullScreen
          ></iframe>

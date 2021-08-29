@@ -7,9 +7,10 @@ import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles(styles);
 
-const RefinementList = ({ items, refine }: MenuProvided) => {
+const RefinementList = ({ items, refine,currentRefinement }: MenuProvided) => {
    const theme = useTheme();
    const classes = useStyles();
+   console.log(currentRefinement)
 
    return (
       <Grid container spacing={1} className={classes.grid}>

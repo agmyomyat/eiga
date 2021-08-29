@@ -5,6 +5,7 @@ import { initializeApollo } from '../apollo/index';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/HomeStyles';
 import Container from '@material-ui/core/Container';
+
 import Movies from '@components/movies/Movies';
 import { Movies as typeMovies } from '@graphgen';
 

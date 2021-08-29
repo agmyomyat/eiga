@@ -7,7 +7,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Box from '@material-ui/core/Box';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 const SearchBox = ({ refine }: SearchBoxProvided) => {
    const classes = useStyles();
@@ -20,7 +20,7 @@ const SearchBox = ({ refine }: SearchBoxProvided) => {
       return () => clearTimeout(timeout);
    }, [keywords, refine]);
 
-   const handleSubmit = e => {
+   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       refine(keywords);
    };

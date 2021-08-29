@@ -1,17 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '../../styles/MoviesGrid';
+import { styles } from '@styles/MoviesGrid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Movie from './Movie';
 import { Movies as typeMovies } from '@graphgen';
-interface IMovies{
-   movies:Partial<typeMovies[]>
+interface IMovies {
+   movies: Partial<typeMovies[]>;
 }
 const useStyles = makeStyles(styles as any);
 
-const Movies = ({ movies }:IMovies) => {
+const Movies = ({ movies }: IMovies) => {
    const classes = useStyles();
 
    return (

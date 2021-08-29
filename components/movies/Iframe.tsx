@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '../../styles/IframeStyles';
+import { styles } from '@styles/IframeStyles';
+import { GetMovieQuery } from '@graphgen';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(styles as any);
 
-const Iframe: React.FC<any> = ({ data }) => {
+interface IframeProp {
+   data: GetMovieQuery;
+}
+
+const Iframe: React.FC<IframeProp> = ({ data }) => {
    const [loading, setLoading] = useState<boolean>(true);
    const classes = useStyles();
 

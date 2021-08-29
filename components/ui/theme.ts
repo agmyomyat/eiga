@@ -1,18 +1,21 @@
 import { createTheme } from '@material-ui/core/styles';
-import { pink } from '@material-ui/core/colors';
+import { blue } from '@material-ui/core/colors';
 
 // Create a theme instance.
 const theme = createTheme({
    palette: {
       type: 'dark',
+      text: {
+         secondary: '#A3A3A3',
+      },
       primary: {
-         main: '#1a1a1c',
+         main: '#121212',
       },
       secondary: {
-         main: pink[400],
+         main: '#1bccb1',
       },
       background: {
-         default: '#121212',
+         default: '#181818',
          paper: '#303030',
       },
    },

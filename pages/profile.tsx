@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useGetUserLazyQuery } from '../graphgen/graphql';
+import { useGetUserLazyQuery } from '@graphgen';
 import { useAuth } from '../contexts/AuthContext';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { auth, uiConfig } from '../lib/firebase';
+import { auth, uiConfig } from '@lib/firebase';
 import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '../styles/ProfileStyles';
+import { styles } from '@styles/ProfileStyles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export default function Profile() {
    const { currentUser, authLoading, logOut } = useAuth();

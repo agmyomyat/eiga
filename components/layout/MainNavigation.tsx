@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { makeStyles } from '@material-ui/core/styles';
-import { useRouter } from 'next/router';
+import { useRouter, NextRouter } from 'next/router';
 import { styles } from '../../styles/MainNavigationStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -25,16 +25,16 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
 const useStyles = makeStyles(styles);
 
-const MainNavigation = () => {
+const MainNavigation: React.FC = () => {
    const classes = useStyles();
-   const [open, setOpen] = useState(false);
-   const [anchorEl, setAnchorEl] = React.useState(null);
+   const [open, setOpen] = useState<boolean>(false);
+   const [anchorEl, setAnchorEl] = useState<HTMLElement>(null);
    const openMenu = Boolean(anchorEl);
 
    const { currentUser, logOut } = useAuth();
-   const { push } = useRouter();
+   const { push }: NextRouter = useRouter();
 
-   const handleMenu = event => {
+   const handleMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
       // if (authLoading) return;
       // if (!currentUser) {
       //    return push('/profile');
@@ -72,7 +72,7 @@ const MainNavigation = () => {
    return (
       <div className={classes.root}>
          <AppBar className={classes.appbar} elevation={0} position="absolute">
-            <Toolbar component="nav" className={classes.toolbar}>
+            <Toolbar component="nav">
                {/* Menu Icon */}
                <IconButton
                   edge="start"

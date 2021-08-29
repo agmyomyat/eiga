@@ -5,7 +5,7 @@ import { styles } from '../../styles/RefinementListStyles';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 const RefinementList = ({ items, refine }: MenuProvided) => {
    const theme = useTheme();

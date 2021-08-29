@@ -2,9 +2,9 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core';
-import { styles } from '../styles/PricingStyles';
+import { styles } from '@styles/PricingStyles';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export default function Pricing() {
    const classes = useStyles();

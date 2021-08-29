@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
-import { useGetMovieLazyQuery } from '../../graphgen/graphql';
+import { useGetMovieLazyQuery } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '../../styles/MoviePage';
-import Iframe from '../../components/movies/Iframe';
+import { styles } from '@styles/MoviePage';
+import Iframe from '@components/movies/Iframe';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export default function MoviePage() {
    const [getMovie, { data }] = useGetMovieLazyQuery({

@@ -4,7 +4,7 @@ import CustomHits from './Hits';
 import CustomRefinementList from './RefinementList';
 import CustomSearchBox from './SearchBox';
 import Container from '@material-ui/core/Container';
-import { transfromLabels } from '../../helpers/tranformGenereLabels';
+import { transfromLabels } from '@helpers/tranformGenereLabels';
 // import './meili.module.scss' //should i delete later?
 
 const searchClient: InstantMeiliSearchInstance = instantMeiliSearch(
@@ -17,7 +17,7 @@ export const Search: React.FC = () => (
       <Container>
          <Configure hitsPerPage={4} />
          <CustomSearchBox />
-         <CustomRefinementList attribute="genres" transformItems={transfromLabels} operator="and" />
+         <CustomRefinementList attribute="genres" transformItems={transfromLabels} />
          <CustomHits />
       </Container>
    </InstantSearch>

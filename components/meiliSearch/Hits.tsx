@@ -1,15 +1,15 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef, MutableRefObject } from 'react';
 import { connectInfiniteHits } from 'react-instantsearch-dom';
 import { InfiniteHitsProvided } from 'react-instantsearch-core';
-import Movies from '../movies/Movies';
+import Movies from '@components/movies/Movies';
 
-function Hits({ hits, hasMore, refineNext }:InfiniteHitsProvided ) {
-   const sentinel = useRef(null);
+function Hits({ hits, hasMore, refineNext }: InfiniteHitsProvided) {
+   const sentinel = useRef<HTMLDivElement | null>(null);
    // console.log('sentinel', sentinel);
 
    useEffect(() => {
-      const onSentinelIntersection = entries => {
-         entries.forEach(entry => {
+      const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
+         entries.forEach((entry: IntersectionObserverEntry) => {
             if (entry.isIntersecting && hasMore) {
                console.log('refining');
                refineNext();

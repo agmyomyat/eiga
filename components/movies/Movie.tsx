@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 //
 import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '../../styles/MovieCard';
+import { styles } from '@styles/MovieCard';
 import Card from '@material-ui/core/Card';
 import Image from 'next/image';
 import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Box from '@material-ui/core/Box';
 import { NextRouter, useRouter } from 'next/router';
-import { Movies } from '../../graphgen/graphql';
+import { Movies } from '@graphgen';
 
 const useStyles = makeStyles(styles as any);
 
-const Movie = ({ uuid, name, photo_url, date, quality }:Partial<Movies>) => {
+const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
    const classes = useStyles();
-   const { push }:NextRouter = useRouter();
+   const { push }: NextRouter = useRouter();
    // will delete later
    const [show, setShow] = useState<boolean>(false);
    useEffect(() => {

@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
-//
+import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/MovieCard';
+import { Movies } from '@graphgen';
 import Card from '@material-ui/core/Card';
 import Image from 'next/image';
 import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Box from '@material-ui/core/Box';
-import { NextRouter, useRouter } from 'next/router';
-import { Movies } from '@graphgen';
 
 const useStyles = makeStyles(styles as any);
 

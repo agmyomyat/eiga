@@ -15,6 +15,6 @@ export const transfromLabels = (items: RefinementItems) => {
       ...item,
       label: item.label[0].toUpperCase() + item.label.slice(1),
    }));
-   console.log(newItems);
+
    return orderBy(newItems, 'label', 'asc');
 };

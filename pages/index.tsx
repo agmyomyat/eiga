@@ -1,11 +1,10 @@
 // import Carousel from '../components/carousel/Carousel';
-import { useGetAllMoviesQuery } from '../graphgen/graphql';
+import { useGetAllMoviesQuery } from '@graphgen';
 import { gql } from '@apollo/client';
-import { initializeApollo } from '../apollo/index';
+import { initializeApollo } from '@apollo';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/HomeStyles';
 import Container from '@material-ui/core/Container';
-
 import Movies from '@components/movies/Movies';
 import { Movies as typeMovies } from '@graphgen';
 

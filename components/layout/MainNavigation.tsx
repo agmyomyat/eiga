@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '@contexts';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRouter, NextRouter } from 'next/router';
-import { styles } from '../../styles/MainNavigationStyles';
+import { styles } from '@styles/MainNavigationStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';

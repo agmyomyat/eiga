@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { initializeApollo } from '../apollo';
-import { setAccessToken } from '../helpers/accessToken';
+import { initializeApollo } from '@apollo';
+import { setAccessToken } from '@helpers/accessToken';
 
 const CREATE_USER = gql`
    mutation signUp($uuid: String!) {
@@ -15,12 +15,12 @@ const CREATE_USER = gql`
 `;
 async function createUser(authResult) {
    const { data, error } = await client.mutate({
-            mutation: CREATE_USER,
-            variables: { uuid: authResult.user.email },
-         });
-         console.log('firebase callback', data);
-         setAccessToken(data.signupClient.accessToken);
-         console.log('error', error); 
+      mutation: CREATE_USER,
+      variables: { uuid: authResult.user.email },
+   });
+   console.log('firebase callback', data);
+   setAccessToken(data.signupClient.accessToken);
+   console.log('error', error);
 }
 
 const client = initializeApollo();
@@ -40,7 +40,7 @@ if (!firebase.apps.length) {
 
 export const auth = firebase.auth();
 
-export const uiConfig:firebaseui.auth.Config = {
+export const uiConfig: firebaseui.auth.Config = {
    signInFlow: 'popup',
    signInOptions: [
       {
@@ -56,9 +56,9 @@ export const uiConfig:firebaseui.auth.Config = {
    callbacks: {
       // Avoid redirects after sign-in.
       signInSuccessWithAuthResult: authResult => {
-         console.log("authresult",authResult)
+         console.log('authresult', authResult);
          createUser(authResult);
-         return false
+         return false;
       },
 
       // Process result. This will not trigger on merge conflicts.

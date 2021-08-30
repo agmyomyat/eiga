@@ -14,6 +14,7 @@ export const styles = (theme: Theme) =>
          paddingBottom: '150%',
       },
       media: {
+         position: 'relative',
          opacity: '1',
          transition: '0.3s',
          '&:hover': {

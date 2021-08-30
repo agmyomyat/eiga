@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { connectSearchBox } from 'react-instantsearch-dom';
 import { SearchBoxProvided } from 'react-instantsearch-core';
 import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '../../styles/SearchMoviesStyles';
+import { styles } from '@styles/SearchMoviesStyles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Box from '@material-ui/core/Box';

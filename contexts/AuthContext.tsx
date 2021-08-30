@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext, useContext, Context } from 'react';
 import { setAccessToken } from '@helpers/accessToken';
-import { auth } from '@lib/firebase';
+import { auth } from '@lib';
 import { default as firebaseUser } from 'firebase';
 interface IauthContext {
    currentUser: firebaseUser.User | null;

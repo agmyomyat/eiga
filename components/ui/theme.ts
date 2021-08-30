@@ -1,5 +1,5 @@
 import { createTheme } from '@material-ui/core/styles';
-import { blue } from '@material-ui/core/colors';
+import { grey, cyan } from '@material-ui/core/colors';
 
 // Create a theme instance.
 const theme = createTheme({
@@ -12,11 +12,14 @@ const theme = createTheme({
          main: '#121212',
       },
       secondary: {
-         main: '#1bccb1',
+         main: '#02a7a7',
+      },
+      grey: {
+         [700]: grey.A400,
       },
       background: {
          default: '#181818',
-         paper: '#303030',
+         paper: grey.A400,
       },
    },
 });

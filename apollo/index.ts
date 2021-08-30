@@ -3,12 +3,12 @@ import { ApolloClient, createHttpLink, InMemoryCache, from, ApolloLink } from '@
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import { onError } from '@apollo/client/link/error';
 import jwt_decode from 'jwt-decode';
-import { getAccessToken, setAccessToken } from '../helpers/accessToken';
+import { getAccessToken, setAccessToken } from '@helpers/accessToken';
 
 let apolloClient;
-async function logOut(){
-   const {auth} = (await import('../lib/firebase'))
-   return auth 
+async function logOut() {
+   const { auth } = await import('../lib/firebase');
+   return auth;
 }
 const httpLink = createHttpLink({
    uri: 'http://localhost:1337/graphql',
@@ -22,18 +22,18 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
    if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
-const tokenRefreshLink= new TokenRefreshLink({
+const tokenRefreshLink = new TokenRefreshLink({
    accessTokenField: 'access',
-   isTokenValidOrUndefined: ()=> {
+   isTokenValidOrUndefined: () => {
       const token = getAccessToken();
 
       if (!token) {
-         logOut().then((auth)=>auth.signOut())
+         logOut().then(auth => auth.signOut());
          return true;
       }
       try {
-         const { exp }:any = jwt_decode(<string|null>token );
-         console.log("expire",exp)
+         const { exp }: any = jwt_decode(<string | null>token);
+         console.log('expire', exp);
 
          if (Date.now() >= exp * 1000) {
             return false;
@@ -56,7 +56,7 @@ const tokenRefreshLink= new TokenRefreshLink({
       setAccessToken(accessToken);
    },
    handleError: err => {
-      logOut().then((auth)=>auth.signOut())
+      logOut().then(auth => auth.signOut());
       console.warn('Your refresh token is invalid. Try to relogin');
       console.error(err);
    },
@@ -68,9 +68,8 @@ graphql name change,
 they should be changed here too.
 */
 const IgnoreTokenRefresh = ApolloLink.split(
-   ({operationName}) => operationName !== 'signUp' 
-   && operationName !== 'getUser',
-   tokenRefreshLink as any,
+   ({ operationName }) => operationName !== 'signUp' && operationName !== 'getUser',
+   tokenRefreshLink as any
 );
 
 const authLink = new ApolloLink((operation, forward) => {
@@ -82,13 +81,13 @@ const authLink = new ApolloLink((operation, forward) => {
          auth: token ? `Bearer ${token}` : '', // however you get your token
       },
    }));
-   return forward(operation)
+   return forward(operation);
 });
 
 function createApolloClient() {
    return new ApolloClient({
       // ssrMode: typeof window === 'undefined',
-      link: from([IgnoreTokenRefresh,authLink,errorLink,httpLink]),
+      link: from([IgnoreTokenRefresh, authLink, errorLink, httpLink]),
       cache: new InMemoryCache(),
    });
 }
@@ -112,7 +111,7 @@ export function initializeApollo(initialState = null) {
    return _apolloClient;
 }
 
-export function useApollo<T>(initialState:T) {
+export function useApollo<T>(initialState: T) {
    const store = useMemo(() => initializeApollo(initialState), [initialState]);
    return store;
 }

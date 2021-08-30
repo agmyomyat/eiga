@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useRef, MutableRefObject } from 'react';
+import { useEffect, useRef } from 'react';
 import { connectInfiniteHits } from 'react-instantsearch-dom';
 import { InfiniteHitsProvided } from 'react-instantsearch-core';
 import Movies from '@components/movies/Movies';

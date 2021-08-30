@@ -2,6 +2,9 @@ import { Theme, createStyles } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) =>
    createStyles({
+      root: {
+         backgroundColor: theme.palette.background.paper,
+      },
       grid: {
          [theme.breakpoints.between('xs', 'sm')]: {
             flexWrap: 'nowrap',

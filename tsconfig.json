@@ -6,9 +6,11 @@
       "paths": {
          "@graphgen": ["graphgen/graphql"],
          "@components/*": ["components/*"],
+         "@styles/*": ["styles/*"],
+         "@apollo": ["apollo/index"],
          "@helpers/*": ["helpers/*"],
-         "@lib/*": ["lib/*"],
-         "@styles/*": ["styles/*"]
+         "@lib": ["lib/firebase"],
+         "@contexts": ["contexts/AuthContext"]
       },
       "allowJs": true,
       "skipLibCheck": true,

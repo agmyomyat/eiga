@@ -10,13 +10,13 @@ import { LocalConvenienceStoreOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
-const RefinementList = ({ items, refine, currentRefinement }: MenuProvided) => {
+const RefinementList = ({ items, refine }: MenuProvided) => {
    const classes = useStyles();
 
    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
    const open = Boolean(anchorEl);
 
-   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+   const handleOpen = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
       setAnchorEl(event.currentTarget);
    };
 
@@ -24,71 +24,77 @@ const RefinementList = ({ items, refine, currentRefinement }: MenuProvided) => {
       setAnchorEl(null);
    };
 
-   const handleRefine = value => {
+   const handleRefine = (value: string) => {
       refine(value);
       setAnchorEl(null);
    };
 
-   console.log('currentRefinement', currentRefinement);
+   const MobileFilter = (
+      <Hidden smUp>
+         <Grid container spacing={1} className={classes.mobileGrid}>
+            {items.map(item => (
+               <Grid item key={item.label}>
+                  <Chip
+                     color={`${item.isRefined ? 'secondary' : 'default'}`}
+                     label={`${item.label}`}
+                     onClick={() => refine(item.value)}
+                  />
+               </Grid>
+            ))}
+         </Grid>
+      </Hidden>
+   );
+
+   const DesktopFilter = (
+      <Hidden xsDown>
+         <Button
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            variant="contained"
+            color="secondary"
+            size="small"
+            className={classes.button}
+            startIcon={<FilterListIcon />}
+            onClick={handleOpen}
+            disableElevation
+         >
+            Filter
+         </Button>
+         <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={open}
+            onClose={handleClose}
+            classes={{
+               list: classes.filterMenu,
+            }}
+            anchorOrigin={{
+               vertical: 'top',
+               horizontal: 'right',
+            }}
+            transformOrigin={{
+               vertical: 'top',
+               horizontal: 'left',
+            }}
+         >
+            {items.map(item => (
+               <MenuItem
+                  key={item.label}
+                  onClick={() => handleRefine(item.value)}
+                  className={classes.menuItem}
+               >
+                  {item.label}
+               </MenuItem>
+            ))}
+         </Menu>
+      </Hidden>
+   );
 
    return (
       <>
-         <Hidden smUp>
-            <Grid container spacing={1} className={classes.mobileGrid}>
-               {items.map(item => (
-                  <Grid item key={item.label}>
-                     <Chip
-                        color={`${item.isRefined ? 'secondary' : 'default'}`}
-                        label={`${item.label}`}
-                        onClick={() => refine(item.value)}
-                     />
-                  </Grid>
-               ))}
-            </Grid>
-         </Hidden>
-         <Hidden xsDown>
-            <Button
-               aria-controls="simple-menu"
-               aria-haspopup="true"
-               variant="contained"
-               color="secondary"
-               size="small"
-               className={classes.button}
-               startIcon={<FilterListIcon />}
-               onClick={handleClick}
-               disableElevation
-            >
-               Filter
-            </Button>
-            <Menu
-               id="simple-menu"
-               anchorEl={anchorEl}
-               keepMounted
-               open={open}
-               onClose={handleClose}
-               classes={{
-                  list: classes.filterMenu,
-               }}
-               anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-               }}
-               transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-               }}
-            >
-               {items.map(item => (
-                  <MenuItem
-                     key={item.label}
-                     onClick={() => handleRefine(item.value)}
-                     className={classes.menuItem}
-                  >
-                     {item.label}
-                  </MenuItem>
-               ))}
-            </Menu>
-         </Hidden>
+         {MobileFilter}
+         {DesktopFilter}
       </>
    );
 };

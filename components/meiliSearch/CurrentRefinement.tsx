@@ -1,12 +1,12 @@
 import { connectCurrentRefinements } from 'react-instantsearch-dom';
 import { CurrentRefinementsProvided } from 'react-instantsearch-core';
-import { Chip } from '@material-ui/core';
+import { Chip, Hidden } from '@material-ui/core';
 
 const CurrentRefinements = ({ items, refine }: CurrentRefinementsProvided) => {
    console.log('items', items);
 
    return (
-      <>
+      <Hidden xsDown>
          {items.map(item => (
             <Chip
                key={item.label}
@@ -16,7 +16,7 @@ const CurrentRefinements = ({ items, refine }: CurrentRefinementsProvided) => {
                onDelete={() => refine(item.value)}
             />
          ))}
-      </>
+      </Hidden>
    );
 };
 

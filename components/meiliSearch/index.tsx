@@ -7,8 +7,6 @@ import CustomSearchBox from './SearchBox';
 import Container from '@material-ui/core/Container';
 import { transformLabels, transformLabel } from '@helpers/tranformGenereLabels';
 
-// import './meili.module.scss' //should i delete later?
-
 const searchClient: InstantMeiliSearchInstance = instantMeiliSearch(
    'http://localhost:7700',
    '2e2716d9058e8c26ab4c01f936fd66f16dd5efe785448d2e87bcb53ab9d69588'

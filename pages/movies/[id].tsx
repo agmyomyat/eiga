@@ -8,7 +8,6 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Button from '@material-ui/core/Button';
-import { Movies } from '@graphgen';
 
 const useStyles = makeStyles(styles);
 
@@ -17,12 +16,10 @@ export default function MoviePage() {
       fetchPolicy: 'network-only',
    });
    const classes = useStyles();
-   const [servers, setServers] = useState<Partial<Movies> | null>(null);
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const router: NextRouter = useRouter();
    const { id } = router.query;
-
-   console.log('Servers', servers);
+   const [loading, setLoading] = useState(true)
 
    useEffect(() => {
       if (id && !data) {
@@ -31,15 +28,15 @@ export default function MoviePage() {
          });
       }
       if (data) {
-         setServers(data.getMovie);
+         setCurrentServer(data.getMovie.server1);
       }
    }, [data, getMovie, id]);
 
-   useEffect(() => {
-      if (servers) {
-         setCurrentServer(servers.server1);
-      }
-   }, [servers]);
+function changeServer(server:string){
+  setCurrentServer(server); 
+  setLoading(server===currentServer?false:true)
+  
+} 
 
    console.log('dynamic page(server)', currentServer);
 
@@ -59,21 +56,22 @@ export default function MoviePage() {
                      {id}
                   </Typography>
                </Breadcrumbs>
-               <Iframe server={currentServer} />
+               <Iframe server={currentServer} loading={loading} setLoading={setLoading} />
                <Button
-                  variant={`${currentServer === servers?.server1 ? 'contained' : 'outlined'}`}
+                  variant={`${currentServer === data.getMovie?.server1 ? 'contained' : 'outlined'}`}
                   size="small"
                   color="secondary"
-                  onClick={() => setCurrentServer(servers.server1)}
+                  onClick={()=>changeServer(data.getMovie?.server1)}
                   className={classes.button}
                >
                   Server1
                </Button>
                <Button
-                  variant={`${currentServer === servers?.server2 ? 'contained' : 'outlined'}`}
+                  variant={`${currentServer === data.getMovie?.server2 ? 'contained' : 'outlined'}`}
                   size="small"
                   color="secondary"
-                  onClick={() => setCurrentServer(servers.server2)}
+                  onClick={()=>changeServer(data.getMovie?.server2)}
+
                >
                   Server2
                </Button>

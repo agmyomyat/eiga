@@ -1,16 +1,17 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/IframeStyles';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 interface IframeProp {
    server: string;
+   loading: boolean;
+   setLoading:Dispatch<SetStateAction<boolean>>
 }
 
-const Iframe: React.FC<IframeProp> = ({ server }) => {
-   const [loading, setLoading] = useState<boolean>(true);
+const Iframe: React.FC<IframeProp> = ({ server,loading,setLoading }) => {
    const classes = useStyles();
 
    console.log('server', server);

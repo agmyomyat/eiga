@@ -17,12 +17,6 @@ export const styles = (theme: Theme) =>
       //    margin: '0 auto',
       // },
       //
-      menuButton: {
-         marginRight: theme.spacing(2),
-         [theme.breakpoints.up('sm')]: {
-            display: 'none',
-         },
-      },
       title: {
          flexGrow: 1,
          flexShrink: 0,

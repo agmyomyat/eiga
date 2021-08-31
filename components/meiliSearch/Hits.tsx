@@ -24,10 +24,10 @@ function Hits({ hits, hasMore, refineNext }: InfiniteHitsProvided) {
    }, [hasMore, refineNext]);
 
    return (
-      <div>
+      <>
          <Movies movies={hits} />
          <div id="sentinel" ref={sentinel} />
-      </div>
+      </>
    );
 }
 

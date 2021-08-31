@@ -4,6 +4,7 @@ export const styles = (theme: Theme) =>
    createStyles({
       root: {
          marginTop: theme.spacing(5),
+         marginBottom: 100,
          maxWidth: '700px',
       },
       title: {

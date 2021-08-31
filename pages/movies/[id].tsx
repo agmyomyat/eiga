@@ -3,11 +3,8 @@ import { useGetMovieLazyQuery } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/MoviePage';
+import { Box, Button, Typography, Breadcrumbs } from '@material-ui/core';
 import Iframe from '@components/movies/Iframe';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(styles);
 
@@ -17,9 +14,9 @@ export default function MoviePage() {
    });
    const classes = useStyles();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
+   const [loading, setLoading] = useState<boolean>(true);
    const router: NextRouter = useRouter();
    const { id } = router.query;
-   const [loading, setLoading] = useState(true)
 
    useEffect(() => {
       if (id && !data) {
@@ -32,11 +29,10 @@ export default function MoviePage() {
       }
    }, [data, getMovie, id]);
 
-function changeServer(server:string){
-  setCurrentServer(server); 
-  setLoading(server===currentServer?false:true)
-  
-} 
+   function changeServer(server: string) {
+      setCurrentServer(server);
+      setLoading(server !== currentServer);
+   }
 
    console.log('dynamic page(server)', currentServer);
 
@@ -61,7 +57,7 @@ function changeServer(server:string){
                   variant={`${currentServer === data.getMovie?.server1 ? 'contained' : 'outlined'}`}
                   size="small"
                   color="secondary"
-                  onClick={()=>changeServer(data.getMovie?.server1)}
+                  onClick={() => changeServer(data.getMovie?.server1)}
                   className={classes.button}
                >
                   Server1
@@ -70,8 +66,7 @@ function changeServer(server:string){
                   variant={`${currentServer === data.getMovie?.server2 ? 'contained' : 'outlined'}`}
                   size="small"
                   color="secondary"
-                  onClick={()=>changeServer(data.getMovie?.server2)}
-
+                  onClick={() => changeServer(data.getMovie?.server2)}
                >
                   Server2
                </Button>

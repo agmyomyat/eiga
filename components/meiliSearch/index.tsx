@@ -2,9 +2,11 @@ import { instantMeiliSearch, InstantMeiliSearchInstance } from '@meilisearch/ins
 import { InstantSearch, Configure } from 'react-instantsearch-dom';
 import CustomHits from './Hits';
 import CustomRefinementList from './RefinementList';
+import CustomCurrentRefinements from './CurrentRefinement';
 import CustomSearchBox from './SearchBox';
 import Container from '@material-ui/core/Container';
-import { transfromLabels } from '@helpers/tranformGenereLabels';
+import { transformLabels, transformLabel } from '@helpers/tranformGenereLabels';
+
 // import './meili.module.scss' //should i delete later?
 
 const searchClient: InstantMeiliSearchInstance = instantMeiliSearch(
@@ -17,7 +19,8 @@ export const Search: React.FC = () => (
       <Container>
          <Configure hitsPerPage={4} />
          <CustomSearchBox />
-         <CustomRefinementList attribute="genres" transformItems={transfromLabels} />
+         <CustomRefinementList attribute="genres" transformItems={transformLabels} />
+         <CustomCurrentRefinements clearsQuery transformItems={transformLabel} />
          <CustomHits />
       </Container>
    </InstantSearch>

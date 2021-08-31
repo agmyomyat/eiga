@@ -19,7 +19,8 @@ const theme = createTheme({
       },
       background: {
          default: '#181818',
-         paper: grey.A400,
+         // paper: grey.A400,
+         paper: '#212529',
       },
    },
 });

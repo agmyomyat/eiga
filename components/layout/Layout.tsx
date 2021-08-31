@@ -1,5 +1,5 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-
+import MobileNavigation from './BottomNavigation';
 import MainNavigation from './MainNavigation';
 
 interface PropsChildren {
@@ -22,6 +22,7 @@ const Layout: React.FC<PropsChildren> = ({ children }) => {
          <div className={classes.offset}></div>
          {/* offset will delete later */}
          {children}
+         <MobileNavigation />
       </div>
    );
 };

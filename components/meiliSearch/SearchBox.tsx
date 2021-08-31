@@ -3,9 +3,8 @@ import { connectSearchBox } from 'react-instantsearch-dom';
 import { SearchBoxProvided } from 'react-instantsearch-core';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/SearchMoviesStyles';
+import { Box, InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
-import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(styles);
 

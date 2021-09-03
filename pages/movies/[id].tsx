@@ -1,44 +1,65 @@
 import { useState, useEffect } from 'react';
-import { GetMovieDocument, useGetMovieLazyQuery } from '@graphgen';
+import {GetMovieDocument,usePremiumUserLazyQuery, GetMovieQuery  } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/MoviePage';
 import { Box, Button, Typography, Breadcrumbs } from '@material-ui/core';
 import Iframe from '@components/movies/Iframe';
-import {PremiumUserQuery} from '@graphgen'
 import {initializeApollo} from '@apollo'
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { getAccessToken } from '@helpers/accessToken';
 const useStyles = makeStyles(styles);
 const client = initializeApollo();
 
 export default function MoviePage(props) {
-   // const [getMovie, { data }] = useGetMovieLazyQuery({
-      //    fetchPolicy: 'network-only',
-      // });
-      const classes = useStyles();
-      const [currentServer, setCurrentServer] = useState<string | null>(null);
-      const [loading, setLoading] = useState<boolean>(true);
-      const router: NextRouter = useRouter();
-      const { id } = router.query;
-      const data = props.data
-      
-      useEffect(() => {
-      console.log("movie",data)
-      setCurrentServer(data.getMovie.freeServer1)
-     
-   }, [data]);
-
-   function changeServer(server: string) {
+   const AccessToken = getAccessToken();
+   const [checkPremium,{ data }]= usePremiumUserLazyQuery({
+      variables:{token:AccessToken},
+      fetchPolicy: 'network-only',
+   });
+   const classes = useStyles();
+   const [currentServer, setCurrentServer] = useState<string | null>(null);
+   const [loading, setLoading] = useState<boolean>(true);
+   const router: NextRouter = useRouter();
+   const { id } = router.query;
+   const serverResult:GetMovieQuery= props.data
+   const server = serverResult?.getMovie
+   const referentialFreeServer1:string= server?.freeServer1
+   const referentialFreeServer2:string= server?.freeServer2
+   const referentialVipServer1:string= server?.vipServer1
+   const referentialVipServer2:string= server?.vipServer2
+   const premiumUser:boolean =  data?.premiumCheck.premiumUser 
+  function changeServer(server:string) {
       setCurrentServer(server);
       setLoading(server !== currentServer);
    }
+      useEffect(()=>{
+         if(!data){
+            checkPremium()
+         }
+      },[data,checkPremium])
+      
+      useEffect(() => {
+      console.log("movie",props)
+      console.log("user",premiumUser)
+      if(!router.isFallback&&premiumUser){
+      return setCurrentServer(server.vipServer1)
 
-   console.log('dynamic page(server)', currentServer);
+      }else if (!router.isFallback&&!premiumUser){
+         return setCurrentServer(server.freeServer1)
+      }else{
+         return
+      } 
+     
+   }, [router.isFallback, premiumUser, props,server ,]);
+
+ 
+
 
    return (
       <div className={classes.root}>
          {router.isFallback || !data && <h2>loading</h2>}
-         {data && (
+         {!router.isFallback&&data&& (
             <Box>
                <Breadcrumbs className={classes.breadcrumbs}>
                   <Typography color="textSecondary" className={classes.breadItem}>
@@ -53,19 +74,21 @@ export default function MoviePage(props) {
                </Breadcrumbs>
                <Iframe server={currentServer} loading={loading} setLoading={setLoading} />
                <Button
-                  variant={`${currentServer === data.getMovie?.freeServer1 ?'contained' : 'outlined'}`}
+                  variant={`${(currentServer === referentialFreeServer1)
+                  ||(currentServer===referentialVipServer1)?'contained' : 'outlined'}`}
                   size="small"
                   color="secondary"
-                  onClick={() => changeServer(data.getMovie?.freeServer1)}
+                  onClick={() => changeServer(premiumUser?server.vipServer1:server.freeServer1)}
                   className={classes.button}
                >
                   Server1
                </Button>
                <Button
-                  variant={`${currentServer === data.getMovie?.freeServer2 ? 'contained' : 'outlined'}`}
+                   variant={`${(currentServer === referentialFreeServer2)
+                  ||(currentServer===referentialVipServer2)?'contained' : 'outlined'}`}
                   size="small"
                   color="secondary"
-                  onClick={() => changeServer(data.getMovie?.freeServer2)}
+                  onClick={() => changeServer(premiumUser?server.vipServer2:server.freeServer2)}
                >
                   Server2
                </Button>

@@ -25,6 +25,7 @@ const Iframe: React.FC<IframeProp> = ({ server, loading, setLoading }) => {
          <iframe
             className={classes.iframe}
             onLoad={() => setLoading(false)}
+            key={server}
             src={server}
             scrolling="no"
             allowFullScreen

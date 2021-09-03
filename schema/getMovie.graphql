@@ -1,6 +1,6 @@
 query getMovie($uuid: String!) {
    getMovie(uuid: $uuid) {
-      server1
-      server2
+      freeServer1 
+      freeServer2
    }
 }

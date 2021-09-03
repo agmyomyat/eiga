@@ -15,7 +15,7 @@ const client = initializeApollo();
 
 export default function MoviePage(props) {
    const AccessToken = getAccessToken();
-   const [checkPremium, { data }] = usePremiumUserLazyQuery({
+   const [checkPremium, { data = null }] = usePremiumUserLazyQuery({
       variables: { token: AccessToken },
       fetchPolicy: 'network-only',
    });
@@ -26,7 +26,7 @@ export default function MoviePage(props) {
    const { id } = router.query;
    const serverResult: GetMovieQuery = props.data;
    const server = serverResult?.getMovie;
-   const premiumUser: boolean = data?.premiumCheck.premiumUser;
+   const premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
 
    function changeServer(server: string) {
       setCurrentServer(server);

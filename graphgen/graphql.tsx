@@ -1976,7 +1976,7 @@ export type GetUserQueryVariables = Exact<{
 export type GetUserQuery = { __typename?: 'Query', userData?: Maybe<Array<Maybe<{ __typename?: 'UserData', uuid?: Maybe<string>, verify?: Maybe<boolean>, expire?: Maybe<any> }>>> };
 
 export type PremiumUserQueryVariables = Exact<{
-  token: Scalars['String'];
+  token?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -2105,7 +2105,7 @@ export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const PremiumUserDocument = gql`
-    query premiumUser($token: String!) {
+    query premiumUser($token: String) {
   premiumCheck(token: $token) {
     premiumUser
   }
@@ -2128,7 +2128,7 @@ export const PremiumUserDocument = gql`
  *   },
  * });
  */
-export function usePremiumUserQuery(baseOptions: Apollo.QueryHookOptions<PremiumUserQuery, PremiumUserQueryVariables>) {
+export function usePremiumUserQuery(baseOptions?: Apollo.QueryHookOptions<PremiumUserQuery, PremiumUserQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<PremiumUserQuery, PremiumUserQueryVariables>(PremiumUserDocument, options);
       }

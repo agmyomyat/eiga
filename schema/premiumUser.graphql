@@ -1,4 +1,4 @@
-query premiumUser($token:String!){
+query premiumUser($token:String){
   premiumCheck(token:$token){
     premiumUser
   }

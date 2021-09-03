@@ -3,19 +3,12 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import { initializeApollo } from '@apollo';
 import { setAccessToken } from '@helpers/accessToken';
+import {SignUpDocument} from '@graphgen'
 
-const CREATE_USER = gql`
-   mutation signUp($uuid: String!) {
-      signupClient(uuid: $uuid) {
-         ok
-         status
-         accessToken
-      }
-   }
-`;
+
 async function createUser(authResult) {
    const { data, error } = await client.mutate({
-      mutation: CREATE_USER,
+      mutation: SignUpDocument,
       variables: { uuid: authResult.user.email },
    });
    console.log('firebase callback', data);

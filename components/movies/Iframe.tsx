@@ -35,11 +35,17 @@ const Iframe: React.FC<IframeProp> = ({
 }) => {
    const router:NextRouter = useRouter()
    const refer = React.useRef(null)
+   const copy = React.useRef(currentServer)
    const classes = useStyles();
    const refFreeServer1: string = server?.freeServer1;
    const refFreeServer2: string = server?.freeServer2;
    const refVipServer1: string = server?.vipServer1;
    const refVipServer2: string = server?.vipServer2;
+   React.useEffect(()=>{
+      console.log("current",currentServer)
+      copy.current = currentServer
+
+   },[currentServer])
 
 
    return (
@@ -63,7 +69,8 @@ const Iframe: React.FC<IframeProp> = ({
                ref={refer}
                className={classes.iframe}
                onLoad={() => {
-                  refer.current.src!==currentServer?
+                  refer.current.src!==copy.current?
+                  
                   router.push('/404'): 
                   setLoading(false)}}
                id="aungmyomyat"

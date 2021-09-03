@@ -21,6 +21,10 @@ export const styles = (theme: Theme) =>
       button: {
          marginRight: theme.spacing(3),
       },
+      paper: {
+         marginLeft: theme.spacing(3),
+         marginTop: theme.spacing(2),
+      },
       filterMenu: {
          display: 'grid',
          gridTemplateColumns: 'repeat(2, minmax(200px, 1fr))',
@@ -30,8 +34,8 @@ export const styles = (theme: Theme) =>
       menuItem: {
          paddingRight: theme.spacing(3),
          '&:hover': {
-            backgroundColor: alpha(theme.palette.primary.main, 0.8),
-            color: theme.palette.secondary.main,
+            backgroundColor: alpha(theme.palette.secondary.main, 0.8),
+            color: theme.palette.primary.main,
             borderRadius: theme.shape.borderRadius,
          },
       },

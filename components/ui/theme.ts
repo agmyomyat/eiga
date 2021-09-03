@@ -9,10 +9,10 @@ const theme = createTheme({
          secondary: '#A3A3A3',
       },
       primary: {
-         main: '#121212',
+         main: '#02a7a7',
       },
       secondary: {
-         main: '#02a7a7',
+         main: '#121212',
       },
       grey: {
          [700]: grey.A400,

@@ -11,7 +11,7 @@ const CurrentRefinements = ({ items, refine }: CurrentRefinementsProvided) => {
             <Chip
                key={item.label}
                variant="outlined"
-               color="secondary"
+               color="primary"
                label={`${item.currentRefinement}`}
                onDelete={() => refine(item.value)}
             />

@@ -35,7 +35,7 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
             {items.map(item => (
                <Grid item key={item.label}>
                   <Chip
-                     color={`${item.isRefined ? 'secondary' : 'default'}`}
+                     color={`${item.isRefined ? 'primary' : 'default'}`}
                      label={`${item.label}`}
                      onClick={() => refine(item.value)}
                   />
@@ -51,7 +51,7 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
             aria-controls="simple-menu"
             aria-haspopup="true"
             variant="contained"
-            color="secondary"
+            color="primary"
             size="small"
             className={classes.button}
             startIcon={<FilterListIcon />}
@@ -68,6 +68,7 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
             onClose={handleClose}
             classes={{
                list: classes.filterMenu,
+               paper: classes.paper,
             }}
             anchorOrigin={{
                vertical: 'top',

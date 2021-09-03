@@ -84,7 +84,7 @@ export default function Profile() {
                   </Grid>
                </Grid>
                <div className={classes.buttonGroup}>
-                  <Button variant="contained" color="secondary" onClick={handleSignOut}>
+                  <Button variant="contained" color="primary" onClick={handleSignOut}>
                      Log Out
                   </Button>
                </div>

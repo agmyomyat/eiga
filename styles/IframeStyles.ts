@@ -2,6 +2,11 @@ import { Theme, createStyles } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) =>
    createStyles({
+      root: {
+         [theme.breakpoints.down('sm')]: {
+            padding: theme.spacing(0),
+         },
+      },
       container: {
          position: 'relative',
          width: '100%',
@@ -9,9 +14,8 @@ export const styles = (theme: Theme) =>
          paddingBottom: '56.25%',
          // paddingTop: 25,
          [theme.breakpoints.up('xl')]: {
-            maxWidth: 1920,
-            paddingBottom: 1080,
-            margin: '0 auto',
+            maxWidth: 1080,
+            paddingBottom: 607.5,
          },
       },
       loadingIcon: {
@@ -28,5 +32,28 @@ export const styles = (theme: Theme) =>
          border: 0,
          width: '100%',
          height: '100%',
+      },
+      //bread crumbs
+      breadcrumbs: {
+         margin: theme.spacing(1, 0),
+         padding: theme.spacing(2, 0),
+         [theme.breakpoints.only('xs')]: {
+            padding: theme.spacing(0.5, 0),
+         },
+      },
+      breadItem: {
+         [theme.breakpoints.only('xs')]: {
+            fontSize: theme.typography.caption.fontSize,
+         },
+      },
+      buttonGroup: {
+         display: 'inline-block',
+         margin: '0 auto',
+      },
+      button: {
+         margin: theme.spacing(2),
+         '&:first-child': {
+            marginLeft: theme.spacing(0),
+         },
       },
    });

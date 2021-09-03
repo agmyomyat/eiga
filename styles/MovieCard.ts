@@ -28,7 +28,7 @@ export const styles = (theme: Theme) =>
          fontStyle: 'normal',
          fontWeight: theme.typography.fontWeightBold,
          padding: theme.spacing(0.6, 0.8),
-         backgroundColor: theme.palette.secondary.main,
+         backgroundColor: theme.palette.primary.main,
          borderRadius: theme.shape.borderRadius,
          boxShadow: '0px 0px 20px 4px #000000cc',
       },
@@ -40,12 +40,12 @@ export const styles = (theme: Theme) =>
       },
       type: {
          display: 'inline-block',
-         color: theme.palette.secondary.main,
+         color: theme.palette.primary.main,
          fontStyle: 'normal',
          fontSize: '0.65rem',
          fontWeight: theme.typography.fontWeightBold,
          padding: theme.spacing(0.4),
-         border: `1px solid ${theme.palette.secondary.main}`,
+         border: `1px solid ${theme.palette.primary.main}`,
          borderRadius: theme.shape.borderRadius,
       },
    });

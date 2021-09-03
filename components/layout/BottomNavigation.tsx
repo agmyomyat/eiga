@@ -30,29 +30,13 @@ const MobileNavigation: React.FC = () => {
             showLabels
             className={classes.root}
          >
+            <BottomNavigationAction label="Home" value="/" icon={<HomeOutlinedIcon />} />
             <BottomNavigationAction
-               classes={{
-                  root: classes.item,
-                  selected: classes.selected,
-               }}
-               label="Home"
-               value="/"
-               icon={<HomeOutlinedIcon />}
-            />
-            <BottomNavigationAction
-               classes={{
-                  root: classes.item,
-                  selected: classes.selected,
-               }}
                label="Favorites"
                value="/pricing"
                icon={<FavoriteBorderOutlinedIcon />}
             />
             <BottomNavigationAction
-               classes={{
-                  root: classes.item,
-                  selected: classes.selected,
-               }}
                label="Profile"
                value="/profile"
                icon={<AccountCircleOutlinedIcon />}

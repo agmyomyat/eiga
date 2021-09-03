@@ -7,7 +7,7 @@ export const styles = (theme: Theme) =>
          margin: '0 auto',
          borderWidth: 3,
          borderStyle: 'solid',
-         borderColor: theme.palette.secondary.main,
+         borderColor: theme.palette.primary.main,
          backgroundColor: '1d1e26',
          borderRadius: 20,
          paddingBottom: theme.spacing(5),

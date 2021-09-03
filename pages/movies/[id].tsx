@@ -3,10 +3,13 @@ import { useGetMovieLazyQuery } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/MoviePage';
-import { Box, Button, Typography, Breadcrumbs } from '@material-ui/core';
+import { Box, Button, Typography, Breadcrumbs, Grid } from '@material-ui/core';
 import Iframe from '@components/movies/Iframe';
+import Episodes from '@components/movies/Episodes';
+import { initializeApollo } from '@apollo';
 
 const useStyles = makeStyles(styles);
+const apolloClient = initializeApollo();
 
 export default function MoviePage() {
    const [getMovie, { data }] = useGetMovieLazyQuery({
@@ -40,37 +43,21 @@ export default function MoviePage() {
       <div className={classes.root}>
          {router.isFallback || (!data && <h2>loading</h2>)}
          {data && (
-            <Box>
-               <Breadcrumbs className={classes.breadcrumbs}>
-                  <Typography color="textSecondary" className={classes.breadItem}>
-                     Home
-                  </Typography>
-                  <Typography color="textSecondary" className={classes.breadItem}>
-                     Movies
-                  </Typography>
-                  <Typography color="textPrimary" className={classes.breadItem}>
-                     {id}
-                  </Typography>
-               </Breadcrumbs>
-               <Iframe server={currentServer} loading={loading} setLoading={setLoading} />
-               <Button
-                  variant={`${currentServer === data.getMovie?.server1 ? 'contained' : 'outlined'}`}
-                  size="small"
-                  color="secondary"
-                  onClick={() => changeServer(data.getMovie?.server1)}
-                  className={classes.button}
-               >
-                  Server1
-               </Button>
-               <Button
-                  variant={`${currentServer === data.getMovie?.server2 ? 'contained' : 'outlined'}`}
-                  size="small"
-                  color="secondary"
-                  onClick={() => changeServer(data.getMovie?.server2)}
-               >
-                  Server2
-               </Button>
-            </Box>
+            <Grid container spacing={2}>
+               <Grid item sm={8} xs={12}>
+                  <Iframe
+                     server={currentServer}
+                     loading={loading}
+                     setLoading={setLoading}
+                     id={id}
+                     data={data}
+                     changeServer={changeServer}
+                  />
+               </Grid>
+               <Grid item sm={4} xs={12}>
+                  <Episodes />
+               </Grid>
+            </Grid>
          )}
       </div>
    );
@@ -83,14 +70,12 @@ export async function getStaticPaths() {
    };
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ params }) {
    // const { id } = params;
-
    // await apolloClient.query({
    //    query: GET_MOVIE,
    //    variables: { id },
    // });
-
    return {
       props: {
          greeting: 'hello',

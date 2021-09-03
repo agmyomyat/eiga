@@ -7,7 +7,8 @@ export const styles = (theme: Theme) =>
          marginBottom: theme.spacing(3),
       },
       appbar: {
-         backgroundColor: theme.palette.primary.main,
+         color: theme.palette.text.primary,
+         backgroundColor: theme.palette.secondary.main,
          paddingTop: 10,
       },
       // for 4k devices, will fix later

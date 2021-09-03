@@ -45,7 +45,7 @@ export const styles = (theme: Theme) =>
          },
          '&:focus': {
             backgroundColor: theme.palette.common.black,
-            borderColor: theme.palette.secondary.main,
+            borderColor: theme.palette.primary.main,
          },
       },
    });

@@ -1,6 +1,5 @@
 // import Carousel from '../components/carousel/Carousel';
 import { useGetAllMoviesQuery } from '@graphgen';
-import { gql } from '@apollo/client';
 import { initializeApollo } from '@apollo';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/HomeStyles';

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useRef,useState, useEffect } from 'react';
 import { GetMovieDocument, usePremiumUserLazyQuery, GetMovieQuery } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,18 +31,21 @@ export default function MoviePage(props) {
    function changeServer(server: string) {
       setCurrentServer(server);
       setLoading(server !== currentServer);
+
+   }
+   function iframeLoad(prop){
+      setLoading(prop)
+      
+
    }
 
    useEffect(() => {
       if (!data) {
-         console.log('checking premium');
          checkPremium();
       }
+      
    }, [data, checkPremium]);
-
-   console.log('data', data);
-   console.log('token', AccessToken);
-
+  
    useEffect(() => {
       console.log('movie', props);
       console.log('user', premiumUser);
@@ -55,8 +58,6 @@ export default function MoviePage(props) {
       }
    }, [router.isFallback, premiumUser, props, server]);
 
-   console.log('router fallback', router.isFallback);
-
    return (
       <div className={classes.root}>
          {(router.isFallback || !data) && <h2>loading</h2>}
@@ -66,7 +67,7 @@ export default function MoviePage(props) {
                   <Iframe
                      currentServer={currentServer}
                      loading={loading}
-                     setLoading={setLoading}
+                     setLoading={iframeLoad}
                      id={id}
                      server={server}
                      changeServer={changeServer}

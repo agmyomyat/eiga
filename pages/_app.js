@@ -10,6 +10,8 @@ import theme from '../components/ui/theme';
 import Layout from '../components/layout/Layout';
 // import 'instantsearch.css/themes/reset.css';
 
+
+
 function MyApp(props) {
    const { Component, pageProps } = props;
    const apolloClient = useApollo(pageProps.initialApolloState);

@@ -24,10 +24,10 @@ export default function MoviePage(props) {
    const { id } = router.query;
    const serverResult:GetMovieQuery= props.data
    const server = serverResult?.getMovie
-   const referentialFreeServer1:string= server?.freeServer1
-   const referentialFreeServer2:string= server?.freeServer2
-   const referentialVipServer1:string= server?.vipServer1
-   const referentialVipServer2:string= server?.vipServer2
+   const refFreeServer1:string= server?.freeServer1
+   const refFreeServer2:string= server?.freeServer2
+   const refVipServer1:string= server?.vipServer1
+   const refVipServer2:string= server?.vipServer2
    const premiumUser:boolean =  data?.premiumCheck.premiumUser 
   function changeServer(server:string) {
       setCurrentServer(server);
@@ -74,8 +74,8 @@ export default function MoviePage(props) {
                </Breadcrumbs>
                <Iframe server={currentServer} loading={loading} setLoading={setLoading} />
                <Button
-                  variant={`${(currentServer === referentialFreeServer1)
-                  ||(currentServer===referentialVipServer1)?'contained' : 'outlined'}`}
+                  variant={`${(currentServer === refFreeServer1)
+                  ||(currentServer===refVipServer1)?'contained' : 'outlined'}`}
                   size="small"
                   color="secondary"
                   onClick={() => changeServer(premiumUser?server.vipServer1:server.freeServer1)}
@@ -84,8 +84,8 @@ export default function MoviePage(props) {
                   Server1
                </Button>
                <Button
-                   variant={`${(currentServer === referentialFreeServer2)
-                  ||(currentServer===referentialVipServer2)?'contained' : 'outlined'}`}
+                   variant={`${(currentServer === refFreeServer2)
+                  ||(currentServer===refVipServer2)?'contained' : 'outlined'}`}
                   size="small"
                   color="secondary"
                   onClick={() => changeServer(premiumUser?server.vipServer2:server.freeServer2)}

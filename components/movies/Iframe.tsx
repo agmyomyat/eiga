@@ -25,8 +25,6 @@ interface IframeProp {
 const Iframe: React.FC<IframeProp> = ({ server, loading, setLoading, id, data, changeServer }) => {
    const classes = useStyles();
 
-   console.log('browser history', window.history.length);
-
    return (
       <Container className={classes.root}>
          <Breadcrumbs className={classes.breadcrumbs}>

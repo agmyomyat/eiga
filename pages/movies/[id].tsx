@@ -12,13 +12,12 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 const useStyles = makeStyles(styles);
 const client = initializeApollo();
 
-export default function MoviePage(props) {
+export default function MoviePage({ data }) {
    const classes = useStyles();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const [loading, setLoading] = useState<boolean>(true);
    const router: NextRouter = useRouter();
    const { id } = router.query;
-   const data = props.data;
 
    useEffect(() => {
       setCurrentServer(data.getMovie.freeServer1);

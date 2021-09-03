@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { GetMovieQuery } from '@graphgen';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/IframeStyles';
 import {
@@ -10,9 +11,6 @@ import {
    Button,
    Container,
 } from '@material-ui/core';
-import { GetMovieQuery } from '@graphgen';
-import { useRouter } from 'next/router';
-import { browser } from 'process';
 
 const useStyles = makeStyles(styles);
 interface IframeProp {
@@ -20,7 +18,7 @@ interface IframeProp {
    loading: boolean;
    setLoading: Dispatch<SetStateAction<boolean>>;
    id: string | string[];
-   data: GetMovieQuery;
+   data: any;
    changeServer: (server: string) => void;
 }
 
@@ -57,19 +55,19 @@ const Iframe: React.FC<IframeProp> = ({ server, loading, setLoading, id, data, c
          </Box>
          <Box className={classes.buttonGroup}>
             <Button
-               variant={`${server === data.getMovie?.server1 ? 'contained' : 'outlined'}`}
+               variant={`${server === data.getMovie?.freeServer1 ? 'contained' : 'outlined'}`}
                size="small"
                color="primary"
-               onClick={() => changeServer(data.getMovie?.server1)}
+               onClick={() => changeServer(data.getMovie?.freeServer1)}
                className={classes.button}
             >
                Server1
             </Button>
             <Button
-               variant={`${server === data.getMovie?.server2 ? 'contained' : 'outlined'}`}
+               variant={`${server === data.getMovie?.freeServer2 ? 'contained' : 'outlined'}`}
                size="small"
                color="primary"
-               onClick={() => changeServer(data.getMovie?.server2)}
+               onClick={() => changeServer(data.getMovie?.freeServer2)}
             >
                Server2
             </Button>

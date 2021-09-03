@@ -1,0 +1,5 @@
+query premiumUser($token:String!){
+  premiumCheck(token:$token){
+    premiumUser
+  }
+}

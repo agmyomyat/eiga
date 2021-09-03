@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/HomeStyles';
 import Container from '@material-ui/core/Container';
 import Movies from '@components/movies/Movies';
-import { Movies as typeMovies } from '@graphgen';
+import { Movies as typeMovies,GetAllMoviesDocument } from '@graphgen';
 
 const useStyles = makeStyles(styles);
 const apolloClient = initializeApollo();
@@ -26,21 +26,8 @@ function Home() {
 export default Home;
 
 export async function getStaticProps() {
-   const GET_ALL_MOVIES = gql`
-      query getAllMovies {
-         movies {
-            name
-            uuid
-            id
-            date
-            quality
-            photo_url
-         }
-      }
-   `;
-
    await apolloClient.query({
-      query: GET_ALL_MOVIES,
+      query: GetAllMoviesDocument,
    });
 
    return {

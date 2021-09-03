@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { GetMovieQuery } from '@graphgen';
+import { Movies } from '@graphgen';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/IframeStyles';
 import {
@@ -14,16 +14,32 @@ import {
 
 const useStyles = makeStyles(styles);
 interface IframeProp {
-   server: string;
+   currentServer: string;
    loading: boolean;
    setLoading: Dispatch<SetStateAction<boolean>>;
    id: string | string[];
-   data: any;
+   server: Partial<Movies>;
    changeServer: (server: string) => void;
+   premiumUser: boolean;
 }
 
-const Iframe: React.FC<IframeProp> = ({ server, loading, setLoading, id, data, changeServer }) => {
+const Iframe: React.FC<IframeProp> = ({
+   currentServer,
+   loading,
+   setLoading,
+   id,
+   server,
+   changeServer,
+   premiumUser,
+}) => {
    const classes = useStyles();
+
+   const refFreeServer1: string = server?.freeServer1;
+   const refFreeServer2: string = server?.freeServer2;
+   const refVipServer1: string = server?.vipServer1;
+   const refVipServer2: string = server?.vipServer2;
+
+   console.log('current server', currentServer);
 
    return (
       <Container className={classes.root}>
@@ -45,27 +61,35 @@ const Iframe: React.FC<IframeProp> = ({ server, loading, setLoading, id, data, c
             <iframe
                className={classes.iframe}
                onLoad={() => setLoading(false)}
-               src={server}
+               src={currentServer}
                scrolling="no"
                allowFullScreen
-               key={server}
+               key={currentServer}
             ></iframe>
          </Box>
          <Box className={classes.buttonGroup}>
             <Button
-               variant={`${server === data.getMovie?.freeServer1 ? 'contained' : 'outlined'}`}
+               variant={`${
+                  currentServer === refFreeServer1 || currentServer === refVipServer1
+                     ? 'contained'
+                     : 'outlined'
+               }`}
                size="small"
                color="primary"
-               onClick={() => changeServer(data.getMovie?.freeServer1)}
+               onClick={() => changeServer(premiumUser ? server.vipServer1 : server.freeServer1)}
                className={classes.button}
             >
                Server1
             </Button>
             <Button
-               variant={`${server === data.getMovie?.freeServer2 ? 'contained' : 'outlined'}`}
+               variant={`${
+                  currentServer === refFreeServer2 || currentServer === refVipServer2
+                     ? 'contained'
+                     : 'outlined'
+               }`}
                size="small"
                color="primary"
-               onClick={() => changeServer(data.getMovie?.freeServer2)}
+               onClick={() => changeServer(premiumUser ? server.vipServer2 : server.freeServer2)}
             >
                Server2
             </Button>

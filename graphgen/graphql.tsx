@@ -1966,7 +1966,7 @@ export type GetMovieQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'Movies', freeServer1?: Maybe<string>, freeServer2?: Maybe<string> }> };
+export type GetMovieQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'Movies', freeServer1?: Maybe<string>, freeServer2?: Maybe<string>, vipServer1?: Maybe<string>, vipServer2?: Maybe<string> }> };
 
 export type GetUserQueryVariables = Exact<{
   uuid: Scalars['String'];
@@ -2034,6 +2034,8 @@ export const GetMovieDocument = gql`
   getMovie(uuid: $uuid) {
     freeServer1
     freeServer2
+    vipServer1
+    vipServer2
   }
 }
     `;

@@ -9,11 +9,6 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 
 const useStyles = makeStyles(styles);
 
-interface Route {
-   path: string;
-   val: number;
-}
-
 const MobileNavigation: React.FC = () => {
    const classes = useStyles();
    const { push, pathname }: NextRouter = useRouter();

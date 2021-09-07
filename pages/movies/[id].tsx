@@ -40,9 +40,6 @@ export default function MoviePage(props) {
       }
    }, [data, checkPremium]);
 
-   console.log('data', data);
-   console.log('token', AccessToken);
-
    useEffect(() => {
       console.log('movie', props);
       console.log('user', premiumUser);
@@ -54,8 +51,6 @@ export default function MoviePage(props) {
          return;
       }
    }, [router.isFallback, premiumUser, props, server]);
-
-   console.log('router fallback', router.isFallback);
 
    return (
       <div className={classes.root}>
@@ -96,8 +91,6 @@ export const getStaticProps: GetStaticProps = async context => {
       query: GetMovieDocument,
       variables: { uuid: id },
    });
-
-   console.log('data', data);
 
    return {
       props: {

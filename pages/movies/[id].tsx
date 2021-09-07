@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { GetMovieDocument, usePremiumUserLazyQuery, GetMovieQuery } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/MoviePage';
 import { Grid } from '@material-ui/core';
 import Iframe from '@components/movies/Iframe';
-import Episodes from '@components/movies/Episodes';
+import RelatedMovies from '@components/movies/RelatedMovies';
 import { getAccessToken } from '@helpers/accessToken';
 import { initializeApollo } from '@apollo';
 import { GetStaticPaths, GetStaticProps } from 'next';
@@ -32,10 +32,12 @@ export default function MoviePage(props) {
       setCurrentServer(server);
       setLoading(server !== currentServer);
    }
+   function iframeLoad(prop) {
+      setLoading(prop);
+   }
 
    useEffect(() => {
       if (!data) {
-         console.log('checking premium');
          checkPremium();
       }
    }, [data, checkPremium]);
@@ -61,7 +63,7 @@ export default function MoviePage(props) {
                   <Iframe
                      currentServer={currentServer}
                      loading={loading}
-                     setLoading={setLoading}
+                     setLoading={iframeLoad}
                      id={id}
                      server={server}
                      changeServer={changeServer}
@@ -69,7 +71,7 @@ export default function MoviePage(props) {
                   />
                </Grid>
                <Grid item sm={4} xs={12}>
-                  <Episodes />
+                  {/* <RelatedMovies movies={} /> */}
                </Grid>
             </Grid>
          )}

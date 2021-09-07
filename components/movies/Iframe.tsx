@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, MutableRefObject, SetStateAction } from 'react';
 import { Movies } from '@graphgen';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/IframeStyles';
@@ -11,6 +11,7 @@ import {
    Button,
    Container,
 } from '@material-ui/core';
+import { NextRouter, useRouter } from 'next/router';
 
 const useStyles = makeStyles(styles);
 interface IframeProp {
@@ -32,6 +33,9 @@ const Iframe: React.FC<IframeProp> = ({
    changeServer,
    premiumUser,
 }) => {
+   const router: NextRouter = useRouter();
+   const refer = React.useRef(null);
+   const copy = React.useRef(currentServer);
    const classes = useStyles();
 
    const refFreeServer1: string = server?.freeServer1;
@@ -39,7 +43,17 @@ const Iframe: React.FC<IframeProp> = ({
    const refVipServer1: string = server?.vipServer1;
    const refVipServer2: string = server?.vipServer2;
 
-   console.log('current server', currentServer);
+   console.log('server1', refFreeServer1);
+   console.log('server2', refFreeServer2);
+   console.log('current Server', currentServer);
+
+   React.useEffect(() => {
+      console.log('current', currentServer);
+      copy.current = currentServer;
+   }, [currentServer]);
+
+   console.log('iframe src', refer.current?.src);
+   console.log('copy server', copy?.current);
 
    return (
       <Container className={classes.root}>
@@ -59,8 +73,12 @@ const Iframe: React.FC<IframeProp> = ({
                {loading && <CircularProgress color="inherit" />}
             </div>
             <iframe
+               ref={refer}
                className={classes.iframe}
-               onLoad={() => setLoading(false)}
+               onLoad={() => {
+                  refer.current.src !== copy.current ? console.log('gg') : setLoading(false);
+               }}
+               id="aungmyomyat"
                src={currentServer}
                scrolling="no"
                allowFullScreen

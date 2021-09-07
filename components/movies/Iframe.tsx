@@ -42,9 +42,7 @@ const Iframe: React.FC<IframeProp> = ({
    const refVipServer1: string = server?.vipServer1;
    const refVipServer2: string = server?.vipServer2;
    React.useEffect(()=>{
-      console.log("current",currentServer)
-      copy.current = currentServer
-
+      copy.current = refer.current.src
    },[currentServer])
 
 

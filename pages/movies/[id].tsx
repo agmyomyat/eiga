@@ -9,16 +9,19 @@ import Episodes from '@components/movies/Episodes';
 import { getAccessToken } from '@helpers/accessToken';
 import { initializeApollo } from '@apollo';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { useAuth } from '@contexts';
 
 const useStyles = makeStyles(styles);
 const client = initializeApollo();
 
 export default function MoviePage(props) {
    const AccessToken = getAccessToken();
-   const [checkPremium, { data = null }] = usePremiumUserLazyQuery({
-      variables: { token: AccessToken },
-      fetchPolicy: 'network-only',
+   const {accessToken} = useAuth()
+   const [checkPremium, { data }] = usePremiumUserLazyQuery({
+   fetchPolicy: 'network-only',
+   ssr:false
    });
+      
    const classes = useStyles();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const [loading, setLoading] = useState<boolean>(true);
@@ -27,6 +30,7 @@ export default function MoviePage(props) {
    const serverResult: GetMovieQuery = props.data;
    const server = serverResult?.getMovie;
    const premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
+   const mountingPremium = useRef(false)
 
    function changeServer(server: string) {
       setCurrentServer(server);
@@ -38,13 +42,19 @@ export default function MoviePage(props) {
       
 
    }
-
    useEffect(() => {
-      if (!data) {
-         checkPremium();
+      if (!mountingPremium.current) {
+         checkPremium({
+            variables: { token: AccessToken },
+         })
+      console.log("checking premium",data)
+      }
+      return() =>{
+         mountingPremium.current = true
+         console.log("premiumcheck unmount")
       }
       
-   }, [data, checkPremium]);
+   }, [data, checkPremium, AccessToken]);
   
    useEffect(() => {
       console.log('movie', props);

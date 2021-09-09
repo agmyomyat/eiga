@@ -2,21 +2,15 @@ import { Theme, createStyles } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) =>
    createStyles({
-      root: {
-         [theme.breakpoints.down('sm')]: {
-            padding: theme.spacing(0),
-         },
-      },
       container: {
          position: 'relative',
          width: '100%',
-
          paddingBottom: '56.25%',
          // paddingTop: 25,
-         [theme.breakpoints.up('xl')]: {
-            maxWidth: 1080,
-            paddingBottom: 607.5,
-         },
+         // [theme.breakpoints.up('xl')]: {
+         //    maxWidth: 1080,
+         //    paddingBottom: 607.5,
+         // },
       },
       loadingIcon: {
          position: 'absolute',
@@ -45,6 +39,9 @@ export const styles = (theme: Theme) =>
          [theme.breakpoints.only('xs')]: {
             fontSize: theme.typography.caption.fontSize,
          },
+      },
+      divider: {
+         marginTop: theme.spacing(2),
       },
       buttonGroup: {
          display: 'inline-block',

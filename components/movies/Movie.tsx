@@ -22,7 +22,7 @@ const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
    });
    //
    return (
-      <Box onClick={() => push(`/movies/${uuid}`)}>
+      <Box onClick={() => push({ pathname: '/movies/[id]', query: { id: uuid } })}>
          {show ? (
             <Skeleton variant="rect" className={classes.skeletonImage} width="100%"></Skeleton>
          ) : (

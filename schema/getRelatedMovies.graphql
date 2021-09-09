@@ -1,0 +1,10 @@
+query getRelatedMovies {
+   movies(limit: 6) {
+      name
+      uuid
+      id
+      date
+      quality
+      photo_url
+   }
+}

@@ -5,6 +5,7 @@ import { default as firebaseUser } from 'firebase';
 import {useReactiveVar} from '@apollo/client'
 import {gqlInvalidToken, ReactiveCurrentUser,ReactiveValue} from '../apollo/apolloReactiveVar'
 import {onAuthStateInit,unsubscribeAuth} from "./onStateAuth"
+
 interface IauthContext {
    currentUser: firebaseUser.User | null;
    logOut: () => Promise<[void, Response]>;
@@ -21,8 +22,10 @@ export function useAuth() {
 export default function AuthProvider({ children }) {
    const [currentUser, setCurrentUser] = useState(null);
    const [authLoading, setAuthLoading] = useState(true);
+
    const reactiveToken= useReactiveVar(gqlInvalidToken)
    
+
 
    const logOut = useCallback(async () => {
       setAccessToken('');
@@ -39,8 +42,10 @@ export default function AuthProvider({ children }) {
 
    useEffect(() => {
       setAuthLoading(true);
+
       onAuthStateInit(auth,ReactiveCurrentUser,setCurrentUser,setAuthLoading) 
       console.log("auth checking")
+
       return () => {
          console.warn("unmounting in context")
          unsubscribeAuth;
@@ -51,8 +56,8 @@ export default function AuthProvider({ children }) {
       currentUser,
       logOut,
       authLoading,
-      reactiveToken 
+      reactiveToken,
    };
-   
+
    return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;
 }

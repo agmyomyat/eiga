@@ -1,16 +1,8 @@
-import React,{ Dispatch, MutableRefObject, SetStateAction } from 'react';
+import React, { Dispatch, MutableRefObject, SetStateAction } from 'react';
 import { Movies } from '@graphgen';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/IframeStyles';
-import {
-   CircularProgress,
-   Box,
-   Grid,
-   Breadcrumbs,
-   Typography,
-   Button,
-   Container,
-} from '@material-ui/core';
+import { CircularProgress, Box, Breadcrumbs, Typography, Button } from '@material-ui/core';
 import { NextRouter, useRouter } from 'next/router';
 
 const useStyles = makeStyles(styles);
@@ -33,21 +25,32 @@ const Iframe: React.FC<IframeProp> = ({
    changeServer,
    premiumUser,
 }) => {
-   const router:NextRouter = useRouter()
-   const refer = React.useRef(null)
-   const copy = React.useRef(currentServer)
+   const router: NextRouter = useRouter();
+   const refer = React.useRef(null);
+   const copy = React.useRef(currentServer);
    const classes = useStyles();
+
    const refFreeServer1: string = server?.freeServer1;
    const refFreeServer2: string = server?.freeServer2;
    const refVipServer1: string = server?.vipServer1;
    const refVipServer2: string = server?.vipServer2;
-   React.useEffect(()=>{
-      copy.current = refer.current.src
-   },[currentServer])
 
+
+   console.log('server1', refFreeServer1);
+   console.log('server2', refFreeServer2);
+   console.log('current Server', currentServer);
+
+   React.useEffect(() => {
+      console.log('current', currentServer);
+      copy.current = refer.current.src;
+   }, [currentServer]);
+
+
+   console.log('iframe src', refer.current?.src);
+   console.log('copy server', copy?.current);
 
    return (
-      <Container className={classes.root}>
+      <>
          <Breadcrumbs className={classes.breadcrumbs}>
             <Typography color="textSecondary" className={classes.breadItem}>
                Home
@@ -67,10 +70,8 @@ const Iframe: React.FC<IframeProp> = ({
                ref={refer}
                className={classes.iframe}
                onLoad={() => {
-                  refer.current.src!==copy.current?
-                  
-                  router.push('/404'): 
-                  setLoading(false)}}
+                  refer.current.src !== copy.current ? console.log('gg') : setLoading(false);
+               }}
                id="aungmyomyat"
                src={currentServer}
                scrolling="no"
@@ -78,6 +79,7 @@ const Iframe: React.FC<IframeProp> = ({
                key={currentServer}
             ></iframe>
          </Box>
+
          <Box className={classes.buttonGroup}>
             <Button
                variant={`${
@@ -105,7 +107,7 @@ const Iframe: React.FC<IframeProp> = ({
                Server2
             </Button>
          </Box>
-      </Container>
+      </>
    );
 };
 

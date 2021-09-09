@@ -1,11 +1,12 @@
 // import Carousel from '../components/carousel/Carousel';
 import { useGetAllMoviesQuery } from '@graphgen';
-import { initializeApollo } from '@apollo';
+import { initializeApollo } from '@apollo/index';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/HomeStyles';
+import { Movies as typeMovies, GetAllMoviesDocument } from '@graphgen';
+import { GetStaticProps } from 'next';
 import Container from '@material-ui/core/Container';
 import Movies from '@components/movies/Movies';
-import { Movies as typeMovies,GetAllMoviesDocument } from '@graphgen';
 
 const useStyles = makeStyles(styles);
 const apolloClient = initializeApollo();
@@ -24,7 +25,7 @@ function Home() {
 
 export default Home;
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
    await apolloClient.query({
       query: GetAllMoviesDocument,
    });
@@ -34,4 +35,4 @@ export async function getStaticProps() {
          initialApolloState: apolloClient.cache.extract(),
       },
    };
-}
+};

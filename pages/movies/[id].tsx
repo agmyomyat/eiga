@@ -10,14 +10,16 @@ import { getAccessToken } from '@helpers/accessToken';
 import { initializeApollo } from '@apollo';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useAuth } from '@contexts';
+import DetectOtherLogin from '@components/modals/detectOtherLogin';
+import { gqlInvalidToken } from 'apollo/apolloReactiveVar';
 
 const useStyles = makeStyles(styles);
 const client = initializeApollo();
 
 export default function MoviePage(props) {
    const AccessToken = getAccessToken();
-   const {accessToken} = useAuth()
-   const [checkPremium, { data }] = usePremiumUserLazyQuery({
+   const {reactiveToken} = useAuth()
+   const [checkPremium, { data}] = usePremiumUserLazyQuery({
    fetchPolicy: 'network-only',
    ssr:false
    });
@@ -25,12 +27,14 @@ export default function MoviePage(props) {
    const classes = useStyles();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const [loading, setLoading] = useState<boolean>(true);
+   const [loginDetect, setLoginDetect] = useState<boolean>(false);
    const router: NextRouter = useRouter();
    const { id } = router.query;
    const serverResult: GetMovieQuery = props.data;
    const server = serverResult?.getMovie;
    const premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
    const mountingPremium = useRef(false)
+
 
    function changeServer(server: string) {
       setCurrentServer(server);
@@ -41,6 +45,10 @@ export default function MoviePage(props) {
       setLoading(prop)
       
 
+   }
+   function handleClose(){
+      setLoginDetect(false)
+      gqlInvalidToken({logOut:false})
    }
    useEffect(() => {
       if (!mountingPremium.current) {
@@ -55,9 +63,14 @@ export default function MoviePage(props) {
       }
       
    }, [data, checkPremium, AccessToken]);
+
+   useEffect(()=>{
+    if(reactiveToken.logOut){
+        return setLoginDetect(true) 
+      }
+   },[reactiveToken.logOut])
   
    useEffect(() => {
-      console.log('movie', props);
       console.log('user', premiumUser);
       if (!router.isFallback && premiumUser) {
          return setCurrentServer(server.vipServer1);
@@ -66,7 +79,7 @@ export default function MoviePage(props) {
       } else {
          return;
       }
-   }, [router.isFallback, premiumUser, props, server]);
+   }, [router.isFallback, premiumUser,reactiveToken.logOut, server?.vipServer1, server?.freeServer1]);
 
    return (
       <div className={classes.root}>
@@ -89,6 +102,7 @@ export default function MoviePage(props) {
                </Grid>
             </Grid>
          )}
+         <DetectOtherLogin open={loginDetect} handleClose={handleClose}/>
       </div>
    );
 }
@@ -107,8 +121,6 @@ export const getStaticProps: GetStaticProps = async context => {
       query: GetMovieDocument,
       variables: { uuid: id },
    });
-
-   console.log('data', data);
 
    return {
       props: {

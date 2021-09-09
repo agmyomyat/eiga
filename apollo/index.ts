@@ -26,27 +26,29 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const asyncRefreshTokenLink = setContext(
   async ()=>{
-   let accessToken = {token:''}
-    let shouldFetchOrNot:boolean;
-   const token = getAccessToken()
-   async function handleFetch(){ 
+      let accessToken = {token:''}
+      let shouldFetchOrNot:boolean;
+      const token = getAccessToken()
+      async function handleFetch(){ 
       let _token:string;
       await fetch('http://localhost:1337/refreshtoken', {
          method: 'POST',
          credentials: 'include',
-      }).then((res)=>res.json())
+      })
+      .then((res)=>res.json())
       .then((data)=>_token= data.access)
       if(!_token){
          throw("access token not found")
       }else{
          return _token
       } 
-   }
-   if(!token){
-      console.log("linkcheckToken",token)
-      return {accessToken}
-   }
-   try {
+   };
+
+      if(!token){
+         console.log("linkcheckToken",token)
+         return {accessToken}
+      }
+      try{
          gqlInvalidToken({logOut:false})
          const { exp }: any = jwt_decode(<string | null>token);
          console.log('expire', exp);
@@ -55,28 +57,30 @@ const asyncRefreshTokenLink = setContext(
          } else {
             shouldFetchOrNot=false;
          }
-   }catch{
-         shouldFetchOrNot=true;
-         };
+      }catch{
+            shouldFetchOrNot=true;
+            };
 
-   if(shouldFetchOrNot) {
-      try{
-         let res= await handleFetch()
-         setAccessToken(res||'');
-         gqlInvalidToken({logOut:false})
-         console.log("fetched token success",res)
-         accessToken.token=res||''
-      }
-      catch(e){
-         logOut().then((auth)=>auth.signOut())
-         console.log("apollo catch",e)
-      }
-      console.log("final line")
-      return {accessToken}
-  }
-}
-    
-);
+      if(shouldFetchOrNot) {
+         try{
+            let res= await handleFetch()
+            setAccessToken(res||'');
+            gqlInvalidToken({logOut:false})
+            console.log("fetched token success",res)
+            accessToken.token=res||''
+         }
+         catch(e){
+            logOut().then((auth)=>auth.signOut())
+            gqlInvalidToken({logOut:true})
+            setAccessToken('')
+            console.log("apollo catch",e)
+         }
+            console.log("final line")
+            return {accessToken}
+   };
+   }
+      
+   );
 
 /*
 IgnoreTokenRefresh ignore tokenRefreshLink middleware

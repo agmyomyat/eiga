@@ -8,7 +8,7 @@ interface IauthContext {
    currentUser: firebaseUser.User | null;
    logOut: () => Promise<[void, Response]>;
    authLoading: boolean;
-   accessToken: ReactiveValue;
+   reactiveToken: ReactiveValue;
 }
 const AuthContext: Context<IauthContext> = createContext(null);
 
@@ -19,7 +19,7 @@ export function useAuth() {
 export default function AuthProvider({ children }) {
    const [currentUser, setCurrentUser] = useState(null);
    const [authLoading, setAuthLoading] = useState(true);
-   const accessToken = useReactiveVar(gqlInvalidToken)
+   const reactiveToken= useReactiveVar(gqlInvalidToken)
 
    const logOut = async () => {
       setAccessToken('');
@@ -49,7 +49,7 @@ export default function AuthProvider({ children }) {
       currentUser,
       logOut,
       authLoading,
-      accessToken
+      reactiveToken 
    };
    
    return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;

@@ -35,6 +35,7 @@ const Iframe: React.FC<IframeProp> = ({
    const refVipServer1: string = server?.vipServer1;
    const refVipServer2: string = server?.vipServer2;
 
+
    console.log('server1', refFreeServer1);
    console.log('server2', refFreeServer2);
    console.log('current Server', currentServer);
@@ -43,6 +44,7 @@ const Iframe: React.FC<IframeProp> = ({
       console.log('current', currentServer);
       copy.current = refer.current.src;
    }, [currentServer]);
+
 
    console.log('iframe src', refer.current?.src);
    console.log('copy server', copy?.current);

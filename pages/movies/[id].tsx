@@ -15,7 +15,7 @@ import { getAccessToken } from '@helpers/accessToken';
 import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useAuth } from '@contexts';
-import DetectOtherLogin from '@components/modals/DetectOtherLogin';
+import DetectOtherLogin from '@components/modals/detectOtherLogin';
 import { gqlInvalidToken } from '@apollo/apolloReactiveVar';
 
 const useStyles = makeStyles(styles);
@@ -24,7 +24,7 @@ const client = initializeApollo();
 export default function MoviePage(props) {
    const AccessToken = getAccessToken();
 
-   const { reactiveToken } = useAuth();
+   const { reactiveToken,logOut } = useAuth();
    const [checkPremium, { data }] = usePremiumUserLazyQuery({
       fetchPolicy: 'network-only',
       ssr: false,
@@ -74,11 +74,10 @@ export default function MoviePage(props) {
 
    useEffect(()=>{
     if(reactiveToken.logOut){
-         logOut()
-         return setLoginDetect(true) 
-
+       logOut()
+       return setLoginDetect(true) 
       }
-   },[logOut, reactiveToken.logOut])
+   },[logOut,reactiveToken.logOut])
   
 
    useEffect(() => {

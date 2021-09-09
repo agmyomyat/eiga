@@ -79,7 +79,7 @@ export default function MoviePage(props) {
       } else {
          return;
       }
-   }, [router.isFallback, premiumUser,reactiveToken.logOut, server?.vipServer1, server?.freeServer1]);
+   }, [router.isFallback, premiumUser, server?.vipServer1, server?.freeServer1]);
 
    return (
       <div className={classes.root}>

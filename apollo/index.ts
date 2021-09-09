@@ -1,14 +1,15 @@
 import { useMemo } from 'react';
 import { ApolloClient, createHttpLink, InMemoryCache, from, ApolloLink } from '@apollo/client';
-import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import { onError } from '@apollo/client/link/error';
 import jwt_decode from 'jwt-decode';
 import { getAccessToken, setAccessToken } from '@helpers/accessToken';
-import { gqlInvalidToken } from './apolloReactiveVar';
-import { setContext } from '@apollo/client/link/context';
+import {gqlInvalidToken } from './apolloReactiveVar'
+import { setContext } from "@apollo/client/link/context";
+import {ReactiveCurrentUser} from './apolloReactiveVar';
+import {onAuthStateInit} from '../contexts/onStateAuth'
 
 let apolloClient;
-async function logOut() {
+async function fireAuth() {
    const { auth } = await import('../lib/firebase');
    return auth;
 }
@@ -34,47 +35,54 @@ const asyncRefreshTokenLink = setContext(async () => {
          method: 'POST',
          credentials: 'include',
       })
-         .then(res => res.json())
-         .then(data => (_token = data.access));
-      if (!_token) {
-         throw 'access token not found';
-      } else {
-         return _token;
-      }
-   }
 
-   if (!token) {
-      console.log('linkcheckToken', token);
-      return { accessToken };
-   }
-   try {
-      gqlInvalidToken({ logOut: false });
-      const { exp }: any = jwt_decode(<string | null>token);
-      console.log('expire', exp);
-      if (Date.now() >= exp * 1000) {
-         shouldFetchOrNot = true;
-      } else {
-         shouldFetchOrNot = false;
+      .then((res)=>res.json())
+      .then((data)=>_token= data.access)
+      if(!_token){
+         throw("access token not found")
+      }else{
+         return _token
+      } 
+   };
+      /** 
+       * TODO: even tho Access Token is not available Should check cookies
+       * To write that Logic 
+      */
+      if(!token){
+         let _auth = await fireAuth()
+         let _currentUser = await onAuthStateInit(_auth,ReactiveCurrentUser) 
+         console.log("currentUser in lin ",_currentUser)
+         if(_currentUser){ 
+         gqlInvalidToken({logOut:true})
+         console.log("linkcheckToken",token)
+         return {accessToken}
+         }
+         return {accessToken}
+
       }
    } catch {
       shouldFetchOrNot = true;
    }
 
-   if (shouldFetchOrNot) {
-      try {
-         let res = await handleFetch();
-         setAccessToken(res || '');
-         gqlInvalidToken({ logOut: false });
-         console.log('fetched token success', res);
-         accessToken.token = res || '';
-      } catch (e) {
-         logOut().then(auth => auth.signOut());
-         gqlInvalidToken({ logOut: true });
-         setAccessToken('');
-         console.log('apollo catch', e);
-      }
-      console.log('final line');
-      return { accessToken };
+
+      if(shouldFetchOrNot) {
+         try{
+            let res= await handleFetch()
+            setAccessToken(res||'');
+            gqlInvalidToken({logOut:false})
+            console.log("fetched token success",res)
+            accessToken.token=res||''
+         }
+         catch(e){
+            fireAuth().then((auth)=>auth.signOut())
+            gqlInvalidToken({logOut:true})
+            setAccessToken('')
+            console.log("apollo catch",e)
+         }
+            console.log("final line")
+            return {accessToken}
+   };
+
    }
 });
 

@@ -1,9 +1,11 @@
-import { useState, useEffect, createContext, useContext, Context } from 'react';
+import { useState, useEffect, createContext, useContext, Context, useCallback, useMemo, Dispatch } from 'react';
 import { setAccessToken } from '@helpers/accessToken';
 import { auth } from '@lib';
 import { default as firebaseUser } from 'firebase';
-import { useReactiveVar } from '@apollo/client';
-import { gqlInvalidToken, ReactiveValue } from '../apollo/apolloReactiveVar';
+import {useReactiveVar} from '@apollo/client'
+import {gqlInvalidToken, ReactiveCurrentUser,ReactiveValue} from '../apollo/apolloReactiveVar'
+import {onAuthStateInit,unsubscribeAuth} from "./onStateAuth"
+
 interface IauthContext {
    currentUser: firebaseUser.User | null;
    logOut: () => Promise<[void, Response]>;
@@ -16,12 +18,16 @@ export function useAuth() {
    return useContext(AuthContext);
 }
 
+
 export default function AuthProvider({ children }) {
    const [currentUser, setCurrentUser] = useState(null);
    const [authLoading, setAuthLoading] = useState(true);
-   const reactiveToken = useReactiveVar(gqlInvalidToken);
 
-   const logOut = async () => {
+   const reactiveToken= useReactiveVar(gqlInvalidToken)
+   
+
+
+   const logOut = useCallback(async () => {
       setAccessToken('');
       console.log('logout works');
       const a = await auth.signOut();
@@ -31,17 +37,18 @@ export default function AuthProvider({ children }) {
          credentials: 'include',
       });
       return Promise.all([a, b]);
-   };
+   },[]);
+  
 
    useEffect(() => {
       setAuthLoading(true);
-      const unsubscribe = auth.onAuthStateChanged(user => {
-         setCurrentUser(user);
-         setAuthLoading(false);
-      });
-      console.log('auth checking');
+
+      onAuthStateInit(auth,ReactiveCurrentUser,setCurrentUser,setAuthLoading) 
+      console.log("auth checking")
+
       return () => {
-         unsubscribe;
+         console.warn("unmounting in context")
+         unsubscribeAuth;
       };
    }, []);
 

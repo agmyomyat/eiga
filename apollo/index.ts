@@ -7,7 +7,7 @@ import {gqlInvalidToken } from './apolloReactiveVar'
 import { setContext } from "@apollo/client/link/context";
 import {ReactiveCurrentUser} from './apolloReactiveVar';
 let apolloClient;
-async function logOut() {
+async function fireAuth() {
    const { auth } = await import('../lib/firebase');
    return auth;
 }
@@ -73,7 +73,7 @@ const asyncRefreshTokenLink = setContext(
             accessToken.token=res||''
          }
          catch(e){
-            logOut().then((auth)=>auth.signOut())
+            fireAuth().then((auth)=>auth.signOut())
             gqlInvalidToken({logOut:true})
             setAccessToken('')
             console.log("apollo catch",e)

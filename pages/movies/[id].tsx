@@ -18,7 +18,7 @@ const client = initializeApollo();
 
 export default function MoviePage(props) {
    const AccessToken = getAccessToken();
-   const {reactiveToken} = useAuth()
+   const {reactiveToken, logOut} = useAuth()
    const [checkPremium, { data}] = usePremiumUserLazyQuery({
    fetchPolicy: 'network-only',
    ssr:false
@@ -66,9 +66,11 @@ export default function MoviePage(props) {
 
    useEffect(()=>{
     if(reactiveToken.logOut){
-        return setLoginDetect(true) 
+         logOut()
+         return setLoginDetect(true) 
+
       }
-   },[reactiveToken.logOut])
+   },[logOut, reactiveToken.logOut])
   
    useEffect(() => {
       console.log('user', premiumUser);

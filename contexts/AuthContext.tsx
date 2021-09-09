@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext, Context } from 'react';
+import { useState, useEffect, createContext, useContext, Context, useCallback } from 'react';
 import { setAccessToken } from '@helpers/accessToken';
 import { auth } from '@lib';
 import { default as firebaseUser } from 'firebase';
@@ -20,9 +20,10 @@ export default function AuthProvider({ children }) {
    const [currentUser, setCurrentUser] = useState(null);
    const [authLoading, setAuthLoading] = useState(true);
    const reactiveToken= useReactiveVar(gqlInvalidToken)
+   console.warn("this is rerendering in auth context")
    
 
-   const logOut = async () => {
+   const logOut = useCallback(async () => {
       setAccessToken('');
       console.log('logout works');
       const a = await auth.signOut();
@@ -32,7 +33,7 @@ export default function AuthProvider({ children }) {
          credentials: 'include',
       });
       return Promise.all([a, b]);
-   };
+   },[]);
 
    useEffect(() => {
       setAuthLoading(true);

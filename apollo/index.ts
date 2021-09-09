@@ -6,6 +6,7 @@ import { getAccessToken, setAccessToken } from '@helpers/accessToken';
 import {gqlInvalidToken } from './apolloReactiveVar'
 import { setContext } from "@apollo/client/link/context";
 import {ReactiveCurrentUser} from './apolloReactiveVar';
+import {onAuthStateInit} from '../contexts/onStateAuth'
 let apolloClient;
 async function fireAuth() {
    const { auth } = await import('../lib/firebase');
@@ -44,7 +45,10 @@ const asyncRefreshTokenLink = setContext(
    };
 
       if(!token){
-         if(ReactiveCurrentUser().user){ 
+         let _auth = await fireAuth()
+         let _currentUser = await onAuthStateInit(_auth,ReactiveCurrentUser) 
+         console.log("currentUser in lin ",_currentUser)
+         if(_currentUser){ 
          gqlInvalidToken({logOut:true})
          console.log("linkcheckToken",token)
          return {accessToken}

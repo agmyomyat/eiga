@@ -7,7 +7,7 @@
          "@graphgen": ["graphgen/graphql"],
          "@components/*": ["components/*"],
          "@styles/*": ["styles/*"],
-         "@apollo": ["apollo/index"],
+         "@apollo/*": ["apollo/*"],
          "@helpers/*": ["helpers/*"],
          "@lib": ["lib/firebase"],
          "@contexts": ["contexts/AuthContext"]

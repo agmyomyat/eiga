@@ -4,8 +4,8 @@ import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import { onError } from '@apollo/client/link/error';
 import jwt_decode from 'jwt-decode';
 import { getAccessToken, setAccessToken } from '@helpers/accessToken';
-import {gqlInvalidToken } from './apolloReactiveVar'
-import { setContext } from "@apollo/client/link/context";
+import { gqlInvalidToken } from './apolloReactiveVar';
+import { setContext } from '@apollo/client/link/context';
 
 let apolloClient;
 async function logOut() {
@@ -24,63 +24,59 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
    if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
-const asyncRefreshTokenLink = setContext(
-  async ()=>{
-      let accessToken = {token:''}
-      let shouldFetchOrNot:boolean;
-      const token = getAccessToken()
-      async function handleFetch(){ 
-      let _token:string;
+const asyncRefreshTokenLink = setContext(async () => {
+   let accessToken = { token: '' };
+   let shouldFetchOrNot: boolean;
+   const token = getAccessToken();
+   async function handleFetch() {
+      let _token: string;
       await fetch('http://localhost:1337/refreshtoken', {
          method: 'POST',
          credentials: 'include',
       })
-      .then((res)=>res.json())
-      .then((data)=>_token= data.access)
-      if(!_token){
-         throw("access token not found")
-      }else{
-         return _token
-      } 
-   };
-
-      if(!token){
-         console.log("linkcheckToken",token)
-         return {accessToken}
+         .then(res => res.json())
+         .then(data => (_token = data.access));
+      if (!_token) {
+         throw 'access token not found';
+      } else {
+         return _token;
       }
-      try{
-         gqlInvalidToken({logOut:false})
-         const { exp }: any = jwt_decode(<string | null>token);
-         console.log('expire', exp);
-         if (Date.now() >= exp * 1000) {
-            shouldFetchOrNot=true;
-         } else {
-            shouldFetchOrNot=false;
-         }
-      }catch{
-            shouldFetchOrNot=true;
-            };
-
-      if(shouldFetchOrNot) {
-         try{
-            let res= await handleFetch()
-            setAccessToken(res||'');
-            gqlInvalidToken({logOut:false})
-            console.log("fetched token success",res)
-            accessToken.token=res||''
-         }
-         catch(e){
-            logOut().then((auth)=>auth.signOut())
-            gqlInvalidToken({logOut:true})
-            setAccessToken('')
-            console.log("apollo catch",e)
-         }
-            console.log("final line")
-            return {accessToken}
-   };
    }
-      
-   );
+
+   if (!token) {
+      console.log('linkcheckToken', token);
+      return { accessToken };
+   }
+   try {
+      gqlInvalidToken({ logOut: false });
+      const { exp }: any = jwt_decode(<string | null>token);
+      console.log('expire', exp);
+      if (Date.now() >= exp * 1000) {
+         shouldFetchOrNot = true;
+      } else {
+         shouldFetchOrNot = false;
+      }
+   } catch {
+      shouldFetchOrNot = true;
+   }
+
+   if (shouldFetchOrNot) {
+      try {
+         let res = await handleFetch();
+         setAccessToken(res || '');
+         gqlInvalidToken({ logOut: false });
+         console.log('fetched token success', res);
+         accessToken.token = res || '';
+      } catch (e) {
+         logOut().then(auth => auth.signOut());
+         gqlInvalidToken({ logOut: true });
+         setAccessToken('');
+         console.log('apollo catch', e);
+      }
+      console.log('final line');
+      return { accessToken };
+   }
+});
 
 /*
 IgnoreTokenRefresh ignore tokenRefreshLink middleware
@@ -89,18 +85,18 @@ graphql name change,
 they should be changed here too.
 */
 const IgnoreTokenRefresh = ApolloLink.split(
-   ({ operationName }) => operationName === 'premiumUser', 
+   ({ operationName }) => operationName === 'premiumUser',
    asyncRefreshTokenLink
 );
 
 const authLink = new ApolloLink((operation, forward) => {
    const oldToken = getAccessToken();
-   const contextToken=operation.getContext().accessToken?.accessToken||""
-   const newAccessToken = contextToken?contextToken:oldToken
-   console.log("access",newAccessToken);
+   const contextToken = operation.getContext().accessToken?.accessToken || '';
+   const newAccessToken = contextToken ? contextToken : oldToken;
+   console.log('access', newAccessToken);
    setAccessToken(newAccessToken);
-   if(operation.operationName==='premiumUser') {
-      operation.variables['token'] = newAccessToken
+   if (operation.operationName === 'premiumUser') {
+      operation.variables['token'] = newAccessToken;
    }
    console.log('operation', operation);
    operation.setContext(({ headers }) => ({
@@ -109,11 +105,11 @@ const authLink = new ApolloLink((operation, forward) => {
          auth: newAccessToken ? `Bearer ${newAccessToken}` : '', // however you get your token
       },
    }));
-   return forward(operation).map((data) => {
-    // Called after server responds
-    console.log("in apollo link", data)
-    return data;
-  });
+   return forward(operation).map(data => {
+      // Called after server responds
+      console.log('in apollo link', data);
+      return data;
+   });
 });
 
 function createApolloClient() {
@@ -147,5 +143,3 @@ export function useApollo<T>(initialState: T) {
    const store = useMemo(() => initializeApollo(initialState), [initialState]);
    return store;
 }
-
-

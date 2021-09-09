@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { initializeApollo } from '@apollo';
+import { initializeApollo } from '@apollo/index';
 import { setAccessToken } from '@helpers/accessToken';
 import { SignUpDocument } from '@graphgen';
 

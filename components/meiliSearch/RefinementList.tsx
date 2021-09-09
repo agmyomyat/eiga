@@ -5,8 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/RefinementListStyles';
 import { Chip, Grid, Hidden, Button, Menu, MenuItem } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import FilterList from '@material-ui/icons/FilterList';
-import { LocalConvenienceStoreOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 

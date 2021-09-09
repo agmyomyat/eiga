@@ -31,8 +31,8 @@ export const styles = (theme: Theme) =>
       grid: {
          display: 'grid',
          gridTemplateColumns: 'repeat(auto-fill, minmax(120px,1fr))',
-         gridRowGap: 20,
-         gridColumnGap: 15,
+         rowGap: 20,
+         columnGap: 15,
 
          [theme.breakpoints.up('sm')]: {
             gridTemplateColumns: 'repeat(auto-fill, minmax(150px,1fr))',

@@ -1968,6 +1968,11 @@ export type GetMovieQueryVariables = Exact<{
 
 export type GetMovieQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'Movies', freeServer1?: Maybe<string>, freeServer2?: Maybe<string>, vipServer1?: Maybe<string>, vipServer2?: Maybe<string> }> };
 
+export type GetRelatedMoviesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRelatedMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, date?: Maybe<any>, quality: string, photo_url: string }>>> };
+
 export type GetUserQueryVariables = Exact<{
   uuid: Scalars['String'];
 }>;
@@ -2067,6 +2072,45 @@ export function useGetMovieLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetMovieQueryHookResult = ReturnType<typeof useGetMovieQuery>;
 export type GetMovieLazyQueryHookResult = ReturnType<typeof useGetMovieLazyQuery>;
 export type GetMovieQueryResult = Apollo.QueryResult<GetMovieQuery, GetMovieQueryVariables>;
+export const GetRelatedMoviesDocument = gql`
+    query getRelatedMovies {
+  movies(limit: 6) {
+    name
+    uuid
+    id
+    date
+    quality
+    photo_url
+  }
+}
+    `;
+
+/**
+ * __useGetRelatedMoviesQuery__
+ *
+ * To run a query within a React component, call `useGetRelatedMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRelatedMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRelatedMoviesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetRelatedMoviesQuery(baseOptions?: Apollo.QueryHookOptions<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>(GetRelatedMoviesDocument, options);
+      }
+export function useGetRelatedMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>(GetRelatedMoviesDocument, options);
+        }
+export type GetRelatedMoviesQueryHookResult = ReturnType<typeof useGetRelatedMoviesQuery>;
+export type GetRelatedMoviesLazyQueryHookResult = ReturnType<typeof useGetRelatedMoviesLazyQuery>;
+export type GetRelatedMoviesQueryResult = Apollo.QueryResult<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>;
 export const GetUserDocument = gql`
     query getUser($uuid: String!) {
   userData(where: {uuid: $uuid}) {

@@ -5,7 +5,7 @@ import jwt_decode from 'jwt-decode';
 import { getAccessToken, setAccessToken } from '@helpers/accessToken';
 import {gqlInvalidToken } from './apolloReactiveVar'
 import { setContext } from "@apollo/client/link/context";
-
+import {ReactiveCurrentUser} from './apolloReactiveVar';
 let apolloClient;
 async function logOut() {
    const { auth } = await import('../lib/firebase');
@@ -44,7 +44,11 @@ const asyncRefreshTokenLink = setContext(
    };
 
       if(!token){
+         if(ReactiveCurrentUser().user){ 
+         gqlInvalidToken({logOut:true})
          console.log("linkcheckToken",token)
+         return {accessToken}
+         }
          return {accessToken}
       }
       try{

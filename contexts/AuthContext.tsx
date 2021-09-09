@@ -3,7 +3,7 @@ import { setAccessToken } from '@helpers/accessToken';
 import { auth } from '@lib';
 import { default as firebaseUser } from 'firebase';
 import {useReactiveVar} from '@apollo/client'
-import {gqlInvalidToken, ReactiveValue} from '../apollo/apolloReactiveVar'
+import {gqlInvalidToken, ReactiveCurrentUser,ReactiveValue} from '../apollo/apolloReactiveVar'
 interface IauthContext {
    currentUser: firebaseUser.User | null;
    logOut: () => Promise<[void, Response]>;
@@ -20,6 +20,7 @@ export default function AuthProvider({ children }) {
    const [currentUser, setCurrentUser] = useState(null);
    const [authLoading, setAuthLoading] = useState(true);
    const reactiveToken= useReactiveVar(gqlInvalidToken)
+   
 
    const logOut = async () => {
       setAccessToken('');
@@ -38,6 +39,7 @@ export default function AuthProvider({ children }) {
       const unsubscribe = auth.onAuthStateChanged(user => {
          setCurrentUser(user);
          setAuthLoading(false);
+         ReactiveCurrentUser({user:user?true:false})
       });
       console.log("auth checking")
       return () => {

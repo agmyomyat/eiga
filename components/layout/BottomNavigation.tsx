@@ -6,6 +6,7 @@ import { BottomNavigation, BottomNavigationAction, Hidden } from '@material-ui/c
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import ExploreOutlinedIcon from '@material-ui/icons/ExploreOutlined';
 
 const useStyles = makeStyles(styles);
 
@@ -26,6 +27,7 @@ const MobileNavigation: React.FC = () => {
             className={classes.root}
          >
             <BottomNavigationAction label="Home" value="/" icon={<HomeOutlinedIcon />} />
+            <BottomNavigationAction label="Browse" value="/browse" icon={<ExploreOutlinedIcon />} />
             <BottomNavigationAction
                label="Favorites"
                value="/pricing"

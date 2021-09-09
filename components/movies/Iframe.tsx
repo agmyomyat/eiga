@@ -2,15 +2,7 @@ import React, { Dispatch, MutableRefObject, SetStateAction } from 'react';
 import { Movies } from '@graphgen';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/IframeStyles';
-import {
-   CircularProgress,
-   Box,
-   Grid,
-   Breadcrumbs,
-   Typography,
-   Button,
-   Container,
-} from '@material-ui/core';
+import { CircularProgress, Box, Breadcrumbs, Typography, Button } from '@material-ui/core';
 import { NextRouter, useRouter } from 'next/router';
 
 const useStyles = makeStyles(styles);
@@ -49,14 +41,14 @@ const Iframe: React.FC<IframeProp> = ({
 
    React.useEffect(() => {
       console.log('current', currentServer);
-      copy.current = currentServer;
+      copy.current = refer.current.src;
    }, [currentServer]);
 
    console.log('iframe src', refer.current?.src);
    console.log('copy server', copy?.current);
 
    return (
-      <Container className={classes.root}>
+      <>
          <Breadcrumbs className={classes.breadcrumbs}>
             <Typography color="textSecondary" className={classes.breadItem}>
                Home
@@ -85,6 +77,7 @@ const Iframe: React.FC<IframeProp> = ({
                key={currentServer}
             ></iframe>
          </Box>
+
          <Box className={classes.buttonGroup}>
             <Button
                variant={`${
@@ -112,7 +105,7 @@ const Iframe: React.FC<IframeProp> = ({
                Server2
             </Button>
          </Box>
-      </Container>
+      </>
    );
 };
 

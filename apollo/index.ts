@@ -7,7 +7,6 @@ import {gqlInvalidToken } from './apolloReactiveVar'
 import { setContext } from "@apollo/client/link/context";
 import {ReactiveCurrentUser} from './apolloReactiveVar';
 import {onAuthStateInit} from '../contexts/onStateAuth'
-
 let apolloClient;
 async function fireAuth() {
    const { auth } = await import('../lib/firebase');
@@ -25,17 +24,17 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
    if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
-const asyncRefreshTokenLink = setContext(async () => {
-   let accessToken = { token: '' };
-   let shouldFetchOrNot: boolean;
-   const token = getAccessToken();
-   async function handleFetch() {
-      let _token: string;
+const asyncRefreshTokenLink = setContext(
+  async ()=>{
+      let accessToken = {token:''}
+      let shouldFetchOrNot:boolean;
+      const token = getAccessToken()
+      async function handleFetch(){ 
+      let _token:string;
       await fetch('http://localhost:1337/refreshtoken', {
          method: 'POST',
          credentials: 'include',
       })
-
       .then((res)=>res.json())
       .then((data)=>_token= data.access)
       if(!_token){
@@ -58,12 +57,19 @@ const asyncRefreshTokenLink = setContext(async () => {
          return {accessToken}
          }
          return {accessToken}
-
       }
-   } catch {
-      shouldFetchOrNot = true;
-   }
-
+      try{
+         gqlInvalidToken({logOut:false})
+         const { exp }: any = jwt_decode(<string | null>token);
+         console.log('expire', exp);
+         if (Date.now() >= exp * 1000) {
+            shouldFetchOrNot=true;
+         } else {
+            shouldFetchOrNot=false;
+         }
+      }catch{
+            shouldFetchOrNot=true;
+            };
 
       if(shouldFetchOrNot) {
          try{
@@ -82,9 +88,9 @@ const asyncRefreshTokenLink = setContext(async () => {
             console.log("final line")
             return {accessToken}
    };
-
    }
-});
+      
+   );
 
 /*
 IgnoreTokenRefresh ignore tokenRefreshLink middleware
@@ -93,18 +99,18 @@ graphql name change,
 they should be changed here too.
 */
 const IgnoreTokenRefresh = ApolloLink.split(
-   ({ operationName }) => operationName === 'premiumUser',
+   ({ operationName }) => operationName === 'premiumUser', 
    asyncRefreshTokenLink
 );
 
 const authLink = new ApolloLink((operation, forward) => {
    const oldToken = getAccessToken();
-   const contextToken = operation.getContext().accessToken?.accessToken || '';
-   const newAccessToken = contextToken ? contextToken : oldToken;
-   console.log('access', newAccessToken);
+   const contextToken=operation.getContext().accessToken?.accessToken||""
+   const newAccessToken = contextToken?contextToken:oldToken
+   console.log("access",newAccessToken);
    setAccessToken(newAccessToken);
-   if (operation.operationName === 'premiumUser') {
-      operation.variables['token'] = newAccessToken;
+   if(operation.operationName==='premiumUser') {
+      operation.variables['token'] = newAccessToken
    }
    console.log('operation', operation);
    operation.setContext(({ headers }) => ({
@@ -113,11 +119,11 @@ const authLink = new ApolloLink((operation, forward) => {
          auth: newAccessToken ? `Bearer ${newAccessToken}` : '', // however you get your token
       },
    }));
-   return forward(operation).map(data => {
-      // Called after server responds
-      console.log('in apollo link', data);
-      return data;
-   });
+   return forward(operation).map((data) => {
+    // Called after server responds
+    console.log("in apollo link", data)
+    return data;
+  });
 });
 
 function createApolloClient() {

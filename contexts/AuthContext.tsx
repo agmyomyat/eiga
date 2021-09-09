@@ -22,7 +22,6 @@ export default function AuthProvider({ children }) {
    const [currentUser, setCurrentUser] = useState(null);
    const [authLoading, setAuthLoading] = useState(true);
    const reactiveToken= useReactiveVar(gqlInvalidToken)
-   console.warn("this is rerendering in auth context")
    
 
    const logOut = useCallback(async () => {
@@ -43,6 +42,7 @@ export default function AuthProvider({ children }) {
       onAuthStateInit(auth,ReactiveCurrentUser,setCurrentUser,setAuthLoading) 
       console.log("auth checking")
       return () => {
+         console.warn("unmounting in context")
          unsubscribeAuth;
       };
    }, []);

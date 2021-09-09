@@ -59,7 +59,7 @@ const asyncRefreshTokenLink = setContext(async () => {
          }
          return {accessToken}
 
-      }
+      
    } catch {
       shouldFetchOrNot = true;
    }
@@ -84,7 +84,7 @@ const asyncRefreshTokenLink = setContext(async () => {
    };
 
    }
-});
+);
 
 /*
 IgnoreTokenRefresh ignore tokenRefreshLink middleware

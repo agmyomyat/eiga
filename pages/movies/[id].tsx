@@ -24,11 +24,10 @@ const client = initializeApollo();
 export default function MoviePage(props) {
    const AccessToken = getAccessToken();
 
-   const { reactiveToken } = useAuth();
+   const { reactiveToken, logOut } = useAuth();
    const [checkPremium, { data }] = usePremiumUserLazyQuery({
       fetchPolicy: 'network-only',
       ssr: false,
-
    });
    const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
    const classes = useStyles();
@@ -71,15 +70,12 @@ export default function MoviePage(props) {
       };
    }, [data, checkPremium, AccessToken]);
 
-
-   useEffect(()=>{
-    if(reactiveToken.logOut){
-         logOut()
-         return setLoginDetect(true) 
-
+   useEffect(() => {
+      if (reactiveToken.logOut) {
+         logOut();
+         return setLoginDetect(true);
       }
-   },[logOut, reactiveToken.logOut])
-  
+   }, [logOut, reactiveToken.logOut]);
 
    useEffect(() => {
       console.log('user', premiumUser);

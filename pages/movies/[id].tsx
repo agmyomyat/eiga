@@ -5,6 +5,7 @@ import {
    GetMovieQuery,
    useGetRelatedMoviesQuery,
    Movies as typeMovies,
+   Genres,
 } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,7 +18,7 @@ import { useAuth } from '@contexts/AuthContext';
 import { gqlInvalidToken } from '@apollo/apolloReactiveVar';
 import Iframe from '@components/movies/Iframe';
 import RelatedMovies from '@components/movies/RelatedMovies';
-import DetectOtherLogin from '@components/modals/DetectOtherLogin';
+import DetectOtherLogin from '@components/modals/detectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 
 const useStyles = makeStyles(styles);
@@ -110,7 +111,7 @@ export default function MoviePage(props) {
                      name={server.name}
                      date={server.date}
                      body={server.body}
-                     genres={server.genres}
+                     genres={server.genres as Partial<Genres[]>}
                   />
                </Grid>
                <Grid item sm={4} xs={12}>

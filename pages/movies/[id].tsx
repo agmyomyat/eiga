@@ -21,34 +21,37 @@ import Iframe from '@components/movies/Iframe';
 import RelatedMovies from '@components/movies/RelatedMovies';
 import DetectOtherLogin from '@components/modals/detectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
+import { CodeSharp } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 const client = initializeApollo();
-interface PageProps {
+export interface PageProps {
    data: GetMovieQuery
 }
 
-export function MoviePage(props:PageProps) {
+export default function MoviePage(props:PageProps) {
    const AccessToken = getAccessToken();
-
    const { reactiveToken, logOut } = useAuth();
-
+   
    const [checkPremium, { data }] = usePremiumUserLazyQuery({
       fetchPolicy: 'network-only',
       ssr: false,
    });
    const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
+   const router: NextRouter = useRouter();
    const classes = useStyles();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
+   const [prevPath,setPrevPath]= useState(router.query.id)
    const [loading, setLoading] = useState<boolean>(true);
    const [loginDetect, setLoginDetect] = useState<boolean>(false);
-   const router: NextRouter = useRouter();
    const { id } = router.query;
    const serverResult = props.data;
    const server = serverResult?.getMovie;
    const premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
    const mountingPremium = useRef(false);
-
+   
+  
+   
    function changeServer(server: string) {
       setCurrentServer(server);
       setLoading(server !== currentServer);
@@ -66,17 +69,21 @@ export function MoviePage(props:PageProps) {
    };
 
    useEffect(() => {
+      if(router.query.id!==prevPath){
+         setPrevPath(router.query.id)
+         mountingPremium.current = false
+   }
+   console.log("ref",mountingPremium.current)
       if (!mountingPremium.current) {
          checkPremium({
             variables: { token: AccessToken },
          });
-         console.log('checking premium', data);
       }
       return () => {
          mountingPremium.current = true;
          console.log('premiumcheck unmount');
       };
-   }, [data, checkPremium, AccessToken]);
+   }, [data, checkPremium, AccessToken,router.query.id, prevPath]);
 
    useEffect(() => {
       if (reactiveToken.logOut) {
@@ -87,6 +94,7 @@ export function MoviePage(props:PageProps) {
 
    useEffect(() => {
       console.log('user', premiumUser);
+      console.log("fallback",router.isFallback)
       if (!router.isFallback && premiumUser) {
          return setCurrentServer(server.vipServer1);
       } else if (!router.isFallback && !premiumUser) {

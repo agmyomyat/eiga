@@ -33,7 +33,7 @@ export default function AuthProvider({ children }) {
 
    const reactiveToken = useReactiveVar(gqlInvalidToken);
 
-   const logOut = useCallback(async () => {
+   const logOut = async () => {
       setAccessToken('');
       console.log('logout works');
       const a = await auth.signOut();
@@ -43,7 +43,7 @@ export default function AuthProvider({ children }) {
          credentials: 'include',
       });
       return Promise.all([a, b]);
-   }, []);
+   }
 
    useEffect(() => {
       setAuthLoading(true);

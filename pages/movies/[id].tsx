@@ -6,6 +6,7 @@ import {
    useGetRelatedMoviesQuery,
    Movies as typeMovies,
    Genres,
+   GetMovieQueryResult,
 } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,8 +24,11 @@ import MovieInfo from '@components/movies/MovieInfo';
 
 const useStyles = makeStyles(styles);
 const client = initializeApollo();
+interface PageProps {
+   data: GetMovieQuery
+}
 
-export default function MoviePage(props) {
+export function MoviePage(props:PageProps) {
    const AccessToken = getAccessToken();
 
    const { reactiveToken, logOut } = useAuth();
@@ -40,7 +44,7 @@ export default function MoviePage(props) {
    const [loginDetect, setLoginDetect] = useState<boolean>(false);
    const router: NextRouter = useRouter();
    const { id } = router.query;
-   const serverResult: GetMovieQuery = props.data;
+   const serverResult = props.data;
    const server = serverResult?.getMovie;
    const premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
    const mountingPremium = useRef(false);
@@ -135,7 +139,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async context => {
    const { id } = context.params;
 
-   const { data } = await client.query({
+   const { data }:GetMovieQueryResult = await client.query({
       query: GetMovieDocument,
       variables: { uuid: id },
    });

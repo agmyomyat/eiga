@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '@contexts';
+import { useAuth } from '@contexts/AuthContext';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRouter, NextRouter } from 'next/router';
 import { styles } from '@styles/MainNavigationStyles';

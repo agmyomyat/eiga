@@ -4,19 +4,21 @@ import {
    usePremiumUserLazyQuery,
    GetMovieQuery,
    useGetRelatedMoviesQuery,
+   Movies as typeMovies,
 } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/MoviePage';
 import { Grid, Container } from '@material-ui/core';
-import Iframe from '@components/movies/Iframe';
-import RelatedMovies from '@components/movies/RelatedMovies';
 import { getAccessToken } from '@helpers/accessToken';
 import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { useAuth } from '@contexts';
-import DetectOtherLogin from '@components/modals/detectOtherLogin';
+import { useAuth } from '@contexts/AuthContext';
 import { gqlInvalidToken } from '@apollo/apolloReactiveVar';
+import Iframe from '@components/movies/Iframe';
+import RelatedMovies from '@components/movies/RelatedMovies';
+import DetectOtherLogin from '@components/modals/DetectOtherLogin';
+import MovieInfo from '@components/movies/MovieInfo';
 
 const useStyles = makeStyles(styles);
 const client = initializeApollo();
@@ -24,11 +26,11 @@ const client = initializeApollo();
 export default function MoviePage(props) {
    const AccessToken = getAccessToken();
 
-   const { reactiveToken,logOut } = useAuth();
+   const { reactiveToken, logOut } = useAuth();
+
    const [checkPremium, { data }] = usePremiumUserLazyQuery({
       fetchPolicy: 'network-only',
       ssr: false,
-
    });
    const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
    const classes = useStyles();
@@ -47,7 +49,7 @@ export default function MoviePage(props) {
       setLoading(server !== currentServer);
    }
 
-   function iframeLoad(prop) {
+   function iframeLoad(prop: boolean) {
       setLoading(prop);
    }
 
@@ -71,14 +73,12 @@ export default function MoviePage(props) {
       };
    }, [data, checkPremium, AccessToken]);
 
-
-   useEffect(()=>{
-    if(reactiveToken.logOut){
-       logOut()
-       return setLoginDetect(true) 
+   useEffect(() => {
+      if (reactiveToken.logOut) {
+         logOut();
+         return setLoginDetect(true);
       }
-   },[logOut,reactiveToken.logOut])
-  
+   }, [logOut, reactiveToken.logOut]);
 
    useEffect(() => {
       console.log('user', premiumUser);
@@ -105,6 +105,12 @@ export default function MoviePage(props) {
                      server={server}
                      changeServer={changeServer}
                      premiumUser={premiumUser}
+                  />
+                  <MovieInfo
+                     name={server.name}
+                     date={server.date}
+                     body={server.body}
+                     genres={server.genres}
                   />
                </Grid>
                <Grid item sm={4} xs={12}>

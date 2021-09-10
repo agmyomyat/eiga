@@ -6,12 +6,27 @@ import { CircularProgress, Box, Breadcrumbs, Typography, Button } from '@materia
 import { NextRouter, useRouter } from 'next/router';
 
 const useStyles = makeStyles(styles);
+
+type Server = {
+   __typename?: 'Movies';
+   freeServer1?: string;
+   freeServer2?: string;
+   vipServer1?: string;
+   vipServer2?: string;
+   name: string;
+   date?: any;
+   body: string;
+   genres?: {
+      __typename?: 'Genres';
+      name?: string;
+   }[];
+};
 interface IframeProp {
    currentServer: string;
    loading: boolean;
    setLoading: Dispatch<SetStateAction<boolean>>;
    id: string | string[];
-   server: Partial<Movies>;
+   server: Server;
    changeServer: (server: string) => void;
    premiumUser: boolean;
 }
@@ -35,7 +50,6 @@ const Iframe: React.FC<IframeProp> = ({
    const refVipServer1: string = server?.vipServer1;
    const refVipServer2: string = server?.vipServer2;
 
-
    console.log('server1', refFreeServer1);
    console.log('server2', refFreeServer2);
    console.log('current Server', currentServer);
@@ -44,7 +58,6 @@ const Iframe: React.FC<IframeProp> = ({
       console.log('current', currentServer);
       copy.current = refer.current.src;
    }, [currentServer]);
-
 
    console.log('iframe src', refer.current?.src);
    console.log('copy server', copy?.current);

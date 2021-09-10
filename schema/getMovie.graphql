@@ -1,8 +1,14 @@
 query getMovie($uuid: String!) {
    getMovie(uuid: $uuid) {
-      freeServer1 
+      freeServer1
       freeServer2
       vipServer1
       vipServer2
+      name
+      date
+      body
+      genres {
+         name
+      }
    }
 }

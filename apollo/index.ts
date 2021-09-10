@@ -3,10 +3,10 @@ import { ApolloClient, createHttpLink, InMemoryCache, from, ApolloLink } from '@
 import { onError } from '@apollo/client/link/error';
 import jwt_decode from 'jwt-decode';
 import { getAccessToken, setAccessToken } from '@helpers/accessToken';
-import {gqlInvalidToken } from './apolloReactiveVar'
-import { setContext } from "@apollo/client/link/context";
-import {ReactiveCurrentUser} from './apolloReactiveVar';
-import {onAuthStateInit} from '../contexts/onStateAuth'
+import { gqlInvalidToken } from './apolloReactiveVar';
+import { setContext } from '@apollo/client/link/context';
+import { ReactiveCurrentUser } from './apolloReactiveVar';
+import { onAuthStateInit } from '@contexts/onStateAuth';
 let apolloClient;
 async function fireAuth() {
    const { auth } = await import('../lib/firebase');
@@ -24,52 +24,51 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
    if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
-const asyncRefreshTokenLink = setContext(
-  async ()=>{
-      let accessToken = {token:''}
-      let shouldFetchOrNot:boolean;
-      const token = getAccessToken()
-      async function handleFetch(){ 
-      let _token:string;
+const asyncRefreshTokenLink = setContext(async () => {
+   let accessToken = { token: '' };
+   let shouldFetchOrNot: boolean;
+   const token = getAccessToken();
+   async function handleFetch() {
+      let _token: string;
       await fetch('http://localhost:1337/refreshtoken', {
          method: 'POST',
          credentials: 'include',
       })
-      .then((res)=>res.json())
-      .then((data)=>_token= data.access)
-      if(!_token){
-         throw("access token not found")
-      }else{
-         return _token
-      } 
-   };
-      /** 
-       * TODO: even tho Access Token is not available Should check cookies
-       * To write that Logic 
-      */
-      if(!token){
-         let _auth = await fireAuth()
-         let _currentUser = await onAuthStateInit(_auth,ReactiveCurrentUser) 
-         console.log("currentUser in lin ",_currentUser)
-         if(_currentUser){ 
-         gqlInvalidToken({logOut:true})
-         console.log("linkcheckToken",token)
-         return {accessToken}
-         }
-         return {accessToken}
+         .then(res => res.json())
+         .then(data => (_token = data.access));
+      if (!_token) {
+         throw 'access token not found';
+      } else {
+         return _token;
       }
-      try{
-         gqlInvalidToken({logOut:false})
-         const { exp }: any = jwt_decode(<string | null>token);
-         console.log('expire', exp);
-         if (Date.now() >= exp * 1000) {
-            shouldFetchOrNot=true;
-         } else {
-            shouldFetchOrNot=false;
-         }
-      }catch{
-            shouldFetchOrNot=true;
-            };
+   }
+   /**
+    * TODO: even tho Access Token is not available Should check cookies
+    * To write that Logic
+    */
+   if (!token) {
+      let _auth = await fireAuth();
+      let _currentUser = await onAuthStateInit(_auth, ReactiveCurrentUser);
+      console.log('currentUser in lin ', _currentUser);
+      if (_currentUser) {
+         gqlInvalidToken({ logOut: true });
+         console.log('linkcheckToken', token);
+         return { accessToken };
+      }
+      return { accessToken };
+   }
+   try {
+      gqlInvalidToken({ logOut: false });
+      const { exp }: any = jwt_decode(<string | null>token);
+      console.log('expire', exp);
+      if (Date.now() >= exp * 1000) {
+         shouldFetchOrNot = true;
+      } else {
+         shouldFetchOrNot = false;
+      }
+   } catch {
+      shouldFetchOrNot = true;
+   }
 
       if(shouldFetchOrNot) {
          try{
@@ -88,9 +87,8 @@ const asyncRefreshTokenLink = setContext(
             console.log("final line")
             return {accessToken}
    };
-   }
-      
-   );
+   
+})
 
 /*
 IgnoreTokenRefresh ignore tokenRefreshLink middleware
@@ -99,7 +97,7 @@ graphql name change,
 they should be changed here too.
 */
 const IgnoreTokenRefresh = ApolloLink.split(
-   ({ operationName }) => operationName === 'premiumUser', 
+   ({ operationName }) => operationName === 'premiumUser',
    asyncRefreshTokenLink
 );
 
@@ -113,8 +111,8 @@ const authLink = new ApolloLink((operation, forward) => {
    const newAccessToken = contextToken?contextToken:oldToken
    console.log("access",newAccessToken);
    setAccessToken(newAccessToken);
-   if(operation.operationName==='premiumUser') {
-      operation.variables['token'] = newAccessToken
+   if (operation.operationName === 'premiumUser') {
+      operation.variables['token'] = newAccessToken;
    }
    console.log('operation', operation);
    operation.setContext(({ headers }) => ({
@@ -123,11 +121,11 @@ const authLink = new ApolloLink((operation, forward) => {
          auth: newAccessToken ? `Bearer ${newAccessToken}` : '', // however you get your token
       },
    }));
-   return forward(operation).map((data) => {
-    // Called after server responds
-    console.log("in apollo link", data)
-    return data;
-  });
+   return forward(operation).map(data => {
+      // Called after server responds
+      console.log('in apollo link', data);
+      return data;
+   });
 });
 
 function createApolloClient() {

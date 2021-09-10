@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useGetUserLazyQuery } from '@graphgen';
-import { useAuth } from '@contexts';
+import { useAuth } from '@contexts/AuthContext';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { auth, uiConfig } from '@lib';
 import { makeStyles } from '@material-ui/core/styles';

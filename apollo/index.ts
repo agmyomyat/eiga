@@ -6,7 +6,7 @@ import { getAccessToken, setAccessToken } from '@helpers/accessToken';
 import { gqlInvalidToken } from './apolloReactiveVar';
 import { setContext } from '@apollo/client/link/context';
 import { ReactiveCurrentUser } from './apolloReactiveVar';
-import { onAuthStateInit } from '../contexts/onStateAuth';
+import { onAuthStateInit } from '@contexts/onStateAuth';
 let apolloClient;
 async function fireAuth() {
    const { auth } = await import('../lib/firebase');

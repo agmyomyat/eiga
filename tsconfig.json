@@ -10,7 +10,7 @@
          "@apollo/*": ["apollo/*"],
          "@helpers/*": ["helpers/*"],
          "@lib": ["lib/firebase"],
-         "@contexts": ["contexts/AuthContext"]
+         "@contexts/*": ["contexts/*"]
       },
       "allowJs": true,
       "skipLibCheck": true,

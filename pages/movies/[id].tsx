@@ -21,7 +21,6 @@ import Iframe from '@components/movies/Iframe';
 import RelatedMovies from '@components/movies/RelatedMovies';
 import DetectOtherLogin from '@components/modals/detectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
-import { CodeSharp } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 const client = initializeApollo();
@@ -33,7 +32,7 @@ export default function MoviePage(props:PageProps) {
    const AccessToken = getAccessToken();
    const { reactiveToken, logOut } = useAuth();
    
-   const [checkPremium, { data }] = usePremiumUserLazyQuery({
+   const [checkPremium, { data, loading:checkPremiumLoading }] = usePremiumUserLazyQuery({
       fetchPolicy: 'network-only',
       ssr: false,
    });
@@ -106,8 +105,8 @@ export default function MoviePage(props:PageProps) {
 
    return (
       <Container className={classes.root}>
-         {(router.isFallback || !data) && <h2>loading</h2>}
-         {!router.isFallback && data && (
+         {(router.isFallback || !data||checkPremiumLoading) && <h2>loading</h2>}
+         {!router.isFallback && data && !checkPremiumLoading&&(
             <Grid container spacing={2}>
                <Grid item sm={8} xs={12}>
                   <Iframe

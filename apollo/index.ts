@@ -59,7 +59,6 @@ const asyncRefreshTokenLink = setContext(async () => {
       return { accessToken };
    }
    try {
-      gqlInvalidToken({ logOut: false });
       const { exp }: any = jwt_decode(<string | null>token);
       console.log('expire', exp);
       if (Date.now() >= exp * 1000) {
@@ -75,7 +74,6 @@ const asyncRefreshTokenLink = setContext(async () => {
          try{
             let res= await handleFetch()
             // setAccessToken(res||''); // see line authLink comment
-            gqlInvalidToken({logOut:false})
             console.log("fetched token success",res)
             accessToken.token=res||''
          }

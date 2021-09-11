@@ -80,7 +80,7 @@ export default function MoviePage(props:PageProps) {
          unmountingPremium.current = true;
          console.log('premiumcheck unmount');
       };
-   }, [data, checkPremium, router.query.id]);
+   }, [checkPremium, router.query.id]);
 
    useEffect(() => {
       if (reactiveToken.logOut) {

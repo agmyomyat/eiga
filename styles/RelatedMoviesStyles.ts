@@ -11,7 +11,7 @@ export const styles = (theme: Theme) =>
             gridTemplateColumns: 'repeat(auto-fill, minmax(80px,1fr))',
          },
          [theme.breakpoints.up('md')]: {
-            gridTemplateColumns: 'repeat(auto-fill, minmax(140px,1fr))',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(100px,1fr))',
          },
          [theme.breakpoints.up('lg')]: {
             gridTemplateColumns: 'repeat(auto-fill, minmax(170px,1fr))',

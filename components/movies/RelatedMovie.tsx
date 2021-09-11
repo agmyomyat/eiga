@@ -18,12 +18,12 @@ const RelatedMovie: React.FC<Partial<Movies>> = ({ name, date, photo_url, uuid }
          className={classes.root}
          onClick={() => push({ pathname: '/movies/[id]', query: { id: uuid } })}
       >
-         <Grid item xs={4}>
+         <Grid item xs={3}>
             <Box className={classes.card}>
-               <Image src={photo_url} layout="responsive" width={1600} height={900} alt={name} />
+               <Image src={photo_url} layout="responsive" width={600} height={900} alt={name} />
             </Box>
          </Grid>
-         <Grid item xs={8}>
+         <Grid item xs={9}>
             <Typography variant="subtitle2" component="h4" noWrap>
                {name}
             </Typography>

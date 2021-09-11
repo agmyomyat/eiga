@@ -46,6 +46,7 @@ export const styles = (theme: Theme) =>
       buttonGroup: {
          display: 'inline-block',
          margin: '0 auto',
+         padding: theme.spacing(1, 0),
       },
       button: {
          margin: theme.spacing(2),

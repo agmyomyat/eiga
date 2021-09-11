@@ -73,12 +73,11 @@ const asyncRefreshTokenLink = setContext(async () => {
    if (shouldFetchOrNot) {
       try {
          let res = await handleFetch();
-         setAccessToken(res || '');
+         // setAccessToken(res||''); // see line authLink comment
          gqlInvalidToken({ logOut: false });
          console.log('fetched token success', res);
          accessToken.token = res || '';
       } catch (e) {
-         fireAuth().then(auth => auth.signOut());
          gqlInvalidToken({ logOut: true });
          setAccessToken('');
          console.log('apollo catch', e);
@@ -101,7 +100,11 @@ const IgnoreTokenRefresh = ApolloLink.split(
 
 const authLink = new ApolloLink((operation, forward) => {
    const oldToken = getAccessToken();
-   const contextToken = operation.getContext().accessToken?.accessToken || '';
+   /**
+    * this line might not need here, context link await already set token but will not remove cause
+    * context link only run on premiumUserCheck query UPDATE: removed context link set Token function
+    */
+   const contextToken = operation.getContext().accessToken?.token || ''; //
    const newAccessToken = contextToken ? contextToken : oldToken;
    console.log('access', newAccessToken);
    setAccessToken(newAccessToken);

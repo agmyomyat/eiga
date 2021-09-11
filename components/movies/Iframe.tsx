@@ -1,5 +1,5 @@
 import React, { Dispatch, MutableRefObject, SetStateAction } from 'react';
-import { Movies } from '@graphgen';
+import { Genres, Movies } from '@graphgen';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/IframeStyles';
 import { CircularProgress, Box, Breadcrumbs, Typography, Button } from '@material-ui/core';
@@ -7,29 +7,20 @@ import { NextRouter, useRouter } from 'next/router';
 
 const useStyles = makeStyles(styles);
 
-type Server = {
-   __typename?: 'Movies';
-   freeServer1?: string;
-   freeServer2?: string;
-   vipServer1?: string;
-   vipServer2?: string;
-   name: string;
-   date?: any;
-   body: string;
-   genres?: {
-      __typename?: 'Genres';
-      name?: string;
-   }[];
-};
-interface IframeProp {
+export type TMovies<P,U> = Partial<Omit<P,"genres"> & U>
+export type PartialGenres = { [P in keyof Genres]?: Genres[P]; }[]
+export type TGenres = {genres: PartialGenres}
+
+interface IframeProp{
    currentServer: string;
    loading: boolean;
    setLoading: Dispatch<SetStateAction<boolean>>;
    id: string | string[];
-   server: Server;
+   server: Partial<TMovies<Movies,TGenres>>;
    changeServer: (server: string) => void;
    premiumUser: boolean;
 }
+
 
 const Iframe: React.FC<IframeProp> = ({
    currentServer,
@@ -49,6 +40,13 @@ const Iframe: React.FC<IframeProp> = ({
    const refFreeServer2: string = server?.freeServer2;
    const refVipServer1: string = server?.vipServer1;
    const refVipServer2: string = server?.vipServer2;
+   
+    
+   
+   
+   
+   
+   
 
    console.log('server1', refFreeServer1);
    console.log('server2', refFreeServer2);

@@ -120,7 +120,7 @@ export default function MoviePage(props:PageProps) {
                      name={server.name}
                      date={server.date}
                      body={server.body}
-                     genres={server.genres as Partial<Genres[]>}
+                     genres={server.genres}
                   />
                </Grid>
                <Grid item sm={4} xs={12}>

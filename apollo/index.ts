@@ -24,24 +24,25 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
    if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
+async function handleFetch() {
+   let _token: string;
+   await fetch('http://localhost:1337/refreshtoken', {
+      method: 'POST',
+      credentials: 'include',
+   })
+      .then(res => res.json())
+      .then(data => (_token = data.access));
+   if (!_token) {
+      throw 'access token not found';
+   } else {
+      return _token;
+   }
+}
 const asyncRefreshTokenLink = setContext(async () => {
    let accessToken = { token: '' };
    let shouldFetchOrNot: boolean;
    const token = getAccessToken();
-   async function handleFetch() {
-      let _token: string;
-      await fetch('http://localhost:1337/refreshtoken', {
-         method: 'POST',
-         credentials: 'include',
-      })
-         .then(res => res.json())
-         .then(data => (_token = data.access));
-      if (!_token) {
-         throw 'access token not found';
-      } else {
-         return _token;
-      }
-   }
+
    /**
     * TODO: even tho Access Token is not available Should check cookies
     * To write that Logic
@@ -58,7 +59,6 @@ const asyncRefreshTokenLink = setContext(async () => {
       return { accessToken };
    }
    try {
-      gqlInvalidToken({ logOut: false });
       const { exp }: any = jwt_decode(<string | null>token);
       console.log('expire', exp);
       if (Date.now() >= exp * 1000) {
@@ -74,7 +74,6 @@ const asyncRefreshTokenLink = setContext(async () => {
       try {
          let res = await handleFetch();
          // setAccessToken(res||''); // see line authLink comment
-         gqlInvalidToken({ logOut: false });
          console.log('fetched token success', res);
          accessToken.token = res || '';
       } catch (e) {

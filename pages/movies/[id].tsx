@@ -38,16 +38,12 @@ export default function MoviePage(props: PageProps) {
    const router: NextRouter = useRouter();
    const classes = useStyles();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
-
    const prevPath = useRef(router.query.id);
-
    const [loading, setLoading] = useState<boolean>(true);
    const [loginDetect, setLoginDetect] = useState<boolean>(false);
    const { id } = router.query;
-
    const serverResult = props.data;
    const movieData = serverResult?.getMovie;
-
    const premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
    const unmountingPremium = useRef(false);
 

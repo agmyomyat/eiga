@@ -38,7 +38,7 @@ export default function MoviePage(props:PageProps) {
    const router: NextRouter = useRouter();
    const classes = useStyles();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
-   const [prevPath,setPrevPath]= useState(router.query.id)
+   const prevPath= useRef(router.query.id)
    const [loading, setLoading] = useState<boolean>(true);
    const [loginDetect, setLoginDetect] = useState<boolean>(false);
    const { id } = router.query;
@@ -66,8 +66,8 @@ export default function MoviePage(props:PageProps) {
    };
 
    useEffect(() => {
-      if(router.query.id!==prevPath){
-         setPrevPath(router.query.id)
+      if(router.query.id!==prevPath.current){
+         prevPath.current=router.query.id
          unmountingPremium.current = false
    }
    console.log("ref",unmountingPremium.current)
@@ -80,7 +80,7 @@ export default function MoviePage(props:PageProps) {
          unmountingPremium.current = true;
          console.log('premiumcheck unmount');
       };
-   }, [data, checkPremium, router.query.id, prevPath]);
+   }, [data, checkPremium, router.query.id]);
 
    useEffect(() => {
       if (reactiveToken.logOut) {

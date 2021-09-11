@@ -70,23 +70,24 @@ const asyncRefreshTokenLink = setContext(async () => {
       shouldFetchOrNot = true;
    }
 
-   if (shouldFetchOrNot) {
-      try {
-         let res = await handleFetch();
-         setAccessToken(res || '');
-         gqlInvalidToken({ logOut: false });
-         console.log('fetched token success', res);
-         accessToken.token = res || '';
-      } catch (e) {
-         fireAuth().then(auth => auth.signOut());
-         gqlInvalidToken({ logOut: true });
-         setAccessToken('');
-         console.log('apollo catch', e);
-      }
-      console.log('final line');
-      return { accessToken };
-   }
-});
+      if(shouldFetchOrNot) {
+         try{
+            let res= await handleFetch()
+            // setAccessToken(res||''); // see line authLink comment
+            gqlInvalidToken({logOut:false})
+            console.log("fetched token success",res)
+            accessToken.token=res||''
+         }
+         catch(e){
+            gqlInvalidToken({logOut:true})
+            setAccessToken('')
+            console.log("apollo catch",e)
+         }
+            console.log("final line")
+            return {accessToken}
+   };
+   
+})
 
 /*
 IgnoreTokenRefresh ignore tokenRefreshLink middleware
@@ -101,9 +102,13 @@ const IgnoreTokenRefresh = ApolloLink.split(
 
 const authLink = new ApolloLink((operation, forward) => {
    const oldToken = getAccessToken();
-   const contextToken = operation.getContext().accessToken?.accessToken || '';
-   const newAccessToken = contextToken ? contextToken : oldToken;
-   console.log('access', newAccessToken);
+   /**
+    * this line might not need here, context link await already set token but will not remove cause
+    * context link only run on premiumUserCheck query UPDATE: removed context link set Token function 
+    */
+   const contextToken=operation.getContext().accessToken?.token||"" //
+   const newAccessToken = contextToken?contextToken:oldToken
+   console.log("access",newAccessToken);
    setAccessToken(newAccessToken);
    if (operation.operationName === 'premiumUser') {
       operation.variables['token'] = newAccessToken;

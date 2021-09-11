@@ -5,45 +5,50 @@ import {
    GetMovieQuery,
    useGetRelatedMoviesQuery,
    Movies as typeMovies,
+   Genres,
+   GetMovieQueryResult,
 } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/MoviePage';
 import { Grid, Container } from '@material-ui/core';
-import { getAccessToken } from '@helpers/accessToken';
 import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useAuth } from '@contexts/AuthContext';
 import { gqlInvalidToken } from '@apollo/apolloReactiveVar';
 import Iframe from '@components/movies/Iframe';
 import RelatedMovies from '@components/movies/RelatedMovies';
-import DetectOtherLogin from '@components/modals/DetectOtherLogin';
+import DetectOtherLogin from '@components/modals/detectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 
 const useStyles = makeStyles(styles);
 const client = initializeApollo();
+export interface PageProps {
+   data: GetMovieQuery
+}
 
-export default function MoviePage(props) {
-   const AccessToken = getAccessToken();
-
+export default function MoviePage(props:PageProps) {
    const { reactiveToken, logOut } = useAuth();
-
-   const [checkPremium, { data }] = usePremiumUserLazyQuery({
+   
+   const [checkPremium, { data, loading:checkPremiumLoading }] = usePremiumUserLazyQuery({
       fetchPolicy: 'network-only',
       ssr: false,
    });
    const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
+   const router: NextRouter = useRouter();
    const classes = useStyles();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
+   const [prevPath,setPrevPath]= useState(router.query.id)
    const [loading, setLoading] = useState<boolean>(true);
    const [loginDetect, setLoginDetect] = useState<boolean>(false);
-   const router: NextRouter = useRouter();
    const { id } = router.query;
-   const serverResult: GetMovieQuery = props.data;
+   const serverResult = props.data;
    const server = serverResult?.getMovie;
    const premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
-   const mountingPremium = useRef(false);
-
+   const unmountingPremium = useRef(false);
+   
+  
+   
    function changeServer(server: string) {
       setCurrentServer(server);
       setLoading(server !== currentServer);
@@ -61,17 +66,21 @@ export default function MoviePage(props) {
    };
 
    useEffect(() => {
-      if (!mountingPremium.current) {
+      if(router.query.id!==prevPath){
+         setPrevPath(router.query.id)
+         unmountingPremium.current = false
+   }
+   console.log("ref",unmountingPremium.current)
+      if (!unmountingPremium.current) {
          checkPremium({
-            variables: { token: AccessToken },
+            variables: { token: ''}, // token will be auto filled in Apollo middleware 
          });
-         console.log('checking premium', data);
       }
       return () => {
-         mountingPremium.current = true;
+         unmountingPremium.current = true;
          console.log('premiumcheck unmount');
       };
-   }, [data, checkPremium, AccessToken]);
+   }, [data, checkPremium, router.query.id, prevPath]);
 
    useEffect(() => {
       if (reactiveToken.logOut) {
@@ -82,6 +91,7 @@ export default function MoviePage(props) {
 
    useEffect(() => {
       console.log('user', premiumUser);
+      console.log("fallback",router.isFallback)
       if (!router.isFallback && premiumUser) {
          return setCurrentServer(server.vipServer1);
       } else if (!router.isFallback && !premiumUser) {
@@ -93,8 +103,8 @@ export default function MoviePage(props) {
 
    return (
       <Container className={classes.root}>
-         {(router.isFallback || !data) && <h2>loading</h2>}
-         {!router.isFallback && data && (
+         {(router.isFallback || !data||checkPremiumLoading) && <h2>loading</h2>}
+         {!router.isFallback && data && !checkPremiumLoading&&(
             <Grid container spacing={2}>
                <Grid item sm={8} xs={12}>
                   <Iframe
@@ -110,7 +120,7 @@ export default function MoviePage(props) {
                      name={server.name}
                      date={server.date}
                      body={server.body}
-                     genres={server.genres}
+                     genres={server.genres as Partial<Genres[]>}
                   />
                </Grid>
                <Grid item sm={4} xs={12}>
@@ -134,7 +144,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async context => {
    const { id } = context.params;
 
-   const { data } = await client.query({
+   const { data }:GetMovieQueryResult = await client.query({
       query: GetMovieDocument,
       variables: { uuid: id },
    });

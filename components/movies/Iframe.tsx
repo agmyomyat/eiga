@@ -16,7 +16,7 @@ interface IframeProp{
    loading: boolean;
    setLoading: Dispatch<SetStateAction<boolean>>;
    id: string | string[];
-   server: Partial<TMovies<Movies,TGenres>>;
+   server: TMovies<Movies,TGenres>;
    changeServer: (server: string) => void;
    premiumUser: boolean;
 }
@@ -41,13 +41,6 @@ const Iframe: React.FC<IframeProp> = ({
    const refVipServer1: string = server?.vipServer1;
    const refVipServer2: string = server?.vipServer2;
    
-    
-   
-   
-   
-   
-   
-
    console.log('server1', refFreeServer1);
    console.log('server2', refFreeServer2);
    console.log('current Server', currentServer);

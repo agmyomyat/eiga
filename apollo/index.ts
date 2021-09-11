@@ -22,13 +22,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
          console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
       );
    if (networkError) console.log(`[Network error]: ${networkError}`);
-});
+}); 
 
-const asyncRefreshTokenLink = setContext(async () => {
-   let accessToken = { token: '' };
-   let shouldFetchOrNot: boolean;
-   const token = getAccessToken();
-   async function handleFetch() {
+async function handleFetch() {
       let _token: string;
       await fetch('http://localhost:1337/refreshtoken', {
          method: 'POST',
@@ -42,6 +38,11 @@ const asyncRefreshTokenLink = setContext(async () => {
          return _token;
       }
    }
+const asyncRefreshTokenLink = setContext(async () => {
+   let accessToken = { token: '' };
+   let shouldFetchOrNot: boolean;
+   const token = getAccessToken();
+  
    /**
     * TODO: even tho Access Token is not available Should check cookies
     * To write that Logic

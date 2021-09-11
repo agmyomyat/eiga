@@ -18,7 +18,7 @@ import { useAuth } from '@contexts/AuthContext';
 import { gqlInvalidToken } from '@apollo/apolloReactiveVar';
 import Iframe from '@components/movies/Iframe';
 import RelatedMovies from '@components/movies/RelatedMovies';
-import DetectOtherLogin from '@components/modals/DetectOtherLogin';
+import DetectOtherLogin from '@components/modals/detectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 
 const useStyles = makeStyles(styles);
@@ -77,20 +77,19 @@ export default function MoviePage(props: PageProps) {
       }
       return () => {
          unmountingPremium.current = true;
-         console.log('premiumcheck unmount');
+         // console.log('premiumcheck unmount');
       };
    }, [checkPremium, router.query.id]);
 
    useEffect(() => {
       if (reactiveToken.logOut) {
-         console.log('asdfasdfdsa log out ????????');
          return setLoginDetect(true);
       }
    }, [reactiveToken.logOut]);
 
    useEffect(() => {
-      console.log('user', premiumUser);
-      console.log('fallback', router.isFallback);
+      // console.log('user', premiumUser);
+      // console.log('fallback', router.isFallback);
       if (!router.isFallback && premiumUser) {
          return setCurrentServer(movieData.vipServer1);
       } else if (!router.isFallback && !premiumUser) {

@@ -12,7 +12,6 @@ import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/MoviePage';
 import { Grid, Container } from '@material-ui/core';
-import { getAccessToken } from '@helpers/accessToken';
 import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useAuth } from '@contexts/AuthContext';
@@ -29,7 +28,6 @@ export interface PageProps {
 }
 
 export default function MoviePage(props:PageProps) {
-   const AccessToken = getAccessToken();
    const { reactiveToken, logOut } = useAuth();
    
    const [checkPremium, { data, loading:checkPremiumLoading }] = usePremiumUserLazyQuery({
@@ -75,14 +73,14 @@ export default function MoviePage(props:PageProps) {
    console.log("ref",mountingPremium.current)
       if (!mountingPremium.current) {
          checkPremium({
-            variables: { token: AccessToken },
+            variables: { token: ''}, // token will be auto filled in Apollo middleware 
          });
       }
       return () => {
          mountingPremium.current = true;
          console.log('premiumcheck unmount');
       };
-   }, [data, checkPremium, AccessToken,router.query.id, prevPath]);
+   }, [data, checkPremium, router.query.id, prevPath]);
 
    useEffect(() => {
       if (reactiveToken.logOut) {

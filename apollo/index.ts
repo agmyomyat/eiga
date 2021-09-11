@@ -79,7 +79,6 @@ const asyncRefreshTokenLink = setContext(async () => {
             accessToken.token=res||''
          }
          catch(e){
-            fireAuth().then((auth)=>auth.signOut())
             gqlInvalidToken({logOut:true})
             setAccessToken('')
             console.log("apollo catch",e)

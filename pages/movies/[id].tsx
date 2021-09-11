@@ -45,7 +45,7 @@ export default function MoviePage(props:PageProps) {
    const serverResult = props.data;
    const server = serverResult?.getMovie;
    const premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
-   const mountingPremium = useRef(false);
+   const unmountingPremium = useRef(false);
    
   
    
@@ -68,16 +68,16 @@ export default function MoviePage(props:PageProps) {
    useEffect(() => {
       if(router.query.id!==prevPath){
          setPrevPath(router.query.id)
-         mountingPremium.current = false
+         unmountingPremium.current = false
    }
-   console.log("ref",mountingPremium.current)
-      if (!mountingPremium.current) {
+   console.log("ref",unmountingPremium.current)
+      if (!unmountingPremium.current) {
          checkPremium({
             variables: { token: ''}, // token will be auto filled in Apollo middleware 
          });
       }
       return () => {
-         mountingPremium.current = true;
+         unmountingPremium.current = true;
          console.log('premiumcheck unmount');
       };
    }, [data, checkPremium, router.query.id, prevPath]);

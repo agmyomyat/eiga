@@ -1,7 +1,7 @@
 import { Box, Typography } from '@material-ui/core';
 import { Movies } from '@graphgen';
-
-const MovieInfo: React.FC<Partial<Movies>> = ({ name, date, body, genres }) => {
+import { TMovies,TGenres} from './Iframe';
+const MovieInfo: React.FC<TMovies<Movies,TGenres>> = ({ name, date, body, genres }) => {
    return (
       <Box>
          <Typography>hello</Typography>

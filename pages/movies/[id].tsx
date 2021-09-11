@@ -40,7 +40,7 @@ export default function MoviePage(props) {
    const router: NextRouter = useRouter();
    const { id } = router.query;
    const serverResult: GetMovieQuery = props.data;
-   const server = serverResult?.getMovie;
+   const movieData = serverResult?.getMovie;
    const premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
    const mountingPremium = useRef(false);
 
@@ -83,13 +83,13 @@ export default function MoviePage(props) {
    useEffect(() => {
       console.log('user', premiumUser);
       if (!router.isFallback && premiumUser) {
-         return setCurrentServer(server.vipServer1);
+         return setCurrentServer(movieData.vipServer1);
       } else if (!router.isFallback && !premiumUser) {
-         return setCurrentServer(server.freeServer1);
+         return setCurrentServer(movieData.freeServer1);
       } else {
          return;
       }
-   }, [router.isFallback, premiumUser, server?.vipServer1, server?.freeServer1]);
+   }, [router.isFallback, premiumUser, movieData?.vipServer1, movieData?.freeServer1]);
 
    return (
       <Container className={classes.root}>
@@ -102,15 +102,15 @@ export default function MoviePage(props) {
                      loading={loading}
                      setLoading={iframeLoad}
                      id={id}
-                     server={server}
+                     server={movieData}
                      changeServer={changeServer}
                      premiumUser={premiumUser}
                   />
                   <MovieInfo
-                     name={server.name}
-                     date={server.date}
-                     body={server.body}
-                     genres={server.genres}
+                     name={movieData.name}
+                     date={movieData.date}
+                     body={movieData.body}
+                     genres={movieData.genres}
                   />
                </Grid>
                <Grid item sm={4} xs={12}>

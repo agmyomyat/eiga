@@ -7,26 +7,12 @@ import { NextRouter, useRouter } from 'next/router';
 
 const useStyles = makeStyles(styles);
 
-type Server = {
-   __typename?: 'Movies';
-   freeServer1?: string;
-   freeServer2?: string;
-   vipServer1?: string;
-   vipServer2?: string;
-   name: string;
-   date?: any;
-   body: string;
-   genres?: {
-      __typename?: 'Genres';
-      name?: string;
-   }[];
-};
 interface IframeProp {
    currentServer: string;
    loading: boolean;
    setLoading: Dispatch<SetStateAction<boolean>>;
    id: string | string[];
-   server: Server;
+   server: Partial<Movies>;
    changeServer: (server: string) => void;
    premiumUser: boolean;
 }

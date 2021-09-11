@@ -84,10 +84,11 @@ export default function MoviePage(props:PageProps) {
 
    useEffect(() => {
       if (reactiveToken.logOut) {
-         logOut();
+         console.log("asdfasdfdsa log out ????????")
          return setLoginDetect(true);
+         
       }
-   }, [logOut, reactiveToken.logOut]);
+   }, [reactiveToken.logOut]);
 
    useEffect(() => {
       console.log('user', premiumUser);

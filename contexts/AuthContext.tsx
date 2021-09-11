@@ -46,6 +46,10 @@ export default function AuthProvider({ children }) {
    }
 
    useEffect(() => {
+      let _mounted = true
+      if(reactiveToken.logOut&&_mounted){
+         logOut()
+      }
       setAuthLoading(true);
 
       onAuthStateInit(auth, ReactiveCurrentUser, setCurrentUser, setAuthLoading);
@@ -53,9 +57,10 @@ export default function AuthProvider({ children }) {
 
       return () => {
          console.warn('unmounting in context');
+         _mounted=false
          unsubscribeAuth;
       };
-   }, []);
+   }, [reactiveToken.logOut]);
 
    const authContext = {
       currentUser,

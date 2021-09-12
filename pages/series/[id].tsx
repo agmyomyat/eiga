@@ -1,15 +1,15 @@
-import { initializeApollo } from '@apollo/index';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { initializeApollo } from "@apollo/index";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 const client = initializeApollo();
 
 export default function SeriesPage() {
-   return <div></div>;
+	return <div></div>;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-   return {
-      paths: [],
-      fallback: true,
-   };
+	return {
+		paths: [],
+		fallback: true,
+	};
 };

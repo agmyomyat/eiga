@@ -1,15 +1,18 @@
+import { gqlInvalidToken } from '@apollo/apolloReactiveVar';
+import { useAuth } from '@contexts/AuthContext';
 import { Modal, Snackbar, SnackbarProps } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import React from 'react';
 
-type ModalProp = {
-   open: boolean;
-   handleClose: (event?: React.SyntheticEvent, reason?: string) => void;
+const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+   if (reason === "clickaway") return;
+   gqlInvalidToken({ logOut: false });
 };
 
-export default function DetectOtherLogin<T extends ModalProp>({ open, handleClose }: T) {
+export default function DetectOtherLogi() {
+   const {reactiveToken} = useAuth()
    return (
-      <Snackbar open={open} onClose={handleClose}>
+      <Snackbar open={reactiveToken.logOut} onClose={handleClose}>
          <Alert onClose={handleClose} severity="error" elevation={6} variant="filled">
             <AlertTitle>We detected Another Login</AlertTitle>
             Don&apos;t Share Your Account To Others!

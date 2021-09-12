@@ -28,7 +28,6 @@ export interface PageProps {
 }
 
 export default function MoviePage(props: PageProps) {
-	const { reactiveToken, logOut } = useAuth();
 
 	const [checkPremium, { data, loading: checkPremiumLoading }] = usePremiumUserLazyQuery({
 		fetchPolicy: "network-only",
@@ -40,7 +39,6 @@ export default function MoviePage(props: PageProps) {
 	const [currentServer, setCurrentServer] = useState<string | null>(null);
 	const prevPath = useRef(router.query.id);
 	const [loading, setLoading] = useState<boolean>(true);
-	const [loginDetect, setLoginDetect] = useState<boolean>(false);
 	const { id } = router.query;
 	const serverResult = props.data;
 	const movieData = serverResult?.getMovie;
@@ -56,12 +54,7 @@ export default function MoviePage(props: PageProps) {
 		setLoading(prop);
 	}
 
-	const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-		if (reason === "clickaway") return;
-
-		setLoginDetect(false);
-		gqlInvalidToken({ logOut: false });
-	};
+	
 
 	useEffect(() => {
 		if (router.query.id !== prevPath.current) {
@@ -80,13 +73,6 @@ export default function MoviePage(props: PageProps) {
 			console.log("premiumcheck unmount");
 		};
 	}, [checkPremium, router.query.id]);
-
-	useEffect(() => {
-		if (reactiveToken.logOut) {
-			console.log("asdfasdfdsa log out ????????");
-			return setLoginDetect(true);
-		}
-	}, [reactiveToken.logOut]);
 
 	useEffect(() => {
 		console.log("user", premiumUser);
@@ -133,7 +119,7 @@ export default function MoviePage(props: PageProps) {
 				</Grid>
 			)}
 
-			<DetectOtherLogin open={loginDetect} handleClose={handleClose} />
+			<DetectOtherLogin />
 		</Container>
 	);
 }

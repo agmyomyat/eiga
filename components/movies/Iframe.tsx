@@ -11,23 +11,28 @@ export type TMovies<P,U> = Partial<Omit<P,"genres"> & U>
 export type PartialGenres = { [P in keyof Genres]?: Genres[P]; }[]
 export type TGenres = {genres: PartialGenres}
 
-interface IframeProp{
+interface IframeProp {
    currentServer: string;
    loading: boolean;
    setLoading: Dispatch<SetStateAction<boolean>>;
    id: string | string[];
-   server: TMovies<Movies,TGenres>;
+   freeServer1: string;
+   freeServer2: string;
+   vipServer1: string;
+   vipServer2: string;
    changeServer: (server: string) => void;
    premiumUser: boolean;
 }
-
 
 const Iframe: React.FC<IframeProp> = ({
    currentServer,
    loading,
    setLoading,
    id,
-   server,
+   freeServer1,
+   freeServer2,
+   vipServer1,
+   vipServer2,
    changeServer,
    premiumUser,
 }) => {
@@ -36,13 +41,8 @@ const Iframe: React.FC<IframeProp> = ({
    const copy = React.useRef(currentServer);
    const classes = useStyles();
 
-   const refFreeServer1: string = server?.freeServer1;
-   const refFreeServer2: string = server?.freeServer2;
-   const refVipServer1: string = server?.vipServer1;
-   const refVipServer2: string = server?.vipServer2;
-   
-   console.log('server1', refFreeServer1);
-   console.log('server2', refFreeServer2);
+   console.log('server1', freeServer1);
+   console.log('server2', freeServer2);
    console.log('current Server', currentServer);
 
    React.useEffect(() => {
@@ -87,26 +87,26 @@ const Iframe: React.FC<IframeProp> = ({
          <Box className={classes.buttonGroup}>
             <Button
                variant={`${
-                  currentServer === refFreeServer1 || currentServer === refVipServer1
+                  currentServer === freeServer1 || currentServer === vipServer1
                      ? 'contained'
                      : 'outlined'
                }`}
                size="small"
                color="primary"
-               onClick={() => changeServer(premiumUser ? server.vipServer1 : server.freeServer1)}
+               onClick={() => changeServer(premiumUser ? vipServer1 : freeServer1)}
                className={classes.button}
             >
                Server1
             </Button>
             <Button
                variant={`${
-                  currentServer === refFreeServer2 || currentServer === refVipServer2
+                  currentServer === freeServer2 || currentServer === vipServer2
                      ? 'contained'
                      : 'outlined'
                }`}
                size="small"
                color="primary"
-               onClick={() => changeServer(premiumUser ? server.vipServer2 : server.freeServer2)}
+               onClick={() => changeServer(premiumUser ? vipServer2 : freeServer2)}
             >
                Server2
             </Button>

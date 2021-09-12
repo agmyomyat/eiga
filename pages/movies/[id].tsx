@@ -28,7 +28,7 @@ export interface PageProps {
 }
 
 export default function MoviePage(props: PageProps) {
-	const { reactiveToken } = useAuth();
+	const { reactiveToken, logOut } = useAuth();
 
 	const [checkPremium, { data, loading: checkPremiumLoading }] = usePremiumUserLazyQuery({
 		fetchPolicy: "network-only",
@@ -77,19 +77,20 @@ export default function MoviePage(props: PageProps) {
 		}
 		return () => {
 			unmountingPremium.current = true;
-			// console.log('premiumcheck unmount');
+			console.log("premiumcheck unmount");
 		};
 	}, [checkPremium, router.query.id]);
 
 	useEffect(() => {
 		if (reactiveToken.logOut) {
+			console.log("asdfasdfdsa log out ????????");
 			return setLoginDetect(true);
 		}
 	}, [reactiveToken.logOut]);
 
 	useEffect(() => {
-		// console.log('user', premiumUser);
-		// console.log('fallback', router.isFallback);
+		console.log("user", premiumUser);
+		console.log("fallback", router.isFallback);
 		if (!router.isFallback && premiumUser) {
 			return setCurrentServer(movieData.vipServer1);
 		} else if (!router.isFallback && !premiumUser) {
@@ -110,7 +111,10 @@ export default function MoviePage(props: PageProps) {
 							loading={loading}
 							setLoading={iframeLoad}
 							id={id}
-							server={movieData}
+							freeServer1={movieData.freeServer1}
+							freeServer2={movieData.freeServer2}
+							vipServer1={movieData.vipServer1}
+							vipServer2={movieData.vipServer2}
 							changeServer={changeServer}
 							premiumUser={premiumUser}
 						/>

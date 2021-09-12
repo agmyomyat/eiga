@@ -235,10 +235,6 @@ export type Movies = {
   published_at?: Maybe<Scalars['DateTime']>;
   tv_series?: Maybe<Array<Maybe<TvSeries>>>;
   genres?: Maybe<Array<Maybe<Genres>>>;
-  server1: Scalars['String'];
-  server2: Scalars['String'];
-  tvServer1: Scalars['String'];
-  tvServer2: Scalars['String'];
 };
 
 
@@ -820,6 +816,7 @@ export type QueryUsersConnectionArgs = {
 
 export type QuerySearchArgs = {
   q?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
 };
 
 
@@ -1973,6 +1970,13 @@ export type GetRelatedMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetRelatedMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, date?: Maybe<any>, quality: string, photo_url: string }>>> };
 
+export type GetSeriesQueryVariables = Exact<{
+  uuid: Scalars['String'];
+}>;
+
+
+export type GetSeriesQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'Movies', name: string, date?: Maybe<any>, body: string, genres?: Maybe<Array<Maybe<{ __typename?: 'Genres', name?: Maybe<string> }>>>, tv_series?: Maybe<Array<Maybe<{ __typename?: 'TvSeries', season?: Maybe<Array<Maybe<{ __typename?: 'ComponentTvSeriesSeason', seasonID?: Maybe<number>, episodes?: Maybe<Array<Maybe<{ __typename?: 'ComponentTvSeriesEpisodes', episodeID?: Maybe<number>, freeServer1?: Maybe<string>, freeServer2?: Maybe<string>, vipServer1?: Maybe<string>, vipServer2?: Maybe<string> }>>> }>>> }>>> }> };
+
 export type GetUserQueryVariables = Exact<{
   uuid: Scalars['String'];
 }>;
@@ -2117,6 +2121,58 @@ export function useGetRelatedMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetRelatedMoviesQueryHookResult = ReturnType<typeof useGetRelatedMoviesQuery>;
 export type GetRelatedMoviesLazyQueryHookResult = ReturnType<typeof useGetRelatedMoviesLazyQuery>;
 export type GetRelatedMoviesQueryResult = Apollo.QueryResult<GetRelatedMoviesQuery, GetRelatedMoviesQueryVariables>;
+export const GetSeriesDocument = gql`
+    query getSeries($uuid: String!) {
+  getMovie(uuid: $uuid) {
+    name
+    date
+    body
+    genres {
+      name
+    }
+    tv_series {
+      season {
+        seasonID
+        episodes {
+          episodeID
+          freeServer1
+          freeServer2
+          vipServer1
+          vipServer2
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSeriesQuery__
+ *
+ * To run a query within a React component, call `useGetSeriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSeriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSeriesQuery({
+ *   variables: {
+ *      uuid: // value for 'uuid'
+ *   },
+ * });
+ */
+export function useGetSeriesQuery(baseOptions: Apollo.QueryHookOptions<GetSeriesQuery, GetSeriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSeriesQuery, GetSeriesQueryVariables>(GetSeriesDocument, options);
+      }
+export function useGetSeriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSeriesQuery, GetSeriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSeriesQuery, GetSeriesQueryVariables>(GetSeriesDocument, options);
+        }
+export type GetSeriesQueryHookResult = ReturnType<typeof useGetSeriesQuery>;
+export type GetSeriesLazyQueryHookResult = ReturnType<typeof useGetSeriesLazyQuery>;
+export type GetSeriesQueryResult = Apollo.QueryResult<GetSeriesQuery, GetSeriesQueryVariables>;
 export const GetUserDocument = gql`
     query getUser($uuid: String!) {
   userData(where: {uuid: $uuid}) {

@@ -5,7 +5,6 @@ import {
 	GetMovieQuery,
 	useGetRelatedMoviesQuery,
 	Movies as typeMovies,
-	Genres,
 	GetMovieQueryResult,
 } from "@graphgen";
 import { NextRouter, useRouter } from "next/router";
@@ -14,8 +13,6 @@ import { styles } from "@styles/MoviePage";
 import { Grid, Container, Divider } from "@material-ui/core";
 import { initializeApollo } from "@apollo/index";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { useAuth } from "@contexts/AuthContext";
-import { gqlInvalidToken } from "@apollo/apolloReactiveVar";
 import Iframe from "@components/movies/Iframe";
 import RelatedMovies from "@components/movies/RelatedMovies";
 import DetectOtherLogin from "@components/modals/detectOtherLogin";
@@ -53,9 +50,6 @@ export default function MoviePage(props: PageProps) {
 	function iframeLoad(prop: boolean) {
 		setLoading(prop);
 	}
-
-	
-
 	useEffect(() => {
 		if (router.query.id !== prevPath.current) {
 			prevPath.current = router.query.id;

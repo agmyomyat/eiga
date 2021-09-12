@@ -7,9 +7,7 @@ import {
 	GetSeriesQueryResult,
 	usePremiumUserLazyQuery,
 } from "@graphgen";
-import { useAuth } from "@contexts/AuthContext";
 import { useRouter, NextRouter } from "next/router";
-import { gqlInvalidToken } from "@apollo/apolloReactiveVar";
 import { makeStyles } from "@material-ui/core/styles";
 import { styles } from "@styles/MoviePage";
 import { Container, Grid, Divider } from "@material-ui/core";
@@ -54,7 +52,6 @@ export default function SeriesPage(props: PageProps) {
 	function iframeLoad(prop: boolean) {
 		setLoading(prop);
 	}
-
 
 	useEffect(() => {
 		if (router.query.id !== prevPath.current) {

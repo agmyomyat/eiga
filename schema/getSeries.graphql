@@ -1,0 +1,22 @@
+query getSeries($uuid: String!) {
+   getMovie(uuid: $uuid) {
+      name
+      date
+      body
+      genres {
+         name
+      }
+      tv_series {
+         season {
+            seasonID
+            episodes {
+               episodeID
+               freeServer1
+               freeServer2
+               vipServer1
+               vipServer2
+            }
+         }
+      }
+   }
+}

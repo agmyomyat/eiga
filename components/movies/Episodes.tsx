@@ -1,11 +1,36 @@
 import { useState } from 'react';
-import { Typography, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { Typography, FormControl, InputLabel, Select, MenuItem, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/EpisodesStyles';
 
 const useStyles = makeStyles(styles);
 
-const Episodes: React.FC = () => {
+type Seasons = {
+   __typename?: 'ComponentTvSeriesSeason';
+   seasonID?: number;
+   episodes?: {
+      __typename?: 'ComponentTvSeriesEpisodes';
+      episodeID?: number;
+      freeServer1?: string;
+      freeServer2?: string;
+      vipServer1?: string;
+      vipServer2?: string;
+   }[];
+}[];
+
+interface Iepisodes {
+   seasons: Seasons;
+   currentSeason: number;
+   currentEpisode: number;
+   handleSelect: (season: number, id: number) => void;
+}
+
+const Episodes: React.FC<Iepisodes> = ({
+   seasons,
+   currentSeason,
+   currentEpisode,
+   handleSelect,
+}) => {
    const classes = useStyles();
    const [season, setSeason] = useState<number>(1);
 
@@ -23,12 +48,54 @@ const Episodes: React.FC = () => {
             onChange={handleChange}
             label="Age"
          >
-            <MenuItem value={1}>Season 1</MenuItem>
-            <MenuItem value={2}>Season 2</MenuItem>
-            <MenuItem value={3}>Season 3</MenuItem>
+            {seasons.map(season => (
+               <MenuItem key={season.seasonID} value={season.seasonID}>
+                  Season {season.seasonID}
+               </MenuItem>
+            ))}
          </Select>
+         <ul>
+            {seasons[season - 1].episodes.map(episode => (
+               <Episode
+                  key={episode.episodeID}
+                  id={episode.episodeID}
+                  currentSeason={currentSeason}
+                  currentEpisode={currentEpisode}
+                  handleSelect={handleSelect}
+                  season={season}
+               >
+                  Season: {season} Episode: {episode.episodeID}
+               </Episode>
+            ))}
+         </ul>
       </FormControl>
    );
 };
 
 export default Episodes;
+
+interface Iepisode {
+   id: number;
+   season: number;
+   currentSeason: number;
+   currentEpisode: number;
+   handleSelect: (season: number, id: number) => void;
+}
+
+export const Episode: React.FC<Iepisode> = ({
+   id,
+   season,
+   handleSelect,
+   currentEpisode,
+   currentSeason,
+}) => {
+   return (
+      <Button
+         onClick={() => handleSelect(season, id)}
+         variant={season === currentSeason && id === currentEpisode ? 'contained' : 'outlined'}
+         color="primary"
+      >
+         Season {season} Episode {id}
+      </Button>
+   );
+};

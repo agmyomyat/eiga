@@ -5,7 +5,6 @@ import jwt_decode from 'jwt-decode';
 import { getAccessToken, setAccessToken } from '@helpers/accessToken';
 import { gqlInvalidToken } from './apolloReactiveVar';
 import { setContext } from '@apollo/client/link/context';
-import { ReactiveCurrentUser } from './apolloReactiveVar';
 import { onAuthStateInit } from '@contexts/onStateAuth';
 let apolloClient;
 async function fireAuth() {
@@ -49,7 +48,7 @@ const asyncRefreshTokenLink = setContext(async () => {
     */
    if (!token) {
       let _auth = await fireAuth();
-      let _currentUser = await onAuthStateInit(_auth, ReactiveCurrentUser);
+      let _currentUser = await onAuthStateInit(_auth);
       console.log('currentUser in lin ', _currentUser);
       if (_currentUser) {
          gqlInvalidToken({ logOut: true });

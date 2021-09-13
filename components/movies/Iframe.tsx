@@ -1,5 +1,5 @@
-import React, { Dispatch, MutableRefObject, SetStateAction } from 'react';
-import { Genres, Movies } from '@graphgen';
+import React, { Dispatch, SetStateAction } from 'react';
+import { Genres } from '@graphgen';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/IframeStyles';
 import { CircularProgress, Box, Breadcrumbs, Typography, Button } from '@material-ui/core';
@@ -76,7 +76,6 @@ const Iframe: React.FC<IframeProp> = ({
                onLoad={() => {
                   refer.current.src !== copy.current ? console.log('gg') : setLoading(false);
                }}
-               id="aungmyomyat"
                src={currentServer}
                scrolling="no"
                allowFullScreen

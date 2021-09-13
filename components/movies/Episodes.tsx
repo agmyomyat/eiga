@@ -2,24 +2,33 @@ import { useState } from 'react';
 import { Typography, FormControl, InputLabel, Select, MenuItem, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/EpisodesStyles';
+import { ComponentTvSeriesSeason, ComponentTvSeriesEpisodes} from '@graphgen'
 
 const useStyles = makeStyles(styles);
+type Episodes = Partial<ComponentTvSeriesEpisodes>
+type OmitEpi = Omit<ComponentTvSeriesSeason, "episodes">
+type Seasons=Partial<OmitEpi & {episodes:Episodes[]}>
+// type SSeasons<T extends { [P in keyof OmitEpi]?: OmitEpi[P] }>=T
 
-type Seasons = {
-   __typename?: 'ComponentTvSeriesSeason';
-   seasonID?: number;
-   episodes?: {
-      __typename?: 'ComponentTvSeriesEpisodes';
-      episodeID?: number;
-      freeServer1?: string;
-      freeServer2?: string;
-      vipServer1?: string;
-      vipServer2?: string;
-   }[];
-}[];
+ 
+
+// type Seasons = {
+//    __typename?: 'ComponentTvSeriesSeason';
+//    seasonID?: number;
+//    episodes?: {
+//       __typename?: 'ComponentTvSeriesEpisodes';
+//       episodeID?: number;
+//       freeServer1?: string;
+//       freeServer2?: string;
+//       vipServer1?: string;
+//       vipServer2?: string;
+//    }[];
+// }[];
+
+
 
 interface Iepisodes {
-   seasons: Seasons;
+   seasons: Seasons[]
    currentSeason: number;
    currentEpisode: number;
    handleSelect: (season: number, id: number) => void;
@@ -55,7 +64,7 @@ const Episodes: React.FC<Iepisodes> = ({
             ))}
          </Select>
          <ul>
-            {seasons[season - 1].episodes.map(episode => (
+            {seasons[season - 1].episodes.map((episode:Episodes) => (
                <Episode
                   key={episode.episodeID}
                   id={episode.episodeID}

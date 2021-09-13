@@ -6,7 +6,6 @@ export let unsubscribeAuth: firebaseUser.Unsubscribe;
 
 export const onAuthStateInit = (
    auth,
-   ReactiveCurrentUser: ReactiveVar<ReactivecurrentUser>,
    setCurrentUser?: Dispatch<any>,
    setAuthLoading?: Dispatch<any>
 ) => {
@@ -16,7 +15,6 @@ export const onAuthStateInit = (
             setCurrentUser(user);
             setAuthLoading(false);
          }
-         ReactiveCurrentUser({ user: user ? true : false });
          unsubscribeAuth = unsubscribe;
          if (user) {
             resolve(user);

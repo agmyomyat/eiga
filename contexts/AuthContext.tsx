@@ -4,15 +4,12 @@ import {
    createContext,
    useContext,
    Context,
-   useCallback,
-   useMemo,
-   Dispatch,
 } from 'react';
 import { setAccessToken } from '@helpers/accessToken';
 import { auth } from '@lib';
 import { default as firebaseUser } from 'firebase';
 import { useReactiveVar } from '@apollo/client';
-import { gqlInvalidToken, ReactiveCurrentUser, ReactiveValue } from '@apollo/apolloReactiveVar';
+import { gqlInvalidToken, ReactiveValue } from '@apollo/apolloReactiveVar';
 import { onAuthStateInit, unsubscribeAuth } from './onStateAuth';
 
 interface IauthContext {
@@ -52,7 +49,7 @@ export default function AuthProvider({ children }) {
       }
       setAuthLoading(true);
 
-      onAuthStateInit(auth, ReactiveCurrentUser, setCurrentUser, setAuthLoading);
+      onAuthStateInit(auth, setCurrentUser, setAuthLoading);
       console.log('auth checking');
 
       return () => {

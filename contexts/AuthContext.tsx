@@ -1,10 +1,4 @@
-import {
-   useState,
-   useEffect,
-   createContext,
-   useContext,
-   Context,
-} from 'react';
+import { useState, useEffect, createContext, useContext, Context } from 'react';
 import { setAccessToken } from '@helpers/accessToken';
 import { auth } from '@lib';
 import { default as firebaseUser } from 'firebase';
@@ -43,9 +37,9 @@ export default function AuthProvider({ children }) {
    };
 
    useEffect(() => {
-      let _mounted = true
-      if(reactiveToken.logOut&&_mounted){
-         logOut()
+      let _mounted = true;
+      if (reactiveToken.logOut && _mounted) {
+         logOut();
       }
       setAuthLoading(true);
 
@@ -54,7 +48,7 @@ export default function AuthProvider({ children }) {
 
       return () => {
          console.warn('unmounting in context');
-         _mounted=false
+         _mounted = false;
          unsubscribeAuth;
       };
    }, [reactiveToken.logOut]);

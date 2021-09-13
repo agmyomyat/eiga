@@ -13,7 +13,9 @@ const useStyles = makeStyles(styles);
 const MobileNavigation: React.FC = () => {
    const classes = useStyles();
    const { push, pathname }: NextRouter = useRouter();
-   const [value, setValue] = useState(pathname === '/movies/[id]' ? '/' : pathname);
+   const [value, setValue] = useState(
+      pathname === '/movies/[id]' || '/seires/[id]' ? '/' : pathname
+   );
 
    return (
       <Hidden smUp>

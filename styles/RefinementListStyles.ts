@@ -11,7 +11,7 @@ export const styles = (theme: Theme) =>
          flexWrap: 'nowrap',
          overflowX: 'scroll',
          '-ms-overflow-style': 'none',
-         scrollbarWwidth: 'none',
+         scrollbarWidth: 'none',
          '&::-webkit-scrollbar': {
             display: 'none',
          },

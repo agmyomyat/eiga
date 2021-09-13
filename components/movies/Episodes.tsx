@@ -1,34 +1,15 @@
 import { useState } from 'react';
-import { Typography, FormControl, InputLabel, Select, MenuItem, Button } from '@material-ui/core';
+import { Box, FormControl, InputLabel, NativeSelect, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/EpisodesStyles';
-import { ComponentTvSeriesSeason, ComponentTvSeriesEpisodes} from '@graphgen'
+import { ComponentTvSeriesSeason, ComponentTvSeriesEpisodes } from '@graphgen';
 
 const useStyles = makeStyles(styles);
-type Episodes = Partial<ComponentTvSeriesEpisodes>
-type OmitEpi = Omit<ComponentTvSeriesSeason, "episodes">
-type Seasons=Partial<OmitEpi & {episodes:Episodes[]}>
-// type SSeasons<T extends { [P in keyof OmitEpi]?: OmitEpi[P] }>=T
-
- 
-
-// type Seasons = {
-//    __typename?: 'ComponentTvSeriesSeason';
-//    seasonID?: number;
-//    episodes?: {
-//       __typename?: 'ComponentTvSeriesEpisodes';
-//       episodeID?: number;
-//       freeServer1?: string;
-//       freeServer2?: string;
-//       vipServer1?: string;
-//       vipServer2?: string;
-//    }[];
-// }[];
-
-
-
+type Episodes = Partial<ComponentTvSeriesEpisodes>;
+type OmitEpi = Omit<ComponentTvSeriesSeason, 'episodes'>;
+type Seasons = Partial<OmitEpi & { episodes: Episodes[] }>;
 interface Iepisodes {
-   seasons: Seasons[]
+   seasons: Seasons[];
    currentSeason: number;
    currentEpisode: number;
    handleSelect: (season: number, id: number) => void;
@@ -44,27 +25,36 @@ const Episodes: React.FC<Iepisodes> = ({
    const [season, setSeason] = useState<number>(1);
 
    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-      setSeason(event.target.value as number);
+      setSeason(+(event.target.value) as number);
    };
 
    return (
-      <FormControl className={classes.formControl}>
-         <InputLabel id="select-season">Season</InputLabel>
-         <Select
-            labelId="select-season"
-            id="select-season"
-            value={season}
-            onChange={handleChange}
-            label="Age"
+      <Box className={classes.root}>
+         <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="select-season">Season</InputLabel>
+            <NativeSelect
+               id="select-season"
+               value={season}
+               onChange={handleChange}
+               inputProps={{
+                  name: 'season',
+                  id: 'select-season',
+               }}
+            >
+               {seasons.map(season => (
+                  <option key={season.seasonID} value={season.seasonID}>
+                     Season {season.seasonID}
+                  </option>
+               ))}
+            </NativeSelect>
+         </FormControl>
+         <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            className={classes.episodesContainer}
          >
-            {seasons.map(season => (
-               <MenuItem key={season.seasonID} value={season.seasonID}>
-                  Season {season.seasonID}
-               </MenuItem>
-            ))}
-         </Select>
-         <ul>
-            {seasons[season - 1].episodes.map((episode:Episodes) => (
+            {seasons[season - 1].episodes.map((episode: Episodes) => (
                <Episode
                   key={episode.episodeID}
                   id={episode.episodeID}
@@ -76,8 +66,8 @@ const Episodes: React.FC<Iepisodes> = ({
                   Season: {season} Episode: {episode.episodeID}
                </Episode>
             ))}
-         </ul>
-      </FormControl>
+         </Box>
+      </Box>
    );
 };
 
@@ -98,13 +88,16 @@ export const Episode: React.FC<Iepisode> = ({
    currentEpisode,
    currentSeason,
 }) => {
+   const classes = useStyles();
+   const isSelected = season === currentSeason && id === currentEpisode;
    return (
       <Button
          onClick={() => handleSelect(season, id)}
-         variant={season === currentSeason && id === currentEpisode ? 'contained' : 'outlined'}
+         variant={isSelected ? 'contained' : 'outlined'}
          color="primary"
+         className={classes.episode}
       >
-         Season {season} Episode {id}
+         Episode {id}
       </Button>
    );
 };

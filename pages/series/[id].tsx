@@ -15,6 +15,7 @@ import DetectOtherLogin from '@components/modals/DetectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 import Iframe from '@components/movies/Iframe';
 import Episodes from '@components/movies/Episodes';
+import { useAuth } from '@contexts/AuthContext';
 
 const client = initializeApollo();
 
@@ -32,6 +33,7 @@ export default function SeriesPage(props: PageProps) {
    // const theme = useTheme();
    // const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
    // const containerRef = useRef(null);
+   const {currentUser} = useAuth()
    const router: NextRouter = useRouter();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const prevPath = useRef(router.query.id);
@@ -39,7 +41,7 @@ export default function SeriesPage(props: PageProps) {
    const { id } = router.query;
    const serverResult = props.data;
    const seriesData = serverResult?.getMovie;
-   const premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
+   let premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
    const unmountingPremium = useRef(false);
 
    const [currentSeason, setCurrentSeason] = useState<number>(1);
@@ -62,9 +64,12 @@ export default function SeriesPage(props: PageProps) {
          unmountingPremium.current = false;
       }
       console.log('ref', unmountingPremium.current);
+      if (!currentUser) { // to check again when log out
+         unmountingPremium.current=false
+      }
 
       if (!unmountingPremium.current) {
-         checkPremium({
+         return checkPremium({
             variables: { token: '' }, // token will be auto filled in Apollo middleware
          });
       }
@@ -72,11 +77,11 @@ export default function SeriesPage(props: PageProps) {
          unmountingPremium.current = true;
          console.log('premiumcheck unmount');
       };
-   }, [checkPremium, router.query.id]);
+   }, [checkPremium, currentUser, router.query.id]);
 
    useEffect(() => {
-      console.log('user', premiumUser);
-      console.log('fallback', router.isFallback);
+      // console.log('user', premiumUser);
+      // console.log('fallback', router.isFallback);
       if (!router.isFallback && premiumUser) {
          return setCurrentServer(servers.vipServer1);
       } else if (!router.isFallback && !premiumUser) {
@@ -93,8 +98,8 @@ export default function SeriesPage(props: PageProps) {
 
    return (
       <Container className={classes.root}>
-         {(router.isFallback || !data || checkPremiumLoading) && <h2>loading</h2>}
-         {!router.isFallback && data && !checkPremiumLoading && (
+         {(router.isFallback || checkPremiumLoading) && <h2>loading</h2>}
+         {!router.isFallback && !checkPremiumLoading && (
             <Box>
                <Iframe
                   currentServer={currentServer}

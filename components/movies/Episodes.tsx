@@ -50,7 +50,7 @@ const Episodes: React.FC<Iepisodes> = ({
          </FormControl>
          <Box
             display="flex"
-            flexDirection="column"
+            flexWrap="wrap"
             alignItems="center"
             className={classes.episodesContainer}
          >

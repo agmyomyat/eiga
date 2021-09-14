@@ -8,9 +8,9 @@ import {
    usePremiumUserLazyQuery,
 } from '@graphgen';
 import { useRouter, NextRouter } from 'next/router';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/MoviePage';
-import { Container, Grid, Divider, Portal, useMediaQuery } from '@material-ui/core';
+import { Container, Box, Divider } from '@material-ui/core';
 import DetectOtherLogin from '@components/modals/DetectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 import Iframe from '@components/movies/Iframe';
@@ -29,9 +29,9 @@ export default function SeriesPage(props: PageProps) {
       ssr: false,
    });
    const classes = useStyles();
-   const theme = useTheme();
-   const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
-   const containerRef = useRef(null);
+   // const theme = useTheme();
+   // const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
+   // const containerRef = useRef(null);
    const router: NextRouter = useRouter();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const prevPath = useRef(router.query.id);
@@ -95,51 +95,35 @@ export default function SeriesPage(props: PageProps) {
       <Container className={classes.root}>
          {(router.isFallback || !data || checkPremiumLoading) && <h2>loading</h2>}
          {!router.isFallback && data && !checkPremiumLoading && (
-            <Grid container spacing={2}>
-               <Grid item sm={8} xs={12}>
-                  <Iframe
-                     currentServer={currentServer}
-                     loading={loading}
-                     setLoading={iframeLoad}
-                     id={id}
-                     freeServer1={servers.freeServer1}
-                     freeServer2={servers.freeServer2}
-                     vipServer1={servers.vipServer1}
-                     vipServer2={servers.vipServer2}
-                     changeServer={changeServer}
-                     premiumUser={premiumUser}
-                  />
-                  <Divider />
-                  <div ref={containerRef}></div>
-                  {isMobile && <Divider />}
-                  <MovieInfo
-                     name={seriesData.name}
-                     date={seriesData.date}
-                     body={seriesData.body}
-                     genres={seriesData.genres}
-                  />
-                  <Divider />
-               </Grid>
-               <Grid item sm={4} xs={12}>
-                  {isMobile ? (
-                     <Portal container={containerRef.current}>
-                        <Episodes
-                           seasons={seasons}
-                           currentSeason={currentSeason}
-                           currentEpisode={currentEpisode}
-                           handleSelect={handleSelect}
-                        />
-                     </Portal>
-                  ) : (
-                     <Episodes
-                        seasons={seasons}
-                        currentSeason={currentSeason}
-                        currentEpisode={currentEpisode}
-                        handleSelect={handleSelect}
-                     />
-                  )}
-               </Grid>
-            </Grid>
+            <Box>
+               <Iframe
+                  currentServer={currentServer}
+                  loading={loading}
+                  setLoading={iframeLoad}
+                  id={id}
+                  freeServer1={servers.freeServer1}
+                  freeServer2={servers.freeServer2}
+                  vipServer1={servers.vipServer1}
+                  vipServer2={servers.vipServer2}
+                  changeServer={changeServer}
+                  premiumUser={premiumUser}
+               />
+               <Divider />
+               <Episodes
+                  seasons={seasons}
+                  currentSeason={currentSeason}
+                  currentEpisode={currentEpisode}
+                  handleSelect={handleSelect}
+               />
+               <Divider />
+               <MovieInfo
+                  name={seriesData.name}
+                  date={seriesData.date}
+                  body={seriesData.body}
+                  genres={seriesData.genres}
+               />
+               <Divider />
+            </Box>
          )}
 
          <DetectOtherLogin />

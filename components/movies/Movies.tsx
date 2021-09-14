@@ -15,13 +15,11 @@ const Movies = ({ movies }: IMovies) => {
    const classes = useStyles();
 
    return (
-      <div className={classes.root}>
-         <div className={classes.grid}>
-            {movies.map((movie: Partial<typeMovies>) => (
-               <Movie key={movie.id} {...movie} />
-            ))}
-         </div>
-      </div>
+      <Box className={classes.grid}>
+         {movies.map((movie: Partial<typeMovies>) => (
+            <Movie key={movie.id} {...movie} />
+         ))}
+      </Box>
    );
 };
 

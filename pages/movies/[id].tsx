@@ -10,7 +10,7 @@ import {
 import { NextRouter, useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/MoviePage';
-import { Grid, Container, Divider } from '@material-ui/core';
+import { Box, Container, Divider } from '@material-ui/core';
 import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Iframe from '@components/movies/Iframe';
@@ -83,33 +83,29 @@ export default function MoviePage(props: PageProps) {
       <Container className={classes.root}>
          {(router.isFallback || !data || checkPremiumLoading) && <h2>loading</h2>}
          {!router.isFallback && data && !checkPremiumLoading && (
-            <Grid container spacing={2}>
-               <Grid item sm={8} xs={12}>
-                  <Iframe
-                     currentServer={currentServer}
-                     loading={loading}
-                     setLoading={iframeLoad}
-                     id={id}
-                     freeServer1={movieData.freeServer1}
-                     freeServer2={movieData.freeServer2}
-                     vipServer1={movieData.vipServer1}
-                     vipServer2={movieData.vipServer2}
-                     changeServer={changeServer}
-                     premiumUser={premiumUser}
-                  />
-                  <Divider />
-                  <MovieInfo
-                     name={movieData.name}
-                     date={movieData.date}
-                     body={movieData.body}
-                     genres={movieData.genres}
-                  />
-                  <Divider />
-               </Grid>
-               <Grid item sm={4} xs={12}>
-                  <RelatedMovies data={relatedMoviesData} loading={relatedMoviesLoading} />
-               </Grid>
-            </Grid>
+            <Box>
+               <Iframe
+                  currentServer={currentServer}
+                  loading={loading}
+                  setLoading={iframeLoad}
+                  id={id}
+                  freeServer1={movieData.freeServer1}
+                  freeServer2={movieData.freeServer2}
+                  vipServer1={movieData.vipServer1}
+                  vipServer2={movieData.vipServer2}
+                  changeServer={changeServer}
+                  premiumUser={premiumUser}
+               />
+               <Divider />
+               <MovieInfo
+                  name={movieData.name}
+                  date={movieData.date}
+                  body={movieData.body}
+                  genres={movieData.genres}
+               />
+               <Divider />
+               <RelatedMovies data={relatedMoviesData} loading={relatedMoviesLoading} />
+            </Box>
          )}
 
          <DetectOtherLogin />

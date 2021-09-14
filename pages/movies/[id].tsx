@@ -17,6 +17,7 @@ import Iframe from '@components/movies/Iframe';
 import RelatedMovies from '@components/movies/RelatedMovies';
 import DetectOtherLogin from '@components/modals/DetectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
+import { useAuth } from '@contexts/AuthContext';
 
 const useStyles = makeStyles(styles);
 const client = initializeApollo();
@@ -30,6 +31,7 @@ export default function MoviePage(props: PageProps) {
       ssr: false,
    });
    const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
+   const {currentUser} = useAuth()
    const router: NextRouter = useRouter();
    const classes = useStyles();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
@@ -49,15 +51,18 @@ export default function MoviePage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop);
    }
-   useEffect(() => {
+    useEffect(() => {
       if (router.query.id !== prevPath.current) {
          prevPath.current = router.query.id;
          unmountingPremium.current = false;
       }
       console.log('ref', unmountingPremium.current);
+      if (!currentUser) { // to check again when log out
+         unmountingPremium.current=false
+      }
 
       if (!unmountingPremium.current) {
-         checkPremium({
+         return checkPremium({
             variables: { token: '' }, // token will be auto filled in Apollo middleware
          });
       }
@@ -65,7 +70,7 @@ export default function MoviePage(props: PageProps) {
          unmountingPremium.current = true;
          console.log('premiumcheck unmount');
       };
-   }, [checkPremium, router.query.id]);
+   }, [checkPremium, currentUser, router.query.id]);
 
    useEffect(() => {
       console.log('user', premiumUser);
@@ -81,8 +86,8 @@ export default function MoviePage(props: PageProps) {
 
    return (
       <Container className={classes.root}>
-         {(router.isFallback || !data || checkPremiumLoading) && <h2>loading</h2>}
-         {!router.isFallback && data && !checkPremiumLoading && (
+         {(router.isFallback || checkPremiumLoading) && <h2>loading</h2>}
+         {!router.isFallback && !checkPremiumLoading && (
             <Box>
                <Iframe
                   currentServer={currentServer}

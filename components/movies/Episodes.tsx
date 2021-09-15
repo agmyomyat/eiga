@@ -62,9 +62,7 @@ const Episodes: React.FC<Iepisodes> = ({
                   currentEpisode={currentEpisode}
                   handleSelect={handleSelect}
                   season={season}
-               >
-                  Season: {season} Episode: {episode.episodeID}
-               </Episode>
+               />
             ))}
          </Box>
       </Box>

@@ -4,12 +4,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/IframeStyles';
 import { CircularProgress, Box, Breadcrumbs, Typography, Button } from '@material-ui/core';
 import { NextRouter, useRouter } from 'next/router';
+import Link from 'next/link';
+import { Link as MuiLink } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
-export type TMovies<P,U> = Partial<Omit<P,"genres"> & U>
-export type PartialGenres = { [P in keyof Genres]?: Genres[P]; }[]
-export type TGenres = {genres: PartialGenres}
+export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>;
+export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[];
+export type TGenres = { genres: PartialGenres };
 
 interface IframeProp {
    currentServer: string;
@@ -57,7 +59,9 @@ const Iframe: React.FC<IframeProp> = ({
       <>
          <Breadcrumbs className={classes.breadcrumbs}>
             <Typography color="textSecondary" className={classes.breadItem}>
-               Home
+               <Link href="/" passHref>
+                  <MuiLink color="inherit">Home</MuiLink>
+               </Link>
             </Typography>
             <Typography color="textSecondary" className={classes.breadItem}>
                Movies

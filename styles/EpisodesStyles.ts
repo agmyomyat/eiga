@@ -12,10 +12,11 @@ export const styles = (theme: Theme) =>
       episodesContainer: {
          maxHeight: 400,
          overflow: 'auto',
+         margin: theme.spacing(2, 0),
       },
       episode: {
          width: '100%',
-         margin: theme.spacing(2, 0),
+         margin: theme.spacing(1, 0),
          [theme.breakpoints.up('sm')]: {
             width: '70%',
             maxWidth: 250,

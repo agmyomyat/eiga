@@ -5,12 +5,12 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import React from 'react';
 
 const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-   if (reason === "clickaway") return;
+   if (reason === 'clickaway') return;
    gqlInvalidToken({ logOut: false });
 };
 
-export default function DetectOtherLogi() {
-   const {reactiveToken} = useAuth()
+export default function DetectOtherLogin() {
+   const { reactiveToken } = useAuth();
    return (
       <Snackbar open={reactiveToken.logOut} onClose={handleClose}>
          <Alert onClose={handleClose} severity="error" elevation={6} variant="filled">

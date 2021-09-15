@@ -15,7 +15,7 @@ import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Iframe from '@components/movies/Iframe';
 import RelatedMovies from '@components/movies/RelatedMovies';
-import DetectOtherLogin from '@components/modals/detectOtherLogin';
+import DetectOtherLogin from '@components/modals/DetectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 import { useAuth } from '@contexts/AuthContext';
 

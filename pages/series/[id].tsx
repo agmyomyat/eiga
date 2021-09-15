@@ -11,7 +11,7 @@ import { useRouter, NextRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/MoviePage';
 import { Container, Box, Divider } from '@material-ui/core';
-import DetectOtherLogin from '@components/modals/DetectOtherLogin';
+import DetectOtherLogin from '@components/modals/detectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 import Iframe from '@components/movies/Iframe';
 import Episodes from '@components/movies/Episodes';
@@ -46,7 +46,7 @@ export default function SeriesPage(props: PageProps) {
 
    const [currentSeason, setCurrentSeason] = useState<number>(1);
    const [currentEpisode, setCurrentEpisode] = useState<number>(1);
-   const seasons = seriesData?.tv_series[0].season;
+   const seasons = seriesData?.tv_sery.season;
    const servers = seasons?.[currentSeason - 1].episodes[currentEpisode - 1];
 
    function changeServer(server: string) {

@@ -18,6 +18,7 @@ import RelatedMovies from '@components/movies/RelatedMovies';
 import DetectOtherLogin from '@components/modals/detectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 import { useAuth } from '@contexts/AuthContext';
+import { useApolloClient } from '@apollo/client';
 
 const useStyles = makeStyles(styles);
 const client = initializeApollo();
@@ -26,22 +27,16 @@ export interface PageProps {
 }
 
 export default function MoviePage(props: PageProps) {
-   const [checkPremium, { data, loading: checkPremiumLoading }] = usePremiumUserLazyQuery({
-      fetchPolicy: 'network-only',
-      ssr: false,
-   });
+   const client = useApolloClient()
    const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
-   const {currentUser} = useAuth()
+   const {premiumUser,checkPremiumLoading} = useAuth()
    const router: NextRouter = useRouter();
    const classes = useStyles();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
-   const prevPath = useRef(router.query.id);
    const [loading, setLoading] = useState<boolean>(true);
    const { id } = router.query;
    const serverResult = props.data;
    const movieData = serverResult?.getMovie;
-   const premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
-   const unmountingPremium = useRef(false);
 
    function changeServer(server: string) {
       setCurrentServer(server);
@@ -51,28 +46,9 @@ export default function MoviePage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop);
    }
-    useEffect(() => {
-      if (router.query.id !== prevPath.current) {
-         prevPath.current = router.query.id;
-         unmountingPremium.current = false;
-      }
-      console.log('ref', unmountingPremium.current);
-      if (!currentUser) { // to check again when log out
-         unmountingPremium.current=false
-      }
-
-      if (!unmountingPremium.current) {
-         return checkPremium({
-            variables: { token: '' }, // token will be auto filled in Apollo middleware
-         });
-      }
-      return () => {
-         unmountingPremium.current = true;
-         console.log('premiumcheck unmount');
-      };
-   }, [checkPremium, currentUser, router.query.id]);
-
+   
    useEffect(() => {
+      
       console.log('user', premiumUser);
       console.log('fallback', router.isFallback);
       if (!router.isFallback && premiumUser) {
@@ -82,7 +58,7 @@ export default function MoviePage(props: PageProps) {
       } else {
          return;
       }
-   }, [router.isFallback, premiumUser, movieData?.vipServer1, movieData?.freeServer1]);
+   }, [router.isFallback, premiumUser, movieData?.vipServer1, movieData?.freeServer1, router.query.id, client]);
 
    return (
       <Container className={classes.root}>

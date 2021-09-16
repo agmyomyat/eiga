@@ -25,24 +25,18 @@ interface PageProps {
 }
 
 export default function SeriesPage(props: PageProps) {
-   const [checkPremium, { data, loading: checkPremiumLoading }] = usePremiumUserLazyQuery({
-      fetchPolicy: 'network-only',
-      ssr: false,
-   });
+   
    const classes = useStyles();
    // const theme = useTheme();
    // const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
    // const containerRef = useRef(null);
-   const {currentUser} = useAuth()
+   const {premiumUser,checkPremiumLoading} = useAuth()
    const router: NextRouter = useRouter();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
-   const prevPath = useRef(router.query.id);
    const [loading, setLoading] = useState<boolean>(true);
    const { id } = router.query;
    const serverResult = props.data;
    const seriesData = serverResult?.getMovie;
-   let premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
-   const unmountingPremium = useRef(false);
 
    const [currentSeason, setCurrentSeason] = useState<number>(1);
    const [currentEpisode, setCurrentEpisode] = useState<number>(1);
@@ -58,28 +52,10 @@ export default function SeriesPage(props: PageProps) {
       setLoading(prop);
    }
 
-   useEffect(() => {
-      if (router.query.id !== prevPath.current) {
-         prevPath.current = router.query.id;
-         unmountingPremium.current = false;
-      }
-      console.log('ref', unmountingPremium.current);
-      if (!currentUser) { // to check again when log out
-         unmountingPremium.current=false
-      }
-
-      if (!unmountingPremium.current) {
-         return checkPremium({
-            variables: { token: '' }, // token will be auto filled in Apollo middleware
-         });
-      }
-      return () => {
-         unmountingPremium.current = true;
-         console.log('premiumcheck unmount');
-      };
-   }, [checkPremium, currentUser, router.query.id]);
+   
 
    useEffect(() => {
+     
       // console.log('user', premiumUser);
       // console.log('fallback', router.isFallback);
       if (!router.isFallback && premiumUser) {
@@ -89,7 +65,7 @@ export default function SeriesPage(props: PageProps) {
       } else {
          return;
       }
-   }, [router.isFallback, premiumUser, servers?.vipServer1, servers?.freeServer1]);
+   }, [router.isFallback, premiumUser, servers.vipServer1, servers.freeServer1]);
 
    const handleSelect = (season: number, id: number) => {
       setCurrentSeason(season);

@@ -11,7 +11,7 @@ import { useRouter, NextRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from '@styles/MoviePage';
 import { Container, Box, Divider } from '@material-ui/core';
-import DetectOtherLogin from '@components/modals/DetectOtherLogin';
+import DetectOtherLogin from '@components/modals/detectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 import Iframe from '@components/movies/Iframe';
 import Episodes from '@components/movies/Episodes';

@@ -13,7 +13,7 @@ export default function Profile() {
    const { currentUser, authLoading, logOut } = useAuth();
 
    const [getUser, { data, loading }] = useGetUserLazyQuery({
-      fetchPolicy: 'cache-and-network',
+      fetchPolicy: 'network-only',
    });
 
    const classes = useStyles();

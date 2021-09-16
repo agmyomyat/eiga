@@ -1,23 +1,161 @@
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+import { useState } from 'react';
+import {
+   Container,
+   Box,
+   Typography,
+   Divider,
+   FormControl,
+   FormLabel,
+   RadioGroup,
+   FormControlLabel,
+   Radio,
+} from '@material-ui/core';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import BlockIcon from '@material-ui/icons/Block';
 import { makeStyles } from '@material-ui/core';
 import { styles } from '@styles/PricingStyles';
+import { plans } from '@helpers/plans';
 
 const useStyles = makeStyles(styles);
 
 export default function Pricing() {
    const classes = useStyles();
 
-   return (
-      <Box className={classes.root}>
-         <Typography variant="h6" component="h2" align="center" className={classes.title}>
-            Premium
-         </Typography>
-         <Divider variant="middle" />
-         <Typography variant="subtitle1" component="h1" align="center" className={classes.pricing}>
-            <span className={classes.priceTitle}>3000</span>MMK/Month
-         </Typography>
+   const [month, setMonth] = useState<number>(1);
+   const currentPlan = plans.find(plan => plan.id === month);
+
+   const selectPlans = (
+      <Box display="flex" justifyContent="center" className={classes.selectPlanWrapper}>
+         {plans.map(plan => (
+            <Box
+               key={plan.id}
+               className={`${classes.selectPlan} ${month === plan.id && classes.activePlan}`}
+               onClick={() => setMonth(plan.id)}
+            >
+               {plan.month}
+            </Box>
+         ))}
       </Box>
+   );
+
+   return (
+      <Container className={classes.root}>
+         {/* <Typography variant="h3" component="h1" align="center">
+            EIGA Pricing
+         </Typography> */}
+         {selectPlans}
+         <Box className={classes.plans} display="flex" justifyContent="center" flexWrap="wrap">
+            <Box className={classes.card}>
+               <Box className={classes.cardHeader}>
+                  <Typography
+                     variant="h6"
+                     component="h2"
+                     align="center"
+                     className={classes.planHeader}
+                  >
+                     BASIC
+                  </Typography>
+               </Box>
+               <Box className={classes.pricing}>
+                  <Typography variant="h5" component="h3" align="center" className={classes.price}>
+                     FREE
+                  </Typography>
+               </Box>
+               <Divider variant="middle" />
+               <Box className={classes.cardBody}>
+                  <Box display="flex" className={classes.cardItem}>
+                     <CheckCircleOutlineIcon className={classes.successIcon} />
+                     <Typography variant="body1">SD(480p)</Typography>
+                  </Box>
+                  <Box display="flex" className={classes.cardItem}>
+                     <BlockIcon className={classes.blockIcon} />
+                     <Typography variant="body1">Ads Free</Typography>
+                  </Box>
+                  <Box display="flex" className={classes.cardItem}>
+                     <BlockIcon className={classes.blockIcon} />
+                     <Typography variant="body1">Download Contents</Typography>
+                  </Box>
+                  <Box display="flex" className={classes.cardItem}>
+                     <BlockIcon className={classes.blockIcon} />
+                     <Typography variant="body1">Access Premium Contents</Typography>
+                  </Box>
+                  <Box display="flex" className={classes.cardItem}>
+                     <BlockIcon className={classes.blockIcon} />
+                     <Typography variant="body1">Watch History Feature</Typography>
+                  </Box>
+                  <Box display="flex" className={classes.cardItem}>
+                     <BlockIcon className={classes.blockIcon} />
+                     <Typography variant="body1">Favorites Feature</Typography>
+                  </Box>
+               </Box>
+            </Box>
+
+            {/* Free-Card ends here */}
+
+            <Box className={classes.card}>
+               <Box className={classes.cardHeader}>
+                  <Typography
+                     variant="h6"
+                     component="h2"
+                     align="center"
+                     className={classes.planHeader}
+                  >
+                     PREMIUM
+                  </Typography>
+               </Box>
+               <Box className={classes.pricing}>
+                  <Typography variant="h5" component="h3" align="center" className={classes.price}>
+                     {currentPlan.price}MMK
+                     <Typography
+                        variant="subtitle2"
+                        component="span"
+                        color="textSecondary"
+                        className={classes.perMonth}
+                     >
+                        /month
+                     </Typography>
+                  </Typography>
+                  {currentPlan.save > 0 && (
+                     <Typography variant="subtitle2" component="p" color="primary" align="center">
+                        (Save {currentPlan.save} Month)
+                     </Typography>
+                  )}
+               </Box>
+               <Divider variant="middle" />
+               <Box className={classes.cardBody}>
+                  <Box display="flex" className={classes.cardItem}>
+                     <CheckCircleOutlineIcon className={classes.successIcon} />
+                     <Typography variant="body1" className={classes.premiumItem}>
+                        HD
+                     </Typography>
+                  </Box>
+                  <Box display="flex" className={classes.cardItem}>
+                     <CheckCircleOutlineIcon className={classes.successIcon} />
+                     <Typography variant="body1" className={classes.premiumItem}>
+                        Ads Free
+                     </Typography>
+                  </Box>
+                  <Box display="flex" className={classes.cardItem}>
+                     <CheckCircleOutlineIcon className={classes.successIcon} />
+                     <Typography variant="body1" className={classes.premiumItem}>
+                        Download Contents
+                     </Typography>
+                  </Box>
+                  <Box display="flex" className={classes.cardItem}>
+                     <CheckCircleOutlineIcon className={classes.successIcon} />
+                     <Typography variant="body1">Access Premium Contents</Typography>
+                  </Box>
+                  <Box display="flex" className={classes.cardItem}>
+                     <CheckCircleOutlineIcon className={classes.successIcon} />
+                     <Typography variant="body1">Watch History Feature</Typography>
+                  </Box>
+                  <Box display="flex" className={classes.cardItem}>
+                     <CheckCircleOutlineIcon className={classes.successIcon} />
+                     <Typography variant="body1">Favorites Feature</Typography>
+                  </Box>
+               </Box>
+            </Box>
+         </Box>
+      </Container>
    );
 }

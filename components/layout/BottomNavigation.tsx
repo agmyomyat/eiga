@@ -14,7 +14,7 @@ const MobileNavigation: React.FC = () => {
    const classes = useStyles();
    const { push, pathname }: NextRouter = useRouter();
    const [value, setValue] = useState(
-      pathname === '/movies/[id]' || '/seires/[id]' ? '/' : pathname
+      pathname === '/movies/[id]' ?? '/series/[id]' ? '/' : pathname
    );
 
    return (

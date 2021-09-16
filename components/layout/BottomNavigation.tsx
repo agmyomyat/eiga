@@ -13,9 +13,10 @@ const useStyles = makeStyles(styles);
 const MobileNavigation: React.FC = () => {
    const classes = useStyles();
    const { push, pathname }: NextRouter = useRouter();
-   const [value, setValue] = useState(
-      pathname === '/movies/[id]' ?? '/series/[id]' ? '/' : pathname
-   );
+   const dynamicRoutes = ['/movies/[id]', '/series/[id]'];
+   const [value, setValue] = useState(dynamicRoutes.includes(pathname) ? '/' : pathname);
+
+   console.log('route check', dynamicRoutes.includes(pathname));
 
    return (
       <Hidden smUp>

@@ -54,3 +54,5 @@ export const styles = (theme: Theme) =>
          },
       },
    });
+
+   console.log('hello');

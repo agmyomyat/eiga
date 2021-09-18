@@ -1,18 +1,14 @@
-import { Grid, Box, Typography } from '@material-ui/core';
+import { Box, Typography } from '@mui/material';
 import { Movies } from '@graphgen';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/MovieInfoStyles';
 import { TMovies, TGenres } from './Iframe';
-
-const useStyles = makeStyles(styles);
+import { StyledBox, classes } from '@styles/MovieInfoStyles';
 
 const MovieInfo: React.FC<TMovies<Movies, TGenres>> = ({ name, date, body, genres }) => {
-   const classes = useStyles();
    const newGenres = genres.map(genre => genre.name[0].toUpperCase() + genre.name.slice(1));
    const movieBody = body.replace(/<\/?[^>]+(>|$)/g, '');
 
    return (
-      <Box className={classes.root}>
+      <StyledBox className={classes.root}>
          <Typography variant="h6" component="h2" className={classes.title}>
             {name}
          </Typography>
@@ -59,7 +55,7 @@ const MovieInfo: React.FC<TMovies<Movies, TGenres>> = ({ name, date, body, genre
                7.1
             </Typography>
          </Box>
-      </Box>
+      </StyledBox>
    );
 };
 

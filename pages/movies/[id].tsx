@@ -8,9 +8,7 @@ import {
    GetMovieQueryResult,
 } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/MoviePage';
-import { Box, Container, Divider } from '@material-ui/core';
+import { Box, Divider } from '@mui/material';
 import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Iframe from '@components/movies/Iframe';
@@ -18,8 +16,8 @@ import RelatedMovies from '@components/movies/RelatedMovies';
 import DetectOtherLogin from '@components/modals/DetectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 import { useAuth } from '@contexts/AuthContext';
+import { StyledContainer, classes } from '@styles/MoviePage';
 
-const useStyles = makeStyles(styles);
 const client = initializeApollo();
 export interface PageProps {
    data: GetMovieQuery;
@@ -31,9 +29,9 @@ export default function MoviePage(props: PageProps) {
       ssr: false,
    });
    const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
-   const {currentUser} = useAuth()
+   const { currentUser } = useAuth();
    const router: NextRouter = useRouter();
-   const classes = useStyles();
+
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const prevPath = useRef(router.query.id);
    const [loading, setLoading] = useState<boolean>(true);
@@ -51,14 +49,15 @@ export default function MoviePage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop);
    }
-    useEffect(() => {
+   useEffect(() => {
       if (router.query.id !== prevPath.current) {
          prevPath.current = router.query.id;
          unmountingPremium.current = false;
       }
       console.log('ref', unmountingPremium.current);
-      if (!currentUser) { // to check again when log out
-         unmountingPremium.current=false
+      if (!currentUser) {
+         // to check again when log out
+         unmountingPremium.current = false;
       }
 
       if (!unmountingPremium.current) {
@@ -85,7 +84,7 @@ export default function MoviePage(props: PageProps) {
    }, [router.isFallback, premiumUser, movieData?.vipServer1, movieData?.freeServer1]);
 
    return (
-      <Container className={classes.root}>
+      <StyledContainer className={classes.root}>
          {(router.isFallback || checkPremiumLoading) && <h2>loading</h2>}
          {!router.isFallback && !checkPremiumLoading && (
             <Box>
@@ -114,7 +113,7 @@ export default function MoviePage(props: PageProps) {
          )}
 
          <DetectOtherLogin />
-      </Container>
+      </StyledContainer>
    );
 }
 

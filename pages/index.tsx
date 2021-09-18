@@ -1,25 +1,20 @@
 // import Carousel from '../components/carousel/Carousel';
 import { useGetAllMoviesQuery } from '@graphgen';
 import { initializeApollo } from '@apollo/index';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/HomeStyles';
 import { Movies as typeMovies, GetAllMoviesDocument } from '@graphgen';
 import { GetStaticProps } from 'next';
-import Container from '@material-ui/core/Container';
 import Movies from '@components/movies/Movies';
+import { StyledContainer, classes } from '@styles/HomeStyles';
 
-const useStyles = makeStyles(styles);
 const apolloClient = initializeApollo();
 
 function Home() {
-   const classes = useStyles();
-
    const { data } = useGetAllMoviesQuery();
 
    return (
-      <Container className={classes.root}>
+      <StyledContainer className={classes.root}>
          <Movies movies={data.movies as typeMovies[]} />
-      </Container>
+      </StyledContainer>
    );
 }
 

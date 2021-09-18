@@ -1,17 +1,15 @@
 import { useState } from 'react';
 import { useRouter, NextRouter } from 'next/router';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/MobileNavigationStyles';
-import { BottomNavigation, BottomNavigationAction, Hidden } from '@material-ui/core';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import ExploreOutlinedIcon from '@material-ui/icons/ExploreOutlined';
-
-const useStyles = makeStyles(styles);
+import { BottomNavigation, BottomNavigationAction, Hidden } from '@mui/material';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
+import { Root, classes } from '@styles/MobileNavigationStyles';
+import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const MobileNavigation: React.FC = () => {
-   const classes = useStyles();
    const { push, pathname }: NextRouter = useRouter();
    const dynamicRoutes = ['/movies/[id]', '/series/[id]'];
    const [value, setValue] = useState(dynamicRoutes.includes(pathname) ? '/' : pathname);
@@ -19,7 +17,14 @@ const MobileNavigation: React.FC = () => {
    console.log('route check', dynamicRoutes.includes(pathname));
 
    return (
-      <Hidden smUp>
+      <Root
+         sx={{
+            display: {
+               xs: 'block',
+               sm: 'none',
+            },
+         }}
+      >
          <BottomNavigation
             value={value}
             onChange={(_event, newValue) => {
@@ -27,7 +32,7 @@ const MobileNavigation: React.FC = () => {
                push({ pathname: newValue });
             }}
             showLabels
-            className={classes.root}
+            className={classes.mobileNavigation}
          >
             <BottomNavigationAction label="Home" value="/" icon={<HomeOutlinedIcon />} />
             <BottomNavigationAction label="Browse" value="/browse" icon={<ExploreOutlinedIcon />} />
@@ -42,8 +47,10 @@ const MobileNavigation: React.FC = () => {
                icon={<AccountCircleOutlinedIcon />}
             />
          </BottomNavigation>
-      </Hidden>
+      </Root>
    );
 };
 
 export default MobileNavigation;
+
+

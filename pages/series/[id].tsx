@@ -8,9 +8,8 @@ import {
    usePremiumUserLazyQuery,
 } from '@graphgen';
 import { useRouter, NextRouter } from 'next/router';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/MoviePage';
-import { Container, Box, Divider } from '@material-ui/core';
+import { StyledContainer, classes } from '@styles/MoviePage';
+import { Box, Divider } from '@mui/material';
 import DetectOtherLogin from '@components/modals/DetectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 import Iframe from '@components/movies/Iframe';
@@ -19,7 +18,6 @@ import { useAuth } from '@contexts/AuthContext';
 
 const client = initializeApollo();
 
-const useStyles = makeStyles(styles);
 interface PageProps {
    data: GetSeriesQuery;
 }
@@ -29,11 +27,10 @@ export default function SeriesPage(props: PageProps) {
       fetchPolicy: 'network-only',
       ssr: false,
    });
-   const classes = useStyles();
    // const theme = useTheme();
    // const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
    // const containerRef = useRef(null);
-   const {currentUser} = useAuth()
+   const { currentUser } = useAuth();
    const router: NextRouter = useRouter();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const prevPath = useRef(router.query.id);
@@ -64,8 +61,9 @@ export default function SeriesPage(props: PageProps) {
          unmountingPremium.current = false;
       }
       console.log('ref', unmountingPremium.current);
-      if (!currentUser) { // to check again when log out
-         unmountingPremium.current=false
+      if (!currentUser) {
+         // to check again when log out
+         unmountingPremium.current = false;
       }
 
       if (!unmountingPremium.current) {
@@ -97,7 +95,7 @@ export default function SeriesPage(props: PageProps) {
    };
 
    return (
-      <Container className={classes.root}>
+      <StyledContainer className={classes.root}>
          {(router.isFallback || checkPremiumLoading) && <h2>loading</h2>}
          {!router.isFallback && !checkPremiumLoading && (
             <Box>
@@ -132,7 +130,7 @@ export default function SeriesPage(props: PageProps) {
          )}
 
          <DetectOtherLogin />
-      </Container>
+      </StyledContainer>
    );
 }
 

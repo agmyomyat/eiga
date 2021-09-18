@@ -1,25 +1,26 @@
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/MoviesGrid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
 import Movie from './Movie';
 import { Movies as typeMovies } from '@graphgen';
+import { StyledBox, classes} from '@styles/MoviesGrid'
 interface IMovies {
    movies: Partial<typeMovies[]>;
 }
-const useStyles = makeStyles(styles as any);
+
+
+
+
+
 
 const Movies = ({ movies }: IMovies) => {
-   const classes = useStyles();
-
    return (
-      <Box className={classes.grid}>
+      <StyledBox className={classes.grid}>
          {movies.map((movie: Partial<typeMovies>) => (
             <Movie key={movie.id} {...movie} />
          ))}
-      </Box>
+      </StyledBox>
    );
 };
 

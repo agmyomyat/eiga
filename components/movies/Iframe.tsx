@@ -1,13 +1,10 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Genres } from '@graphgen';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/IframeStyles';
-import { CircularProgress, Box, Breadcrumbs, Typography, Button } from '@material-ui/core';
+import { CircularProgress, Box, Breadcrumbs, Typography, Button } from '@mui/material';
 import { NextRouter, useRouter } from 'next/router';
 import Link from 'next/link';
-import { Link as MuiLink } from '@material-ui/core';
-
-const useStyles = makeStyles(styles);
+import { Link as MuiLink } from '@mui/material';
+import { Root, classes } from '@styles/IframeStyles';
 
 export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>;
 export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[];
@@ -41,7 +38,6 @@ const Iframe: React.FC<IframeProp> = ({
    const router: NextRouter = useRouter();
    const refer = React.useRef(null);
    const copy = React.useRef(currentServer);
-   const classes = useStyles();
 
    console.log('server1', freeServer1);
    console.log('server2', freeServer2);
@@ -56,7 +52,7 @@ const Iframe: React.FC<IframeProp> = ({
    console.log('copy server', copy?.current);
 
    return (
-      <>
+      <Root>
          <Breadcrumbs className={classes.breadcrumbs}>
             <Typography color="textSecondary" className={classes.breadItem}>
                <Link href="/" passHref>
@@ -86,7 +82,6 @@ const Iframe: React.FC<IframeProp> = ({
                key={currentServer}
             ></iframe>
          </Box>
-
          <Box className={classes.buttonGroup}>
             <Button
                variant={`${
@@ -114,7 +109,7 @@ const Iframe: React.FC<IframeProp> = ({
                Server2
             </Button>
          </Box>
-      </>
+      </Root>
    );
 };
 

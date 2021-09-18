@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-   Container,
    Box,
    Typography,
    Divider,
@@ -9,18 +8,13 @@ import {
    RadioGroup,
    FormControlLabel,
    Radio,
-} from '@material-ui/core';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import BlockIcon from '@material-ui/icons/Block';
-import { makeStyles } from '@material-ui/core';
-import { styles } from '@styles/PricingStyles';
+} from '@mui/material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import BlockIcon from '@mui/icons-material/Block';
 import { plans } from '@helpers/plans';
-
-const useStyles = makeStyles(styles);
+import { StyledContainer, classes } from '@styles/PricingStyles';
 
 export default function Pricing() {
-   const classes = useStyles();
-
    const [month, setMonth] = useState<number>(1);
    const currentPlan = plans.find(plan => plan.id === month);
 
@@ -39,7 +33,7 @@ export default function Pricing() {
    );
 
    return (
-      <Container className={classes.root}>
+      <StyledContainer className={classes.root}>
          {/* <Typography variant="h3" component="h1" align="center">
             EIGA Pricing
          </Typography> */}
@@ -156,6 +150,6 @@ export default function Pricing() {
                </Box>
             </Box>
          </Box>
-      </Container>
+      </StyledContainer>
    );
 }

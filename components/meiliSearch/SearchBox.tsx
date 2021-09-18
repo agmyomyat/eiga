@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 import { connectSearchBox } from 'react-instantsearch-dom';
 import { SearchBoxProvided } from 'react-instantsearch-core';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/SearchMoviesStyles';
-import { Box, InputBase } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-
-const useStyles = makeStyles(styles);
+import { InputBase } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { StyledBox, classes } from '@styles/SearchMoviesStyles';
 
 const SearchBox = ({ refine }: SearchBoxProvided) => {
-   const classes = useStyles();
    const [keywords, setKeywords] = useState('');
 
    useEffect(() => {
@@ -25,7 +21,7 @@ const SearchBox = ({ refine }: SearchBoxProvided) => {
    };
 
    return (
-      <Box className={classes.searchContainer} pb={3}>
+      <StyledBox className={classes.searchContainer} pb={3}>
          <form noValidate role="search" className={classes.search} onSubmit={handleSubmit}>
             <InputBase
                placeholder="Search..."
@@ -41,7 +37,7 @@ const SearchBox = ({ refine }: SearchBoxProvided) => {
                <SearchIcon />
             </div>
          </form>
-      </Box>
+      </StyledBox>
    );
 };
 

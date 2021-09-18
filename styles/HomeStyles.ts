@@ -1,8 +1,14 @@
-import { Theme, createStyles } from '@material-ui/core/styles';
+import Container from '@mui/material/Container';
+import { styled } from '@mui/material/styles';
 
-export const styles = (theme: Theme) =>
-   createStyles({
-      root: {
-         marginBottom: 100,
-      },
-   });
+const PREFIX = 'Home';
+
+export const classes = {
+   root: `${PREFIX}-root`,
+};
+
+export const StyledContainer = styled(Container)(({ theme }) => ({
+   [`&.${classes.root}`]: {
+      marginBottom: 100,
+   },
+}));

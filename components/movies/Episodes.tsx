@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { Box, FormControl, InputLabel, NativeSelect, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/EpisodesStyles';
+import { Box, FormControl, InputLabel, NativeSelect } from '@mui/material';
 import { ComponentTvSeriesSeason, ComponentTvSeriesEpisodes } from '@graphgen';
+import { StyledButton, StyledBox, classes } from '@styles/EpisodesStyles';
 
-const useStyles = makeStyles(styles);
 type Episodes = Partial<ComponentTvSeriesEpisodes>;
 type OmitEpi = Omit<ComponentTvSeriesSeason, 'episodes'>;
 type Seasons = Partial<OmitEpi & { episodes: Episodes[] }>;
@@ -21,15 +19,14 @@ const Episodes: React.FC<Iepisodes> = ({
    currentEpisode,
    handleSelect,
 }) => {
-   const classes = useStyles();
    const [season, setSeason] = useState<number>(1);
 
    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-      setSeason(+(event.target.value) as number);
+      setSeason(+event.target.value as number);
    };
 
    return (
-      <Box className={classes.root}>
+      <StyledBox className={classes.root}>
          <FormControl className={classes.formControl}>
             <InputLabel htmlFor="select-season">Season</InputLabel>
             <NativeSelect
@@ -65,7 +62,7 @@ const Episodes: React.FC<Iepisodes> = ({
                />
             ))}
          </Box>
-      </Box>
+      </StyledBox>
    );
 };
 
@@ -86,16 +83,15 @@ export const Episode: React.FC<Iepisode> = ({
    currentEpisode,
    currentSeason,
 }) => {
-   const classes = useStyles();
    const isSelected = season === currentSeason && id === currentEpisode;
    return (
-      <Button
+      <StyledButton
          onClick={() => handleSelect(season, id)}
          variant={isSelected ? 'contained' : 'outlined'}
          color="primary"
          className={classes.episode}
       >
          Episode {id}
-      </Button>
+      </StyledButton>
    );
 };

@@ -1,11 +1,19 @@
-import { Theme, createStyles } from '@material-ui/core/styles';
+import { Grid } from '@mui/material'
+import {  styled } from '@mui/material/styles';
 
-export const styles = (theme: Theme) =>
-   createStyles({
-      root: {
-         cursor: 'pointer',
-      },
-      card: {
-         width: '100%',
-      },
-   });
+const PREFIX = 'RelatedMovie';
+
+export const classes = {
+   root: `${PREFIX}-root`,
+   card: `${PREFIX}-card`,
+};
+
+export const StyledGrid = styled(Grid)(({ theme }) => ({
+   [`&.${classes.root}`]: {
+      cursor: 'pointer',
+   },
+
+   [`& .${classes.card}`]: {
+      width: '100%',
+   },
+}));

@@ -3,11 +3,8 @@ import { useGetUserLazyQuery } from '@graphgen';
 import { useAuth } from '@contexts/AuthContext';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { auth, uiConfig } from '@lib';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/ProfileStyles';
-import { Container, Button, Grid, Typography } from '@material-ui/core';
-
-const useStyles = makeStyles(styles);
+import { Container, Button, Grid, Typography } from '@mui/material';
+import { Root, classes } from '@styles/ProfileStyles';
 
 export default function Profile() {
    const { currentUser, authLoading, logOut } = useAuth();
@@ -15,8 +12,6 @@ export default function Profile() {
    const [getUser, { data, loading }] = useGetUserLazyQuery({
       fetchPolicy: 'cache-and-network',
    });
-
-   const classes = useStyles();
 
    useEffect(() => {
       if (currentUser !== null && Object.keys(currentUser).length) {
@@ -41,7 +36,7 @@ export default function Profile() {
    }
 
    return (
-      <>
+      <Root>
          <h1>Welcome to Eiga</h1>
          {currentUser ? (
             <Container className={classes.root}>
@@ -92,6 +87,6 @@ export default function Profile() {
          ) : (
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
          )}
-      </>
+      </Root>
    );
 }

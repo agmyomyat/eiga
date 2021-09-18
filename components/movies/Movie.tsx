@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
 import { NextRouter, useRouter } from 'next/router';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/MovieCard';
 import { Movies } from '@graphgen';
-import { Box, Card, Typography } from '@material-ui/core';
+import { Box, Card, Typography } from '@mui/material';
 import Image from 'next/image';
-import Skeleton from '@material-ui/lab/Skeleton';
+import Skeleton from '@mui/material/Skeleton';
+import { StyledBox, classes} from '@styles/MovieCard'
 
-const useStyles = makeStyles(styles as any);
 
 const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
-   const classes = useStyles();
    const { push }: NextRouter = useRouter();
    // will delete later
    const [show, setShow] = useState<boolean>(false);
@@ -22,9 +19,13 @@ const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
    });
    //
    return (
-      <Box onClick={() => push({ pathname: '/movies/[id]', query: { id: uuid } })}>
+      <StyledBox onClick={() => push({ pathname: '/movies/[id]', query: { id: uuid } })}>
          {show ? (
-            <Skeleton variant="rect" className={classes.skeletonImage} width="100%"></Skeleton>
+            <Skeleton
+               variant="rectangular"
+               className={classes.skeletonImage}
+               width="100%"
+            ></Skeleton>
          ) : (
             <Card className={classes.card}>
                <Image
@@ -58,7 +59,7 @@ const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
                </>
             )}
          </Box>
-      </Box>
+      </StyledBox>
    );
 };
 

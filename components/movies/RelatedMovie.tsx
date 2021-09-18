@@ -1,18 +1,14 @@
 import { Movies } from '@graphgen';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/RelatedMovieStyles';
-import { Grid, Box, Typography } from '@material-ui/core';
+import { Grid, Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useRouter, NextRouter } from 'next/router';
-
-const useStyles = makeStyles(styles);
+import { StyledGrid, classes } from '@styles/RelatedMovieStyles';
 
 const RelatedMovie: React.FC<Partial<Movies>> = ({ name, date, photo_url, uuid }) => {
-   const classes = useStyles();
    const { push }: NextRouter = useRouter();
 
    return (
-      <Grid
+      <StyledGrid
          container
          spacing={2}
          className={classes.root}
@@ -31,7 +27,7 @@ const RelatedMovie: React.FC<Partial<Movies>> = ({ name, date, photo_url, uuid }
                {new Date(date).getFullYear()}
             </Typography>
          </Grid>
-      </Grid>
+      </StyledGrid>
    );
 };
 

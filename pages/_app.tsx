@@ -1,31 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import { AppProps } from 'next/app';
 import { ApolloProvider } from '@apollo/client';
-import { useApollo } from '../apollo';
-import { ThemeProvider } from '@material-ui/core/styles';
-import AuthProvider from '../contexts/AuthContext';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../components/ui/theme';
-import Layout from '../components/layout/Layout';
-// import 'instantsearch.css/themes/reset.css';
+import { useApollo } from '@apollo/index';
+import { ThemeProvider } from '@mui/material/styles';
+import AuthProvider from '@contexts/AuthContext';
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from '@components/ui/theme';
+import createEmotionCache from '@components/ui/createEmotionCache';
+import Layout from '@components/layout/Layout';
+import { CacheProvider, EmotionCache } from '@emotion/react';
 
+const clientSideEmotionCache = createEmotionCache();
 
+interface MyAppProps extends AppProps {
+   emotionCache?: EmotionCache;
+}
 
-function MyApp(props) {
-   const { Component, pageProps } = props;
+function MyApp(props: MyAppProps) {
+   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
    const apolloClient = useApollo(pageProps.initialApolloState);
 
-   React.useEffect(() => {
-      // Remove the server-side injected CSS.
-      const jssStyles = document.querySelector('#jss-server-side');
-      if (jssStyles) {
-         jssStyles.parentElement.removeChild(jssStyles);
-      }
-   }, []);
-
    return (
-      <React.Fragment>
+      <CacheProvider value={emotionCache}>
          <Head>
             <title>My page</title>
             <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
@@ -41,13 +39,8 @@ function MyApp(props) {
                </AuthProvider>
             </ThemeProvider>
          </ApolloProvider>
-      </React.Fragment>
+      </CacheProvider>
    );
 }
-
-MyApp.propTypes = {
-   Component: PropTypes.elementType.isRequired,
-   pageProps: PropTypes.object.isRequired,
-};
 
 export default MyApp;

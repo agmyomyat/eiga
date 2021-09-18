@@ -1,10 +1,10 @@
-import { createTheme } from '@material-ui/core/styles';
-import { grey, cyan } from '@material-ui/core/colors';
+import { createTheme } from '@mui/material/styles';
+import { grey, cyan } from '@mui/material/colors';
 
 // Create a theme instance.
 const theme = createTheme({
    palette: {
-      type: 'dark',
+      mode: 'dark',
       text: {
          secondary: '#A3A3A3',
       },

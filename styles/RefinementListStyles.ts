@@ -1,42 +1,60 @@
-import { Theme, createStyles, alpha } from '@material-ui/core/styles';
+import { alpha, styled } from '@mui/material/styles';
+import Menu, { MenuProps } from '@mui/material/Menu';
+import { Grid, Box } from '@mui/material';
 
-export const styles = (theme: Theme) =>
-   createStyles({
-      // mobile
+const PREFIX = 'CustomRefinementList';
 
-      root: {
-         backgroundColor: theme.palette.background.paper,
-      },
-      mobileGrid: {
-         flexWrap: 'nowrap',
-         overflowX: 'scroll',
-         '-ms-overflow-style': 'none',
-         scrollbarWidth: 'none',
-         '&::-webkit-scrollbar': {
-            display: 'none',
-         },
-      },
+export const classes = {
+   root: `${PREFIX}-root`,
+   mobileGrid: `${PREFIX}-mobileGrid`,
+   button: `${PREFIX}-button`,
+   paper: `${PREFIX}-paper`,
+   filterMenu: `${PREFIX}-filterMenu`,
+   menuItem: `${PREFIX}-menuItem`,
+};
 
-      // desktop
-      button: {
-         marginRight: theme.spacing(3),
+export const StyledBox = styled(Box)(({ theme }) => ({
+   // mobile
+
+   [`&.${classes.root}`]: {
+      backgroundColor: theme.palette.background.paper,
+   },
+
+   // desktop
+   [`& .${classes.button}`]: {
+      marginRight: theme.spacing(3),
+   },
+
+   [`& .${classes.paper}`]: {
+      marginLeft: theme.spacing(3),
+      marginTop: theme.spacing(2),
+   },
+
+   [`& .${classes.filterMenu}`]: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, minmax(200px, 1fr))',
+      columnGap: 20,
+      padding: theme.spacing(2),
+   },
+
+   [`& .${classes.menuItem}`]: {
+      paddingRight: theme.spacing(10),
+      '&:hover': {
+         backgroundColor: alpha(theme.palette.secondary.main, 0.8),
+         color: theme.palette.primary.main,
+         borderRadius: theme.shape.borderRadius,
       },
-      paper: {
-         marginLeft: theme.spacing(3),
-         marginTop: theme.spacing(2),
+   },
+}));
+
+export const StyledMobileGrid = styled(Grid)(({ theme }) => ({
+   [`&.${classes.mobileGrid}`]: {
+      flexWrap: 'nowrap',
+      overflowX: 'scroll',
+      '-ms-overflow-style': 'none',
+      scrollbarWidth: 'none',
+      '&::-webkit-scrollbar': {
+         display: 'none',
       },
-      filterMenu: {
-         display: 'grid',
-         gridTemplateColumns: 'repeat(2, minmax(200px, 1fr))',
-         columnGap: 20,
-         padding: theme.spacing(2),
-      },
-      menuItem: {
-         paddingRight: theme.spacing(3),
-         '&:hover': {
-            backgroundColor: alpha(theme.palette.secondary.main, 0.8),
-            color: theme.palette.primary.main,
-            borderRadius: theme.shape.borderRadius,
-         },
-      },
-   });
+   },
+}));

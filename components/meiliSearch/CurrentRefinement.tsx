@@ -1,17 +1,20 @@
 import { connectCurrentRefinements } from 'react-instantsearch-dom';
 import { CurrentRefinementsProvided } from 'react-instantsearch-core';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/CurrentRefinementStyles';
-import { Chip, Hidden } from '@material-ui/core';
-
-const useStyles = makeStyles(styles);
+import { Chip } from '@mui/material';
+import { Root, classes } from '@styles/CurrentRefinementStyles';
 
 const CurrentRefinements = ({ items, refine }: CurrentRefinementsProvided) => {
    console.log('items', items);
-   const classes = useStyles();
 
    return (
-      <Hidden xsDown>
+      <Root
+         sx={{
+            display: {
+               xs: 'none',
+               sm: 'inline-block',
+            },
+         }}
+      >
          {items.map(item => (
             <Chip
                key={item.label}
@@ -22,7 +25,7 @@ const CurrentRefinements = ({ items, refine }: CurrentRefinementsProvided) => {
                className={classes.currentRefinement}
             />
          ))}
-      </Hidden>
+      </Root>
    );
 };
 

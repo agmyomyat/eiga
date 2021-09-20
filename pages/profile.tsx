@@ -3,8 +3,8 @@ import { useGetUserLazyQuery } from '@graphgen';
 import { useAuth } from '@contexts/AuthContext';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { auth, uiConfig } from '@lib';
-import { Container, Button, Grid, Typography } from '@mui/material';
-import { Root, classes } from '@styles/ProfileStyles';
+import { Container, Button, Grid, Box, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 export default function Profile() {
    const { currentUser, authLoading, logOut } = useAuth();
@@ -35,58 +35,57 @@ export default function Profile() {
       return <h1>Loading...</h1>;
    }
 
+   const StyledBox = styled(Box)(({ theme }) => ({
+      padding: theme.spacing(2),
+      backgroundColor: theme.palette.background.paper,
+      borderRadius: theme.shape.borderRadius,
+   }));
+
    return (
-      <Root>
+      <Box>
          <h1>Welcome to Eiga</h1>
          {currentUser ? (
-            <Container className={classes.root}>
-               <Typography
-                  className={classes.title}
-                  variant="h5"
-                  component="h3"
-                  color="textSecondary"
-               >
+            <Container sx={{ mt: 5, mb: '100px', maxWidth: '700px' }}>
+               <Typography align="center" variant="h5" component="h3" color="textSecondary">
                   Your Profile
                </Typography>
-               <Grid
-                  container
-                  spacing={2}
-                  justifyContent="center"
-                  alignItems="center"
-                  className={classes.card}
-               >
+               <Grid container spacing={2} justifyContent="center" alignItems="center" mt={5}>
                   <Grid item sm={3} xs={12}>
-                     <label className={classes.label}>Email</label>
+                     <Typography component="label" color="textSecondary">
+                        Email
+                     </Typography>
                   </Grid>
                   <Grid item sm={9} xs={12}>
-                     <div className={classes.item}>{data ? userData.uuid : 'Loading...'}</div>
+                     <StyledBox>{data ? userData.uuid : 'Loading...'}</StyledBox>
                   </Grid>
 
                   <Grid item sm={3} xs={12}>
-                     <label className={classes.label}>Verified</label>
+                     <Typography component="label" color="textSecondary">
+                        Verified
+                     </Typography>
                   </Grid>
                   <Grid item sm={9} xs={12}>
-                     <div className={classes.item}>
-                        {data ? (userData.verify ? 'Yes' : 'No') : 'Loading...'}
-                     </div>
+                     <StyledBox>{data ? (userData.verify ? 'Yes' : 'No') : 'Loading...'}</StyledBox>
                   </Grid>
 
                   <Grid item sm={3} xs={12}>
-                     <label className={classes.label}>Remaining Time</label>
+                     <Typography component="label" color="textSecondary">
+                        Remaining Time
+                     </Typography>
                   </Grid>
                   <Grid item sm={9} xs={12}>
-                     <div className={classes.item}>26 days</div>
+                     <StyledBox>26 days</StyledBox>
                   </Grid>
                </Grid>
-               <div className={classes.buttonGroup}>
+               <Box display="flex" justifyContent="flex-end" mt={3}>
                   <Button variant="contained" color="primary" onClick={handleSignOut}>
                      Log Out
                   </Button>
-               </div>
+               </Box>
             </Container>
          ) : (
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
          )}
-      </Root>
+      </Box>
    );
 }

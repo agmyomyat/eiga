@@ -8,13 +8,13 @@ import {
    usePremiumUserLazyQuery,
 } from '@graphgen';
 import { useRouter, NextRouter } from 'next/router';
-import { StyledContainer, classes } from '@styles/MoviePage';
-import { Box, Divider } from '@mui/material';
+import { Box, Divider,Container } from '@mui/material';
 import DetectOtherLogin from '@components/modals/DetectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 import Iframe from '@components/movies/Iframe';
 import Episodes from '@components/movies/Episodes';
 import { useAuth } from '@contexts/AuthContext';
+
 
 const client = initializeApollo();
 
@@ -94,8 +94,10 @@ export default function SeriesPage(props: PageProps) {
       setCurrentEpisode(id);
    };
 
+
+
    return (
-      <StyledContainer className={classes.root}>
+      <Container sx={{ mb: '100px'}}>
          {(router.isFallback || checkPremiumLoading) && <h2>loading</h2>}
          {!router.isFallback && !checkPremiumLoading && (
             <Box>
@@ -130,7 +132,7 @@ export default function SeriesPage(props: PageProps) {
          )}
 
          <DetectOtherLogin />
-      </StyledContainer>
+      </Container>
    );
 }
 

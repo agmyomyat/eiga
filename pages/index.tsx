@@ -4,7 +4,7 @@ import { initializeApollo } from '@apollo/index';
 import { Movies as typeMovies, GetAllMoviesDocument } from '@graphgen';
 import { GetStaticProps } from 'next';
 import Movies from '@components/movies/Movies';
-import { StyledContainer, classes } from '@styles/HomeStyles';
+import { Container } from '@mui/material';
 
 const apolloClient = initializeApollo();
 
@@ -12,9 +12,9 @@ function Home() {
    const { data } = useGetAllMoviesQuery();
 
    return (
-      <StyledContainer className={classes.root}>
+      <Container sx={{ mb: '100px' }}>
          <Movies movies={data.movies as typeMovies[]} />
-      </StyledContainer>
+      </Container>
    );
 }
 

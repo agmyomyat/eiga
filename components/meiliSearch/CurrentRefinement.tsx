@@ -1,18 +1,18 @@
 import { connectCurrentRefinements } from 'react-instantsearch-dom';
 import { CurrentRefinementsProvided } from 'react-instantsearch-core';
-import { Chip } from '@mui/material';
-import { Root, classes } from '@styles/CurrentRefinementStyles';
+import { Chip, Box } from '@mui/material';
 
 const CurrentRefinements = ({ items, refine }: CurrentRefinementsProvided) => {
    console.log('items', items);
 
    return (
-      <Root
+      <Box
          sx={{
             display: {
                xs: 'none',
                sm: 'inline-block',
             },
+            mr: 1,
          }}
       >
          {items.map(item => (
@@ -22,10 +22,9 @@ const CurrentRefinements = ({ items, refine }: CurrentRefinementsProvided) => {
                color="primary"
                label={`${item.currentRefinement}`}
                onDelete={() => refine(item.value)}
-               className={classes.currentRefinement}
             />
          ))}
-      </Root>
+      </Box>
    );
 };
 

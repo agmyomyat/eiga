@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { connectMenu } from 'react-instantsearch-dom';
 import { MenuProvided } from 'react-instantsearch-core';
-import { Chip, Grid, Button, MenuItem } from '@mui/material';
+import { Chip, Box, Grid, Button, MenuItem } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { alpha, styled } from '@mui/material/styles';
 import Menu, { MenuProps } from '@mui/material/Menu';
-import { StyledMobileGrid, StyledBox, classes } from '@styles/RefinementListStyles';
 
 const RefinementList = ({ items, refine }: MenuProvided) => {
    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -24,11 +23,20 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
       setAnchorEl(null);
    };
 
+   const StyledMobileGrid = styled(Grid)(() => ({
+      flexWrap: 'nowrap',
+      overflowX: 'scroll',
+      '-ms-overflow-style': 'none',
+      scrollbarWidth: 'none',
+      '&::-webkit-scrollbar': {
+         display: 'none',
+      },
+   }));
+
    const MobileFilter = (
       <StyledMobileGrid
          container
          spacing={1}
-         className={classes.mobileGrid}
          sx={{
             display: {
                xs: 'flex',
@@ -84,7 +92,7 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
    }));
 
    const DesktopFilter = (
-      <StyledBox
+      <Box
          sx={{
             display: {
                xs: 'none',
@@ -98,7 +106,7 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
             variant="contained"
             color="primary"
             size="small"
-            className={classes.button}
+            sx={{ mr: 3 }}
             startIcon={<FilterListIcon />}
             onClick={handleOpen}
             disableElevation
@@ -108,16 +116,12 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
          {/* Will Fix Later */}
          <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
             {items.map(item => (
-               <MenuItem
-                  key={item.label}
-                  onClick={() => handleRefine(item.value)}
-                  className={classes.menuItem}
-               >
+               <MenuItem key={item.label} onClick={() => handleRefine(item.value)}>
                   {item.label}
                </MenuItem>
             ))}
          </StyledMenu>
-      </StyledBox>
+      </Box>
    );
 
    return (

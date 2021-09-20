@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Box, FormControl, InputLabel, NativeSelect } from '@mui/material';
+import { Box, FormControl, InputLabel, NativeSelect, Button } from '@mui/material';
 import { ComponentTvSeriesSeason, ComponentTvSeriesEpisodes } from '@graphgen';
-import { StyledButton, StyledBox, classes } from '@styles/EpisodesStyles';
+import { styled } from '@mui/material/styles';
 
 type Episodes = Partial<ComponentTvSeriesEpisodes>;
 type OmitEpi = Omit<ComponentTvSeriesSeason, 'episodes'>;
@@ -26,8 +26,8 @@ const Episodes: React.FC<Iepisodes> = ({
    };
 
    return (
-      <StyledBox className={classes.root}>
-         <FormControl className={classes.formControl}>
+      <Box my={2}>
+         <FormControl sx={{ my: 2 }}>
             <InputLabel htmlFor="select-season">Season</InputLabel>
             <NativeSelect
                id="select-season"
@@ -49,7 +49,9 @@ const Episodes: React.FC<Iepisodes> = ({
             display="flex"
             flexWrap="wrap"
             alignItems="center"
-            className={classes.episodesContainer}
+            maxHeight="400px"
+            overflow="auto"
+            my={2}
          >
             {seasons[season - 1].episodes.map((episode: Episodes) => (
                <Episode
@@ -62,7 +64,7 @@ const Episodes: React.FC<Iepisodes> = ({
                />
             ))}
          </Box>
-      </StyledBox>
+      </Box>
    );
 };
 
@@ -84,12 +86,21 @@ export const Episode: React.FC<Iepisode> = ({
    currentSeason,
 }) => {
    const isSelected = season === currentSeason && id === currentEpisode;
+
+   const StyledButton = styled(Button)(({ theme }) => ({
+      width: '100%',
+      margin: theme.spacing(1, 0),
+      [theme.breakpoints.up('sm')]: {
+         width: '70%',
+         maxWidth: 250,
+         marginRight: theme.spacing(2),
+      },
+   }));
    return (
       <StyledButton
          onClick={() => handleSelect(season, id)}
          variant={isSelected ? 'contained' : 'outlined'}
          color="primary"
-         className={classes.episode}
       >
          Episode {id}
       </StyledButton>

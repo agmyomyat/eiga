@@ -18,7 +18,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import { Root, classes } from '@styles/MainNavigationStyles';
+
 
 const MainNavigation: React.FC = () => {
    const [anchorEl, setAnchorEl] = useState<HTMLElement>(null);
@@ -45,11 +45,28 @@ const MainNavigation: React.FC = () => {
    };
 
    return (
-      <Root className={classes.root}>
-         <AppBar className={classes.appbar} elevation={0} position="absolute">
+      <Box flexGrow={1} mb={3}>
+         <AppBar
+            sx={{
+               color: 'text.primary',
+               bgcolor: 'secondary.main',
+               pt: '10px',
+            }}
+            elevation={0}
+            position="absolute"
+         >
             <Toolbar component="nav">
                {/* Title */}
-               <Typography className={classes.title} variant="h5" component="h2" noWrap>
+               <Typography
+                  variant="h5"
+                  component="h2"
+                  noWrap
+                  sx={{
+                     flexGrow: 1,
+                     flexShrink: 0,
+                     mr: 2,
+                  }}
+               >
                   EIGA
                </Typography>
 
@@ -68,6 +85,11 @@ const MainNavigation: React.FC = () => {
 
                   {/* profile menu */}
                   <Menu
+                     sx={{
+                        '& .MuiPaper-root': {
+                           backgroundImage: 'none',
+                        },
+                     }}
                      id="menu-appbar"
                      anchorEl={anchorEl}
                      anchorOrigin={{
@@ -82,12 +104,7 @@ const MainNavigation: React.FC = () => {
                      open={openMenu}
                      onClose={handleClose}
                   >
-                     <Box
-                        display="flex"
-                        flexDirection="column"
-                        component="li"
-                        className={classes.profileWrapper}
-                     >
+                     <Box display="flex" flexDirection="column" component="li" py={1.5} px={2}>
                         {currentUser ? (
                            <Box>
                               <Typography
@@ -110,18 +127,53 @@ const MainNavigation: React.FC = () => {
                      <Divider />
                      {currentUser ? (
                         <Box>
-                           <MenuItem className={classes.menuItem} onClick={handleViewProfile}>
+                           <MenuItem
+                              sx={{
+                                 color: 'text.secondary',
+                                 py: 0.5,
+                                 px: 3,
+                                 my: 0.5,
+                                 fontSize: 'body2.fontSize',
+                              }}
+                              onClick={handleViewProfile}
+                           >
                               <PersonOutlineIcon fontSize="small" /> View Profile
                            </MenuItem>
-                           <MenuItem className={classes.menuItem}>
+                           <MenuItem
+                              sx={{
+                                 color: 'text.secondary',
+                                 py: 0.5,
+                                 px: 3,
+                                 my: 0.5,
+                                 fontSize: 'body2.fontSize',
+                              }}
+                           >
                               <FavoriteBorderIcon fontSize="small" /> Favourites
                            </MenuItem>
-                           <MenuItem className={classes.menuItem} onClick={handleSignOut}>
+                           <MenuItem
+                              sx={{
+                                 color: 'text.secondary',
+                                 py: 0.5,
+                                 px: 3,
+                                 my: 0.5,
+                                 fontSize: 'body2.fontSize',
+                              }}
+                              onClick={handleSignOut}
+                           >
                               <ExitToAppIcon fontSize="small" /> Logout
                            </MenuItem>
                         </Box>
                      ) : (
-                        <MenuItem className={classes.menuItem} onClick={handleViewProfile}>
+                        <MenuItem
+                           sx={{
+                              color: 'text.secondary',
+                              py: 0.5,
+                              px: 3,
+                              my: 0.5,
+                              fontSize: 'body2.fontSize',
+                           }}
+                           onClick={handleViewProfile}
+                        >
                            <ArrowRightAltIcon /> Log In
                         </MenuItem>
                      )}
@@ -129,7 +181,7 @@ const MainNavigation: React.FC = () => {
                </Box>
             </Toolbar>
          </AppBar>
-      </Root>
+      </Box>
    );
 };
 

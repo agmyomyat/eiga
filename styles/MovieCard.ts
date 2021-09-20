@@ -15,16 +15,6 @@ export const classes = {
 };
 
 export const StyledBox = styled(Box)(({ theme }) => ({
-   [`& .${classes.root}`]: {
-      backgroundColor: theme.palette.background.paper,
-   },
-
-   [`& .${classes.card}`]: {
-      width: '100%',
-      cursor: 'pointer',
-      position: 'relative',
-   },
-
    [`& .${classes.skeletonImage}`]: {
       paddingBottom: '150%',
    },
@@ -36,36 +26,5 @@ export const StyledBox = styled(Box)(({ theme }) => ({
       '&:hover': {
          opacity: '0.5',
       },
-   },
-
-   [`& .${classes.quality}`]: {
-      position: 'absolute',
-      top: '4%',
-      left: '5%',
-      fontStyle: 'normal',
-      fontWeight: theme.typography.fontWeightBold,
-      padding: theme.spacing(0.6, 0.8),
-      backgroundColor: theme.palette.primary.main,
-      borderRadius: theme.shape.borderRadius,
-      boxShadow: '0px 0px 20px 4px #000000cc',
-   },
-
-   [`& .${classes.title}`]: {
-      padding: theme.spacing(1, 0, 1, 0),
-   },
-
-   [`& .${classes.content}`]: {
-      color: theme.palette.text.disabled,
-   },
-
-   [`& .${classes.type}`]: {
-      display: 'inline-block',
-      color: theme.palette.primary.main,
-      fontStyle: 'normal',
-      fontSize: '0.65rem',
-      fontWeight: theme.typography.fontWeightBold,
-      padding: theme.spacing(0.4),
-      border: `1px solid ${theme.palette.primary.main}`,
-      borderRadius: theme.shape.borderRadius,
    },
 }));

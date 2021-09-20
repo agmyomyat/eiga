@@ -1,30 +1,35 @@
 import { useState } from 'react';
-import {
-   Box,
-   Typography,
-   Divider,
-   FormControl,
-   FormLabel,
-   RadioGroup,
-   FormControlLabel,
-   Radio,
-} from '@mui/material';
+import { Box, Typography, Divider, Container } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import BlockIcon from '@mui/icons-material/Block';
 import { plans } from '@helpers/plans';
-import { StyledContainer, classes } from '@styles/PricingStyles';
 
 export default function Pricing() {
    const [month, setMonth] = useState<number>(1);
    const currentPlan = plans.find(plan => plan.id === month);
 
    const selectPlans = (
-      <Box display="flex" justifyContent="center" className={classes.selectPlanWrapper}>
+      <Box display="flex" justifyContent="center" sx={{ pt: 5 }}>
          {plans.map(plan => (
             <Box
                key={plan.id}
-               className={`${classes.selectPlan} ${month === plan.id && classes.activePlan}`}
                onClick={() => setMonth(plan.id)}
+               sx={{
+                  py: 2,
+                  px: 4,
+                  textAlign: 'center',
+                  borderWidth: 1,
+                  borderStyle: 'solid',
+                  borderColor: '#303030',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  '&:hover': {
+                     borderColor: 'primary.main',
+                  },
+                  color: month === plan.id ? 'black' : 'white',
+                  border: month === plan.id ? 'none' : '',
+                  bgcolor: month === plan.id ? 'primary.main' : 'transparent',
+               }}
             >
                {plan.month}
             </Box>
@@ -33,52 +38,59 @@ export default function Pricing() {
    );
 
    return (
-      <StyledContainer className={classes.root}>
+      <Container sx={{ mb: '100px' }}>
          {/* <Typography variant="h3" component="h1" align="center">
             EIGA Pricing
          </Typography> */}
          {selectPlans}
-         <Box className={classes.plans} display="flex" justifyContent="center" flexWrap="wrap">
-            <Box className={classes.card}>
-               <Box className={classes.cardHeader}>
+         <Box display="flex" justifyContent="center" flexWrap="wrap" mt={2}>
+            <Box width="400px" maxWidth="80%" m={3} boxShadow={10} borderRadius={1}>
+               <Box bgcolor="primary.main" color="black" p={2}>
                   <Typography
                      variant="h6"
                      component="h2"
                      align="center"
-                     className={classes.planHeader}
+                     sx={{
+                        fontWeight: 'bold',
+                     }}
                   >
                      BASIC
                   </Typography>
                </Box>
-               <Box className={classes.pricing}>
-                  <Typography variant="h5" component="h3" align="center" className={classes.price}>
+               <Box py={5} px={2}>
+                  <Typography
+                     variant="h5"
+                     component="h3"
+                     align="center"
+                     sx={{ fontWeight: 'bold' }}
+                  >
                      FREE
                   </Typography>
                </Box>
                <Divider variant="middle" />
-               <Box className={classes.cardBody}>
-                  <Box display="flex" className={classes.cardItem}>
-                     <CheckCircleOutlineIcon className={classes.successIcon} />
+               <Box p={5}>
+                  <Box display="flex" py={1}>
+                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
                      <Typography variant="body1">SD(480p)</Typography>
                   </Box>
-                  <Box display="flex" className={classes.cardItem}>
-                     <BlockIcon className={classes.blockIcon} />
+                  <Box display="flex" py={1}>
+                     <BlockIcon sx={{ mr: 2, color: 'error.main' }} />
                      <Typography variant="body1">Ads Free</Typography>
                   </Box>
-                  <Box display="flex" className={classes.cardItem}>
-                     <BlockIcon className={classes.blockIcon} />
+                  <Box display="flex" py={1}>
+                     <BlockIcon sx={{ mr: 2, color: 'error.main' }} />
                      <Typography variant="body1">Download Contents</Typography>
                   </Box>
-                  <Box display="flex" className={classes.cardItem}>
-                     <BlockIcon className={classes.blockIcon} />
+                  <Box display="flex" py={1}>
+                     <BlockIcon sx={{ mr: 2, color: 'error.main' }} />
                      <Typography variant="body1">Access Premium Contents</Typography>
                   </Box>
-                  <Box display="flex" className={classes.cardItem}>
-                     <BlockIcon className={classes.blockIcon} />
+                  <Box display="flex" py={1}>
+                     <BlockIcon sx={{ mr: 2, color: 'error.main' }} />
                      <Typography variant="body1">Watch History Feature</Typography>
                   </Box>
-                  <Box display="flex" className={classes.cardItem}>
-                     <BlockIcon className={classes.blockIcon} />
+                  <Box display="flex" py={1}>
+                     <BlockIcon sx={{ mr: 2, color: 'error.main' }} />
                      <Typography variant="body1">Favorites Feature</Typography>
                   </Box>
                </Box>
@@ -86,25 +98,32 @@ export default function Pricing() {
 
             {/* Free-Card ends here */}
 
-            <Box className={classes.card}>
-               <Box className={classes.cardHeader}>
+            <Box width="400px" maxWidth="80%" m={3} boxShadow={10} borderRadius={1}>
+               <Box bgcolor="primary.main" color="black" p={2}>
                   <Typography
                      variant="h6"
                      component="h2"
                      align="center"
-                     className={classes.planHeader}
+                     sx={{
+                        fontWeight: 'bold',
+                     }}
                   >
                      PREMIUM
                   </Typography>
                </Box>
-               <Box className={classes.pricing}>
-                  <Typography variant="h5" component="h3" align="center" className={classes.price}>
+               <Box py={5} px={2}>
+                  <Typography
+                     variant="h5"
+                     component="h3"
+                     align="center"
+                     sx={{ fontWeight: 'bold' }}
+                  >
                      {currentPlan.price}MMK
                      <Typography
                         variant="subtitle2"
                         component="span"
                         color="textSecondary"
-                        className={classes.perMonth}
+                        sx={{ ml: 1 }}
                      >
                         /month
                      </Typography>
@@ -116,40 +135,79 @@ export default function Pricing() {
                   )}
                </Box>
                <Divider variant="middle" />
-               <Box className={classes.cardBody}>
-                  <Box display="flex" className={classes.cardItem}>
-                     <CheckCircleOutlineIcon className={classes.successIcon} />
-                     <Typography variant="body1" className={classes.premiumItem}>
+               <Box p={5}>
+                  <Box display="flex" py={1}>
+                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
+                     <Typography
+                        variant="body1"
+                        sx={{
+                           color: 'primary.main',
+                           position: 'relative',
+                           '&::after': {
+                              position: 'absolute',
+                              content: '"*"',
+                              top: 0,
+                              right: -10,
+                              marginLeft: 1,
+                           },
+                        }}
+                     >
                         HD
                      </Typography>
                   </Box>
-                  <Box display="flex" className={classes.cardItem}>
-                     <CheckCircleOutlineIcon className={classes.successIcon} />
-                     <Typography variant="body1" className={classes.premiumItem}>
+                  <Box display="flex" py={1}>
+                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
+                     <Typography
+                        variant="body1"
+                        sx={{
+                           color: 'primary.main',
+                           position: 'relative',
+                           '&::after': {
+                              position: 'absolute',
+                              content: '"*"',
+                              top: 0,
+                              right: -10,
+                              marginLeft: 1,
+                           },
+                        }}
+                     >
                         Ads Free
                      </Typography>
                   </Box>
-                  <Box display="flex" className={classes.cardItem}>
-                     <CheckCircleOutlineIcon className={classes.successIcon} />
-                     <Typography variant="body1" className={classes.premiumItem}>
+                  <Box display="flex" py={1}>
+                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
+                     <Typography
+                        variant="body1"
+                        sx={{
+                           color: 'primary.main',
+                           position: 'relative',
+                           '&::after': {
+                              position: 'absolute',
+                              content: '"*"',
+                              top: 0,
+                              right: -10,
+                              marginLeft: 1,
+                           },
+                        }}
+                     >
                         Download Contents
                      </Typography>
                   </Box>
-                  <Box display="flex" className={classes.cardItem}>
-                     <CheckCircleOutlineIcon className={classes.successIcon} />
+                  <Box display="flex" py={1}>
+                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
                      <Typography variant="body1">Access Premium Contents</Typography>
                   </Box>
-                  <Box display="flex" className={classes.cardItem}>
-                     <CheckCircleOutlineIcon className={classes.successIcon} />
+                  <Box display="flex" py={1}>
+                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
                      <Typography variant="body1">Watch History Feature</Typography>
                   </Box>
-                  <Box display="flex" className={classes.cardItem}>
-                     <CheckCircleOutlineIcon className={classes.successIcon} />
+                  <Box display="flex" py={1}>
+                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
                      <Typography variant="body1">Favorites Feature</Typography>
                   </Box>
                </Box>
             </Box>
          </Box>
-      </StyledContainer>
+      </Container>
    );
 }

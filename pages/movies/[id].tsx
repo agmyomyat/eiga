@@ -8,7 +8,7 @@ import {
    GetMovieQueryResult,
 } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, Container } from '@mui/material';
 import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Iframe from '@components/movies/Iframe';
@@ -16,7 +16,6 @@ import RelatedMovies from '@components/movies/RelatedMovies';
 import DetectOtherLogin from '@components/modals/DetectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 import { useAuth } from '@contexts/AuthContext';
-import { StyledContainer, classes } from '@styles/MoviePage';
 
 const client = initializeApollo();
 export interface PageProps {
@@ -84,7 +83,7 @@ export default function MoviePage(props: PageProps) {
    }, [router.isFallback, premiumUser, movieData?.vipServer1, movieData?.freeServer1]);
 
    return (
-      <StyledContainer className={classes.root}>
+      <Container sx={{ mb: '100px' }}>
          {(router.isFallback || checkPremiumLoading) && <h2>loading</h2>}
          {!router.isFallback && !checkPremiumLoading && (
             <Box>
@@ -113,7 +112,7 @@ export default function MoviePage(props: PageProps) {
          )}
 
          <DetectOtherLogin />
-      </StyledContainer>
+      </Container>
    );
 }
 

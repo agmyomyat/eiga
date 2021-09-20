@@ -5,9 +5,6 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
-import { Root, classes } from '@styles/MobileNavigationStyles';
-import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 const MobileNavigation: React.FC = () => {
    const { push, pathname }: NextRouter = useRouter();
@@ -17,37 +14,41 @@ const MobileNavigation: React.FC = () => {
    console.log('route check', dynamicRoutes.includes(pathname));
 
    return (
-      <Root
+      <BottomNavigation
+         value={value}
+         onChange={(_event, newValue) => {
+            setValue(newValue);
+            push({ pathname: newValue });
+         }}
+         showLabels
          sx={{
             display: {
-               xs: 'block',
+               xs: 'flex',
                sm: 'none',
             },
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            backgroundColor: 'secondary.main',
+            width: '100%',
+            height: 'auto',
+            pt: 0.5,
+            pb: 3,
          }}
       >
-         <BottomNavigation
-            value={value}
-            onChange={(_event, newValue) => {
-               setValue(newValue);
-               push({ pathname: newValue });
-            }}
-            showLabels
-            className={classes.mobileNavigation}
-         >
-            <BottomNavigationAction label="Home" value="/" icon={<HomeOutlinedIcon />} />
-            <BottomNavigationAction label="Browse" value="/browse" icon={<ExploreOutlinedIcon />} />
-            <BottomNavigationAction
-               label="Favorites"
-               value="/pricing"
-               icon={<FavoriteBorderOutlinedIcon />}
-            />
-            <BottomNavigationAction
-               label="Profile"
-               value="/profile"
-               icon={<AccountCircleOutlinedIcon />}
-            />
-         </BottomNavigation>
-      </Root>
+         <BottomNavigationAction label="Home" value="/" icon={<HomeOutlinedIcon />} />
+         <BottomNavigationAction label="Browse" value="/browse" icon={<ExploreOutlinedIcon />} />
+         <BottomNavigationAction
+            label="Favorites"
+            value="/pricing"
+            icon={<FavoriteBorderOutlinedIcon />}
+         />
+         <BottomNavigationAction
+            label="Profile"
+            value="/profile"
+            icon={<AccountCircleOutlinedIcon />}
+         />
+      </BottomNavigation>
    );
 };
 

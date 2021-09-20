@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { GetRelatedMoviesQuery } from '@graphgen';
 import { Movies as typeMovies } from '@graphgen';
 import Movies from '@components/movies/Movies';
-import { StyledBox, classes } from '@styles/RelatedMoviesStyles';
+
 
 interface IRelatedMovies {
    data: GetRelatedMoviesQuery;
@@ -19,14 +19,14 @@ const RelatedMovies: React.FC<IRelatedMovies> = ({ data, loading }) => {
    }
 
    return (
-      <StyledBox>
-         <Typography variant="subtitle1" component="h3" className={classes.title}>
+      <Box>
+         <Typography variant="subtitle1" component="h3" sx={{ my: 1, py: 2 }}>
             Related Movies
          </Typography>
          <Box>
             <Movies movies={data.movies as typeMovies[]} />
          </Box>
-      </StyledBox>
+      </Box>
    );
 };
 

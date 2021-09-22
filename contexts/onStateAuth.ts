@@ -1,6 +1,5 @@
 import { ReactivecurrentUser } from 'apollo/apolloReactiveVar';
-import { Dispatch } from 'react-transition-group/node_modules/@types/react';
-import { default as firebaseUser } from 'firebase';
+import { Dispatch } from 'react';
 import { ReactiveVar } from '@apollo/client';
 import { onAuthStateChanged, Unsubscribe } from '@firebase/auth';
 import {auth} from '../lib/firebase'

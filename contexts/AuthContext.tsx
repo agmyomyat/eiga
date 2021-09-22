@@ -1,15 +1,15 @@
 import { useState, useEffect, createContext, useContext, Context, useRef, Dispatch, SetStateAction } from 'react';
 import { setAccessToken } from '@helpers/accessToken';
 import { auth } from '@lib';
-import { default as firebaseUser } from 'firebase';
 import { useReactiveVar } from '@apollo/client';
 import { gqlInvalidToken, ReactiveValue } from '@apollo/apolloReactiveVar';
 import { onAuthStateInit, unsubscribeAuth } from './onStateAuth';
 import { usePremiumUserLazyQuery } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
+import { User } from 'firebase/auth';
 
 interface IauthContext {
-   currentUser: firebaseUser.User | null;
+   currentUser: User | null;
    logOut: () => Promise<[void, Response]>;
    authLoading: boolean;
    reactiveToken: ReactiveValue;

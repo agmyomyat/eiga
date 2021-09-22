@@ -2,8 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { Genres } from '@graphgen';
 import { CircularProgress, Box, Breadcrumbs, Typography, Button } from '@mui/material';
 import { NextRouter, useRouter } from 'next/router';
-import Link from 'next/link';
-import { Link as MuiLink } from '@mui/material';
+import Link from '../ui/Link';
 
 export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>;
 export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[];
@@ -65,8 +64,8 @@ const Iframe: React.FC<IframeProp> = ({
                color="textSecondary"
                sx={{ fontSize: { xs: 'caption.fontSize', sm: 'body1.fontSize' } }}
             >
-               <Link href="/" passHref>
-                  <MuiLink color="inherit">Home</MuiLink>
+               <Link href="/" color="inherit">
+                  Home
                </Link>
             </Typography>
             <Typography

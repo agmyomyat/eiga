@@ -9,7 +9,7 @@ import {
 } from '@graphgen';
 import { useRouter, NextRouter } from 'next/router';
 import { Box, Divider,Container } from '@mui/material';
-import DetectOtherLogin from '@components/modals/DetectOtherLogin';
+import DetectOtherLogin from '@components/modals/detectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 import Iframe from '@components/movies/Iframe';
 import Episodes from '@components/movies/Episodes';

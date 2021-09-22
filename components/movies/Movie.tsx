@@ -10,7 +10,7 @@ import { StyledBox, classes} from '@styles/MovieCard'
 const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
    const { push }: NextRouter = useRouter();
    // will delete later
-   const [show, setShow] = useState<boolean>(false);
+   const [show, setShow] = useState<boolean>(true);
    useEffect(() => {
       const timeout = setTimeout(() => {
          setShow(false);
@@ -23,7 +23,9 @@ const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
          {show ? (
             <Skeleton
                variant="rectangular"
-               className={classes.skeletonImage}
+               sx={{
+                  pb: '150%',
+               }}
                width="100%"
             ></Skeleton>
          ) : (

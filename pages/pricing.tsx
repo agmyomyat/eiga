@@ -1,213 +1,94 @@
 import { useState } from 'react';
-import { Box, Typography, Divider, Container } from '@mui/material';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import BlockIcon from '@mui/icons-material/Block';
-import { plans } from '@helpers/plans';
+import { Container, Box, Stepper, Step, StepLabel, Link, Alert, AlertTitle } from '@mui/material';
+import { steps } from '@helpers/pricingSteps';
+import { useAuth } from '@contexts/AuthContext';
+import { plans, Plan } from '@helpers/plans';
+import PricingTable from '@components/movies/PricingTable';
+import Voucher from '@components/movies/Voucher';
+import HowToSubscribe from '@components/movies/HowToSubscribe';
+
+const STEP_ONE = 0;
+const STEP_TWO = 1;
+const STEP_THREE = 2;
 
 export default function Pricing() {
-   const [month, setMonth] = useState<number>(1);
-   const currentPlan = plans.find(plan => plan.id === month);
+   const [activeStep, setActiveStep] = useState<number>(0);
+   const { currentUser } = useAuth();
 
-   const selectPlans = (
-      <Box display="flex" justifyContent="center" sx={{ pt: 5 }}>
-         {plans.map(plan => (
-            <Box
-               key={plan.id}
-               onClick={() => setMonth(plan.id)}
-               sx={{
-                  py: 2,
-                  px: 4,
-                  textAlign: 'center',
-                  borderWidth: 1,
-                  borderStyle: 'solid',
-                  borderColor: '#303030',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  '&:hover': {
-                     borderColor: 'primary.main',
-                  },
-                  color: month === plan.id ? 'black' : 'white',
-                  border: month === plan.id ? 'none' : '',
-                  bgcolor: month === plan.id ? 'primary.main' : 'transparent',
-               }}
-            >
-               {plan.month}
-            </Box>
-         ))}
-      </Box>
-   );
+   // user selected plan(handle click buy now)
+   const [currentPlan, setCurrentPlan] = useState<Plan | null>(null);
+   const [month, setMonth] = useState<number>(1);
+   const selectedPlan = plans.find(plan => plan.id === month);
+   // plan from select button
+
+   const handleNext = () => {
+      setActiveStep(prevActiveStep => prevActiveStep + 1);
+   };
+
+   const handleBack = () => {
+      setActiveStep(prevActiveStep => prevActiveStep - 1);
+   };
+
+   const handleReset = () => {
+      setActiveStep(0);
+   };
+
+   const handlePurchase = () => {
+      setCurrentPlan(selectedPlan);
+      handleNext();
+   };
+
+   const isStepTwo = (index: number) => {
+      return index === STEP_TWO;
+   };
 
    return (
       <Container sx={{ mb: '100px' }}>
-         {/* <Typography variant="h3" component="h1" align="center">
-            EIGA Pricing
-         </Typography> */}
-         {selectPlans}
-         <Box display="flex" justifyContent="center" flexWrap="wrap" mt={2}>
-            <Box width="400px" maxWidth="80%" m={3} boxShadow={10} borderRadius={1}>
-               <Box bgcolor="primary.main" color="black" p={2}>
-                  <Typography
-                     variant="h6"
-                     component="h2"
-                     align="center"
-                     sx={{
-                        fontWeight: 'bold',
-                     }}
-                  >
-                     BASIC
-                  </Typography>
-               </Box>
-               <Box py={5} px={2}>
-                  <Typography
-                     variant="h5"
-                     component="h3"
-                     align="center"
-                     sx={{ fontWeight: 'bold' }}
-                  >
-                     FREE
-                  </Typography>
-               </Box>
-               <Divider variant="middle" />
-               <Box p={5}>
-                  <Box display="flex" py={1}>
-                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
-                     <Typography variant="body1">SD(480p)</Typography>
-                  </Box>
-                  <Box display="flex" py={1}>
-                     <BlockIcon sx={{ mr: 2, color: 'error.main' }} />
-                     <Typography variant="body1">Ads Free</Typography>
-                  </Box>
-                  <Box display="flex" py={1}>
-                     <BlockIcon sx={{ mr: 2, color: 'error.main' }} />
-                     <Typography variant="body1">Download Contents</Typography>
-                  </Box>
-                  <Box display="flex" py={1}>
-                     <BlockIcon sx={{ mr: 2, color: 'error.main' }} />
-                     <Typography variant="body1">Access Premium Contents</Typography>
-                  </Box>
-                  <Box display="flex" py={1}>
-                     <BlockIcon sx={{ mr: 2, color: 'error.main' }} />
-                     <Typography variant="body1">Watch History Feature</Typography>
-                  </Box>
-                  <Box display="flex" py={1}>
-                     <BlockIcon sx={{ mr: 2, color: 'error.main' }} />
-                     <Typography variant="body1">Favorites Feature</Typography>
-                  </Box>
-               </Box>
-            </Box>
+         <Box sx={{ width: 1 }}>
+            <Stepper activeStep={activeStep} alternativeLabel>
+               {steps.map((step, index) => {
+                  const labelProps: {
+                     error?: boolean;
+                  } = {};
+                  // Check error when currentStep is '2' and not loggedIn and assign error to only step 2
+                  if (activeStep === 1 && !currentUser && isStepTwo(index)) {
+                     labelProps.error = true;
+                  }
 
-            {/* Free-Card ends here */}
-
-            <Box width="400px" maxWidth="80%" m={3} boxShadow={10} borderRadius={1}>
-               <Box bgcolor="primary.main" color="black" p={2}>
-                  <Typography
-                     variant="h6"
-                     component="h2"
-                     align="center"
-                     sx={{
-                        fontWeight: 'bold',
-                     }}
-                  >
-                     PREMIUM
-                  </Typography>
-               </Box>
-               <Box py={5} px={2}>
-                  <Typography
-                     variant="h5"
-                     component="h3"
-                     align="center"
-                     sx={{ fontWeight: 'bold' }}
-                  >
-                     {currentPlan.price}MMK
-                     <Typography
-                        variant="subtitle2"
-                        component="span"
-                        color="textSecondary"
-                        sx={{ ml: 1 }}
-                     >
-                        /month
-                     </Typography>
-                  </Typography>
-                  {currentPlan.save > 0 && (
-                     <Typography variant="subtitle2" component="p" color="primary" align="center">
-                        (Save {currentPlan.save} Month)
-                     </Typography>
-                  )}
-               </Box>
-               <Divider variant="middle" />
-               <Box p={5}>
-                  <Box display="flex" py={1}>
-                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
-                     <Typography
-                        variant="body1"
-                        sx={{
-                           color: 'primary.main',
-                           position: 'relative',
-                           '&::after': {
-                              position: 'absolute',
-                              content: '"*"',
-                              top: 0,
-                              right: -10,
-                              marginLeft: 1,
-                           },
-                        }}
-                     >
-                        HD
-                     </Typography>
-                  </Box>
-                  <Box display="flex" py={1}>
-                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
-                     <Typography
-                        variant="body1"
-                        sx={{
-                           color: 'primary.main',
-                           position: 'relative',
-                           '&::after': {
-                              position: 'absolute',
-                              content: '"*"',
-                              top: 0,
-                              right: -10,
-                              marginLeft: 1,
-                           },
-                        }}
-                     >
-                        Ads Free
-                     </Typography>
-                  </Box>
-                  <Box display="flex" py={1}>
-                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
-                     <Typography
-                        variant="body1"
-                        sx={{
-                           color: 'primary.main',
-                           position: 'relative',
-                           '&::after': {
-                              position: 'absolute',
-                              content: '"*"',
-                              top: 0,
-                              right: -10,
-                              marginLeft: 1,
-                           },
-                        }}
-                     >
-                        Download Contents
-                     </Typography>
-                  </Box>
-                  <Box display="flex" py={1}>
-                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
-                     <Typography variant="body1">Access Premium Contents</Typography>
-                  </Box>
-                  <Box display="flex" py={1}>
-                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
-                     <Typography variant="body1">Watch History Feature</Typography>
-                  </Box>
-                  <Box display="flex" py={1}>
-                     <CheckCircleOutlineIcon sx={{ mr: 2, color: 'success.main' }} />
-                     <Typography variant="body1">Favorites Feature</Typography>
-                  </Box>
-               </Box>
-            </Box>
+                  return (
+                     <Step key={step}>
+                        <StepLabel {...labelProps}>{step}</StepLabel>
+                     </Step>
+                  );
+               })}
+            </Stepper>
          </Box>
+         {activeStep === steps.length && (
+            <Box maxWidth="600px" mx="auto" my={5} py={5}>
+               <Alert severity="success" variant="filled" onClose={handleReset}>
+                  <AlertTitle>Completed</AlertTitle>
+                  Thanks for supporting us.
+               </Alert>
+            </Box>
+         )}
+         {activeStep === STEP_ONE && (
+            <PricingTable
+               plans={plans}
+               month={month}
+               setMonth={setMonth}
+               selectedPlan={selectedPlan}
+               onPurchase={handlePurchase}
+            />
+         )}
+         {activeStep === STEP_TWO && (
+            <Voucher
+               currentPlan={currentPlan}
+               handleNext={handleNext}
+               handleBack={handleBack}
+               isLoggedIn={!!currentUser}
+            />
+         )}
+         {activeStep === STEP_THREE && <HowToSubscribe handleNext={handleNext} />}
       </Container>
    );
 }

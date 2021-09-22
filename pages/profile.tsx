@@ -3,8 +3,7 @@ import { useGetUserLazyQuery } from '@graphgen';
 import { useAuth } from '@contexts/AuthContext';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { auth, uiConfig } from '@lib';
-import { Container, Button, Grid, Box, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Container, Button, Grid, Box, Typography, Paper } from '@mui/material';
 
 export default function Profile() {
    const { currentUser, authLoading, logOut } = useAuth();
@@ -35,12 +34,6 @@ export default function Profile() {
       return <h1>Loading...</h1>;
    }
 
-   const StyledBox = styled(Box)(({ theme }) => ({
-      padding: theme.spacing(2),
-      backgroundColor: theme.palette.background.paper,
-      borderRadius: theme.shape.borderRadius,
-   }));
-
    return (
       <Box>
          <h1>Welcome to Eiga</h1>
@@ -56,7 +49,14 @@ export default function Profile() {
                      </Typography>
                   </Grid>
                   <Grid item sm={9} xs={12}>
-                     <StyledBox>{data ? userData.uuid : 'Loading...'}</StyledBox>
+                     <Paper
+                        sx={{
+                           p: 2,
+                           backgroundImage: 'none',
+                        }}
+                     >
+                        {data ? userData.uuid : 'Loading...'}
+                     </Paper>
                   </Grid>
 
                   <Grid item sm={3} xs={12}>
@@ -65,7 +65,14 @@ export default function Profile() {
                      </Typography>
                   </Grid>
                   <Grid item sm={9} xs={12}>
-                     <StyledBox>{data ? (userData.verify ? 'Yes' : 'No') : 'Loading...'}</StyledBox>
+                     <Paper
+                        sx={{
+                           p: 2,
+                           backgroundImage: 'none',
+                        }}
+                     >
+                        {data ? (userData.verify ? 'Yes' : 'No') : 'Loading...'}
+                     </Paper>
                   </Grid>
 
                   <Grid item sm={3} xs={12}>
@@ -74,7 +81,14 @@ export default function Profile() {
                      </Typography>
                   </Grid>
                   <Grid item sm={9} xs={12}>
-                     <StyledBox>26 days</StyledBox>
+                     <Paper
+                        sx={{
+                           p: 2,
+                           backgroundImage: 'none',
+                        }}
+                     >
+                        26 days
+                     </Paper>
                   </Grid>
                </Grid>
                <Box display="flex" justifyContent="flex-end" mt={3}>

@@ -6,7 +6,7 @@ import { auth, uiConfig } from '@lib';
 import { Container, Button, Grid, Box, Typography, Paper } from '@mui/material';
 
 export default function Profile() {
-   const { currentUser, authLoading, logOut } = useAuth();
+   const { currentUser, authLoading, logOut,premiumUser } = useAuth();
 
    const [getUser, { data, loading }] = useGetUserLazyQuery({
       fetchPolicy: 'network-only',
@@ -36,7 +36,7 @@ export default function Profile() {
 
    return (
       <Box>
-         <h1>Welcome to Eiga</h1>
+         <h1>{ premiumUser?"You are a Premium User":"You are a Free User"}</h1>
          {currentUser ? (
             <Container sx={{ mt: 5, mb: '100px', maxWidth: '700px' }}>
                <Typography align="center" variant="h5" component="h3" color="textSecondary">

@@ -7,6 +7,7 @@ import { gqlInvalidToken, ReactiveValue } from '@apollo/apolloReactiveVar';
 import { onAuthStateInit, unsubscribeAuth } from './onStateAuth';
 import { usePremiumUserLazyQuery } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
+import useCheckPremium from './share-hooks/useCheckPremium';
 
 interface IauthContext {
    currentUser: firebaseUser.User | null;
@@ -23,32 +24,12 @@ export function useAuth() {
 }
 
 export default function AuthProvider({ children }) {
-   const [checkPremium, { data:gqlCurrentUser, loading: checkPremiumLoading }] = usePremiumUserLazyQuery({
-      fetchPolicy: 'network-only',
-      ssr: false,
-   });
-   const router = useRouter()
-   const premiumUser:boolean = gqlCurrentUser?.premiumCheck?.premiumUser || false 
    const [currentUser, setCurrentUser] = useState(null);
-   const unmountingPremium = useRef(false);
+   const {checkPremiumLoading,gqlCurrentUser} = useCheckPremium(currentUser)
+   const premiumUser:boolean = gqlCurrentUser?.premiumCheck?.premiumUser || false 
    const [authLoading, setAuthLoading] = useState(true);
    const reactiveToken = useReactiveVar(gqlInvalidToken);
-   const prevPath = useRef(router.query.id)
-    useEffect(() => {
-       console.log("currentuser",currentUser)
-      if(router.query.id&&router.query.id!==prevPath.current) unmountingPremium.current=false 
-      if (currentUser === null || !Object.keys(currentUser).length) { // to check again when log out
-         unmountingPremium.current=false
-      }
-      
-      if (!unmountingPremium.current) {
-         unmountingPremium.current = true
-         return checkPremium({
-            variables: { token: '' }, // token will be auto filled in Apollo middleware
-         });
 
-      }
-   }, [checkPremium, currentUser, router.query.id]);
 
    const logOut = async () => {
       setAccessToken('');

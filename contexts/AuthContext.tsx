@@ -63,7 +63,7 @@ export default function AuthProvider({ children }) {
 
    useEffect(() => {
       let _mounted = true;
-      if (reactiveToken.logOut && _mounted) {
+      if (reactiveToken.shouldLogOut && _mounted) {
          logOut();
       }
       setAuthLoading(true);
@@ -76,7 +76,7 @@ export default function AuthProvider({ children }) {
          _mounted = false;
          unsubscribeAuth;
       };
-   }, [reactiveToken.logOut]);
+   }, [reactiveToken.shouldLogOut]);
 
    const authContext = {
       premiumUser, 

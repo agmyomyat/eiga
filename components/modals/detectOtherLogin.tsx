@@ -6,13 +6,13 @@ import React from 'react';
 
 const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
    if (reason === 'clickaway') return;
-   gqlInvalidToken({ logOut: false });
+   gqlInvalidToken({ shouldLogOut: false });
 };
 
 export default function DetectOtherLogin() {
    const { reactiveToken } = useAuth();
    return (
-      <Snackbar open={reactiveToken.logOut} onClose={handleClose}>
+      <Snackbar open={reactiveToken.shouldLogOut} onClose={handleClose}>
          <Alert onClose={handleClose} severity="error" elevation={6} variant="filled">
             <AlertTitle>We detected Another Login</AlertTitle>
             Don&apos;t Share Your Account To Others!

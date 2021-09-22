@@ -51,7 +51,7 @@ const asyncRefreshTokenLink = setContext(async () => {
       let _currentUser = await onAuthStateInit(_auth);
       console.log('currentUser in lin ', _currentUser);
       if (_currentUser) {
-         gqlInvalidToken({ logOut: true });
+         gqlInvalidToken({ shouldLogOut: true });
          console.log('linkcheckToken', token);
          return { accessToken };
       }
@@ -76,7 +76,7 @@ const asyncRefreshTokenLink = setContext(async () => {
          console.log('fetched token success', res);
          accessToken.token = res || '';
       } catch (e) {
-         gqlInvalidToken({ logOut: true });
+         gqlInvalidToken({ shouldLogOut: true });
          setAccessToken('');
          console.log('apollo catch', e);
       }

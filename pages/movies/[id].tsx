@@ -8,9 +8,7 @@ import {
    GetMovieQueryResult,
 } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/MoviePage';
-import { Box, Container, Divider } from '@material-ui/core';
+import { Box, Divider, Container } from '@mui/material';
 import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Iframe from '@components/movies/Iframe';
@@ -20,7 +18,6 @@ import MovieInfo from '@components/movies/MovieInfo';
 import { useAuth } from '@contexts/AuthContext';
 import { useApolloClient } from '@apollo/client';
 
-const useStyles = makeStyles(styles);
 const client = initializeApollo();
 export interface PageProps {
    data: GetMovieQuery;
@@ -29,9 +26,11 @@ export interface PageProps {
 export default function MoviePage(props: PageProps) {
    const client = useApolloClient()
    const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
+
    const {premiumUser,checkPremiumLoading} = useAuth()
+
    const router: NextRouter = useRouter();
-   const classes = useStyles();
+
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const [loading, setLoading] = useState<boolean>(true);
    const { id } = router.query;
@@ -46,7 +45,7 @@ export default function MoviePage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop);
    }
-   
+
    useEffect(() => {
       
       console.log('user', premiumUser);
@@ -61,7 +60,7 @@ export default function MoviePage(props: PageProps) {
    }, [router.isFallback, premiumUser, movieData?.vipServer1, movieData?.freeServer1, router.query.id, client]);
 
    return (
-      <Container className={classes.root}>
+      <Container sx={{ mb: '100px' }}>
          {(router.isFallback || checkPremiumLoading) && <h2>loading</h2>}
          {!router.isFallback && !checkPremiumLoading && (
             <Box>

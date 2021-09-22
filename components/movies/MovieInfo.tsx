@@ -1,58 +1,46 @@
-import { Grid, Box, Typography } from '@material-ui/core';
+import { Box, Typography, Stack, Divider } from '@mui/material';
 import { Movies } from '@graphgen';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/MovieInfoStyles';
 import { TMovies, TGenres } from './Iframe';
-
-const useStyles = makeStyles(styles);
+import { styled } from '@mui/material/styles';
 
 const MovieInfo: React.FC<TMovies<Movies, TGenres>> = ({ name, date, body, genres }) => {
-   const classes = useStyles();
    const newGenres = genres.map(genre => genre.name[0].toUpperCase() + genre.name.slice(1));
    const movieBody = body.replace(/<\/?[^>]+(>|$)/g, '');
 
+   const StyledBody = styled(Box)(({ theme }) => ({
+      [theme.breakpoints.up('sm')]: {
+         maxWidth: '90%',
+      },
+   }));
+
    return (
-      <Box className={classes.root}>
-         <Typography variant="h6" component="h2" className={classes.title}>
+      <Box sx={{ my: 2 }}>
+         <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold' }}>
             {name}
          </Typography>
-         <Box className={classes.infoWrapper}>
+         <Stack
+            direction="row"
+            divider={<Divider orientation="vertical" flexItem />}
+            spacing={2}
+            sx={{ my: 2 }}
+         >
             <Typography variant="subtitle2" component="span" color="textSecondary">
                {new Date(date).getFullYear()}
             </Typography>
-            <Typography
-               variant="subtitle2"
-               component="span"
-               color="textSecondary"
-               className={classes.infoSpacer}
-            >
-               |
-            </Typography>
+
             <Typography variant="subtitle2" component="span" color="textSecondary">
                1hr 30min
             </Typography>
-            <Typography
-               variant="subtitle2"
-               component="span"
-               color="textSecondary"
-               className={classes.infoSpacer}
-            >
-               |
-            </Typography>
+
             <Typography variant="subtitle2" component="span" color="textSecondary">
                {newGenres.join(' ')}
             </Typography>
-         </Box>
-         <Box className={classes.body}>
+         </Stack>
+         <StyledBody>
             <Typography variant="body1">{movieBody}</Typography>
-         </Box>
-         <Box className={classes.details}>
-            <Typography
-               variant="subtitle2"
-               component="span"
-               color="textSecondary"
-               className={classes.detailKey}
-            >
+         </StyledBody>
+         <Box mt={2} maxWidth={1 / 2}>
+            <Typography variant="subtitle2" component="span" color="textSecondary" sx={{ mr: 1 }}>
                Imdb:
             </Typography>
             <Typography variant="subtitle2" component="span">

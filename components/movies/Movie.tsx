@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
 import { NextRouter, useRouter } from 'next/router';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/MovieCard';
 import { Movies } from '@graphgen';
-import { Box, Card, Typography } from '@material-ui/core';
+import { Box, Card, Typography } from '@mui/material';
 import Image from 'next/image';
-import Skeleton from '@material-ui/lab/Skeleton';
+import Skeleton from '@mui/material/Skeleton';
+import { StyledBox, classes} from '@styles/MovieCard'
 
-const useStyles = makeStyles(styles as any);
 
 const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
-   const classes = useStyles();
    const { push }: NextRouter = useRouter();
    // will delete later
-   const [show, setShow] = useState<boolean>(false);
+   const [show, setShow] = useState<boolean>(true);
    useEffect(() => {
       const timeout = setTimeout(() => {
          setShow(false);
@@ -24,9 +21,15 @@ const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
    return (
       <Box onClick={() => push({ pathname: '/movies/[id]', query: { id: uuid } })}>
          {show ? (
-            <Skeleton variant="rect" className={classes.skeletonImage} width="100%"></Skeleton>
+            <Skeleton
+               variant="rectangular"
+               sx={{
+                  pb: '150%',
+               }}
+               width="100%"
+            ></Skeleton>
          ) : (
-            <Card className={classes.card}>
+            <Card sx={{ width: 1, cursor: 'pointer', position: 'relative' }}>
                <Image
                   src={photo_url}
                   className={classes.media}
@@ -35,11 +38,26 @@ const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
                   height={900}
                   alt={name}
                />
-               <i className={classes.quality}>{quality}</i>
+               <Typography
+                  component="label"
+                  sx={{
+                     position: 'absolute',
+                     top: '4%',
+                     left: '5%',
+                     fontWeight: 'bold',
+                     py: 0.6,
+                     px: 0.8,
+                     bgcolor: 'primary.main',
+                     borderRadius: 1,
+                     boxShadow: 5,
+                  }}
+               >
+                  {quality}
+               </Typography>
             </Card>
          )}
 
-         <Typography className={classes.title} variant="subtitle2" component="h4" noWrap>
+         <Typography sx={{ py: 1 }} variant="subtitle2" component="h4" noWrap>
             {show ? <Skeleton /> : name}
          </Typography>
 
@@ -47,14 +65,29 @@ const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
             display="flex"
             alignItems="center"
             justifyContent="space-between"
-            className={classes.content}
+            color="text.disabled"
          >
             {show ? (
                <Skeleton width="50%" />
             ) : (
                <>
                   {new Date(date).getFullYear()}
-                  <i className={classes.type}>Movie</i>
+                  <Typography
+                     component="label"
+                     sx={{
+                        display: 'inline-block',
+                        color: 'primary.main',
+                        fontStyle: 'normal',
+                        fontSize: '0.65rem',
+                        fontWeight: 'bold',
+                        padding: 0.4,
+                        border: 1,
+                        borderColor: 'primary.main',
+                        borderRadius: 1,
+                     }}
+                  >
+                     Movie
+                  </Typography>
                </>
             )}
          </Box>

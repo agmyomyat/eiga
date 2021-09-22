@@ -1,11 +1,8 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography } from '@mui/material';
 import { GetRelatedMoviesQuery } from '@graphgen';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/RelatedMoviesStyles';
 import { Movies as typeMovies } from '@graphgen';
 import Movies from '@components/movies/Movies';
 
-const useStyles = makeStyles(styles);
 
 interface IRelatedMovies {
    data: GetRelatedMoviesQuery;
@@ -14,7 +11,6 @@ interface IRelatedMovies {
 
 const RelatedMovies: React.FC<IRelatedMovies> = ({ data, loading }) => {
    const movies = data?.movies;
-   const classes = useStyles();
 
    console.log('related movies', movies);
 
@@ -24,7 +20,7 @@ const RelatedMovies: React.FC<IRelatedMovies> = ({ data, loading }) => {
 
    return (
       <Box>
-         <Typography variant="subtitle1" component="h3" className={classes.title}>
+         <Typography variant="subtitle1" component="h3" sx={{ my: 1, py: 2 }}>
             Related Movies
          </Typography>
          <Box>

@@ -1,13 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Genres } from '@graphgen';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/IframeStyles';
-import { CircularProgress, Box, Breadcrumbs, Typography, Button } from '@material-ui/core';
+import { CircularProgress, Box, Breadcrumbs, Typography, Button } from '@mui/material';
 import { NextRouter, useRouter } from 'next/router';
-import Link from 'next/link';
-import { Link as MuiLink } from '@material-ui/core';
-
-const useStyles = makeStyles(styles);
+import Link from '../ui/Link';
 
 export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>;
 export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[];
@@ -41,7 +36,6 @@ const Iframe: React.FC<IframeProp> = ({
    const router: NextRouter = useRouter();
    const refer = React.useRef(null);
    const copy = React.useRef(currentServer);
-   const classes = useStyles();
 
    console.log('server1', freeServer1);
    console.log('server2', freeServer2);
@@ -57,26 +51,65 @@ const Iframe: React.FC<IframeProp> = ({
 
    return (
       <>
-         <Breadcrumbs className={classes.breadcrumbs}>
-            <Typography color="textSecondary" className={classes.breadItem}>
-               <Link href="/" passHref>
-                  <MuiLink color="inherit">Home</MuiLink>
+         <Breadcrumbs
+            sx={{
+               my: 1,
+               py: {
+                  xs: 0.5,
+                  sm: 2,
+               },
+            }}
+         >
+            <Typography
+               color="textSecondary"
+               sx={{ fontSize: { xs: 'caption.fontSize', sm: 'body1.fontSize' } }}
+            >
+               <Link href="/" color="inherit">
+                  Home
                </Link>
             </Typography>
-            <Typography color="textSecondary" className={classes.breadItem}>
+            <Typography
+               color="textSecondary"
+               sx={{ fontSize: { xs: 'caption.fontSize', sm: 'body1.fontSize' } }}
+            >
                Movies
             </Typography>
-            <Typography color="textPrimary" className={classes.breadItem}>
+            <Typography
+               color="textPrimary"
+               sx={{ fontSize: { xs: 'caption.fontSize', sm: 'body1.fontSize' } }}
+            >
                {id}
             </Typography>
          </Breadcrumbs>
-         <Box className={classes.container}>
-            <div className={classes.loadingIcon}>
+         <Box
+            sx={{
+               position: 'relative',
+               width: 1,
+               paddingBottom: '56.25%',
+            }}
+         >
+            <Box
+               sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: 1000,
+               }}
+            >
                {loading && <CircularProgress color="inherit" />}
-            </div>
-            <iframe
+            </Box>
+            <Box
+               component="iframe"
                ref={refer}
-               className={classes.iframe}
+               sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  border: 0,
+                  width: 1,
+                  height: 1,
+               }}
                onLoad={() => {
                   refer.current.src !== copy.current ? console.log('gg') : setLoading(false);
                }}
@@ -84,10 +117,9 @@ const Iframe: React.FC<IframeProp> = ({
                scrolling="no"
                allowFullScreen
                key={currentServer}
-            ></iframe>
+            ></Box>
          </Box>
-
-         <Box className={classes.buttonGroup}>
+         <Box py={1}>
             <Button
                variant={`${
                   currentServer === freeServer1 || currentServer === vipServer1
@@ -97,7 +129,13 @@ const Iframe: React.FC<IframeProp> = ({
                size="small"
                color="primary"
                onClick={() => changeServer(premiumUser ? vipServer1 : freeServer1)}
-               className={classes.button}
+               sx={{
+                  my: 2,
+                  mx: 1,
+                  '&:first-child': {
+                     ml: 0,
+                  },
+               }}
             >
                Server1
             </Button>
@@ -110,6 +148,13 @@ const Iframe: React.FC<IframeProp> = ({
                size="small"
                color="primary"
                onClick={() => changeServer(premiumUser ? vipServer2 : freeServer2)}
+               sx={{
+                  my: 2,
+                  mx: 1,
+                  '&:first-child': {
+                     ml: 0,
+                  },
+               }}
             >
                Server2
             </Button>

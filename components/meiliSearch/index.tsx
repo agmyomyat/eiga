@@ -4,7 +4,7 @@ import CustomHits from './Hits';
 import CustomRefinementList from './RefinementList';
 import CustomCurrentRefinements from './CurrentRefinement';
 import CustomSearchBox from './SearchBox';
-import Container from '@material-ui/core/Container';
+import Container from '@mui/material/Container';
 import { transformLabels, transformLabel } from '@helpers/tranformGenereLabels';
 
 const searchClient: InstantMeiliSearchInstance = instantMeiliSearch(

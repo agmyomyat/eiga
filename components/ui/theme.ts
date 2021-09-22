@@ -1,10 +1,11 @@
-import { createTheme } from '@material-ui/core/styles';
-import { grey, cyan } from '@material-ui/core/colors';
+import { createTheme } from '@mui/material/styles';
+import { grey, cyan } from '@mui/material/colors';
+import { darkScrollbar } from '@mui/material';
 
 // Create a theme instance.
 const theme = createTheme({
    palette: {
-      type: 'dark',
+      mode: 'dark',
       text: {
          secondary: '#A3A3A3',
       },
@@ -23,6 +24,15 @@ const theme = createTheme({
          paper: '#212529',
       },
    },
+   // components: {
+   //    MuiCssBaseline: {
+   //       styleOverrides: {
+   //          body: darkScrollbar(),
+   //       },
+   //    },
+   // },
 });
+
+
 
 export default theme;

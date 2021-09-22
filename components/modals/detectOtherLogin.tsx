@@ -1,7 +1,7 @@
 import { gqlInvalidToken } from '@apollo/apolloReactiveVar';
 import { useAuth } from '@contexts/AuthContext';
-import { Modal, Snackbar, SnackbarProps } from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Snackbar } from '@mui/material';
+import { Alert, AlertTitle } from '@mui/material';
 import React from 'react';
 
 const handleClose = (event?: React.SyntheticEvent, reason?: string) => {

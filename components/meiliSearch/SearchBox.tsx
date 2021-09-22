@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 import { connectSearchBox } from 'react-instantsearch-dom';
 import { SearchBoxProvided } from 'react-instantsearch-core';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/SearchMoviesStyles';
-import { Box, InputBase } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-
-const useStyles = makeStyles(styles);
+import { InputBase, Box } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { alpha } from '@mui/material/styles';
 
 const SearchBox = ({ refine }: SearchBoxProvided) => {
-   const classes = useStyles();
    const [keywords, setKeywords] = useState('');
 
    useEffect(() => {
@@ -25,22 +21,63 @@ const SearchBox = ({ refine }: SearchBoxProvided) => {
    };
 
    return (
-      <Box className={classes.searchContainer} pb={3}>
-         <form noValidate role="search" className={classes.search} onSubmit={handleSubmit}>
+      <Box maxWidth="400px" my={0} mx="auto" py={2}>
+         <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            width={1}
+            component="form"
+            noValidate
+            role="search"
+            onSubmit={handleSubmit}
+         >
             <InputBase
                placeholder="Search..."
-               classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
+               sx={{
+                  '&.MuiInputBase-root': {
+                     color: 'inherit',
+                     width: '100%',
+                  },
+                  '& .MuiInputBase-input': {
+                     py: 1,
+                     px: 2,
+                     transition: 'easing.easeIn',
+                     borderRadius: '0.6rem 0px 0px 0.6rem',
+                     width: '100%',
+                     borderWidth: 2,
+                     borderStyle: 'solid',
+                     borderColor: alpha('#fff', 0.001),
+                     backgroundColor: alpha('#fff', 0.2),
+                     '&:hover': {
+                        bgcolor: alpha('#fff', 0.3),
+                     },
+                     '&:focus': {
+                        bgcolor: 'secondary.main',
+                        borderColor: 'primary.main',
+                     },
+                  },
                }}
                inputProps={{ 'aria-label': 'search' }}
                value={keywords}
                onChange={e => setKeywords(e.currentTarget.value)}
             />
-            <div className={classes.searchIcon}>
+            <Box
+               sx={{
+                  padding: 1.2,
+                  height: 1,
+                  pointerEvents: 'none',
+                  borderRadius: '0 0.6rem 0.6rem 0px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  opacity: '0.5',
+                  backgroundColor: alpha('#fff', 0.15),
+               }}
+            >
                <SearchIcon />
-            </div>
-         </form>
+            </Box>
+         </Box>
       </Box>
    );
 };

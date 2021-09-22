@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { Box, FormControl, InputLabel, NativeSelect, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from '@styles/EpisodesStyles';
+import { Box, FormControl, InputLabel, NativeSelect, Button } from '@mui/material';
 import { ComponentTvSeriesSeason, ComponentTvSeriesEpisodes } from '@graphgen';
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles(styles);
 type Episodes = Partial<ComponentTvSeriesEpisodes>;
 type OmitEpi = Omit<ComponentTvSeriesSeason, 'episodes'>;
 type Seasons = Partial<OmitEpi & { episodes: Episodes[] }>;
@@ -21,16 +19,15 @@ const Episodes: React.FC<Iepisodes> = ({
    currentEpisode,
    handleSelect,
 }) => {
-   const classes = useStyles();
    const [season, setSeason] = useState<number>(1);
 
    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-      setSeason(+(event.target.value) as number);
+      setSeason(+event.target.value as number);
    };
 
    return (
-      <Box className={classes.root}>
-         <FormControl className={classes.formControl}>
+      <Box my={2}>
+         <FormControl sx={{ my: 2 }}>
             <InputLabel htmlFor="select-season">Season</InputLabel>
             <NativeSelect
                id="select-season"
@@ -52,7 +49,9 @@ const Episodes: React.FC<Iepisodes> = ({
             display="flex"
             flexWrap="wrap"
             alignItems="center"
-            className={classes.episodesContainer}
+            maxHeight="400px"
+            overflow="auto"
+            my={2}
          >
             {seasons[season - 1].episodes.map((episode: Episodes) => (
                <Episode
@@ -86,16 +85,24 @@ export const Episode: React.FC<Iepisode> = ({
    currentEpisode,
    currentSeason,
 }) => {
-   const classes = useStyles();
    const isSelected = season === currentSeason && id === currentEpisode;
+
+   const StyledButton = styled(Button)(({ theme }) => ({
+      width: '100%',
+      margin: theme.spacing(1, 0),
+      [theme.breakpoints.up('sm')]: {
+         width: '70%',
+         maxWidth: 250,
+         marginRight: theme.spacing(2),
+      },
+   }));
    return (
-      <Button
+      <StyledButton
          onClick={() => handleSelect(season, id)}
          variant={isSelected ? 'contained' : 'outlined'}
          color="primary"
-         className={classes.episode}
       >
          Episode {id}
-      </Button>
+      </StyledButton>
    );
 };

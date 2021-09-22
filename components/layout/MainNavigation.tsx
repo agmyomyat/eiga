@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '@contexts/AuthContext';
-import { makeStyles } from '@material-ui/core/styles';
 import { useRouter, NextRouter } from 'next/router';
-import { styles } from '@styles/MainNavigationStyles';
+
 import {
    AppBar,
    Toolbar,
@@ -12,19 +11,53 @@ import {
    Menu,
    MenuItem,
    Divider,
-} from '@material-ui/core';
+   useScrollTrigger,
+   Slide,
+   Stack,
+} from '@mui/material';
 
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import Link from '../ui/Link';
+import { styled } from '@mui/material/styles';
+import { navLinks } from '@helpers/navLinks';
 
-const useStyles = makeStyles(styles);
+interface IhideOnScroll {
+   children: React.ReactElement;
+}
+
+function HideOnScroll({ children }: IhideOnScroll) {
+   const trigger = useScrollTrigger();
+
+   return (
+      <Slide appear={false} direction="down" in={!trigger}>
+         {children}
+      </Slide>
+   );
+}
+
+const PREFIX = 'MainNavigation';
+
+const classes = {
+   root: `${PREFIX}-root`,
+   active: `${PREFIX}-active`,
+};
+
+const StyledBox = styled(Box)(({ theme }) => ({
+   [`&.${classes.root}`]: {
+      flexGrow: 1,
+      marginBottom: theme.spacing(3),
+   },
+   [`& .${classes.active}`]: {
+      opacity: 1,
+      color: theme.palette.primary.main,
+   },
+}));
 
 const MainNavigation: React.FC = () => {
-   const classes = useStyles();
-
    const [anchorEl, setAnchorEl] = useState<HTMLElement>(null);
    const openMenu = Boolean(anchorEl);
 
@@ -49,15 +82,54 @@ const MainNavigation: React.FC = () => {
    };
 
    return (
-      <>
-         <div className={classes.root}>
-            <AppBar className={classes.appbar} elevation={0} position="absolute">
-               <Toolbar component="nav">
+      <StyledBox className={classes.root}>
+         <HideOnScroll>
+            <AppBar
+               sx={{
+                  color: 'text.primary',
+                  bgcolor: 'secondary.main',
+                  pt: '10px',
+               }}
+               elevation={0}
+            >
+               <Toolbar component="nav" sx={{ alignItems: 'center' }}>
                   {/* Title */}
-                  <Typography className={classes.title} variant="h5" component="h2" noWrap>
+                  <Typography
+                     variant="h5"
+                     component="h2"
+                     noWrap
+                     sx={{
+                        flexGrow: 1,
+                        flexShrink: 0,
+                        mr: 2,
+                     }}
+                  >
                      EIGA
                   </Typography>
-
+                  <Stack
+                     direction="row"
+                     spacing={4}
+                     sx={{
+                        display: {
+                           xs: 'none',
+                           sm: 'flex',
+                        },
+                        mx: 2,
+                     }}
+                  >
+                     {navLinks.map(({ title, path }, i) => (
+                        <Link
+                           key={`${title}${i}`}
+                           href={path}
+                           variant="button"
+                           sx={{ color: `white`, opacity: 0.7 }}
+                           underline="none"
+                           activeClassName={classes.active}
+                        >
+                           {title}
+                        </Link>
+                     ))}
+                  </Stack>
                   {/* Profile avatar */}
                   <Box>
                      <IconButton
@@ -66,12 +138,18 @@ const MainNavigation: React.FC = () => {
                         aria-haspopup="true"
                         onClick={handleMenu}
                         color="inherit"
+                        size="large"
                      >
                         <AccountCircle fontSize="large" />
                      </IconButton>
 
                      {/* profile menu */}
                      <Menu
+                        sx={{
+                           '& .MuiPaper-root': {
+                              backgroundImage: 'none',
+                           },
+                        }}
                         id="menu-appbar"
                         anchorEl={anchorEl}
                         anchorOrigin={{
@@ -86,12 +164,7 @@ const MainNavigation: React.FC = () => {
                         open={openMenu}
                         onClose={handleClose}
                      >
-                        <Box
-                           display="flex"
-                           flexDirection="column"
-                           component="li"
-                           className={classes.profileWrapper}
-                        >
+                        <Box display="flex" flexDirection="column" component="li" py={1.5} px={2}>
                            {currentUser ? (
                               <Box>
                                  <Typography
@@ -118,18 +191,53 @@ const MainNavigation: React.FC = () => {
                         <Divider />
                         {currentUser ? (
                            <Box>
-                              <MenuItem className={classes.menuItem} onClick={handleViewProfile}>
+                              <MenuItem
+                                 sx={{
+                                    color: 'text.secondary',
+                                    py: 0.5,
+                                    px: 3,
+                                    my: 0.5,
+                                    fontSize: 'body2.fontSize',
+                                 }}
+                                 onClick={handleViewProfile}
+                              >
                                  <PersonOutlineIcon fontSize="small" /> View Profile
                               </MenuItem>
-                              <MenuItem className={classes.menuItem}>
+                              <MenuItem
+                                 sx={{
+                                    color: 'text.secondary',
+                                    py: 0.5,
+                                    px: 3,
+                                    my: 0.5,
+                                    fontSize: 'body2.fontSize',
+                                 }}
+                              >
                                  <FavoriteBorderIcon fontSize="small" /> Favourites
                               </MenuItem>
-                              <MenuItem className={classes.menuItem} onClick={handleSignOut}>
+                              <MenuItem
+                                 sx={{
+                                    color: 'text.secondary',
+                                    py: 0.5,
+                                    px: 3,
+                                    my: 0.5,
+                                    fontSize: 'body2.fontSize',
+                                 }}
+                                 onClick={handleSignOut}
+                              >
                                  <ExitToAppIcon fontSize="small" /> Logout
                               </MenuItem>
                            </Box>
                         ) : (
-                           <MenuItem className={classes.menuItem} onClick={handleViewProfile}>
+                           <MenuItem
+                              sx={{
+                                 color: 'text.secondary',
+                                 py: 0.5,
+                                 px: 3,
+                                 my: 0.5,
+                                 fontSize: 'body2.fontSize',
+                              }}
+                              onClick={handleViewProfile}
+                           >
                               <ArrowRightAltIcon /> Log In
                            </MenuItem>
                         )}
@@ -137,8 +245,8 @@ const MainNavigation: React.FC = () => {
                   </Box>
                </Toolbar>
             </AppBar>
-         </div>
-      </>
+         </HideOnScroll>
+      </StyledBox>
    );
 };
 

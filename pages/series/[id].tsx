@@ -30,7 +30,7 @@ export default function SeriesPage(props: PageProps) {
    // const theme = useTheme();
    // const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
    // const containerRef = useRef(null);
-   const { currentUser } = useAuth();
+   const {premiumUser,checkPremiumLoading} = useAuth()
    const router: NextRouter = useRouter();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const prevPath = useRef(router.query.id);
@@ -54,29 +54,7 @@ export default function SeriesPage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop);
    }
-
-   useEffect(() => {
-      if (router.query.id !== prevPath.current) {
-         prevPath.current = router.query.id;
-         unmountingPremium.current = false;
-      }
-      console.log('ref', unmountingPremium.current);
-      if (!currentUser) {
-         // to check again when log out
-         unmountingPremium.current = false;
-      }
-
-      if (!unmountingPremium.current) {
-         return checkPremium({
-            variables: { token: '' }, // token will be auto filled in Apollo middleware
-         });
-      }
-      return () => {
-         unmountingPremium.current = true;
-         console.log('premiumcheck unmount');
-      };
-   }, [checkPremium, currentUser, router.query.id]);
-
+  
    useEffect(() => {
       // console.log('user', premiumUser);
       // console.log('fallback', router.isFallback);
@@ -155,3 +133,4 @@ export const getStaticProps: GetStaticProps = async context => {
       props: { data },
    };
 };
+

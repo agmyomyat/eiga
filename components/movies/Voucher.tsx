@@ -27,8 +27,7 @@ const Voucher: React.FC<Ivoucher> = ({ isLoggedIn, handleNext, handleBack, curre
                }}
                p={5}
                pt={2}
-               border={1}
-               borderColor="primary.main"
+               boxShadow={10}
             >
                <Box py={3}>
                   <Typography variant="h5" component="h2" align="center">

@@ -1,20 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import {
-   GetSeriesDocument,
-   GetSeriesQuery,
-   GetSeriesQueryResult,
-   usePremiumUserLazyQuery,
-} from '@graphgen';
+import { GetSeriesDocument, GetSeriesQuery, GetSeriesQueryResult } from '@graphgen';
 import { useRouter, NextRouter } from 'next/router';
-import { Box, Divider,Container } from '@mui/material';
+import { Box, Divider, Container } from '@mui/material';
 import DetectOtherLogin from '@components/modals/detectOtherLogin';
 import MovieInfo from '@components/movies/MovieInfo';
 import Iframe from '@components/movies/Iframe';
 import Episodes from '@components/movies/Episodes';
 import { useAuth } from '@contexts/AuthContext';
-
+import { useApolloClient } from '@apollo/client';
 
 const client = initializeApollo();
 
@@ -23,24 +18,17 @@ interface PageProps {
 }
 
 export default function SeriesPage(props: PageProps) {
-   const [checkPremium, { data, loading: checkPremiumLoading }] = usePremiumUserLazyQuery({
-      fetchPolicy: 'network-only',
-      ssr: false,
-   });
    // const theme = useTheme();
    // const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
    // const containerRef = useRef(null);
-   const {premiumUser,checkPremiumLoading} = useAuth()
+   const client = useApolloClient();
+   const { premiumUser, checkPremiumLoading } = useAuth();
    const router: NextRouter = useRouter();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
-   const prevPath = useRef(router.query.id);
    const [loading, setLoading] = useState<boolean>(true);
    const { id } = router.query;
    const serverResult = props.data;
    const seriesData = serverResult?.getMovie;
-   let premiumUser: boolean = data?.premiumCheck?.premiumUser || null;
-   const unmountingPremium = useRef(false);
-
    const [currentSeason, setCurrentSeason] = useState<number>(1);
    const [currentEpisode, setCurrentEpisode] = useState<number>(1);
    const seasons = seriesData?.tv_sery.season;
@@ -54,7 +42,7 @@ export default function SeriesPage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop);
    }
-  
+
    useEffect(() => {
       // console.log('user', premiumUser);
       // console.log('fallback', router.isFallback);
@@ -65,17 +53,22 @@ export default function SeriesPage(props: PageProps) {
       } else {
          return;
       }
-   }, [router.isFallback, premiumUser, servers?.vipServer1, servers?.freeServer1]);
+   }, [
+      router.isFallback,
+      premiumUser,
+      servers?.vipServer1,
+      servers?.freeServer1,
+      router.query.id,
+      client,
+   ]);
 
    const handleSelect = (season: number, id: number) => {
       setCurrentSeason(season);
       setCurrentEpisode(id);
    };
 
-
-
    return (
-      <Container sx={{ mb: '100px'}}>
+      <Container sx={{ mb: '100px' }}>
          {(router.isFallback || checkPremiumLoading) && <h2>loading</h2>}
          {!router.isFallback && !checkPremiumLoading && (
             <Box>

@@ -26,11 +26,8 @@ export interface PageProps {
 export default function MoviePage(props: PageProps) {
    const client = useApolloClient()
    const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
-
-   const {premiumUser,checkPremiumLoading} = useAuth()
-
+   const { premiumUser, checkPremiumLoading } = useAuth();
    const router: NextRouter = useRouter();
-
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const [loading, setLoading] = useState<boolean>(true);
    const { id } = router.query;

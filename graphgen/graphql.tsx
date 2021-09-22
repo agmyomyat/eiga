@@ -68,6 +68,116 @@ export type ComponentTvSeriesSeasonInput = {
 
 
 
+export type EmbedUploader = {
+  __typename?: 'EmbedUploader';
+  id: Scalars['ID'];
+  created_at: Scalars['DateTime'];
+  updated_at: Scalars['DateTime'];
+  userName?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
+  tokenVersion?: Maybe<Scalars['Int']>;
+  verify?: Maybe<Scalars['Boolean']>;
+};
+
+export type EmbedUploaderAggregator = {
+  __typename?: 'EmbedUploaderAggregator';
+  count?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+  sum?: Maybe<EmbedUploaderAggregatorSum>;
+  avg?: Maybe<EmbedUploaderAggregatorAvg>;
+  min?: Maybe<EmbedUploaderAggregatorMin>;
+  max?: Maybe<EmbedUploaderAggregatorMax>;
+};
+
+export type EmbedUploaderAggregatorAvg = {
+  __typename?: 'EmbedUploaderAggregatorAvg';
+  tokenVersion?: Maybe<Scalars['Float']>;
+};
+
+export type EmbedUploaderAggregatorMax = {
+  __typename?: 'EmbedUploaderAggregatorMax';
+  tokenVersion?: Maybe<Scalars['Float']>;
+};
+
+export type EmbedUploaderAggregatorMin = {
+  __typename?: 'EmbedUploaderAggregatorMin';
+  tokenVersion?: Maybe<Scalars['Float']>;
+};
+
+export type EmbedUploaderAggregatorSum = {
+  __typename?: 'EmbedUploaderAggregatorSum';
+  tokenVersion?: Maybe<Scalars['Float']>;
+};
+
+export type EmbedUploaderConnection = {
+  __typename?: 'EmbedUploaderConnection';
+  values?: Maybe<Array<Maybe<EmbedUploader>>>;
+  groupBy?: Maybe<EmbedUploaderGroupBy>;
+  aggregate?: Maybe<EmbedUploaderAggregator>;
+};
+
+export type EmbedUploaderConnectionCreated_At = {
+  __typename?: 'EmbedUploaderConnectionCreated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<EmbedUploaderConnection>;
+};
+
+export type EmbedUploaderConnectionId = {
+  __typename?: 'EmbedUploaderConnectionId';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<EmbedUploaderConnection>;
+};
+
+export type EmbedUploaderConnectionPassword = {
+  __typename?: 'EmbedUploaderConnectionPassword';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<EmbedUploaderConnection>;
+};
+
+export type EmbedUploaderConnectionTokenVersion = {
+  __typename?: 'EmbedUploaderConnectionTokenVersion';
+  key?: Maybe<Scalars['Int']>;
+  connection?: Maybe<EmbedUploaderConnection>;
+};
+
+export type EmbedUploaderConnectionUpdated_At = {
+  __typename?: 'EmbedUploaderConnectionUpdated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<EmbedUploaderConnection>;
+};
+
+export type EmbedUploaderConnectionUserName = {
+  __typename?: 'EmbedUploaderConnectionUserName';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<EmbedUploaderConnection>;
+};
+
+export type EmbedUploaderConnectionVerify = {
+  __typename?: 'EmbedUploaderConnectionVerify';
+  key?: Maybe<Scalars['Boolean']>;
+  connection?: Maybe<EmbedUploaderConnection>;
+};
+
+export type EmbedUploaderGroupBy = {
+  __typename?: 'EmbedUploaderGroupBy';
+  id?: Maybe<Array<Maybe<EmbedUploaderConnectionId>>>;
+  created_at?: Maybe<Array<Maybe<EmbedUploaderConnectionCreated_At>>>;
+  updated_at?: Maybe<Array<Maybe<EmbedUploaderConnectionUpdated_At>>>;
+  userName?: Maybe<Array<Maybe<EmbedUploaderConnectionUserName>>>;
+  password?: Maybe<Array<Maybe<EmbedUploaderConnectionPassword>>>;
+  tokenVersion?: Maybe<Array<Maybe<EmbedUploaderConnectionTokenVersion>>>;
+  verify?: Maybe<Array<Maybe<EmbedUploaderConnectionVerify>>>;
+};
+
+export type EmbedUploaderInput = {
+  userName?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
+  tokenVersion?: Maybe<Scalars['Int']>;
+  verify?: Maybe<Scalars['Boolean']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
 export type EmbedVideo = {
   __typename?: 'EmbedVideo';
   id: Scalars['ID'];
@@ -79,7 +189,7 @@ export type EmbedVideo = {
   eigaLink?: Maybe<Scalars['String']>;
   originalLink?: Maybe<Scalars['String']>;
   uploadStatus?: Maybe<Scalars['Boolean']>;
-  uuid?: Maybe<Scalars['String']>;
+  uploader?: Maybe<Scalars['String']>;
   published_at?: Maybe<Scalars['DateTime']>;
 };
 
@@ -184,8 +294,8 @@ export type EmbedVideoConnectionUploadStatus = {
   connection?: Maybe<EmbedVideoConnection>;
 };
 
-export type EmbedVideoConnectionUuid = {
-  __typename?: 'EmbedVideoConnectionUuid';
+export type EmbedVideoConnectionUploader = {
+  __typename?: 'EmbedVideoConnectionUploader';
   key?: Maybe<Scalars['String']>;
   connection?: Maybe<EmbedVideoConnection>;
 };
@@ -201,7 +311,7 @@ export type EmbedVideoGroupBy = {
   eigaLink?: Maybe<Array<Maybe<EmbedVideoConnectionEigaLink>>>;
   originalLink?: Maybe<Array<Maybe<EmbedVideoConnectionOriginalLink>>>;
   uploadStatus?: Maybe<Array<Maybe<EmbedVideoConnectionUploadStatus>>>;
-  uuid?: Maybe<Array<Maybe<EmbedVideoConnectionUuid>>>;
+  uploader?: Maybe<Array<Maybe<EmbedVideoConnectionUploader>>>;
   published_at?: Maybe<Array<Maybe<EmbedVideoConnectionPublished_At>>>;
 };
 
@@ -212,7 +322,7 @@ export type EmbedVideoInput = {
   eigaLink?: Maybe<Scalars['String']>;
   originalLink?: Maybe<Scalars['String']>;
   uploadStatus?: Maybe<Scalars['Boolean']>;
-  uuid?: Maybe<Scalars['String']>;
+  uploader?: Maybe<Scalars['String']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -343,7 +453,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | ReturnSignup | PremiumCheckReturn | EmbedVideo | EmbedVideoConnection | EmbedVideoAggregator | EmbedVideoAggregatorSum | EmbedVideoAggregatorAvg | EmbedVideoAggregatorMin | EmbedVideoAggregatorMax | EmbedVideoGroupBy | EmbedVideoConnectionId | EmbedVideoConnectionCreated_At | EmbedVideoConnectionUpdated_At | EmbedVideoConnectionMovieName | EmbedVideoConnectionSeason | EmbedVideoConnectionEpisode | EmbedVideoConnectionEigaLink | EmbedVideoConnectionOriginalLink | EmbedVideoConnectionUploadStatus | EmbedVideoConnectionUuid | EmbedVideoConnectionPublished_At | CreateEmbedVideoPayload | UpdateEmbedVideoPayload | DeleteEmbedVideoPayload | Genres | GenresConnection | GenresAggregator | GenresGroupBy | GenresConnectionId | GenresConnectionCreated_At | GenresConnectionUpdated_At | GenresConnectionName | GenresConnectionUuid | GenresConnectionPublished_At | CreateGenrePayload | UpdateGenrePayload | DeleteGenrePayload | Movies | MoviesConnection | MoviesAggregator | MoviesGroupBy | MoviesConnectionId | MoviesConnectionCreated_At | MoviesConnectionUpdated_At | MoviesConnectionName | MoviesConnectionBody | MoviesConnectionDate | MoviesConnectionUuid | MoviesConnectionFreeServer1 | MoviesConnectionPhoto_Url | MoviesConnectionFreeServer2 | MoviesConnectionVipServer1 | MoviesConnectionVipServer2 | MoviesConnectionPremiumOnly | MoviesConnectionRecommend | MoviesConnectionTv_Sery | MoviesConnectionQuality | MoviesConnectionViews | MoviesConnectionPublished_At | CreateMoviePayload | UpdateMoviePayload | DeleteMoviePayload | TvSeries | TvSeriesConnection | TvSeriesAggregator | TvSeriesGroupBy | TvSeriesConnectionId | TvSeriesConnectionCreated_At | TvSeriesConnectionUpdated_At | TvSeriesConnectionName | TvSeriesConnectionPublished_At | CreateTvSeryPayload | UpdateTvSeryPayload | DeleteTvSeryPayload | UserData | UserDataConnection | UserDataAggregator | UserDataAggregatorSum | UserDataAggregatorAvg | UserDataAggregatorMin | UserDataAggregatorMax | UserDataGroupBy | UserDataConnectionId | UserDataConnectionCreated_At | UserDataConnectionUpdated_At | UserDataConnectionUuid | UserDataConnectionVerify | UserDataConnectionExpire | UserDataConnectionTokenVersion | UserDataConnectionPublished_At | CreateUserDatumPayload | UpdateUserDatumPayload | DeleteUserDatumPayload | WatchHistory | WatchHistoryConnection | WatchHistoryAggregator | WatchHistoryAggregatorSum | WatchHistoryAggregatorAvg | WatchHistoryAggregatorMin | WatchHistoryAggregatorMax | WatchHistoryGroupBy | WatchHistoryConnectionId | WatchHistoryConnectionCreated_At | WatchHistoryConnectionUpdated_At | WatchHistoryConnectionMovieName | WatchHistoryConnectionEpisode | WatchHistoryConnectionSeason | WatchHistoryConnectionUser_Data | WatchHistoryConnectionMovie | WatchHistoryConnectionPublished_At | CreateWatchHistoryPayload | UpdateWatchHistoryPayload | DeleteWatchHistoryPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentTvSeriesEpisodes | ComponentTvSeriesSeason;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | TypeRegisterEmbedUploader | Typeloginembeduploader | VerifyTokenPayload | ReturnSignup | PremiumCheckReturn | EmbedUploader | EmbedUploaderConnection | EmbedUploaderAggregator | EmbedUploaderAggregatorSum | EmbedUploaderAggregatorAvg | EmbedUploaderAggregatorMin | EmbedUploaderAggregatorMax | EmbedUploaderGroupBy | EmbedUploaderConnectionId | EmbedUploaderConnectionCreated_At | EmbedUploaderConnectionUpdated_At | EmbedUploaderConnectionUserName | EmbedUploaderConnectionPassword | EmbedUploaderConnectionTokenVersion | EmbedUploaderConnectionVerify | CreateEmbedUploaderPayload | UpdateEmbedUploaderPayload | DeleteEmbedUploaderPayload | EmbedVideo | EmbedVideoConnection | EmbedVideoAggregator | EmbedVideoAggregatorSum | EmbedVideoAggregatorAvg | EmbedVideoAggregatorMin | EmbedVideoAggregatorMax | EmbedVideoGroupBy | EmbedVideoConnectionId | EmbedVideoConnectionCreated_At | EmbedVideoConnectionUpdated_At | EmbedVideoConnectionMovieName | EmbedVideoConnectionSeason | EmbedVideoConnectionEpisode | EmbedVideoConnectionEigaLink | EmbedVideoConnectionOriginalLink | EmbedVideoConnectionUploadStatus | EmbedVideoConnectionUploader | EmbedVideoConnectionPublished_At | CreateEmbedVideoPayload | UpdateEmbedVideoPayload | DeleteEmbedVideoPayload | Genres | GenresConnection | GenresAggregator | GenresGroupBy | GenresConnectionId | GenresConnectionCreated_At | GenresConnectionUpdated_At | GenresConnectionName | GenresConnectionUuid | GenresConnectionPublished_At | CreateGenrePayload | UpdateGenrePayload | DeleteGenrePayload | Movies | MoviesConnection | MoviesAggregator | MoviesGroupBy | MoviesConnectionId | MoviesConnectionCreated_At | MoviesConnectionUpdated_At | MoviesConnectionName | MoviesConnectionBody | MoviesConnectionDate | MoviesConnectionUuid | MoviesConnectionFreeServer1 | MoviesConnectionPhoto_Url | MoviesConnectionFreeServer2 | MoviesConnectionVipServer1 | MoviesConnectionVipServer2 | MoviesConnectionPremiumOnly | MoviesConnectionRecommend | MoviesConnectionTv_Sery | MoviesConnectionQuality | MoviesConnectionViews | MoviesConnectionPublished_At | CreateMoviePayload | UpdateMoviePayload | DeleteMoviePayload | TvSeries | TvSeriesConnection | TvSeriesAggregator | TvSeriesGroupBy | TvSeriesConnectionId | TvSeriesConnectionCreated_At | TvSeriesConnectionUpdated_At | TvSeriesConnectionName | TvSeriesConnectionPublished_At | CreateTvSeryPayload | UpdateTvSeryPayload | DeleteTvSeryPayload | UserData | UserDataConnection | UserDataAggregator | UserDataAggregatorSum | UserDataAggregatorAvg | UserDataAggregatorMin | UserDataAggregatorMax | UserDataGroupBy | UserDataConnectionId | UserDataConnectionCreated_At | UserDataConnectionUpdated_At | UserDataConnectionUuid | UserDataConnectionVerify | UserDataConnectionExpire | UserDataConnectionTokenVersion | UserDataConnectionPublished_At | CreateUserDatumPayload | UpdateUserDatumPayload | DeleteUserDatumPayload | WatchHistory | WatchHistoryConnection | WatchHistoryAggregator | WatchHistoryAggregatorSum | WatchHistoryAggregatorAvg | WatchHistoryAggregatorMin | WatchHistoryAggregatorMax | WatchHistoryGroupBy | WatchHistoryConnectionId | WatchHistoryConnectionCreated_At | WatchHistoryConnectionUpdated_At | WatchHistoryConnectionMovieName | WatchHistoryConnectionEpisode | WatchHistoryConnectionSeason | WatchHistoryConnectionUser_Data | WatchHistoryConnectionMovie | WatchHistoryConnectionPublished_At | CreateWatchHistoryPayload | UpdateWatchHistoryPayload | DeleteWatchHistoryPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentTvSeriesEpisodes | ComponentTvSeriesSeason;
 
 export type MovieInput = {
   name: Scalars['String'];
@@ -542,6 +652,9 @@ export type MoviesGroupBy = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createEmbedUploader?: Maybe<CreateEmbedUploaderPayload>;
+  updateEmbedUploader?: Maybe<UpdateEmbedUploaderPayload>;
+  deleteEmbedUploader?: Maybe<DeleteEmbedUploaderPayload>;
   createEmbedVideo?: Maybe<CreateEmbedVideoPayload>;
   updateEmbedVideo?: Maybe<UpdateEmbedVideoPayload>;
   deleteEmbedVideo?: Maybe<DeleteEmbedVideoPayload>;
@@ -582,7 +695,25 @@ export type Mutation = {
   forgotPassword?: Maybe<UserPermissionsPasswordPayload>;
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
+  loginEmbedUploader?: Maybe<Typeloginembeduploader>;
+  verifyToken?: Maybe<VerifyTokenPayload>;
+  embedRegister?: Maybe<TypeRegisterEmbedUploader>;
   signupClient?: Maybe<ReturnSignup>;
+};
+
+
+export type MutationCreateEmbedUploaderArgs = {
+  input?: Maybe<CreateEmbedUploaderInput>;
+};
+
+
+export type MutationUpdateEmbedUploaderArgs = {
+  input?: Maybe<UpdateEmbedUploaderInput>;
+};
+
+
+export type MutationDeleteEmbedUploaderArgs = {
+  input?: Maybe<DeleteEmbedUploaderInput>;
 };
 
 
@@ -763,6 +894,16 @@ export type MutationEmailConfirmationArgs = {
 };
 
 
+export type MutationLoginEmbedUploaderArgs = {
+  input?: Maybe<LoginEmbedInput>;
+};
+
+
+export type MutationEmbedRegisterArgs = {
+  input?: Maybe<LoginEmbedInput>;
+};
+
+
 export type MutationSignupClientArgs = {
   uuid?: Maybe<Scalars['String']>;
 };
@@ -774,6 +915,9 @@ export enum PublicationState {
 
 export type Query = {
   __typename?: 'Query';
+  embedUploader?: Maybe<EmbedUploader>;
+  embedUploaders?: Maybe<Array<Maybe<EmbedUploader>>>;
+  embedUploadersConnection?: Maybe<EmbedUploaderConnection>;
   embedVideo?: Maybe<EmbedVideo>;
   embedVideos?: Maybe<Array<Maybe<EmbedVideo>>>;
   embedVideosConnection?: Maybe<EmbedVideoConnection>;
@@ -805,6 +949,29 @@ export type Query = {
   search?: Maybe<Array<Maybe<Movies>>>;
   getMovie?: Maybe<Movies>;
   premiumCheck?: Maybe<PremiumCheckReturn>;
+};
+
+
+export type QueryEmbedUploaderArgs = {
+  id: Scalars['ID'];
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryEmbedUploadersArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryEmbedUploadersConnectionArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
 };
 
 
@@ -1795,6 +1962,15 @@ export type WatchHistoryInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type CreateEmbedUploaderInput = {
+  data?: Maybe<EmbedUploaderInput>;
+};
+
+export type CreateEmbedUploaderPayload = {
+  __typename?: 'createEmbedUploaderPayload';
+  embedUploader?: Maybe<EmbedUploader>;
+};
+
 export type CreateEmbedVideoInput = {
   data?: Maybe<EmbedVideoInput>;
 };
@@ -1865,6 +2041,15 @@ export type CreateWatchHistoryInput = {
 export type CreateWatchHistoryPayload = {
   __typename?: 'createWatchHistoryPayload';
   watchHistory?: Maybe<WatchHistory>;
+};
+
+export type DeleteEmbedUploaderInput = {
+  where?: Maybe<InputId>;
+};
+
+export type DeleteEmbedUploaderPayload = {
+  __typename?: 'deleteEmbedUploaderPayload';
+  embedUploader?: Maybe<EmbedUploader>;
 };
 
 export type DeleteEmbedVideoInput = {
@@ -1964,6 +2149,15 @@ export type EditComponentTvSeriesSeasonInput = {
   seasonID?: Maybe<Scalars['Int']>;
 };
 
+export type EditEmbedUploaderInput = {
+  userName?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
+  tokenVersion?: Maybe<Scalars['Int']>;
+  verify?: Maybe<Scalars['Boolean']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
 export type EditEmbedVideoInput = {
   movieName?: Maybe<Scalars['String']>;
   season?: Maybe<Scalars['Int']>;
@@ -1971,7 +2165,7 @@ export type EditEmbedVideoInput = {
   eigaLink?: Maybe<Scalars['String']>;
   originalLink?: Maybe<Scalars['String']>;
   uploadStatus?: Maybe<Scalars['Boolean']>;
-  uuid?: Maybe<Scalars['String']>;
+  uploader?: Maybe<Scalars['String']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -2087,6 +2281,11 @@ export type EditWatchHistoryInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type LoginEmbedInput = {
+  userName: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type PremiumCheckReturn = {
   __typename?: 'premiumCheckReturn';
   premiumUser?: Maybe<Scalars['Boolean']>;
@@ -2097,6 +2296,32 @@ export type ReturnSignup = {
   ok?: Maybe<Scalars['Boolean']>;
   status?: Maybe<Scalars['String']>;
   accessToken?: Maybe<Scalars['String']>;
+};
+
+export type TypeRegisterEmbedUploader = {
+  __typename?: 'typeRegisterEmbedUploader';
+  success?: Maybe<Scalars['Boolean']>;
+  status?: Maybe<Scalars['String']>;
+  alreadyCreated?: Maybe<Scalars['Boolean']>;
+};
+
+export type Typeloginembeduploader = {
+  __typename?: 'typeloginembeduploader';
+  statusCode?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['String']>;
+  jwt?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
+  verify?: Maybe<Scalars['Boolean']>;
+};
+
+export type UpdateEmbedUploaderInput = {
+  where?: Maybe<InputId>;
+  data?: Maybe<EditEmbedUploaderInput>;
+};
+
+export type UpdateEmbedUploaderPayload = {
+  __typename?: 'updateEmbedUploaderPayload';
+  embedUploader?: Maybe<EmbedUploader>;
 };
 
 export type UpdateEmbedVideoInput = {
@@ -2177,6 +2402,15 @@ export type UpdateWatchHistoryInput = {
 export type UpdateWatchHistoryPayload = {
   __typename?: 'updateWatchHistoryPayload';
   watchHistory?: Maybe<WatchHistory>;
+};
+
+export type VerifyTokenPayload = {
+  __typename?: 'verifyTokenPayload';
+  verify?: Maybe<Scalars['Boolean']>;
+  status?: Maybe<Scalars['String']>;
+  statusCode?: Maybe<Scalars['Int']>;
+  bnet?: Maybe<Scalars['String']>;
+  user?: Maybe<Scalars['String']>;
 };
 
 export type GetAllMoviesQueryVariables = Exact<{ [key: string]: never; }>;

@@ -37,9 +37,8 @@ export default function AuthProvider({ children }) {
     useEffect(() => {
        console.log("currentuser",currentUser)
       if(router.query.id&&router.query.id!==prevPath.current) unmountingPremium.current=false 
-      if (currentUser === null || !Object.keys(currentUser).length) { // to check again when log out
-         unmountingPremium.current=false
-      }
+      if (currentUser === null || !Object.keys(currentUser).length)return  // to check again when log out
+      
       
       if (!unmountingPremium.current) {
          unmountingPremium.current = true
@@ -68,13 +67,13 @@ export default function AuthProvider({ children }) {
       }
       setAuthLoading(true);
 
-      onAuthStateInit(auth, setCurrentUser, setAuthLoading);
+      onAuthStateInit(setCurrentUser, setAuthLoading);
       console.log('auth checking');
 
       return () => {
          console.warn('unmounting in context');
          _mounted = false;
-         unsubscribeAuth;
+         unsubscribeAuth();
       };
    }, [reactiveToken.logOut]);
 

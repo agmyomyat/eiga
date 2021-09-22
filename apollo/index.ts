@@ -6,11 +6,12 @@ import { getAccessToken, setAccessToken } from '@helpers/accessToken';
 import { gqlInvalidToken } from './apolloReactiveVar';
 import { setContext } from '@apollo/client/link/context';
 import { onAuthStateInit } from '@contexts/onStateAuth';
+import {signOut } from "firebase/auth";
 let apolloClient;
-async function fireAuth() {
-   const { auth } = await import('../lib/firebase');
-   return auth;
-}
+// async function fireAuth() {
+//    const { auth } = await import('../lib/firebase');
+//    return auth;
+// }
 const httpLink = createHttpLink({
    uri: 'http://localhost:1337/graphql',
    credentials: 'include',
@@ -47,8 +48,8 @@ const asyncRefreshTokenLink = setContext(async () => {
     * To write that Logic
     */
    if (!token) {
-      let _auth = await fireAuth();
-      let _currentUser = await onAuthStateInit(_auth);
+      // let _auth = await fireAuth();
+      let _currentUser = await onAuthStateInit();
       console.log('currentUser in lin ', _currentUser);
       if (_currentUser) {
          gqlInvalidToken({ logOut: true });

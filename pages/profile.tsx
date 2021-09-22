@@ -1,9 +1,67 @@
 import React, { useEffect } from 'react';
 import { useGetUserLazyQuery } from '@graphgen';
 import { useAuth } from '@contexts/AuthContext';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { auth, uiConfig } from '@lib';
+import { createUser } from '@apollo/mutationfn/createUser';
 import { Container, Button, Grid, Box, Typography, Paper } from '@mui/material';
+import { getRedirectResult, getAuth, signInWithPopup,GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+
+function google() {
+   const provider = new GoogleAuthProvider();
+   provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+   const auth = getAuth();
+signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    console.log("user",user)
+    console.log("token",token)
+    console.log("result",result)
+
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+
+   
+}
+const auth = getAuth();
+function redirect() {
+   const provider = new GoogleAuthProvider();
+   provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+   signInWithRedirect(auth, provider);
+    
+
+}
+   getRedirectResult(auth)
+   .then((result) => {
+     // This gives you a Google Access Token. You can use it to access Google APIs.
+     const credential = GoogleAuthProvider.credentialFromResult(result);
+     const token = credential.accessToken;
+     console.log("asdlfdaskfkdsf",result)
+     createUser(result)
+ 
+     // The signed-in user info.
+     const user = result.user;
+   }).catch((error) => {
+     // Handle Errors here.
+     const errorCode = error.code;
+     const errorMessage = error.message;
+     // The email of the user's account used.
+     const email = error.email;
+     // The AuthCredential type that was used.
+     const credential = GoogleAuthProvider.credentialFromError(error);
+     // ...
+   });
 
 export default function Profile() {
    const { currentUser, authLoading, logOut } = useAuth();
@@ -98,7 +156,8 @@ export default function Profile() {
                </Box>
             </Container>
          ) : (
-            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
+            // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
+            <button onClick={()=>redirect()}>redirect login</button>
          )}
       </Box>
    );

@@ -2,16 +2,18 @@ import { ReactivecurrentUser } from 'apollo/apolloReactiveVar';
 import { Dispatch } from 'react-transition-group/node_modules/@types/react';
 import { default as firebaseUser } from 'firebase';
 import { ReactiveVar } from '@apollo/client';
-export let unsubscribeAuth: firebaseUser.Unsubscribe;
+import { onAuthStateChanged, Unsubscribe } from '@firebase/auth';
+import {auth} from '../lib/firebase'
+export let unsubscribeAuth: Unsubscribe;
 
 export const onAuthStateInit = (
-   auth,
    setCurrentUser?: Dispatch<any>,
    setAuthLoading?: Dispatch<any>
 ) => {
    return new Promise((resolve, reject) => {
-      const unsubscribe = auth.onAuthStateChanged((user: firebaseUser.User) => {
+      const unsubscribe = onAuthStateChanged(auth,user => {
          if (setCurrentUser && setAuthLoading) {
+            console.log("authstate",user)
             setCurrentUser(user);
             setAuthLoading(false);
          }

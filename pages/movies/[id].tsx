@@ -22,7 +22,7 @@ export interface PageProps {
    data: GetMovieQuery;
 }
 
-export default function MoviePage(props: PageProps) {
+export default function MoviePage(props) {
    const client = useApolloClient()
    const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
    const { userData, getUserLoading} = useAuth();
@@ -46,14 +46,14 @@ export default function MoviePage(props: PageProps) {
       
       // console.log('user', premiumUser);
       // console.log('fallback', router.isFallback);
-      if (!router.isFallback && userData.premium) {
+      if (!router.isFallback && userData?.premium) {
          return setCurrentServer(movieData.vipServer1);
-      } else if (!router.isFallback && !userData.premium) {
+      } else if (!router.isFallback && !userData?.premium) {
          return setCurrentServer(movieData.freeServer1);
       } else {
          return;
       }
-   }, [router.isFallback, movieData.vipServer1, movieData.freeServer1, router.query.id, client, userData.premium]);
+   }, [router.isFallback, movieData?.vipServer1, movieData?.freeServer1, router.query.id, client, userData?.premium]);
 
    return (
       <Container sx={{ mb: '100px' }}>
@@ -70,7 +70,7 @@ export default function MoviePage(props: PageProps) {
                   vipServer1={movieData.vipServer1}
                   vipServer2={movieData.vipServer2}
                   changeServer={changeServer}
-                  premiumUser={userData.premium}
+                  premiumUser={userData?.premium}
                />
                <Divider />
                <MovieInfo
@@ -99,14 +99,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async context => {
    const { id } = context.params;
 
-   const { data }: GetMovieQueryResult = await client.query({
+   const { data}: GetMovieQueryResult = await client.query({
       query: GetMovieDocument,
       variables: { uuid: id },
    });
+   console.log("asdfl",data)
 
    return {
       props: {
          data,
+         
       },
    };
 };

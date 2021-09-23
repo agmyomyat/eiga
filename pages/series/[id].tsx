@@ -46,14 +46,14 @@ export default function SeriesPage(props: PageProps) {
    useEffect(() => {
       // console.log('user', premiumUser);
       // console.log('fallback', router.isFallback);
-      if (!router.isFallback && userData.premium) {
+      if (!router.isFallback && userData?.premium) {
          return setCurrentServer(servers.vipServer1);
-      } else if (!router.isFallback && !userData.premium) {
+      } else if (!router.isFallback && !userData?.premium) {
          return setCurrentServer(servers.freeServer1);
       } else {
          return;
       }
-   }, [router.isFallback, servers.vipServer1, servers.freeServer1, router.query.id, client, userData.premium]);
+   }, [router.isFallback, servers?.vipServer1, servers?.freeServer1, router.query.id, client, userData?.premium]);
 
    const handleSelect = (season: number, id: number) => {
       setCurrentSeason(season);
@@ -75,7 +75,7 @@ export default function SeriesPage(props: PageProps) {
                   vipServer1={servers.vipServer1}
                   vipServer2={servers.vipServer2}
                   changeServer={changeServer}
-                  premiumUser={userData.premium}
+                  premiumUser={userData?.premium}
                />
                <Divider />
                <Episodes

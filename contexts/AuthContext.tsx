@@ -62,13 +62,13 @@ export default function AuthProvider({ children }) {
    },[getUserRefetch])
 
    useEffect(() => {
-      if (reactiveToken.logOut) {
+      if (reactiveToken.shouldLogOut) {
          logOut();
       }
 
       console.log('auth checking');
 
-   }, [logOut, reactiveToken.logOut]);
+   }, [logOut, reactiveToken.shouldLogOut]);
 
    const authContext = {
       userData,

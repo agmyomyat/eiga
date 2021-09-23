@@ -68,7 +68,7 @@ const asyncRefreshTokenLink = setContext(async () => {
          console.log('fetched token success', res);
          accessToken.token = res || '';
       } catch (e) {
-         gqlInvalidToken({ logOut: true });
+         gqlInvalidToken({ shouldLogOut: true });
          setAccessToken('');
          console.log('apollo catch', e);
       }

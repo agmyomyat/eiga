@@ -32,6 +32,8 @@ function redirectAuth(){
      // The signed-in user info.
      const user = result.user;
    }).catch((error) => {
+      setAuthLoading(false)
+      console.log(error)
      // Handle Errors here.
      const errorCode = error.code;
      const errorMessage = error.message;
@@ -71,7 +73,7 @@ export default function Profile() {
 
    return (
       <Box>
-         <h1>Welcome to Eiga</h1>
+         <h1>{userData?.premium?"You Are Premium User":"You are free User"}</h1>
          {userData? (
             <Container sx={{ mt: 5, mb: '100px', maxWidth: '700px' }}>
                <Typography align="center" variant="h5" component="h3" color="textSecondary">

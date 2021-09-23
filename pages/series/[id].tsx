@@ -22,7 +22,7 @@ export default function SeriesPage(props: PageProps) {
    // const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
    // const containerRef = useRef(null);
    const client = useApolloClient();
-   const { premiumUser, checkPremiumLoading } = useAuth();
+   const { userData, getUserLoading} = useAuth();
    const router: NextRouter = useRouter();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const [loading, setLoading] = useState<boolean>(true);
@@ -46,21 +46,14 @@ export default function SeriesPage(props: PageProps) {
    useEffect(() => {
       // console.log('user', premiumUser);
       // console.log('fallback', router.isFallback);
-      if (!router.isFallback && premiumUser) {
+      if (!router.isFallback && userData.premium) {
          return setCurrentServer(servers.vipServer1);
-      } else if (!router.isFallback && !premiumUser) {
+      } else if (!router.isFallback && !userData.premium) {
          return setCurrentServer(servers.freeServer1);
       } else {
          return;
       }
-   }, [
-      router.isFallback,
-      premiumUser,
-      servers?.vipServer1,
-      servers?.freeServer1,
-      router.query.id,
-      client,
-   ]);
+   }, [router.isFallback, servers.vipServer1, servers.freeServer1, router.query.id, client, userData.premium]);
 
    const handleSelect = (season: number, id: number) => {
       setCurrentSeason(season);
@@ -69,8 +62,8 @@ export default function SeriesPage(props: PageProps) {
 
    return (
       <Container sx={{ mb: '100px' }}>
-         {(router.isFallback || checkPremiumLoading) && <h2>loading</h2>}
-         {!router.isFallback && !checkPremiumLoading && (
+         {(router.isFallback || getUserLoading) && <h2>loading</h2>}
+         {!router.isFallback && !getUserLoading && (
             <Box>
                <Iframe
                   currentServer={currentServer}
@@ -82,7 +75,7 @@ export default function SeriesPage(props: PageProps) {
                   vipServer1={servers.vipServer1}
                   vipServer2={servers.vipServer2}
                   changeServer={changeServer}
-                  premiumUser={premiumUser}
+                  premiumUser={userData.premium}
                />
                <Divider />
                <Episodes

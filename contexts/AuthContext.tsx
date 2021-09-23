@@ -6,6 +6,7 @@ import { Exact, useGetUserLazyQuery } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
 import { useCheckUser } from './global-states/useCheckUser';
 import shallow from 'zustand/shallow'
+const setUserCheck = useCheckUser.getState().setCheckUser
 
 type User= {
    __typename?: 'returnUserData';
@@ -58,8 +59,8 @@ export default function AuthProvider({ children }) {
          method: 'POST',
          credentials: 'include',
       });
-      getUserRefetch({token:""})
-   },[getUserRefetch])
+      setUserCheck(true)
+   },[])
 
    useEffect(() => {
       if (reactiveToken.shouldLogOut) {

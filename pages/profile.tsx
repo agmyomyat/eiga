@@ -1,43 +1,78 @@
 import React, { useEffect } from 'react';
 import { useGetUserLazyQuery } from '@graphgen';
 import { useAuth } from '@contexts/AuthContext';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { auth, uiConfig } from '@lib';
+import { createUser } from '@apollo/mutationfn/createUser';
 import { Container, Button, Grid, Box, Typography, Paper } from '@mui/material';
+import { getRedirectResult, getAuth, signInWithPopup,GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { auth } from '@lib';
+import { useCheckUser } from '@contexts/global-states/useCheckUser';
+import { useAuthLoading } from '@contexts/global-states/useAuthLoading';
+
+const setAuthLoading = useAuthLoading.getState().setLoading
+
+function redirect() {
+   const provider = new GoogleAuthProvider();
+   provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+   signInWithRedirect(auth, provider);
+    
+
+}
+function redirectAuth(){
+   setAuthLoading(true)
+   getRedirectResult(auth)
+   .then((result) => {
+      setAuthLoading(false)
+     // This gives you a Google Access Token. You can use it to access Google APIs.
+     const credential = GoogleAuthProvider.credentialFromResult(result);
+     const token = credential.accessToken;
+     console.log("asdlfdaskfkdsf",result)
+     createUser(result).then(()=>useCheckUser.getState().setCheckUser(true))
+     
+ 
+     // The signed-in user info.
+     const user = result.user;
+   }).catch((error) => {
+     // Handle Errors here.
+     const errorCode = error.code;
+     const errorMessage = error.message;
+     // The email of the user's account used.
+     const email = error.email;
+     // The AuthCredential type that was used.
+     const credential = GoogleAuthProvider.credentialFromError(error);
+     // ...
+   })};
 
 export default function Profile() {
-   const { currentUser, authLoading, logOut } = useAuth();
-
-   const [getUser, { data, loading }] = useGetUserLazyQuery({
-      fetchPolicy: 'network-only',
-   });
-
+   const authLoading = useAuthLoading(state=>state.loading)
+   const {getUserLoading, userData,  logOut } = useAuth();
    useEffect(() => {
-      if (currentUser !== null && Object.keys(currentUser).length) {
-         console.log('current', currentUser);
-         return getUser({ variables: { uuid: currentUser.email } });
-      }
-   }, [currentUser, getUser]);
+      
+      redirectAuth()
 
-   //* userData from server
-   const userData = data?.userData[0];
+   },[])
+
+   // useEffect(() => {
+   //    if (currentUser !== null && Object.keys(currentUser).length) {
+   //       console.log('current', currentUser);
+   //       return getUser({ variables: { uuid: currentUser.email } });
+   //    }
+   // }, [currentUser, getUser]);
+
+   // //* userData from server
+   // const userData = data?.userData[0];
 
    const handleSignOut = async () => {
       logOut()
-         .then(res => {
-            console.log(res);
-         })
-         .catch(err => alert(`err logging out${err}`));
    };
 
-   if (authLoading || loading) {
+   if (getUserLoading||authLoading) {
       return <h1>Loading...</h1>;
    }
 
    return (
       <Box>
          <h1>Welcome to Eiga</h1>
-         {currentUser ? (
+         {userData? (
             <Container sx={{ mt: 5, mb: '100px', maxWidth: '700px' }}>
                <Typography align="center" variant="h5" component="h3" color="textSecondary">
                   Your Profile
@@ -55,7 +90,7 @@ export default function Profile() {
                            backgroundImage: 'none',
                         }}
                      >
-                        {data ? userData.uuid : 'Loading...'}
+                        {userData.userName}
                      </Paper>
                   </Grid>
 
@@ -71,7 +106,7 @@ export default function Profile() {
                            backgroundImage: 'none',
                         }}
                      >
-                        {data ? (userData.verify ? 'Yes' : 'No') : 'Loading...'}
+                        { userData.verify? 'Yes' : 'No' }
                      </Paper>
                   </Grid>
 
@@ -98,7 +133,8 @@ export default function Profile() {
                </Box>
             </Container>
          ) : (
-            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
+            // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
+            <button onClick={()=>redirect()}>redirect login</button>
          )}
       </Box>
    );

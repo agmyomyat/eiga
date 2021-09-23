@@ -1,7 +1,8 @@
-query getUser($uuid: String!) {
-  userData(where: { uuid: $uuid }) {
-    uuid
-    verify
+query getUser($token: String) {
+  getUserData(token: $token) {
+    userName 
+    premium 
     expire
+    verify
   }
 }

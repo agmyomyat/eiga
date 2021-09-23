@@ -5,12 +5,11 @@ import jwt_decode from 'jwt-decode';
 import { getAccessToken, setAccessToken } from '@helpers/accessToken';
 import { gqlInvalidToken } from './apolloReactiveVar';
 import { setContext } from '@apollo/client/link/context';
-import { onAuthStateInit } from '@contexts/onStateAuth';
 let apolloClient;
-async function fireAuth() {
-   const { auth } = await import('../lib/firebase');
-   return auth;
-}
+// async function fireAuth() {
+//    const { auth } = await import('../lib/firebase');
+//    return auth;
+// }
 const httpLink = createHttpLink({
    uri: 'http://localhost:1337/graphql',
    credentials: 'include',
@@ -47,14 +46,7 @@ const asyncRefreshTokenLink = setContext(async () => {
     * To write that Logic
     */
    if (!token) {
-      let _auth = await fireAuth();
-      let _currentUser = await onAuthStateInit(_auth);
-      console.log('currentUser in lin ', _currentUser);
-      if (_currentUser) {
-         gqlInvalidToken({ shouldLogOut: true });
-         console.log('linkcheckToken', token);
-         return { accessToken };
-      }
+      // let _auth = await fireAuth();
       return { accessToken };
    }
    try {
@@ -92,7 +84,7 @@ graphql name change,
 they should be changed here too.
 */
 const IgnoreTokenRefresh = ApolloLink.split(
-   ({ operationName }) => operationName === 'premiumUser',
+   ({ operationName }) => operationName === 'getUser',
    asyncRefreshTokenLink
 );
 
@@ -106,7 +98,7 @@ const authLink = new ApolloLink((operation, forward) => {
    const newAccessToken = contextToken ? contextToken : oldToken;
    console.log('access', newAccessToken);
    setAccessToken(newAccessToken);
-   if (operation.operationName === 'premiumUser') {
+   if (operation.operationName === 'getUser') {
       operation.variables['token'] = newAccessToken;
    }
    console.log('operation', operation);

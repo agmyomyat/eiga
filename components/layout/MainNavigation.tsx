@@ -61,7 +61,7 @@ const MainNavigation: React.FC = () => {
    const [anchorEl, setAnchorEl] = useState<HTMLElement>(null);
    const openMenu = Boolean(anchorEl);
 
-   const { currentUser, logOut } = useAuth();
+   const { userData, logOut } = useAuth();
    const { push }: NextRouter = useRouter();
 
    const handleMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
@@ -165,7 +165,7 @@ const MainNavigation: React.FC = () => {
                         onClose={handleClose}
                      >
                         <Box display="flex" flexDirection="column" component="li" py={1.5} px={2}>
-                           {currentUser ? (
+                           {userData? (
                               <Box>
                                  <Typography
                                     variant="subtitle2"
@@ -175,7 +175,7 @@ const MainNavigation: React.FC = () => {
                                     Signed In as
                                  </Typography>
                                  <Typography variant="body2" component="p">
-                                    {currentUser.email}
+                                    {userData.userName}
                                  </Typography>
                               </Box>
                            ) : (
@@ -189,7 +189,7 @@ const MainNavigation: React.FC = () => {
                            )}
                         </Box>
                         <Divider />
-                        {currentUser ? (
+                        {userData? (
                            <Box>
                               <MenuItem
                                  sx={{

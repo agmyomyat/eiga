@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import {
    GetMovieDocument,
-   usePremiumUserLazyQuery,
    GetMovieQuery,
    useGetRelatedMoviesQuery,
    Movies as typeMovies,
@@ -26,7 +25,7 @@ export interface PageProps {
 export default function MoviePage(props: PageProps) {
    const client = useApolloClient()
    const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
-   const { premiumUser, checkPremiumLoading } = useAuth();
+   const { userData, getUserLoading} = useAuth();
    const router: NextRouter = useRouter();
    const [currentServer, setCurrentServer] = useState<string | null>(null);
    const [loading, setLoading] = useState<boolean>(true);
@@ -45,21 +44,21 @@ export default function MoviePage(props: PageProps) {
 
    useEffect(() => {
       
-      console.log('user', premiumUser);
-      console.log('fallback', router.isFallback);
-      if (!router.isFallback && premiumUser) {
+      // console.log('user', premiumUser);
+      // console.log('fallback', router.isFallback);
+      if (!router.isFallback && userData.premium) {
          return setCurrentServer(movieData.vipServer1);
-      } else if (!router.isFallback && !premiumUser) {
+      } else if (!router.isFallback && !userData.premium) {
          return setCurrentServer(movieData.freeServer1);
       } else {
          return;
       }
-   }, [router.isFallback, premiumUser, movieData?.vipServer1, movieData?.freeServer1, router.query.id, client]);
+   }, [router.isFallback, movieData.vipServer1, movieData.freeServer1, router.query.id, client, userData.premium]);
 
    return (
       <Container sx={{ mb: '100px' }}>
-         {(router.isFallback || checkPremiumLoading) && <h2>loading</h2>}
-         {!router.isFallback && !checkPremiumLoading && (
+         {(router.isFallback || getUserLoading) && <h2>loading</h2>}
+         {!router.isFallback && !getUserLoading&& (
             <Box>
                <Iframe
                   currentServer={currentServer}
@@ -71,7 +70,7 @@ export default function MoviePage(props: PageProps) {
                   vipServer1={movieData.vipServer1}
                   vipServer2={movieData.vipServer2}
                   changeServer={changeServer}
-                  premiumUser={premiumUser}
+                  premiumUser={userData.premium}
                />
                <Divider />
                <MovieInfo

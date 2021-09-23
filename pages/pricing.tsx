@@ -13,7 +13,7 @@ const STEP_THREE = 2;
 
 export default function Pricing() {
    const [activeStep, setActiveStep] = useState<number>(0);
-   const { currentUser } = useAuth();
+   const { userData } = useAuth();
 
    // user selected plan(handle click buy now)
    const [currentPlan, setCurrentPlan] = useState<Plan | null>(null);
@@ -51,7 +51,7 @@ export default function Pricing() {
                      error?: boolean;
                   } = {};
                   // Check error when currentStep is '2' and not loggedIn and assign error to only step 2
-                  if (activeStep === 1 && !currentUser && isStepTwo(index)) {
+                  if (activeStep === 1 && !userData&& isStepTwo(index)) {
                      labelProps.error = true;
                   }
 
@@ -85,7 +85,7 @@ export default function Pricing() {
                currentPlan={currentPlan}
                handleNext={handleNext}
                handleBack={handleBack}
-               isLoggedIn={!!currentUser}
+               isLoggedIn={!!userData}
             />
          )}
          {activeStep === STEP_THREE && <HowToSubscribe handleNext={handleNext} />}

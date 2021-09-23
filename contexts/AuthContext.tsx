@@ -1,20 +1,28 @@
-import { useState, useEffect, createContext, useContext, Context, useRef, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect, createContext, useContext, Context, useRef, Dispatch, SetStateAction, useCallback } from 'react';
 import { setAccessToken } from '@helpers/accessToken';
-import { auth } from '@lib';
-import { useReactiveVar } from '@apollo/client';
+import { QueryLazyOptions, useReactiveVar } from '@apollo/client';
 import { gqlInvalidToken, ReactiveValue } from '@apollo/apolloReactiveVar';
-import { onAuthStateInit, unsubscribeAuth } from './onStateAuth';
-import { usePremiumUserLazyQuery } from '@graphgen';
+import { Exact, useGetUserLazyQuery } from '@graphgen';
 import { NextRouter, useRouter } from 'next/router';
-import { User } from 'firebase/auth';
+import { useCheckUser } from './global-states/useCheckUser';
+import shallow from 'zustand/shallow'
 
+type User= {
+   __typename?: 'returnUserData';
+   userName?: string;
+   premium?: boolean;
+   expire?: string;
+   verify?: boolean;
+}
 interface IauthContext {
-   currentUser: User | null;
-   logOut: () => Promise<[void, Response]>;
-   authLoading: boolean;
+   userData: User;
+   logOut: () => void; 
    reactiveToken: ReactiveValue;
    premiumUser: boolean;
-   checkPremiumLoading: boolean;
+   getUserLoading: boolean;
+   getUser:(options?: QueryLazyOptions<Exact<{
+      token?: string;
+  }>>) => void
 }
 const AuthContext: Context<IauthContext> = createContext(null);
 
@@ -22,68 +30,53 @@ export function useAuth() {
    return useContext(AuthContext);
 }
 
+const setCheckUser= useCheckUser.getState().setCheckUser
 export default function AuthProvider({ children }) {
-   const [checkPremium, { data:gqlCurrentUser, loading: checkPremiumLoading }] = usePremiumUserLazyQuery({
+   const checkUser = useCheckUser(state =>state.checkUser) 
+   const [getUser, { data:gqlCurrentUser, loading: getUserLoading,refetch:getUserRefetch}] = useGetUserLazyQuery({
       fetchPolicy: 'network-only',
       ssr: false,
    });
-   const router = useRouter()
-   const premiumUser:boolean = gqlCurrentUser?.premiumCheck?.premiumUser || false 
-   const [currentUser, setCurrentUser] = useState(null);
-   const unmountingPremium = useRef(false);
-   const [authLoading, setAuthLoading] = useState(true);
+   const router:NextRouter = useRouter()
+   const premiumUser:boolean = gqlCurrentUser?.getUserData?.premium||false
+   const userData = gqlCurrentUser?.getUserData;
    const reactiveToken = useReactiveVar(gqlInvalidToken);
    const prevPath = useRef(router.query.id)
     useEffect(() => {
-       console.log("currentuser",currentUser)
-      if(router.query.id&&router.query.id!==prevPath.current) unmountingPremium.current=false 
-      if (currentUser === null || !Object.keys(currentUser).length)return  // to check again when log out
-      
-      
-      if (!unmountingPremium.current) {
-         unmountingPremium.current = true
-         return checkPremium({
-            variables: { token: '' }, // token will be auto filled in Apollo middleware
-         });
+      if((router.query.id&&router.query.id!==prevPath.current)||checkUser||!gqlCurrentUser)
+      getUser({
+         variables: { token: '' }, // token will be auto filled in Apollo middleware
+      });
+      setCheckUser(false)
 
-      }
-   }, [checkPremium, currentUser, router.query.id]);
+      
+   }, [checkUser, getUser, gqlCurrentUser, router.query.id]);
 
-   const logOut = async () => {
+   const logOut = useCallback(async () => {
       setAccessToken('');
-      const a = await auth.signOut();
-
-      const b = await fetch('http://localhost:1337/logout', {
+      await fetch('http://localhost:1337/logout', {
          method: 'POST',
          credentials: 'include',
       });
-      return Promise.all([a, b]);
-   };
+      getUserRefetch({token:""})
+   },[getUserRefetch])
 
    useEffect(() => {
-      let _mounted = true;
-      if (reactiveToken.logOut && _mounted) {
+      if (reactiveToken.logOut) {
          logOut();
       }
-      setAuthLoading(true);
 
-      onAuthStateInit(setCurrentUser, setAuthLoading);
       console.log('auth checking');
 
-      return () => {
-         console.warn('unmounting in context');
-         _mounted = false;
-         unsubscribeAuth();
-      };
-   }, [reactiveToken.logOut]);
+   }, [logOut, reactiveToken.logOut]);
 
    const authContext = {
+      userData,
       premiumUser, 
-      checkPremiumLoading,
-      currentUser,
+      getUserLoading,
       logOut,
-      authLoading,
       reactiveToken,
+      getUser
    };
 
    return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;

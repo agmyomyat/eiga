@@ -22,7 +22,7 @@ export interface PageProps {
    data: GetMovieQuery;
 }
 
-export default function MoviePage(props) {
+export default function MoviePage(props:PageProps) {
    const client = useApolloClient()
    const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
    const { userData, getUserLoading} = useAuth();

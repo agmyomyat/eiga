@@ -6,6 +6,7 @@ import { plans, Plan } from '@helpers/plans';
 import PricingTable from '@components/movies/PricingTable';
 import Voucher from '@components/movies/Voucher';
 import HowToSubscribe from '@components/movies/HowToSubscribe';
+import DetectOtherLogin from '@components/modals/detectOtherLogin';
 
 const STEP_ONE = 0;
 const STEP_TWO = 1;
@@ -51,7 +52,7 @@ export default function Pricing() {
                      error?: boolean;
                   } = {};
                   // Check error when currentStep is '2' and not loggedIn and assign error to only step 2
-                  if (activeStep === 1 && !userData&& isStepTwo(index)) {
+                  if (activeStep === 1 && !userData && isStepTwo(index)) {
                      labelProps.error = true;
                   }
 
@@ -89,6 +90,7 @@ export default function Pricing() {
             />
          )}
          {activeStep === STEP_THREE && <HowToSubscribe handleNext={handleNext} />}
+         <DetectOtherLogin />
       </Container>
    );
 }

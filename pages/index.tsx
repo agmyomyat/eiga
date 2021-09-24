@@ -5,6 +5,7 @@ import { Movies as typeMovies, GetAllMoviesDocument } from '@graphgen';
 import { GetStaticProps } from 'next';
 import Movies from '@components/movies/Movies';
 import { Container } from '@mui/material';
+import DetectOtherLogin from '@components/modals/detectOtherLogin';
 
 const apolloClient = initializeApollo();
 
@@ -14,6 +15,7 @@ function Home() {
    return (
       <Container sx={{ mb: '100px' }}>
          <Movies movies={data.movies as typeMovies[]} />
+         <DetectOtherLogin />
       </Container>
    );
 }

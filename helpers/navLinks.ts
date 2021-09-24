@@ -4,8 +4,7 @@ type NavLink = {
 };
 
 export const navLinks: NavLink[] = [
-   { title: `home`, path: `/` },
-   { title: `browse`, path: `/browse` },
-   { title: `favorites`, path: `/pricing` },
-   { title: `profile`, path: `/profile` },
+   { title: `Browse`, path: `/search` },
+   { title: `Favorites`, path: `/pricing` },
+   { title: `Profile`, path: `/profile` },
 ];

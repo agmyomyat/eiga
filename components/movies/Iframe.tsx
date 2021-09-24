@@ -131,10 +131,6 @@ const Iframe: React.FC<IframeProp> = ({
                onClick={() => changeServer(premiumUser ? vipServer1 : freeServer1)}
                sx={{
                   my: 2,
-                  mx: 1,
-                  '&:first-child': {
-                     ml: 0,
-                  },
                }}
             >
                Server1
@@ -150,10 +146,7 @@ const Iframe: React.FC<IframeProp> = ({
                onClick={() => changeServer(premiumUser ? vipServer2 : freeServer2)}
                sx={{
                   my: 2,
-                  mx: 1,
-                  '&:first-child': {
-                     ml: 0,
-                  },
+                  ml: 2,
                }}
             >
                Server2

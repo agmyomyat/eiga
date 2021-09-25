@@ -11,49 +11,55 @@ import { Box, Divider, Container } from '@mui/material';
 import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Iframe from '@components/movies/Iframe';
-import RelatedMovies from '@components/movies/RelatedMovies';
-import DetectOtherLogin from '@components/modals/detectOtherLogin';
-import MovieInfo from '@components/movies/MovieInfo';
-import { useAuth } from '@contexts/AuthContext';
-import { useApolloClient } from '@apollo/client';
+import RelatedMovies from '@components/movies/RelatedMovies'
+import MovieInfo from '@components/movies/MovieInfo'
+import { useAuth } from '@contexts/AuthContext'
+import { useApolloClient } from '@apollo/client'
 
-const client = initializeApollo();
+const client = initializeApollo()
 export interface PageProps {
-   data: GetMovieQuery;
+   data: GetMovieQuery
 }
 
-export default function MoviePage(props:PageProps) {
+export default function MoviePage(props: PageProps) {
    const client = useApolloClient()
-   const { data: relatedMoviesData, loading: relatedMoviesLoading } = useGetRelatedMoviesQuery();
-   const { userData, getUserLoading} = useAuth();
-   const router: NextRouter = useRouter();
-   const [currentServer, setCurrentServer] = useState<string | null>(null);
-   const [loading, setLoading] = useState<boolean>(true);
-   const { id } = router.query;
-   const serverResult = props.data;
-   const movieData = serverResult?.getMovie;
+   const { data: relatedMoviesData, loading: relatedMoviesLoading } =
+      useGetRelatedMoviesQuery()
+   const { userData, getUserLoading } = useAuth()
+   const router: NextRouter = useRouter()
+   const [currentServer, setCurrentServer] = useState<string | null>(null)
+   const [loading, setLoading] = useState<boolean>(true)
+   const { id } = router.query
+   const serverResult = props.data
+   const movieData = serverResult?.getMovie
 
    function changeServer(server: string) {
-      setCurrentServer(server);
-      setLoading(server !== currentServer);
+      setCurrentServer(server)
+      setLoading(server !== currentServer)
    }
 
    function iframeLoad(prop: boolean) {
-      setLoading(prop);
+      setLoading(prop)
    }
 
    useEffect(() => {
-      
       // console.log('user', premiumUser);
       // console.log('fallback', router.isFallback);
       if (!router.isFallback && userData?.premium) {
-         return setCurrentServer(movieData.vipServer1);
+         return setCurrentServer(movieData.vipServer1)
       } else if (!router.isFallback && !userData?.premium) {
-         return setCurrentServer(movieData.freeServer1);
+         return setCurrentServer(movieData.freeServer1)
       } else {
-         return;
+         return
       }
-   }, [router.isFallback, movieData?.vipServer1, movieData?.freeServer1, router.query.id, client, userData?.premium]);
+   }, [
+      router.isFallback,
+      movieData?.vipServer1,
+      movieData?.freeServer1,
+      router.query.id,
+      client,
+      userData?.premium,
+   ])
 
    return (
       <Container sx={{ mb: '100px' }}>
@@ -86,8 +92,6 @@ export default function MoviePage(props:PageProps) {
                />
             </Box>
          )}
-
-         <DetectOtherLogin />
       </Container>
    )
 }

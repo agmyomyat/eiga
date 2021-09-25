@@ -5,8 +5,7 @@ import { useAuth } from '@contexts/AuthContext';
 import { plans, Plan } from '@helpers/plans';
 import PricingTable from '@components/movies/PricingTable';
 import Voucher from '@components/movies/Voucher';
-import HowToSubscribe from '@components/movies/HowToSubscribe';
-import DetectOtherLogin from '@components/modals/detectOtherLogin';
+import HowToSubscribe from '@components/movies/HowToSubscribe'
 
 const STEP_ONE = 0;
 const STEP_TWO = 1;

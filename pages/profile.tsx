@@ -6,8 +6,7 @@ import { Container, Button, Grid, Box, Typography, Paper } from '@mui/material';
 import { getRedirectResult, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
 import { auth } from '@lib';
 import { useCheckUser } from '@contexts/global-states/useCheckUser';
-import { useAuthLoading } from '@contexts/global-states/useAuthLoading';
-import DetectOtherLogin from '@components/modals/detectOtherLogin';
+import { useAuthLoading } from '@contexts/global-states/useAuthLoading'
 
 const setAuthLoading = useAuthLoading.getState().setLoading;
 

@@ -3,8 +3,7 @@ import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { GetSeriesDocument, GetSeriesQuery, GetSeriesQueryResult } from '@graphgen';
 import { useRouter, NextRouter } from 'next/router';
-import { Box, Divider, Container } from '@mui/material';
-import DetectOtherLogin from '@components/modals/detectOtherLogin';
+import { Box, Divider, Container } from '@mui/material'
 import MovieInfo from '@components/movies/MovieInfo';
 import Iframe from '@components/movies/Iframe';
 import Episodes from '@components/movies/Episodes';

@@ -4,8 +4,7 @@ import { initializeApollo } from '@apollo/index';
 import { Movies as typeMovies, GetAllMoviesDocument } from '@graphgen';
 import { GetStaticProps } from 'next';
 import Movies from '@components/movies/Movies';
-import { Container } from '@mui/material';
-import DetectOtherLogin from '@components/modals/detectOtherLogin';
+import { Container } from '@mui/material'
 
 const apolloClient = initializeApollo();
 

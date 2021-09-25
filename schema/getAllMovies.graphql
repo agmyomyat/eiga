@@ -3,7 +3,7 @@ query getAllMovies {
       name
       uuid
       id
-      release_date 
+      release_date
       quality
       photo_url
    }

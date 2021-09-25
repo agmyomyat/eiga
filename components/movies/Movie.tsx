@@ -1,25 +1,32 @@
-import { useEffect, useState } from 'react';
-import { NextRouter, useRouter } from 'next/router';
-import { Movies } from '@graphgen';
-import { Box, Card, Typography } from '@mui/material';
-import Image from 'next/image';
-import Skeleton from '@mui/material/Skeleton';
-import { StyledBox, classes} from '@styles/MovieCard'
+import { useEffect, useState } from 'react'
+import { NextRouter, useRouter } from 'next/router'
+import { Movies } from '@graphgen'
+import { Box, Card, Typography } from '@mui/material'
+import Image from 'next/image'
+import Skeleton from '@mui/material/Skeleton'
+import { StyledBox, classes } from '@styles/MovieCard'
 
-
-const Movie = ({ uuid, name, photo_url, release_date, quality }: Partial<Movies>) => {
-   const { push }: NextRouter = useRouter();
+const Movie = ({
+   uuid,
+   name,
+   photo_url,
+   release_date,
+   quality,
+}: Partial<Movies>) => {
+   const { push }: NextRouter = useRouter()
    // will delete later
-   const [show, setShow] = useState<boolean>(false);
+   const [show, setShow] = useState<boolean>(false)
    useEffect(() => {
       const timeout = setTimeout(() => {
-         setShow(false);
-      }, 3000);
-      return () => clearTimeout(timeout);
-   });
+         setShow(false)
+      }, 3000)
+      return () => clearTimeout(timeout)
+   })
    //
    return (
-      <Box onClick={() => push({ pathname: '/movies/[id]', query: { id: uuid } })}>
+      <Box
+         onClick={() => push({ pathname: '/movies/[id]', query: { id: uuid } })}
+      >
          {show ? (
             <Skeleton
                variant="rectangular"
@@ -92,7 +99,7 @@ const Movie = ({ uuid, name, photo_url, release_date, quality }: Partial<Movies>
             )}
          </Box>
       </Box>
-   );
-};
+   )
+}
 
-export default Movie;
+export default Movie

@@ -1,11 +1,17 @@
-import { useMemo } from 'react';
-import { ApolloClient, createHttpLink, InMemoryCache, from, ApolloLink } from '@apollo/client';
-import { onError } from '@apollo/client/link/error';
-import jwt_decode from 'jwt-decode';
-import { getAccessToken, setAccessToken } from '@helpers/accessToken';
-import { gqlInvalidToken } from './apolloReactiveVar';
-import { setContext } from '@apollo/client/link/context';
-let apolloClient;
+import { useMemo } from 'react'
+import {
+   ApolloClient,
+   createHttpLink,
+   InMemoryCache,
+   from,
+   ApolloLink,
+} from '@apollo/client'
+import { onError } from '@apollo/client/link/error'
+import jwt_decode from 'jwt-decode'
+import { getAccessToken, setAccessToken } from '@helpers/accessToken'
+import { gqlInvalidToken } from './apolloReactiveVar'
+import { setContext } from '@apollo/client/link/context'
+let apolloClient
 // async function fireAuth() {
 //    const { auth } = await import('../lib/firebase');
 //    return auth;
@@ -13,33 +19,35 @@ let apolloClient;
 const httpLink = createHttpLink({
    uri: 'http://localhost:1337/graphql',
    credentials: 'include',
-});
+})
 const errorLink = onError(({ graphQLErrors, networkError }) => {
    if (graphQLErrors)
       graphQLErrors.map(({ message, locations, path }) =>
-         console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
-      );
-   if (networkError) console.log(`[Network error]: ${networkError}`);
-});
+         console.log(
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+         )
+      )
+   if (networkError) console.log(`[Network error]: ${networkError}`)
+})
 
 async function handleFetch() {
-   let _token: string;
+   let _token: string
    await fetch('http://localhost:1337/refreshtoken', {
       method: 'POST',
       credentials: 'include',
    })
-      .then(res => res.json())
-      .then(data => (_token = data.access));
+      .then((res) => res.json())
+      .then((data) => (_token = data.access))
    if (!_token) {
-      throw 'access token not found';
+      throw 'access token not found'
    } else {
-      return _token;
+      return _token
    }
 }
 const asyncRefreshTokenLink = setContext(async () => {
-   let accessToken = { token: '' };
-   let shouldFetchOrNot: boolean;
-   const token = getAccessToken();
+   let accessToken = { token: '' }
+   let shouldFetchOrNot: boolean
+   const token = getAccessToken()
 
    /**
     * TODO: even tho Access Token is not available Should check cookies
@@ -47,35 +55,35 @@ const asyncRefreshTokenLink = setContext(async () => {
     */
    if (!token) {
       // let _auth = await fireAuth();
-      return { accessToken };
+      return { accessToken }
    }
    try {
-      const { exp }: any = jwt_decode(<string | null>token);
-      console.log('expire', exp);
+      const { exp }: any = jwt_decode(<string | null>token)
+      console.log('expire', exp)
       if (Date.now() >= exp * 1000) {
-         shouldFetchOrNot = true;
+         shouldFetchOrNot = true
       } else {
-         shouldFetchOrNot = false;
+         shouldFetchOrNot = false
       }
    } catch {
-      shouldFetchOrNot = true;
+      shouldFetchOrNot = true
    }
 
    if (shouldFetchOrNot) {
       try {
-         let res = await handleFetch();
+         let res = await handleFetch()
          // setAccessToken(res||''); // see line authLink comment
-         console.log('fetched token success', res);
-         accessToken.token = res || '';
+         console.log('fetched token success', res)
+         accessToken.token = res || ''
       } catch (e) {
-         gqlInvalidToken({ shouldLogOut: true });
-         setAccessToken('');
-         console.log('apollo catch', e);
+         gqlInvalidToken({ shouldLogOut: true })
+         setAccessToken('')
+         console.log('apollo catch', e)
       }
-      console.log('final line');
-      return { accessToken };
+      console.log('final line')
+      return { accessToken }
    }
-});
+})
 
 /*
 IgnoreTokenRefresh ignore tokenRefreshLink middleware
@@ -86,63 +94,63 @@ they should be changed here too.
 const IgnoreTokenRefresh = ApolloLink.split(
    ({ operationName }) => operationName === 'getUser',
    asyncRefreshTokenLink
-);
+)
 
 const authLink = new ApolloLink((operation, forward) => {
-   const oldToken = getAccessToken();
+   const oldToken = getAccessToken()
    /**
     * this line might not need here, context link await already set token but will not remove cause
     * context link only run on premiumUserCheck query UPDATE: removed context link set Token function
     */
-   const contextToken = operation.getContext().accessToken?.token || ''; //
-   const newAccessToken = contextToken ? contextToken : oldToken;
-   console.log('access', newAccessToken);
-   setAccessToken(newAccessToken);
+   const contextToken = operation.getContext().accessToken?.token || '' //
+   const newAccessToken = contextToken ? contextToken : oldToken
+   console.log('access', newAccessToken)
+   setAccessToken(newAccessToken)
    if (operation.operationName === 'getUser') {
-      operation.variables['token'] = newAccessToken;
+      operation.variables['token'] = newAccessToken
    }
-   console.log('operation', operation);
+   console.log('operation', operation)
    operation.setContext(({ headers }) => ({
       headers: {
          ...headers,
          auth: newAccessToken ? `Bearer ${newAccessToken}` : '', // however you get your token
       },
-   }));
-   return forward(operation).map(data => {
+   }))
+   return forward(operation).map((data) => {
       // Called after server responds
-      console.log('in apollo link', data);
-      return data;
-   });
-});
+      console.log('in apollo link', data)
+      return data
+   })
+})
 
 function createApolloClient() {
    return new ApolloClient({
       // ssrMode: typeof window === 'undefined',
       link: from([IgnoreTokenRefresh, authLink, errorLink, httpLink]),
       cache: new InMemoryCache(),
-   });
+   })
 }
 
 export function initializeApollo(initialState = null) {
-   const _apolloClient = apolloClient ?? createApolloClient();
+   const _apolloClient = apolloClient ?? createApolloClient()
 
    // If your page has Next.js data fetching methods that use Apollo Client, the initial state
    // gets hydrated here
    if (initialState) {
       // Get existing cache, loaded during client side data fetching
-      const existingCache = _apolloClient.extract();
+      const existingCache = _apolloClient.extract()
       // Restore the cache using the data passed from getStaticProps/getServerSideProps
       // combined with the existing cached data
-      _apolloClient.cache.restore({ ...existingCache, ...initialState });
+      _apolloClient.cache.restore({ ...existingCache, ...initialState })
    }
    // For SSG and SSR always create a new Apollo Client
-   if (typeof window === 'undefined') return _apolloClient;
+   if (typeof window === 'undefined') return _apolloClient
    // Create the Apollo Client once in the client
-   if (!apolloClient) apolloClient = _apolloClient;
-   return _apolloClient;
+   if (!apolloClient) apolloClient = _apolloClient
+   return _apolloClient
 }
 
 export function useApollo<T>(initialState: T) {
-   const store = useMemo(() => initializeApollo(initialState), [initialState]);
-   return store;
+   const store = useMemo(() => initializeApollo(initialState), [initialState])
+   return store
 }

@@ -1,6 +1,6 @@
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
-import { grey, cyan } from '@mui/material/colors';
-import { darkScrollbar } from '@mui/material';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles'
+import { grey, cyan } from '@mui/material/colors'
+import { darkScrollbar } from '@mui/material'
 
 // Create a theme instance.
 let theme = createTheme({
@@ -24,8 +24,8 @@ let theme = createTheme({
          paper: '#212529',
       },
    },
-});
+})
 
-theme = responsiveFontSizes(theme);
+theme = responsiveFontSizes(theme)
 
-export default theme;
+export default theme

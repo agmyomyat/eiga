@@ -1,27 +1,29 @@
-import { useState } from 'react';
-import { connectMenu } from 'react-instantsearch-dom';
-import { MenuProvided } from 'react-instantsearch-core';
-import { Chip, Box, Grid, Button, MenuItem } from '@mui/material';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import { alpha, styled } from '@mui/material/styles';
-import Menu, { MenuProps } from '@mui/material/Menu';
+import { useState } from 'react'
+import { connectMenu } from 'react-instantsearch-dom'
+import { MenuProvided } from 'react-instantsearch-core'
+import { Chip, Box, Grid, Button, MenuItem } from '@mui/material'
+import FilterListIcon from '@mui/icons-material/FilterList'
+import { alpha, styled } from '@mui/material/styles'
+import Menu, { MenuProps } from '@mui/material/Menu'
 
 const RefinementList = ({ items, refine }: MenuProvided) => {
-   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-   const open = Boolean(anchorEl);
+   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
+   const open = Boolean(anchorEl)
 
-   const handleOpen = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-      setAnchorEl(event.currentTarget);
-   };
+   const handleOpen = (
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+   ): void => {
+      setAnchorEl(event.currentTarget)
+   }
 
    const handleClose = () => {
-      setAnchorEl(null);
-   };
+      setAnchorEl(null)
+   }
 
    const handleRefine = (value: string) => {
-      refine(value);
-      setAnchorEl(null);
-   };
+      refine(value)
+      setAnchorEl(null)
+   }
 
    const StyledMobileGrid = styled(Grid)(() => ({
       flexWrap: 'nowrap',
@@ -31,7 +33,7 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
       '&::-webkit-scrollbar': {
          display: 'none',
       },
-   }));
+   }))
 
    const MobileFilter = (
       <StyledMobileGrid
@@ -44,7 +46,7 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
             },
          }}
       >
-         {items.map(item => (
+         {items.map((item) => (
             <Grid item key={item.label}>
                <Chip
                   color={`${item.isRefined ? 'primary' : 'default'}`}
@@ -54,7 +56,7 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
             </Grid>
          ))}
       </StyledMobileGrid>
-   );
+   )
 
    const StyledMenu = styled((props: MenuProps) => (
       <Menu
@@ -89,7 +91,7 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
             borderRadius: theme.shape.borderRadius,
          },
       },
-   }));
+   }))
 
    const DesktopFilter = (
       <Box
@@ -115,23 +117,26 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
          </Button>
          {/* Will Fix Later */}
          <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
-            {items.map(item => (
-               <MenuItem key={item.label} onClick={() => handleRefine(item.value)}>
+            {items.map((item) => (
+               <MenuItem
+                  key={item.label}
+                  onClick={() => handleRefine(item.value)}
+               >
                   {item.label}
                </MenuItem>
             ))}
          </StyledMenu>
       </Box>
-   );
+   )
 
    return (
       <>
          {MobileFilter}
          {DesktopFilter}
       </>
-   );
-};
+   )
+}
 
-const CustomRefinementList = connectMenu(RefinementList);
+const CustomRefinementList = connectMenu(RefinementList)
 
-export default CustomRefinementList;
+export default CustomRefinementList

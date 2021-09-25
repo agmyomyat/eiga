@@ -1,7 +1,7 @@
-import { Button } from '@mui/material';
+import { Button } from '@mui/material'
 
 interface IhowToSub {
-   handleNext: () => void;
+   handleNext: () => void
 }
 
 const HowToSubscribe: React.FC<IhowToSub> = ({ handleNext }) => {
@@ -9,7 +9,7 @@ const HowToSubscribe: React.FC<IhowToSub> = ({ handleNext }) => {
       <div>
          <Button onClick={handleNext}>Complete</Button>
       </div>
-   );
-};
+   )
+}
 
-export default HowToSubscribe;
+export default HowToSubscribe

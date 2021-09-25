@@ -19,18 +19,21 @@ function redirect() {
    provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
    signInWithRedirect(auth, provider)
 }
+/**
+ * @TODO: put error handle for redirctAuth user canceled or orther
+ */
 function redirectAuth() {
    setAuthLoading(true)
    getRedirectResult(auth)
       .then((result) => {
-         setAuthLoading(false)
          // This gives you a Google Access Token. You can use it to access Google APIs.
          const credential = GoogleAuthProvider.credentialFromResult(result)
          const token = credential.accessToken
          console.log('asdlfdaskfkdsf', result)
-         createUser(result).then(() =>
+         createUser(result).then(() => {
             useCheckUser.getState().setCheckUser(true)
-         )
+            setAuthLoading(false)
+         })
 
          // The signed-in user info.
          const user = result.user
@@ -45,6 +48,8 @@ function redirectAuth() {
          const email = error.email
          // The AuthCredential type that was used.
          const credential = GoogleAuthProvider.credentialFromError(error)
+         console.log(errorCode)
+         console.log(errorMessage)
          // ...
       })
 }

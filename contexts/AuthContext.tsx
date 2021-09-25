@@ -32,6 +32,7 @@ interface IauthContext {
    premiumUser: boolean
    getUserLoading: boolean
    getUser: (
+      // eslint-disable-next-line no-unused-vars
       options?: QueryLazyOptions<
          Exact<{
             token?: string

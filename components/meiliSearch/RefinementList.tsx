@@ -26,7 +26,7 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
    const StyledMobileGrid = styled(Grid)(() => ({
       flexWrap: 'nowrap',
       overflowX: 'scroll',
-      '-ms-overflow-style': 'none',
+      msOverflowStyle: 'none',
       scrollbarWidth: 'none',
       '&::-webkit-scrollbar': {
          display: 'none',
@@ -58,7 +58,7 @@ const RefinementList = ({ items, refine }: MenuProvided) => {
 
    const StyledMenu = styled((props: MenuProps) => (
       <Menu
-         id="simple-menu"
+         id="refinementList-menu"
          keepMounted
          anchorOrigin={{
             vertical: 'top',

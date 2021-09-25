@@ -1,0 +1,8 @@
+query searchMovie($search: String!) {
+   search(q: $search, limit: 5) {
+      name
+      uuid
+      date
+      photo_url
+   }
+}

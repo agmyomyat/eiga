@@ -1,9 +1,11 @@
-import React from 'react';
-import { Dialog, Box, AppBar, Toolbar, IconButton, InputBase, Slide } from '@mui/material';
+import React, { ChangeEventHandler } from 'react';
+import { Dialog, Box, AppBar, Toolbar, IconButton, InputBase, Slide, Stack } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { TransitionProps } from '@mui/material/transitions';
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha } from '@mui/material/styles';
+import { Movies as typeMovies } from '@graphgen';
+import SearchedMovie from '@components/layout/SearchedMovie';
 
 const Transition = React.forwardRef(function Transition(
    props: TransitionProps & {
@@ -17,9 +19,20 @@ const Transition = React.forwardRef(function Transition(
 interface IfullScreen {
    openSearch: boolean;
    handleSearchClose: () => void;
+   movies: Partial<typeMovies[]>;
+   value: string;
+   onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+   show: boolean;
 }
 
-const FullScreenSearch: React.FC<IfullScreen> = ({ openSearch, handleSearchClose }) => {
+const FullScreenSearch: React.FC<IfullScreen> = ({
+   openSearch,
+   handleSearchClose,
+   movies,
+   value,
+   onChange,
+   show,
+}) => {
    return (
       <Dialog
          fullScreen
@@ -80,6 +93,8 @@ const FullScreenSearch: React.FC<IfullScreen> = ({ openSearch, handleSearchClose
                      autoFocus
                      placeholder="Search"
                      inputProps={{ 'aria-label': 'search' }}
+                     value={value}
+                     onChange={onChange}
                      sx={{
                         color: 'inherit',
                         '& .MuiInputBase-input': {
@@ -94,6 +109,9 @@ const FullScreenSearch: React.FC<IfullScreen> = ({ openSearch, handleSearchClose
                </Box>
             </Toolbar>
          </AppBar>
+         <Stack sx={{ mb: 3, pl: { xs: 2, sm: 4 }, pt: 1 }}>
+            {show && movies?.map(movie => <SearchedMovie key={movie.uuid} {...movie} />)}
+         </Stack>
       </Dialog>
    );
 };

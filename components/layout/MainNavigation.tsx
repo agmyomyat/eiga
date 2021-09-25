@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useAuth } from '@contexts/AuthContext';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, NextRouter } from 'next/router';
 import SearchBoxComponent from '@components/movies/SearchBoxComponent';
 import {
@@ -8,25 +7,21 @@ import {
    IconButton,
    Typography,
    Box,
-   Menu,
-   MenuItem,
-   Divider,
    useScrollTrigger,
    Slide,
    Stack,
 } from '@mui/material';
 
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import SearchIcon from '@mui/icons-material/Search';
 
 import Link from '../ui/Link';
 import { styled } from '@mui/material/styles';
 import { navLinks } from '@helpers/navLinks';
-import FullScreenSearch from '@components/movies/FullScreenSearch';
+import FullScreenSearch from '@components/layout/FullScreenSearch';
+import ProfileComponent from '@components/layout/ProfileComponent';
+import SearchBoxDropdown from './SearchBoxDropdown';
+import { useSearchMovieLazyQuery } from '@graphgen';
+import { Movies } from '@graphgen';
 
 interface IhideOnScroll {
    children: React.ReactElement;
@@ -68,35 +63,41 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 
 const MainNavigation: React.FC = () => {
-   const [anchorEl, setAnchorEl] = useState<HTMLElement>(null);
-   const openMenu = Boolean(anchorEl);
-
-   const { userData, logOut } = useAuth();
-   const { push, pathname }: NextRouter = useRouter();
-   const isSearchRoute = pathname === SEARCH_ROUTE;
-
    const [keywords, setKeywords] = useState<string>('');
+   const [searchMovie, { data: searchResults }] = useSearchMovieLazyQuery({
+      variables: { search: keywords },
+   });
+   const [isSearching, setIsSearching] = useState<boolean>(false);
+   const keywordIsValid = Boolean(keywords.trim().length > 0);
+   const { pathname }: NextRouter = useRouter();
+   const isSearchRoute = pathname === SEARCH_ROUTE;
    const [openSearch, setOpenSearch] = useState<boolean>(false);
 
-   const handleMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-      setAnchorEl(event.currentTarget);
-   };
-
-   const handleClose = () => {
-      setAnchorEl(null);
-   };
-
-   const handleViewProfile = () => {
-      setAnchorEl(null);
-      push('/profile');
-   };
-
-   const handleSignOut = async () => {
-      await logOut();
-   };
+   useEffect(() => {
+      const timeout = setTimeout(() => {
+         if (keywordIsValid) {
+            console.log('searching');
+            searchMovie();
+         }
+      }, 500);
+      return () => clearTimeout(timeout);
+   }, [searchMovie, keywordIsValid, keywords]);
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+   };
+
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setKeywords(e.currentTarget.value);
+   };
+
+   const handleFocus = () => {
+      setIsSearching(true);
+   };
+
+   const handleBlur = () => {
+      setKeywords('');
+      setIsSearching(false);
    };
 
    const handleSearchOpen = () => {
@@ -182,156 +183,54 @@ const MainNavigation: React.FC = () => {
                   <Box display="flex" alignItems="center" justifyContent="flex-end" width={1}>
                      {!isSearchRoute && (
                         <>
+                           {/* Desktop Search */}
                            <Box
                               width="100%"
                               maxWidth="400px"
                               mr={3}
+                              position="relative"
                               sx={{ display: { xs: 'none', md: 'block' } }}
                            >
                               <SearchBoxComponent
                                  value={keywords}
-                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                    setKeywords(e.currentTarget.value)
-                                 }
+                                 onChange={handleChange}
                                  onSubmit={handleSubmit}
+                                 onFocus={handleFocus}
+                                 onBlur={handleBlur}
+                              />
+
+                              <SearchBoxDropdown
+                                 show={
+                                    keywordIsValid &&
+                                    isSearching &&
+                                    searchResults?.search.length > 0
+                                 }
+                                 movies={searchResults?.search as Movies[]}
                               />
                            </Box>
-                           <Box>
-                              <IconButton
-                                 aria-label="search box"
-                                 aria-controls="searchbox-appbar"
-                                 aria-haspopup="true"
-                                 color="inherit"
-                                 onClick={handleSearchOpen}
-                                 sx={{ display: { xs: 'inline-flex', md: 'none' } }}
-                              >
-                                 <SearchIcon fontSize="large" />
-                              </IconButton>
-                              <FullScreenSearch
-                                 openSearch={openSearch}
-                                 handleSearchClose={handleSearchClose}
-                              />
-                           </Box>
+
+                           {/* Mobile Search */}
+                           <IconButton
+                              aria-label="search box"
+                              aria-controls="searchbox-appbar"
+                              aria-haspopup="true"
+                              color="inherit"
+                              onClick={handleSearchOpen}
+                              sx={{ display: { xs: 'inline-flex', md: 'none' } }}
+                           >
+                              <SearchIcon fontSize="large" />
+                           </IconButton>
+                           <FullScreenSearch
+                              movies={searchResults?.search as Movies[]}
+                              value={keywords}
+                              onChange={handleChange}
+                              openSearch={openSearch}
+                              handleSearchClose={handleSearchClose}
+                              show={keywordIsValid}
+                           />
                         </>
                      )}
-                     <Box>
-                        <IconButton
-                           aria-label="account of current user"
-                           aria-controls="menu-appbar"
-                           aria-haspopup="true"
-                           onClick={handleMenu}
-                           color="inherit"
-                           // size="large"
-                        >
-                           <AccountCircle fontSize="large" />
-                        </IconButton>
-
-                        {/* profile menu */}
-                        <Menu
-                           sx={{
-                              '& .MuiPaper-root': {
-                                 backgroundImage: 'none',
-                              },
-                           }}
-                           id="menu-appbar"
-                           anchorEl={anchorEl}
-                           anchorOrigin={{
-                              vertical: 'top',
-                              horizontal: 'left',
-                           }}
-                           keepMounted
-                           transformOrigin={{
-                              vertical: 'top',
-                              horizontal: 'right',
-                           }}
-                           open={openMenu}
-                           onClose={handleClose}
-                        >
-                           <Box
-                              display="flex"
-                              flexDirection="column"
-                              component="li"
-                              py={1.5}
-                              px={2}
-                           >
-                              {userData ? (
-                                 <Box>
-                                    <Typography
-                                       variant="subtitle2"
-                                       component="label"
-                                       color="textSecondary"
-                                    >
-                                       Signed In as
-                                    </Typography>
-                                    <Typography variant="body2" component="p">
-                                       {userData.userName}
-                                    </Typography>
-                                 </Box>
-                              ) : (
-                                 <Typography
-                                    variant="subtitle2"
-                                    component="label"
-                                    color="textSecondary"
-                                 >
-                                    You are not Signed In
-                                 </Typography>
-                              )}
-                           </Box>
-                           <Divider />
-                           {userData ? (
-                              <Box>
-                                 <MenuItem
-                                    sx={{
-                                       color: 'text.secondary',
-                                       py: 0.5,
-                                       px: 3,
-                                       my: 0.5,
-                                       fontSize: 'body2.fontSize',
-                                    }}
-                                    onClick={handleViewProfile}
-                                 >
-                                    <PersonOutlineIcon fontSize="small" /> View Profile
-                                 </MenuItem>
-                                 <MenuItem
-                                    sx={{
-                                       color: 'text.secondary',
-                                       py: 0.5,
-                                       px: 3,
-                                       my: 0.5,
-                                       fontSize: 'body2.fontSize',
-                                    }}
-                                 >
-                                    <FavoriteBorderIcon fontSize="small" /> Favourites
-                                 </MenuItem>
-                                 <MenuItem
-                                    sx={{
-                                       color: 'text.secondary',
-                                       py: 0.5,
-                                       px: 3,
-                                       my: 0.5,
-                                       fontSize: 'body2.fontSize',
-                                    }}
-                                    onClick={handleSignOut}
-                                 >
-                                    <ExitToAppIcon fontSize="small" /> Logout
-                                 </MenuItem>
-                              </Box>
-                           ) : (
-                              <MenuItem
-                                 sx={{
-                                    color: 'text.secondary',
-                                    py: 0.5,
-                                    px: 3,
-                                    my: 0.5,
-                                    fontSize: 'body2.fontSize',
-                                 }}
-                                 onClick={handleViewProfile}
-                              >
-                                 <ArrowRightAltIcon /> Log In
-                              </MenuItem>
-                           )}
-                        </Menu>
-                     </Box>
+                     <ProfileComponent />
                   </Box>
                </Toolbar>
             </AppBar>

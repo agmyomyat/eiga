@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FormEventHandler } from 'react';
+import { ChangeEventHandler, FocusEventHandler } from 'react';
 import { Box, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { alpha } from '@mui/material/styles';
@@ -7,9 +7,17 @@ interface IcustomSearchBox {
    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
    value: string;
    onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+   onFocus: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+   onBlur: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }
 
-const CustomSearchBox: React.FC<IcustomSearchBox> = ({ value, onChange, onSubmit }) => {
+const CustomSearchBox: React.FC<IcustomSearchBox> = ({
+   value,
+   onChange,
+   onSubmit,
+   onFocus,
+   onBlur,
+}) => {
    return (
       <Box
          display="flex"
@@ -54,6 +62,8 @@ const CustomSearchBox: React.FC<IcustomSearchBox> = ({ value, onChange, onSubmit
             inputProps={{ 'aria-label': 'search' }}
             value={value}
             onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
          />
          <Box
             sx={{

@@ -73,7 +73,7 @@ export default function Profile() {
          <h1>
             {userData?.premium ? 'You Are Premium User' : 'You are free User'}
          </h1>
-         {userData ? (
+         {userData?.userName ? (
             <Container sx={{ mt: 5, mb: '100px', maxWidth: '700px' }}>
                <Typography
                   align="center"

@@ -95,7 +95,6 @@ export default function SeriesPage(props: PageProps) {
             </Box>
          )}
 
-         <DetectOtherLogin />
       </Container>
    );
 }

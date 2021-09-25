@@ -71,13 +71,26 @@ export default function Profile() {
 
    return (
       <Box>
-         <h1>{userData?.premium ? 'You Are Premium User' : 'You are free User'}</h1>
+         <h1>
+            {userData?.premium ? 'You Are Premium User' : 'You are free User'}
+         </h1>
          {userData ? (
             <Container sx={{ mt: 5, mb: '100px', maxWidth: '700px' }}>
-               <Typography align="center" variant="h5" component="h3" color="textSecondary">
+               <Typography
+                  align="center"
+                  variant="h5"
+                  component="h3"
+                  color="textSecondary"
+               >
                   Your Profile
                </Typography>
-               <Grid container spacing={2} justifyContent="center" alignItems="center" mt={5}>
+               <Grid
+                  container
+                  spacing={2}
+                  justifyContent="center"
+                  alignItems="center"
+                  mt={5}
+               >
                   <Grid item sm={3} xs={12}>
                      <Typography component="label" color="textSecondary">
                         Email
@@ -127,7 +140,11 @@ export default function Profile() {
                   </Grid>
                </Grid>
                <Box display="flex" justifyContent="flex-end" mt={3}>
-                  <Button variant="contained" color="primary" onClick={handleSignOut}>
+                  <Button
+                     variant="contained"
+                     color="primary"
+                     onClick={handleSignOut}
+                  >
                      Log Out
                   </Button>
                </Box>
@@ -136,7 +153,6 @@ export default function Profile() {
             // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
             <button onClick={() => redirect()}>redirect login</button>
          )}
-         <DetectOtherLogin />
       </Box>
-   );
+   )
 }

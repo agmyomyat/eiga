@@ -10,7 +10,6 @@ export default function search() {
          }}
       >
          <Search />
-         <DetectOtherLogin />
       </div>
-   );
+   )
 }

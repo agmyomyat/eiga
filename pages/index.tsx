@@ -15,9 +15,8 @@ function Home() {
    return (
       <Container sx={{ mb: '100px' }}>
          <Movies movies={data.movies as typeMovies[]} />
-         <DetectOtherLogin />
       </Container>
-   );
+   )
 }
 
 export default Home;

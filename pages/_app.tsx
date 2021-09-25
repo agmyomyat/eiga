@@ -11,22 +11,26 @@ import theme from '@components/ui/theme';
 import createEmotionCache from '@components/ui/createEmotionCache';
 import Layout from '@components/layout/Layout';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import DetectOtherLogin from '@components/modals/detectOtherLogin'
 
-const clientSideEmotionCache = createEmotionCache();
+const clientSideEmotionCache = createEmotionCache()
 
 interface MyAppProps extends AppProps {
-   emotionCache?: EmotionCache;
+   emotionCache?: EmotionCache
 }
 
 function MyApp(props: MyAppProps) {
-   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-   const apolloClient = useApollo(pageProps.initialApolloState);
+   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+   const apolloClient = useApollo(pageProps.initialApolloState)
 
    return (
       <CacheProvider value={emotionCache}>
          <Head>
             <title>My page</title>
-            <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+            <meta
+               name="viewport"
+               content="minimum-scale=1, initial-scale=1, width=device-width"
+            />
          </Head>
          <ApolloProvider client={apolloClient}>
             <ThemeProvider theme={theme}>
@@ -35,12 +39,13 @@ function MyApp(props: MyAppProps) {
                   <Layout>
                      <CssBaseline />
                      <Component {...pageProps} />
+                     <DetectOtherLogin />
                   </Layout>
                </AuthProvider>
             </ThemeProvider>
          </ApolloProvider>
       </CacheProvider>
-   );
+   )
 }
 
 export default MyApp;

@@ -49,18 +49,18 @@ export default function Pricing() {
             <Stepper activeStep={activeStep} alternativeLabel>
                {steps.map((step, index) => {
                   const labelProps: {
-                     error?: boolean;
-                  } = {};
+                     error?: boolean
+                  } = {}
                   // Check error when currentStep is '2' and not loggedIn and assign error to only step 2
                   if (activeStep === 1 && !userData && isStepTwo(index)) {
-                     labelProps.error = true;
+                     labelProps.error = true
                   }
 
                   return (
                      <Step key={step}>
                         <StepLabel {...labelProps}>{step}</StepLabel>
                      </Step>
-                  );
+                  )
                })}
             </Stepper>
          </Box>
@@ -89,8 +89,9 @@ export default function Pricing() {
                isLoggedIn={!!userData}
             />
          )}
-         {activeStep === STEP_THREE && <HowToSubscribe handleNext={handleNext} />}
-         <DetectOtherLogin />
+         {activeStep === STEP_THREE && (
+            <HowToSubscribe handleNext={handleNext} />
+         )}
       </Container>
-   );
+   )
 }

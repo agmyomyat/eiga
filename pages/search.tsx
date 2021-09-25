@@ -1,6 +1,5 @@
 import { Search } from '@components/meiliSearch';
-import React from 'react';
-import DetectOtherLogin from '@components/modals/detectOtherLogin';
+import React from 'react'
 
 export default function search() {
    return (
@@ -10,7 +9,6 @@ export default function search() {
          }}
       >
          <Search />
-         <DetectOtherLogin />
       </div>
-   );
+   )
 }

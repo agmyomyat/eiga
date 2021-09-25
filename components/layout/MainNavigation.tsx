@@ -114,7 +114,7 @@ const MainNavigation: React.FC = () => {
             <AppBar
                sx={{
                   color: 'text.primary',
-                  bgcolor: theme => theme.palette.common.black,
+                  bgcolor: (theme) => theme.palette.common.black,
                }}
                elevation={3}
             >
@@ -153,18 +153,20 @@ const MainNavigation: React.FC = () => {
                               href={path}
                               variant="h6"
                               sx={{
-                                 color: theme => theme.palette.text.primary,
+                                 color: (theme) => theme.palette.text.primary,
                                  px: 1,
                                  py: 2,
                                  fontWeight: 'bold',
                                  position: 'relative',
                                  '&:hover': {
-                                    color: theme => theme.palette.primary.main,
+                                    color: (theme) =>
+                                       theme.palette.primary.main,
                                  },
                                  '&::after': {
                                     position: 'absolute',
                                     content: '""',
-                                    bgcolor: theme => theme.palette.primary.main,
+                                    bgcolor: (theme) =>
+                                       theme.palette.primary.main,
                                     bottom: 0,
                                     left: 0,
                                     width: 0,
@@ -180,7 +182,12 @@ const MainNavigation: React.FC = () => {
                      </Stack>
                   </Box>
                   {/* Profile avatar */}
-                  <Box display="flex" alignItems="center" justifyContent="flex-end" width={1}>
+                  <Box
+                     display="flex"
+                     alignItems="center"
+                     justifyContent="flex-end"
+                     width={1}
+                  >
                      {!isSearchRoute && (
                         <>
                            {/* Desktop Search */}
@@ -194,10 +201,12 @@ const MainNavigation: React.FC = () => {
                               <SearchBoxComponent
                                  value={keywords}
                                  onChange={handleChange}
+
                                  onSubmit={handleSubmit}
                                  onFocus={handleFocus}
                                  onBlur={handleBlur}
                               />
+
 
                               <SearchBoxDropdown
                                  show={
@@ -206,6 +215,7 @@ const MainNavigation: React.FC = () => {
                                     searchResults?.search.length > 0
                                  }
                                  movies={searchResults?.search as Movies[]}
+
                               />
                            </Box>
 
@@ -218,6 +228,7 @@ const MainNavigation: React.FC = () => {
                               onClick={handleSearchOpen}
                               sx={{ display: { xs: 'inline-flex', md: 'none' } }}
                            >
+
                               <SearchIcon fontSize="large" />
                            </IconButton>
                            <FullScreenSearch
@@ -231,12 +242,13 @@ const MainNavigation: React.FC = () => {
                         </>
                      )}
                      <ProfileComponent />
+
                   </Box>
                </Toolbar>
             </AppBar>
          </HideOnScroll>
       </StyledBox>
-   );
+   )
 };
 
 export default MainNavigation;

@@ -7,7 +7,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { StyledBox, classes} from '@styles/MovieCard'
 
 
-const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
+const Movie = ({ uuid, name, photo_url, release_date, quality }: Partial<Movies>) => {
    const { push }: NextRouter = useRouter();
    // will delete later
    const [show, setShow] = useState<boolean>(false);
@@ -71,7 +71,7 @@ const Movie = ({ uuid, name, photo_url, date, quality }: Partial<Movies>) => {
                <Skeleton width="50%" />
             ) : (
                <>
-                  {new Date(date).getFullYear()}
+                  {release_date}
                   <Typography
                      component="label"
                      sx={{

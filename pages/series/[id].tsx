@@ -3,8 +3,7 @@ import { initializeApollo } from '@apollo/index';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { GetSeriesDocument, GetSeriesQuery, GetSeriesQueryResult } from '@graphgen';
 import { useRouter, NextRouter } from 'next/router';
-import { Box, Divider, Container } from '@mui/material';
-import DetectOtherLogin from '@components/modals/detectOtherLogin';
+import { Box, Divider, Container } from '@mui/material'
 import MovieInfo from '@components/movies/MovieInfo';
 import Iframe from '@components/movies/Iframe';
 import Episodes from '@components/movies/Episodes';
@@ -87,7 +86,7 @@ export default function SeriesPage(props: PageProps) {
                <Divider />
                <MovieInfo
                   name={seriesData.name}
-                  date={seriesData.date}
+                  release_date={seriesData.release_date}
                   body={seriesData.body}
                   genres={seriesData.genres}
                />
@@ -95,7 +94,6 @@ export default function SeriesPage(props: PageProps) {
             </Box>
          )}
 
-         <DetectOtherLogin />
       </Container>
    );
 }

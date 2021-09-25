@@ -1,9 +1,8 @@
-import { useRef, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
    GetMovieDocument,
    GetMovieQuery,
    useGetRelatedMoviesQuery,
-   Movies as typeMovies,
    GetMovieQueryResult,
 } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'

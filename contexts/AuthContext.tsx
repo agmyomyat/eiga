@@ -1,12 +1,9 @@
 import {
-   useState,
    useEffect,
    createContext,
    useContext,
    Context,
    useRef,
-   Dispatch,
-   SetStateAction,
    useCallback,
 } from 'react'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
@@ -15,8 +12,7 @@ import { gqlInvalidToken, ReactiveValue } from '@apollo/apolloReactiveVar'
 import { Exact, useGetUserLazyQuery } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'
 import { useCheckUser } from './global-states/useCheckUser'
-import shallow from 'zustand/shallow'
-const setUserCheck = useCheckUser.getState().setCheckUser
+import { useShouldLogOut } from './global-states/useShouldLogOut'
 
 type User = {
    __typename?: 'returnUserData'
@@ -48,6 +44,7 @@ export function useAuth() {
 
 const setCheckUser = useCheckUser.getState().setCheckUser
 export default function AuthProvider({ children }) {
+   const ShouldLogOut = useShouldLogOut((state) => state.logOut)
    const checkUser = useCheckUser((state) => state.checkUser)
    const [
       getUser,
@@ -90,12 +87,12 @@ export default function AuthProvider({ children }) {
    }, [getUserRefetch])
 
    useEffect(() => {
-      if (reactiveToken.shouldLogOut) {
+      if (ShouldLogOut) {
          logOut()
       }
 
       console.log('auth checking')
-   }, [logOut, reactiveToken.shouldLogOut])
+   }, [ShouldLogOut, logOut])
 
    const authContext = {
       userData,

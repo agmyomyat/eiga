@@ -1,3 +1,4 @@
+import { useShouldLogOut } from './../contexts/global-states/useShouldLogOut'
 import { useMemo } from 'react'
 import {
    ApolloClient,
@@ -9,8 +10,8 @@ import {
 import { onError } from '@apollo/client/link/error'
 import jwt_decode from 'jwt-decode'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
-import { gqlInvalidToken } from './apolloReactiveVar'
 import { setContext } from '@apollo/client/link/context'
+const shouldLogOut = useShouldLogOut.getState().setLogOut
 let apolloClient
 // async function fireAuth() {
 //    const { auth } = await import('../lib/firebase');
@@ -45,7 +46,7 @@ async function handleFetch() {
    }
 }
 const asyncRefreshTokenLink = setContext(async () => {
-   let accessToken = { token: '' }
+   const accessToken = { token: '' }
    let shouldFetchOrNot: boolean
    const token = getAccessToken()
 
@@ -71,12 +72,13 @@ const asyncRefreshTokenLink = setContext(async () => {
 
    if (shouldFetchOrNot) {
       try {
-         let res = await handleFetch()
+         const res = await handleFetch()
          // setAccessToken(res||''); // see line authLink comment
          console.log('fetched token success', res)
          accessToken.token = res || ''
       } catch (e) {
-         gqlInvalidToken({ shouldLogOut: true })
+         // gqlInvalidToken({ shouldLogOut: true })
+         shouldLogOut(true)
          setAccessToken('')
          console.log('apollo catch', e)
       }

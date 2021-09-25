@@ -87,7 +87,7 @@ export default function SeriesPage(props: PageProps) {
                <Divider />
                <MovieInfo
                   name={seriesData.name}
-                  date={seriesData.date}
+                  release_date={seriesData.release_date}
                   body={seriesData.body}
                   genres={seriesData.genres}
                />

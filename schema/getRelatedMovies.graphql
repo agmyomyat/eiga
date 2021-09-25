@@ -3,7 +3,7 @@ query getRelatedMovies {
       name
       uuid
       id
-      date
+release_date 
       quality
       photo_url
    }

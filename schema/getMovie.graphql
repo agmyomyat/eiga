@@ -5,7 +5,7 @@ query getMovie($uuid: String!) {
       vipServer1
       vipServer2
       name
-      date
+      release_date 
       body
       genres {
          name

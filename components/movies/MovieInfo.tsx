@@ -3,7 +3,7 @@ import { Movies } from '@graphgen';
 import { TMovies, TGenres } from './Iframe';
 import { styled } from '@mui/material/styles';
 
-const MovieInfo: React.FC<TMovies<Movies, TGenres>> = ({ name, date, body, genres }) => {
+const MovieInfo: React.FC<TMovies<Movies, TGenres>> = ({ name, release_date, body, genres }) => {
    const newGenres = genres.map(genre => genre.name[0].toUpperCase() + genre.name.slice(1));
    const movieBody = body.replace(/<\/?[^>]+(>|$)/g, '');
 
@@ -25,7 +25,7 @@ const MovieInfo: React.FC<TMovies<Movies, TGenres>> = ({ name, date, body, genre
             sx={{ my: 2 }}
          >
             <Typography variant="subtitle2" component="span" color="textSecondary">
-               {new Date(date).getFullYear()}
+               {release_date}
             </Typography>
 
             <Typography variant="subtitle2" component="span" color="textSecondary">

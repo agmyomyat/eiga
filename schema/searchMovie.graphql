@@ -2,7 +2,7 @@ query searchMovie($search: String!) {
    search(q: $search, limit: 5) {
       name
       uuid
-      date
+      release_date
       photo_url
    }
 }

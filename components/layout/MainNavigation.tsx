@@ -64,9 +64,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 const MainNavigation: React.FC = () => {
    const [keywords, setKeywords] = useState<string>('')
-   const [searchMovie, { data: searchResults }] = useSearchMovieLazyQuery({
-      variables: { search: keywords },
-   })
+   const [searchMovie, { data: searchResults }] = useSearchMovieLazyQuery()
    const [isSearching, setIsSearching] = useState<boolean>(false)
    const keywordIsValid = Boolean(keywords.trim().length > 0)
    const { pathname }: NextRouter = useRouter()
@@ -77,7 +75,9 @@ const MainNavigation: React.FC = () => {
       const timeout = setTimeout(() => {
          if (keywordIsValid) {
             console.log('searching')
-            searchMovie()
+            searchMovie({
+               variables: { search: keywords },
+            })
          }
       }, 500)
       return () => clearTimeout(timeout)

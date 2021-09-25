@@ -5,7 +5,7 @@ import { useRouter, NextRouter } from 'next/router'
 
 const RelatedMovie: React.FC<Partial<Movies>> = ({
    name,
-   date,
+   release_date,
    photo_url,
    uuid,
 }) => {
@@ -39,7 +39,7 @@ const RelatedMovie: React.FC<Partial<Movies>> = ({
                {name}
             </Typography>
             <Typography variant="subtitle2" component="p" color="textSecondary">
-               {new Date(date).getFullYear()}
+               {release_date}
             </Typography>
          </Grid>
       </Grid>

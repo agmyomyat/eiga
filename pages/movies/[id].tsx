@@ -58,7 +58,7 @@ export default function MoviePage(props:PageProps) {
    return (
       <Container sx={{ mb: '100px' }}>
          {(router.isFallback || getUserLoading) && <h2>loading</h2>}
-         {!router.isFallback && !getUserLoading&& (
+         {!router.isFallback && !getUserLoading && (
             <Box>
                <Iframe
                   currentServer={currentServer}
@@ -75,18 +75,21 @@ export default function MoviePage(props:PageProps) {
                <Divider />
                <MovieInfo
                   name={movieData.name}
-                  date={movieData.date}
+                  release_date={movieData.release_date}
                   body={movieData.body}
                   genres={movieData.genres}
                />
                <Divider />
-               <RelatedMovies data={relatedMoviesData} loading={relatedMoviesLoading} />
+               <RelatedMovies
+                  data={relatedMoviesData}
+                  loading={relatedMoviesLoading}
+               />
             </Box>
          )}
 
          <DetectOtherLogin />
       </Container>
-   );
+   )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

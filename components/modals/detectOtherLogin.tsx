@@ -1,5 +1,5 @@
 import { gqlInvalidToken } from '@apollo/apolloReactiveVar'
-import { useAuth } from '@contexts/AuthContext'
+import { useShouldLogOut } from '@contexts/global-states/useShouldLogOut'
 import { Snackbar } from '@mui/material'
 import { Alert, AlertTitle } from '@mui/material'
 import React from 'react'
@@ -10,9 +10,9 @@ const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
 }
 
 export default function DetectOtherLogin() {
-   const { reactiveToken } = useAuth()
+   const shouldLogOut = useShouldLogOut((state) => state.logOut)
    return (
-      <Snackbar open={reactiveToken.shouldLogOut} onClose={handleClose}>
+      <Snackbar open={shouldLogOut} onClose={handleClose}>
          <Alert
             onClose={handleClose}
             severity="error"

@@ -44,7 +44,7 @@ export function useAuth() {
 
 const setCheckUser = useCheckUser.getState().setCheckUser
 export default function AuthProvider({ children }) {
-   const ShouldLogOut = useShouldLogOut((state) => state.logOut)
+   const shouldLogOut = useShouldLogOut((state) => state.logOut)
    const checkUser = useCheckUser((state) => state.checkUser)
    const [
       getUser,
@@ -67,7 +67,7 @@ export default function AuthProvider({ children }) {
       if (!_accessToken) return
       if (
          (router.query.id && router.query.id !== prevPath.current) ||
-         checkUser
+         checkUser //after profile redirect
       ) {
          setCheckUser(false)
          return getUser({
@@ -87,12 +87,12 @@ export default function AuthProvider({ children }) {
    }, [getUserRefetch])
 
    useEffect(() => {
-      if (ShouldLogOut) {
+      if (shouldLogOut) {
          logOut()
       }
 
       console.log('auth checking')
-   }, [ShouldLogOut, logOut])
+   }, [shouldLogOut, logOut])
 
    const authContext = {
       userData,

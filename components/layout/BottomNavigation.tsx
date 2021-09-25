@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter, NextRouter } from 'next/router'
-import { BottomNavigation, BottomNavigationAction, Hidden } from '@mui/material'
+import { BottomNavigation, BottomNavigationAction } from '@mui/material'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'

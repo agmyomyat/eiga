@@ -1,5 +1,5 @@
-import { useState, Dispatch, SetStateAction } from 'react'
-import { Box, Typography, Divider, Container, Button } from '@mui/material'
+import { Dispatch, SetStateAction } from 'react'
+import { Box, Typography, Divider, Button } from '@mui/material'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import BlockIcon from '@mui/icons-material/Block'
 import { Plan } from '@helpers/plans'

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useGetUserLazyQuery } from '@graphgen'
 import { useAuth } from '@contexts/AuthContext'
 import { createUser } from '@apollo/mutationfn/createUser'
 import { Container, Button, Grid, Box, Typography, Paper } from '@mui/material'

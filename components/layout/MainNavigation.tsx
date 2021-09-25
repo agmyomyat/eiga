@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter, NextRouter } from 'next/router'
 import SearchBoxComponent from '@components/movies/SearchBoxComponent'
 import {

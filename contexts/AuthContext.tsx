@@ -59,14 +59,15 @@ export default function AuthProvider({ children }) {
       if (!_accessToken) return
       if (
          (router.query.id && router.query.id !== prevPath.current) ||
-         checkUser ||
-         !gqlCurrentUser
-      )
-         getUser({
+         checkUser
+      ) {
+         setCheckUser(false)
+         return getUser({
             variables: { token: '' }, // token will be auto filled in Apollo middleware
          })
-      setCheckUser(false)
-   }, [checkUser, getUser, gqlCurrentUser, router.query.id])
+      }
+      getUser({ variables: { token: '' } }) //to check initial load
+   }, [checkUser, getUser, router.query.id])
 
    const logOut = useCallback(async () => {
       setAccessToken('')

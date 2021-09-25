@@ -113,7 +113,7 @@ const MainNavigation: React.FC = () => {
             <AppBar
                sx={{
                   color: 'text.primary',
-                  bgcolor: theme => theme.palette.common.black,
+                  bgcolor: (theme) => theme.palette.common.black,
                }}
                elevation={3}
             >
@@ -152,18 +152,20 @@ const MainNavigation: React.FC = () => {
                               href={path}
                               variant="h6"
                               sx={{
-                                 color: theme => theme.palette.text.primary,
+                                 color: (theme) => theme.palette.text.primary,
                                  px: 1,
                                  py: 2,
                                  fontWeight: 'bold',
                                  position: 'relative',
                                  '&:hover': {
-                                    color: theme => theme.palette.primary.main,
+                                    color: (theme) =>
+                                       theme.palette.primary.main,
                                  },
                                  '&::after': {
                                     position: 'absolute',
                                     content: '""',
-                                    bgcolor: theme => theme.palette.primary.main,
+                                    bgcolor: (theme) =>
+                                       theme.palette.primary.main,
                                     bottom: 0,
                                     left: 0,
                                     width: 0,
@@ -179,7 +181,12 @@ const MainNavigation: React.FC = () => {
                      </Stack>
                   </Box>
                   {/* Profile avatar */}
-                  <Box display="flex" alignItems="center" justifyContent="flex-end" width={1}>
+                  <Box
+                     display="flex"
+                     alignItems="center"
+                     justifyContent="flex-end"
+                     width={1}
+                  >
                      {!isSearchRoute && (
                         <>
                            <Box
@@ -190,9 +197,9 @@ const MainNavigation: React.FC = () => {
                            >
                               <SearchBoxComponent
                                  value={keywords}
-                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                    setKeywords(e.currentTarget.value)
-                                 }
+                                 onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                 ) => setKeywords(e.currentTarget.value)}
                                  onSubmit={handleSubmit}
                               />
                            </Box>
@@ -203,7 +210,9 @@ const MainNavigation: React.FC = () => {
                                  aria-haspopup="true"
                                  color="inherit"
                                  onClick={handleSearchOpen}
-                                 sx={{ display: { xs: 'inline-flex', md: 'none' } }}
+                                 sx={{
+                                    display: { xs: 'inline-flex', md: 'none' },
+                                 }}
                               >
                                  <SearchIcon fontSize="large" />
                               </IconButton>
@@ -254,7 +263,7 @@ const MainNavigation: React.FC = () => {
                               py={1.5}
                               px={2}
                            >
-                              {userData ? (
+                              {userData?.userName ? (
                                  <Box>
                                     <Typography
                                        variant="subtitle2"
@@ -278,7 +287,7 @@ const MainNavigation: React.FC = () => {
                               )}
                            </Box>
                            <Divider />
-                           {userData ? (
+                           {userData?.userName ? (
                               <Box>
                                  <MenuItem
                                     sx={{
@@ -290,7 +299,8 @@ const MainNavigation: React.FC = () => {
                                     }}
                                     onClick={handleViewProfile}
                                  >
-                                    <PersonOutlineIcon fontSize="small" /> View Profile
+                                    <PersonOutlineIcon fontSize="small" /> View
+                                    Profile
                                  </MenuItem>
                                  <MenuItem
                                     sx={{
@@ -301,7 +311,8 @@ const MainNavigation: React.FC = () => {
                                        fontSize: 'body2.fontSize',
                                     }}
                                  >
-                                    <FavoriteBorderIcon fontSize="small" /> Favourites
+                                    <FavoriteBorderIcon fontSize="small" />{' '}
+                                    Favourites
                                  </MenuItem>
                                  <MenuItem
                                     sx={{
@@ -337,7 +348,7 @@ const MainNavigation: React.FC = () => {
             </AppBar>
          </HideOnScroll>
       </StyledBox>
-   );
+   )
 };
 
 export default MainNavigation;

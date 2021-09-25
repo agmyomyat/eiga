@@ -6,13 +6,14 @@ import {
    InMemoryCache,
    from,
    ApolloLink,
+   NormalizedCacheObject,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import jwt_decode from 'jwt-decode'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
 import { setContext } from '@apollo/client/link/context'
 const shouldLogOut = useShouldLogOut.getState().setLogOut
-let apolloClient
+let apolloClient: ApolloClient<NormalizedCacheObject>
 // async function fireAuth() {
 //    const { auth } = await import('../lib/firebase');
 //    return auth;
@@ -134,7 +135,8 @@ function createApolloClient() {
 }
 
 export function initializeApollo(initialState = null) {
-   const _apolloClient = apolloClient ?? createApolloClient()
+   const _apolloClient: ApolloClient<NormalizedCacheObject> =
+      apolloClient ?? createApolloClient()
 
    // If your page has Next.js data fetching methods that use Apollo Client, the initial state
    // gets hydrated here

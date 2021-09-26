@@ -15,7 +15,7 @@ const setAuthLoading = useAuthLoading.getState().setLoading
 
 function redirect() {
    const provider = new GoogleAuthProvider()
-   provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
+   // provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
    signInWithRedirect(auth, provider)
 }
 /**

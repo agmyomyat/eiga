@@ -105,7 +105,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
    const { id } = context.params
 
-   const { data }: GetMovieQueryResult = await client.query({
+   const { data }: Partial<GetMovieQueryResult> = await client.query({
       query: GetMovieDocument,
       variables: { uuid: id },
    })

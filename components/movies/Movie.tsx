@@ -4,7 +4,6 @@ import { Movies } from '@graphgen'
 import { Box, Card, Typography } from '@mui/material'
 import Image from 'next/image'
 import Skeleton from '@mui/material/Skeleton'
-import { StyledBox, classes } from '@styles/MovieCard'
 
 const Movie = ({
    uuid,
@@ -14,6 +13,7 @@ const Movie = ({
    quality,
 }: Partial<Movies>) => {
    const { push }: NextRouter = useRouter()
+
    // will delete later
    const [show, setShow] = useState<boolean>(false)
    useEffect(() => {
@@ -39,7 +39,6 @@ const Movie = ({
             <Card sx={{ width: 1, cursor: 'pointer', position: 'relative' }}>
                <Image
                   src={photo_url}
-                  className={classes.media}
                   layout="responsive"
                   width={600}
                   height={900}

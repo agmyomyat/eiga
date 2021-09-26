@@ -6,3 +6,4 @@ query searchMovie($search: String!) {
       photo_url
    }
 }
+

@@ -7,7 +7,6 @@ import {
    Typography,
    Button,
 } from '@mui/material'
-import { NextRouter, useRouter } from 'next/router'
 import Link from '../ui/Link'
 
 export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>
@@ -39,7 +38,6 @@ const Iframe: React.FC<IframeProp> = ({
    changeServer,
    premiumUser,
 }) => {
-   const router: NextRouter = useRouter()
    const refer = React.useRef(null)
    const copy = React.useRef(currentServer)
 

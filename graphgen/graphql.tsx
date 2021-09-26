@@ -2496,7 +2496,7 @@ export type SearchMovieQueryVariables = Exact<{
 }>;
 
 
-export type SearchMovieQuery = { __typename?: 'Query', search?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, date?: Maybe<any>, photo_url: string }>>> };
+export type SearchMovieQuery = { __typename?: 'Query', search?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, release_date?: Maybe<number>, photo_url: string }>>> };
 
 export type SignUpMutationVariables = Exact<{
   uuid?: Maybe<Scalars['String']>;
@@ -2723,7 +2723,7 @@ export const SearchMovieDocument = gql`
   search(q: $search, limit: 5) {
     name
     uuid
-    date
+    release_date
     photo_url
   }
 }

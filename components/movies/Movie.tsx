@@ -4,10 +4,14 @@ import { Movies } from '@graphgen';
 import { Box, Card, Typography } from '@mui/material';
 import Image from 'next/image';
 import Skeleton from '@mui/material/Skeleton';
-import { StyledBox, classes} from '@styles/MovieCard'
 
-
-const Movie = ({ uuid, name, photo_url, release_date, quality }: Partial<Movies>) => {
+const Movie = ({
+   uuid,
+   name,
+   photo_url,
+   release_date,
+   quality,
+}: Partial<Movies>) => {
    const { push }: NextRouter = useRouter();
    // will delete later
    const [show, setShow] = useState<boolean>(false);
@@ -19,7 +23,9 @@ const Movie = ({ uuid, name, photo_url, release_date, quality }: Partial<Movies>
    });
    //
    return (
-      <Box onClick={() => push({ pathname: '/movies/[id]', query: { id: uuid } })}>
+      <Box
+         onClick={() => push({ pathname: '/movies/[id]', query: { id: uuid } })}
+      >
          {show ? (
             <Skeleton
                variant="rectangular"
@@ -32,7 +38,6 @@ const Movie = ({ uuid, name, photo_url, release_date, quality }: Partial<Movies>
             <Card sx={{ width: 1, cursor: 'pointer', position: 'relative' }}>
                <Image
                   src={photo_url}
-                  className={classes.media}
                   layout="responsive"
                   width={600}
                   height={900}

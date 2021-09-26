@@ -1,46 +1,54 @@
-import { useState } from 'react';
-import { Container, Box, Stepper, Step, StepLabel, Link, Alert, AlertTitle } from '@mui/material';
-import { steps } from '@helpers/pricingSteps';
-import { useAuth } from '@contexts/AuthContext';
-import { plans, Plan } from '@helpers/plans';
-import PricingTable from '@components/movies/PricingTable';
-import Voucher from '@components/movies/Voucher';
+import { useState } from 'react'
+import {
+   Container,
+   Box,
+   Stepper,
+   Step,
+   StepLabel,
+   Alert,
+   AlertTitle,
+} from '@mui/material'
+import { steps } from '@helpers/pricingSteps'
+import { useAuth } from '@contexts/AuthContext'
+import { plans, Plan } from '@helpers/plans'
+import PricingTable from '@components/movies/PricingTable'
+import Voucher from '@components/movies/Voucher'
 import HowToSubscribe from '@components/movies/HowToSubscribe'
 
-const STEP_ONE = 0;
-const STEP_TWO = 1;
-const STEP_THREE = 2;
+const STEP_ONE = 0
+const STEP_TWO = 1
+const STEP_THREE = 2
 
 export default function Pricing() {
-   const [activeStep, setActiveStep] = useState<number>(0);
-   const { userData } = useAuth();
+   const [activeStep, setActiveStep] = useState<number>(0)
+   const { userData } = useAuth()
 
    // user selected plan(handle click buy now)
-   const [currentPlan, setCurrentPlan] = useState<Plan | null>(null);
-   const [month, setMonth] = useState<number>(1);
-   const selectedPlan = plans.find(plan => plan.id === month);
+   const [currentPlan, setCurrentPlan] = useState<Plan | null>(null)
+   const [month, setMonth] = useState<number>(1)
+   const selectedPlan = plans.find((plan) => plan.id === month)
    // plan from select button
 
    const handleNext = () => {
-      setActiveStep(prevActiveStep => prevActiveStep + 1);
-   };
+      setActiveStep((prevActiveStep) => prevActiveStep + 1)
+   }
 
    const handleBack = () => {
-      setActiveStep(prevActiveStep => prevActiveStep - 1);
-   };
+      setActiveStep((prevActiveStep) => prevActiveStep - 1)
+   }
 
    const handleReset = () => {
-      setActiveStep(0);
-   };
+      setActiveStep(0)
+   }
 
    const handlePurchase = () => {
-      setCurrentPlan(selectedPlan);
-      handleNext();
-   };
+      setCurrentPlan(selectedPlan)
+      handleNext()
+   }
 
    const isStepTwo = (index: number) => {
-      return index === STEP_TWO;
-   };
+      return index === STEP_TWO
+   }
 
    return (
       <Container sx={{ mb: '100px' }}>

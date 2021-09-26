@@ -1,9 +1,9 @@
-import Box from '@mui/material/Box';
-import Movie from './Movie';
-import { Movies as typeMovies } from '@graphgen';
+import Box from '@mui/material/Box'
+import Movie from './Movie'
+import { Movies as typeMovies } from '@graphgen'
 
 interface IMovies {
-   movies: Partial<typeMovies[]>;
+   movies: Partial<typeMovies[]>
 }
 
 const Movies = ({ movies }: IMovies) => {
@@ -26,7 +26,7 @@ const Movies = ({ movies }: IMovies) => {
             <Movie key={movie.id} {...movie} />
          ))}
       </Box>
-   );
-};
+   )
+}
 
-export default Movies;
+export default Movies

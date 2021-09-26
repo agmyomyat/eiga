@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
-import { NextRouter, useRouter } from 'next/router';
-import { Movies } from '@graphgen';
-import { Box, Card, Typography } from '@mui/material';
-import Image from 'next/image';
-import Skeleton from '@mui/material/Skeleton';
+
+import { useEffect, useState } from 'react'
+import { NextRouter, useRouter } from 'next/router'
+import { Movies } from '@graphgen'
+import { Box, Card, Typography } from '@mui/material'
+import Image from 'next/image'
+import Skeleton from '@mui/material/Skeleton'
+
 
 const Movie = ({
    uuid,
@@ -12,15 +14,17 @@ const Movie = ({
    release_date,
    quality,
 }: Partial<Movies>) => {
-   const { push }: NextRouter = useRouter();
+
+   const { push }: NextRouter = useRouter()
+
    // will delete later
-   const [show, setShow] = useState<boolean>(false);
+   const [show, setShow] = useState<boolean>(false)
    useEffect(() => {
       const timeout = setTimeout(() => {
-         setShow(false);
-      }, 3000);
-      return () => clearTimeout(timeout);
-   });
+         setShow(false)
+      }, 3000)
+      return () => clearTimeout(timeout)
+   })
    //
    return (
       <Box
@@ -97,7 +101,7 @@ const Movie = ({
             )}
          </Box>
       </Box>
-   );
-};
+   )
+}
 
-export default Movie;
+export default Movie

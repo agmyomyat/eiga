@@ -1,11 +1,11 @@
 export interface Plan {
-   id: number;
-   month: string;
-   save: number;
-   price: number;
+   id: number
+   month: string
+   save: number
+   price: number
 }
 
-type Plans = Plan[];
+type Plans = Plan[]
 
 export const plans: Plans = [
    {
@@ -20,4 +20,4 @@ export const plans: Plans = [
       save: 1,
       price: 6000,
    },
-];
+]

@@ -1,35 +1,44 @@
-import { useState } from 'react';
-import { NextRouter, useRouter } from 'next/router';
-import { useAuth } from '@contexts/AuthContext';
-import { Box, IconButton, Typography, Menu, MenuItem, Divider } from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import { useState } from 'react'
+import { NextRouter, useRouter } from 'next/router'
+import { useAuth } from '@contexts/AuthContext'
+import {
+   Box,
+   IconButton,
+   Typography,
+   Menu,
+   MenuItem,
+   Divider,
+} from '@mui/material'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 
 const ProfileComponent: React.FC = () => {
-   const [anchorEl, setAnchorEl] = useState<HTMLElement>(null);
-   const openMenu = Boolean(anchorEl);
+   const [anchorEl, setAnchorEl] = useState<HTMLElement>(null)
+   const openMenu = Boolean(anchorEl)
 
-   const { userData, logOut } = useAuth();
-   const { push }: NextRouter = useRouter();
-   const handleMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-      setAnchorEl(event.currentTarget);
-   };
+   const { userData, logOut } = useAuth()
+   const { push }: NextRouter = useRouter()
+   const handleMenu = (
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+   ): void => {
+      setAnchorEl(event.currentTarget)
+   }
 
    const handleClose = () => {
-      setAnchorEl(null);
-   };
+      setAnchorEl(null)
+   }
 
    const handleViewProfile = () => {
-      setAnchorEl(null);
-      push('/profile');
-   };
+      setAnchorEl(null)
+      push('/profile')
+   }
 
    const handleSignOut = async () => {
-      await logOut();
-   };
+      await logOut()
+   }
 
    return (
       <Box>
@@ -65,10 +74,20 @@ const ProfileComponent: React.FC = () => {
             open={openMenu}
             onClose={handleClose}
          >
-            <Box display="flex" flexDirection="column" component="li" py={1.5} px={2}>
+            <Box
+               display="flex"
+               flexDirection="column"
+               component="li"
+               py={1.5}
+               px={2}
+            >
                {userData ? (
                   <Box>
-                     <Typography variant="subtitle2" component="label" color="textSecondary">
+                     <Typography
+                        variant="subtitle2"
+                        component="label"
+                        color="textSecondary"
+                     >
                         Signed In as
                      </Typography>
                      <Typography variant="body2" component="p">
@@ -76,7 +95,11 @@ const ProfileComponent: React.FC = () => {
                      </Typography>
                   </Box>
                ) : (
-                  <Typography variant="subtitle2" component="label" color="textSecondary">
+                  <Typography
+                     variant="subtitle2"
+                     component="label"
+                     color="textSecondary"
+                  >
                      You are not Signed In
                   </Typography>
                )}
@@ -136,7 +159,7 @@ const ProfileComponent: React.FC = () => {
             )}
          </Menu>
       </Box>
-   );
-};
+   )
+}
 
-export default ProfileComponent;
+export default ProfileComponent

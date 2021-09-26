@@ -1,8 +1,8 @@
 query getUser($token: String) {
-  getUserData(token: $token) {
-    userName 
-    premium 
-    expire
-    verify
-  }
+   getUserData(token: $token) {
+      userName
+      premium
+      expire
+      verify
+   }
 }

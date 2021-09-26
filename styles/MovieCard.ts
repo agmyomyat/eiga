@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles'
 
-const PREFIX = 'Movie';
+const PREFIX = 'Movie'
 
 export const classes = {
    root: `${PREFIX}-root`,
@@ -12,7 +12,7 @@ export const classes = {
    title: `${PREFIX}-title`,
    content: `${PREFIX}-content`,
    type: `${PREFIX}-type`,
-};
+}
 
 export const StyledBox = styled(Box)(({ theme }) => ({
    [`& .${classes.skeletonImage}`]: {
@@ -27,4 +27,4 @@ export const StyledBox = styled(Box)(({ theme }) => ({
          opacity: '0.5',
       },
    },
-}));
+}))

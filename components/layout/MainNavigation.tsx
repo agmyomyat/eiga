@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useRouter, NextRouter } from 'next/router';
-import SearchBoxComponent from '@components/movies/SearchBoxComponent';
+import React, { useState, useEffect } from 'react'
+import { useRouter, NextRouter } from 'next/router'
+import SearchBoxComponent from '@components/movies/SearchBoxComponent'
 import {
    AppBar,
    Toolbar,
@@ -10,41 +10,41 @@ import {
    useScrollTrigger,
    Slide,
    Stack,
-} from '@mui/material';
+} from '@mui/material'
 
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search'
 
-import Link from '../ui/Link';
-import { styled } from '@mui/material/styles';
-import { navLinks } from '@helpers/navLinks';
-import FullScreenSearch from '@components/layout/FullScreenSearch';
-import ProfileComponent from '@components/layout/ProfileComponent';
-import SearchBoxDropdown from './SearchBoxDropdown';
-import { useSearchMovieLazyQuery } from '@graphgen';
-import { Movies } from '@graphgen';
+import Link from '../ui/Link'
+import { styled } from '@mui/material/styles'
+import { navLinks } from '@helpers/navLinks'
+import FullScreenSearch from '@components/layout/FullScreenSearch'
+import ProfileComponent from '@components/layout/ProfileComponent'
+import SearchBoxDropdown from './SearchBoxDropdown'
+import { useSearchMovieLazyQuery } from '@graphgen'
+import { Movies } from '@graphgen'
 
 interface IhideOnScroll {
-   children: React.ReactElement;
+   children: React.ReactElement
 }
 
 function HideOnScroll({ children }: IhideOnScroll) {
-   const trigger = useScrollTrigger();
+   const trigger = useScrollTrigger()
 
    return (
       <Slide appear={false} direction="down" in={!trigger}>
          {children}
       </Slide>
-   );
+   )
 }
 
-const SEARCH_ROUTE = '/search';
+const SEARCH_ROUTE = '/search'
 
-const PREFIX = 'MainNavigation';
+const PREFIX = 'MainNavigation'
 
 const classes = {
    root: `${PREFIX}-root`,
    active: `${PREFIX}-active`,
-};
+}
 
 const StyledBox = styled(Box)(({ theme }) => ({
    [`&.${classes.root}`]: {
@@ -60,53 +60,53 @@ const StyledBox = styled(Box)(({ theme }) => ({
          }),
       },
    },
-}));
+}))
 
 const MainNavigation: React.FC = () => {
-   const [keywords, setKeywords] = useState<string>('');
-   const [searchMovie, { data: searchResults }] = useSearchMovieLazyQuery({
-      variables: { search: keywords },
-   });
-   const [isSearching, setIsSearching] = useState<boolean>(false);
-   const keywordIsValid = Boolean(keywords.trim().length > 0);
-   const { pathname }: NextRouter = useRouter();
-   const isSearchRoute = pathname === SEARCH_ROUTE;
-   const [openSearch, setOpenSearch] = useState<boolean>(false);
+   const [keywords, setKeywords] = useState<string>('')
+   const [searchMovie, { data: searchResults }] = useSearchMovieLazyQuery()
+   const [isSearching, setIsSearching] = useState<boolean>(false)
+   const keywordIsValid = Boolean(keywords.trim().length > 0)
+   const { pathname }: NextRouter = useRouter()
+   const isSearchRoute = pathname === SEARCH_ROUTE
+   const [openSearch, setOpenSearch] = useState<boolean>(false)
 
    useEffect(() => {
       const timeout = setTimeout(() => {
          if (keywordIsValid) {
-            console.log('searching');
-            searchMovie();
+            console.log('searching')
+            searchMovie({
+               variables: { search: keywords },
+            })
          }
-      }, 500);
-      return () => clearTimeout(timeout);
-   }, [searchMovie, keywordIsValid, keywords]);
+      }, 500)
+      return () => clearTimeout(timeout)
+   }, [searchMovie, keywordIsValid, keywords])
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-   };
+      e.preventDefault()
+   }
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setKeywords(e.currentTarget.value);
-   };
+      setKeywords(e.currentTarget.value)
+   }
 
    const handleFocus = () => {
-      setIsSearching(true);
-   };
+      setIsSearching(true)
+   }
 
    const handleBlur = () => {
-      setKeywords('');
-      setIsSearching(false);
-   };
+      setKeywords('')
+      setIsSearching(false)
+   }
 
    const handleSearchOpen = () => {
-      setOpenSearch(true);
-   };
+      setOpenSearch(true)
+   }
 
    const handleSearchClose = () => {
-      setOpenSearch(false);
-   };
+      setOpenSearch(false)
+   }
 
    return (
       <StyledBox className={classes.root}>
@@ -201,12 +201,10 @@ const MainNavigation: React.FC = () => {
                               <SearchBoxComponent
                                  value={keywords}
                                  onChange={handleChange}
-
                                  onSubmit={handleSubmit}
                                  onFocus={handleFocus}
                                  onBlur={handleBlur}
                               />
-
 
                               <SearchBoxDropdown
                                  show={
@@ -215,7 +213,6 @@ const MainNavigation: React.FC = () => {
                                     searchResults?.search.length > 0
                                  }
                                  movies={searchResults?.search as Movies[]}
-
                               />
                            </Box>
 
@@ -226,9 +223,10 @@ const MainNavigation: React.FC = () => {
                               aria-haspopup="true"
                               color="inherit"
                               onClick={handleSearchOpen}
-                              sx={{ display: { xs: 'inline-flex', md: 'none' } }}
+                              sx={{
+                                 display: { xs: 'inline-flex', md: 'none' },
+                              }}
                            >
-
                               <SearchIcon fontSize="large" />
                            </IconButton>
                            <FullScreenSearch
@@ -242,13 +240,12 @@ const MainNavigation: React.FC = () => {
                         </>
                      )}
                      <ProfileComponent />
-
                   </Box>
                </Toolbar>
             </AppBar>
          </HideOnScroll>
       </StyledBox>
    )
-};
+}
 
-export default MainNavigation;
+export default MainNavigation

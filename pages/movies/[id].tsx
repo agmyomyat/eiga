@@ -1,16 +1,15 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import {
    GetMovieDocument,
    GetMovieQuery,
    useGetRelatedMoviesQuery,
-   Movies as typeMovies,
    GetMovieQueryResult,
-} from '@graphgen';
-import { NextRouter, useRouter } from 'next/router';
-import { Box, Divider, Container } from '@mui/material';
-import { initializeApollo } from '@apollo/index';
-import { GetStaticPaths, GetStaticProps } from 'next';
-import Iframe from '@components/movies/Iframe';
+} from '@graphgen'
+import { NextRouter, useRouter } from 'next/router'
+import { Box, Divider, Container } from '@mui/material'
+import { initializeApollo } from '@apollo/index'
+import { GetStaticPaths, GetStaticProps } from 'next'
+import Iframe from '@components/movies/Iframe'
 import RelatedMovies from '@components/movies/RelatedMovies'
 import MovieInfo from '@components/movies/MovieInfo'
 import { useAuth } from '@contexts/AuthContext'
@@ -100,22 +99,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
    return {
       paths: [],
       fallback: true,
-   };
-};
+   }
+}
 
-export const getStaticProps: GetStaticProps = async context => {
-   const { id } = context.params;
+export const getStaticProps: GetStaticProps = async (context) => {
+   const { id } = context.params
 
-   const { data}: GetMovieQueryResult = await client.query({
+   const { data }: GetMovieQueryResult = await client.query({
       query: GetMovieDocument,
       variables: { uuid: id },
-   });
-   console.log("asdfl",data)
+   })
+   console.log('asdfl', data)
 
    return {
       props: {
          data,
-         
       },
-   };
-};
+   }
+}

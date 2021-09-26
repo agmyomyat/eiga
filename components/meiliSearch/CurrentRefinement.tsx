@@ -1,9 +1,9 @@
-import { connectCurrentRefinements } from 'react-instantsearch-dom';
-import { CurrentRefinementsProvided } from 'react-instantsearch-core';
-import { Chip, Box } from '@mui/material';
+import { connectCurrentRefinements } from 'react-instantsearch-dom'
+import { CurrentRefinementsProvided } from 'react-instantsearch-core'
+import { Chip, Box } from '@mui/material'
 
 const CurrentRefinements = ({ items, refine }: CurrentRefinementsProvided) => {
-   console.log('items', items);
+   console.log('items', items)
 
    return (
       <Box
@@ -15,7 +15,7 @@ const CurrentRefinements = ({ items, refine }: CurrentRefinementsProvided) => {
             mr: 1,
          }}
       >
-         {items.map(item => (
+         {items.map((item) => (
             <Chip
                key={item.label}
                variant="outlined"
@@ -25,9 +25,9 @@ const CurrentRefinements = ({ items, refine }: CurrentRefinementsProvided) => {
             />
          ))}
       </Box>
-   );
-};
+   )
+}
 
-const CustomCurrentRefinements = connectCurrentRefinements(CurrentRefinements);
+const CustomCurrentRefinements = connectCurrentRefinements(CurrentRefinements)
 
-export default CustomCurrentRefinements;
+export default CustomCurrentRefinements

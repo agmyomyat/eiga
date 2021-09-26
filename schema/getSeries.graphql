@@ -1,12 +1,12 @@
 query getSeries($uuid: String!) {
    getMovie(uuid: $uuid) {
       name
-      release_date 
+      release_date
       body
       genres {
          name
       }
-      tv_sery{
+      tv_sery {
          season {
             seasonID
             episodes {

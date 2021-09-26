@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Head from 'next/head';
-import { AppProps } from 'next/app';
-import { ApolloProvider } from '@apollo/client';
-import { useApollo } from '@apollo/index';
-import { ThemeProvider } from '@mui/material/styles';
-import AuthProvider from '@contexts/AuthContext';
-import CssBaseline from '@mui/material/CssBaseline';
-import theme from '@components/ui/theme';
-import createEmotionCache from '@components/ui/createEmotionCache';
-import Layout from '@components/layout/Layout';
-import { CacheProvider, EmotionCache } from '@emotion/react';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Head from 'next/head'
+import { AppProps } from 'next/app'
+import { ApolloProvider } from '@apollo/client'
+import { useApollo } from '@apollo/index'
+import { ThemeProvider } from '@mui/material/styles'
+import AuthProvider from '@contexts/AuthContext'
+import CssBaseline from '@mui/material/CssBaseline'
+import theme from '@components/ui/theme'
+import createEmotionCache from '@components/ui/createEmotionCache'
+import Layout from '@components/layout/Layout'
+import { CacheProvider, EmotionCache } from '@emotion/react'
 import DetectOtherLogin from '@components/modals/detectOtherLogin'
 
 const clientSideEmotionCache = createEmotionCache()
@@ -48,4 +48,4 @@ function MyApp(props: MyAppProps) {
    )
 }
 
-export default MyApp;
+export default MyApp

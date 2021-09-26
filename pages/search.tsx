@@ -1,4 +1,4 @@
-import { Search } from '@components/meiliSearch';
+import { Search } from '@components/meiliSearch'
 import React from 'react'
 
 export default function search() {

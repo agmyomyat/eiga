@@ -1,17 +1,29 @@
-import { Box, Typography, Button, Divider, Alert, AlertTitle } from '@mui/material';
-import { Plan } from '@helpers/plans';
-import Link from 'next/link';
-import { Link as MuiLink } from '@mui/material';
+import {
+   Box,
+   Typography,
+   Button,
+   Divider,
+   Alert,
+   AlertTitle,
+} from '@mui/material'
+import { Plan } from '@helpers/plans'
+import Link from 'next/link'
+import { Link as MuiLink } from '@mui/material'
 
 interface Ivoucher {
-   isLoggedIn: boolean;
-   handleNext: () => void;
-   handleBack: () => void;
-   currentPlan: Plan;
+   isLoggedIn: boolean
+   handleNext: () => void
+   handleBack: () => void
+   currentPlan: Plan
 }
 
-const Voucher: React.FC<Ivoucher> = ({ isLoggedIn, handleNext, handleBack, currentPlan }) => {
-   console.log('currentPlan', currentPlan);
+const Voucher: React.FC<Ivoucher> = ({
+   isLoggedIn,
+   handleNext,
+   handleBack,
+   currentPlan,
+}) => {
+   console.log('currentPlan', currentPlan)
 
    return (
       <Box width={1} my={5} py={5}>
@@ -71,10 +83,19 @@ const Voucher: React.FC<Ivoucher> = ({ isLoggedIn, handleNext, handleBack, curre
                         justifyContent: 'flex-end',
                      }}
                   >
-                     <Button variant="outlined" size="small" sx={{ mr: 2 }} onClick={handleBack}>
+                     <Button
+                        variant="outlined"
+                        size="small"
+                        sx={{ mr: 2 }}
+                        onClick={handleBack}
+                     >
                         Cancel
                      </Button>
-                     <Button variant="contained" size="small" onClick={handleNext}>
+                     <Button
+                        variant="contained"
+                        size="small"
+                        onClick={handleNext}
+                     >
                         Confirm
                      </Button>
                   </Box>
@@ -99,8 +120,18 @@ const Voucher: React.FC<Ivoucher> = ({ isLoggedIn, handleNext, handleBack, curre
                   <AlertTitle>You&apos;re Not Logged In</AlertTitle>
                   Please login first to subscribe.
                </Alert>
-               <Box display="flex" justifyContent="space-between" mt={2} color="text.secondary">
-                  <MuiLink component="button" variant="body2" color="inherit" onClick={handleBack}>
+               <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  mt={2}
+                  color="text.secondary"
+               >
+                  <MuiLink
+                     component="button"
+                     variant="body2"
+                     color="inherit"
+                     onClick={handleBack}
+                  >
                      Back
                   </MuiLink>
                   <Typography variant="body2">
@@ -114,7 +145,7 @@ const Voucher: React.FC<Ivoucher> = ({ isLoggedIn, handleNext, handleBack, curre
             </Box>
          )}
       </Box>
-   );
-};
+   )
+}
 
-export default Voucher;
+export default Voucher

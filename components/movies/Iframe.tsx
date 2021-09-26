@@ -1,24 +1,30 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { Genres } from '@graphgen';
-import { CircularProgress, Box, Breadcrumbs, Typography, Button } from '@mui/material';
-import { NextRouter, useRouter } from 'next/router';
-import Link from '../ui/Link';
+import React, { Dispatch, SetStateAction } from 'react'
+import { Genres } from '@graphgen'
+import {
+   CircularProgress,
+   Box,
+   Breadcrumbs,
+   Typography,
+   Button,
+} from '@mui/material'
+import { NextRouter, useRouter } from 'next/router'
+import Link from '../ui/Link'
 
-export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>;
-export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[];
-export type TGenres = { genres: PartialGenres };
+export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>
+export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[]
+export type TGenres = { genres: PartialGenres }
 
 interface IframeProp {
-   currentServer: string;
-   loading: boolean;
-   setLoading: Dispatch<SetStateAction<boolean>>;
-   id: string | string[];
-   freeServer1: string;
-   freeServer2: string;
-   vipServer1: string;
-   vipServer2: string;
-   changeServer: (server: string) => void;
-   premiumUser: boolean;
+   currentServer: string
+   loading: boolean
+   setLoading: Dispatch<SetStateAction<boolean>>
+   id: string | string[]
+   freeServer1: string
+   freeServer2: string
+   vipServer1: string
+   vipServer2: string
+   changeServer: (server: string) => void
+   premiumUser: boolean
 }
 
 const Iframe: React.FC<IframeProp> = ({
@@ -33,21 +39,21 @@ const Iframe: React.FC<IframeProp> = ({
    changeServer,
    premiumUser,
 }) => {
-   const router: NextRouter = useRouter();
-   const refer = React.useRef(null);
-   const copy = React.useRef(currentServer);
+   const router: NextRouter = useRouter()
+   const refer = React.useRef(null)
+   const copy = React.useRef(currentServer)
 
-   console.log('server1', freeServer1);
-   console.log('server2', freeServer2);
-   console.log('current Server', currentServer);
+   console.log('server1', freeServer1)
+   console.log('server2', freeServer2)
+   console.log('current Server', currentServer)
 
    React.useEffect(() => {
-      console.log('current', currentServer);
-      copy.current = refer.current.src;
-   }, [currentServer]);
+      console.log('current', currentServer)
+      copy.current = refer.current.src
+   }, [currentServer])
 
-   console.log('iframe src', refer.current?.src);
-   console.log('copy server', copy?.current);
+   console.log('iframe src', refer.current?.src)
+   console.log('copy server', copy?.current)
 
    return (
       <>
@@ -62,7 +68,9 @@ const Iframe: React.FC<IframeProp> = ({
          >
             <Typography
                color="textSecondary"
-               sx={{ fontSize: { xs: 'caption.fontSize', sm: 'body1.fontSize' } }}
+               sx={{
+                  fontSize: { xs: 'caption.fontSize', sm: 'body1.fontSize' },
+               }}
             >
                <Link href="/" color="inherit">
                   Home
@@ -70,13 +78,17 @@ const Iframe: React.FC<IframeProp> = ({
             </Typography>
             <Typography
                color="textSecondary"
-               sx={{ fontSize: { xs: 'caption.fontSize', sm: 'body1.fontSize' } }}
+               sx={{
+                  fontSize: { xs: 'caption.fontSize', sm: 'body1.fontSize' },
+               }}
             >
                Movies
             </Typography>
             <Typography
                color="textPrimary"
-               sx={{ fontSize: { xs: 'caption.fontSize', sm: 'body1.fontSize' } }}
+               sx={{
+                  fontSize: { xs: 'caption.fontSize', sm: 'body1.fontSize' },
+               }}
             >
                {id}
             </Typography>
@@ -111,7 +123,9 @@ const Iframe: React.FC<IframeProp> = ({
                   height: 1,
                }}
                onLoad={() => {
-                  refer.current.src !== copy.current ? console.log('gg') : setLoading(false);
+                  refer.current.src !== copy.current
+                     ? console.log('gg')
+                     : setLoading(false)
                }}
                src={currentServer}
                scrolling="no"
@@ -128,7 +142,9 @@ const Iframe: React.FC<IframeProp> = ({
                }`}
                size="small"
                color="primary"
-               onClick={() => changeServer(premiumUser ? vipServer1 : freeServer1)}
+               onClick={() =>
+                  changeServer(premiumUser ? vipServer1 : freeServer1)
+               }
                sx={{
                   my: 2,
                }}
@@ -143,7 +159,9 @@ const Iframe: React.FC<IframeProp> = ({
                }`}
                size="small"
                color="primary"
-               onClick={() => changeServer(premiumUser ? vipServer2 : freeServer2)}
+               onClick={() =>
+                  changeServer(premiumUser ? vipServer2 : freeServer2)
+               }
                sx={{
                   my: 2,
                   ml: 2,
@@ -153,7 +171,7 @@ const Iframe: React.FC<IframeProp> = ({
             </Button>
          </Box>
       </>
-   );
-};
+   )
+}
 
-export default Iframe;
+export default Iframe

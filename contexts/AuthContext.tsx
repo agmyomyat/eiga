@@ -1,12 +1,18 @@
-import { useState, useEffect, createContext, useContext, Context, useRef, Dispatch, SetStateAction, useCallback } from 'react';
+import {
+   useEffect,
+   createContext,
+   useContext,
+   Context,
+   useRef,
+   useCallback,
+} from 'react'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
 import { QueryLazyOptions, useReactiveVar } from '@apollo/client'
 import { gqlInvalidToken, ReactiveValue } from '@apollo/apolloReactiveVar'
 import { Exact, useGetUserLazyQuery } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'
 import { useCheckUser } from './global-states/useCheckUser'
-import shallow from 'zustand/shallow'
-const setUserCheck = useCheckUser.getState().setCheckUser
+import { useShouldLogOut } from './global-states/useShouldLogOut'
 
 type User = {
    __typename?: 'returnUserData'
@@ -22,6 +28,7 @@ interface IauthContext {
    premiumUser: boolean
    getUserLoading: boolean
    getUser: (
+      // eslint-disable-next-line no-unused-vars
       options?: QueryLazyOptions<
          Exact<{
             token?: string
@@ -37,6 +44,7 @@ export function useAuth() {
 
 const setCheckUser = useCheckUser.getState().setCheckUser
 export default function AuthProvider({ children }) {
+   const shouldLogOut = useShouldLogOut((state) => state.logOut)
    const checkUser = useCheckUser((state) => state.checkUser)
    const [
       getUser,
@@ -59,7 +67,7 @@ export default function AuthProvider({ children }) {
       if (!_accessToken) return
       if (
          (router.query.id && router.query.id !== prevPath.current) ||
-         checkUser
+         checkUser //after profile redirect
       ) {
          setCheckUser(false)
          return getUser({
@@ -79,12 +87,12 @@ export default function AuthProvider({ children }) {
    }, [getUserRefetch])
 
    useEffect(() => {
-      if (reactiveToken.shouldLogOut) {
+      if (shouldLogOut) {
          logOut()
       }
 
       console.log('auth checking')
-   }, [logOut, reactiveToken.shouldLogOut])
+   }, [shouldLogOut, logOut])
 
    const authContext = {
       userData,

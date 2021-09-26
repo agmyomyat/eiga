@@ -1,4 +1,4 @@
-import { useEffect, useState, FormEventHandler } from 'react'
+import { useEffect, useState } from 'react'
 import { connectSearchBox } from 'react-instantsearch-dom'
 import { SearchBoxProvided } from 'react-instantsearch-core'
 import { Box } from '@mui/material'

@@ -1,11 +1,9 @@
-
 import { useEffect, useState } from 'react'
 import { NextRouter, useRouter } from 'next/router'
 import { Movies } from '@graphgen'
 import { Box, Card, Typography } from '@mui/material'
 import Image from 'next/image'
 import Skeleton from '@mui/material/Skeleton'
-
 
 const Movie = ({
    uuid,
@@ -14,7 +12,6 @@ const Movie = ({
    release_date,
    quality,
 }: Partial<Movies>) => {
-
    const { push }: NextRouter = useRouter()
 
    // will delete later

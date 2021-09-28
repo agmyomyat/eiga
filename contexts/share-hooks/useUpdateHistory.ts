@@ -20,9 +20,7 @@ export default function useUpdateHistory({
       }
       function handleRouteChange() {
          console.log('timer', timer)
-         if (router.query.id)
-            return (timer = setTimeout(() => updateHistory(), 3000))
-         return null
+         return (timer = setTimeout(() => updateHistory(), 3000))
       }
       router.events.on('routeChangeStart', handleRouteChange)
       return () => {
@@ -30,7 +28,7 @@ export default function useUpdateHistory({
          clearTimeout(timer)
       }
       //       console.log('updateHistorty', data)
-   }, [router.events, router.query.id, updateHistory])
+   }, [router.events, updateHistory])
    const updateHistoryLoading = loading
    const updateHistoryData = data
    const updateHistoryError = error

@@ -3,13 +3,18 @@ import { Grid, Box, Typography } from '@mui/material'
 import Image from 'next/image'
 import { useRouter, NextRouter } from 'next/router'
 
-const RelatedMovie: React.FC<Partial<Movies>> = ({
-   name,
-   release_date,
-   photo_url,
-   uuid,
-}) => {
+interface IsearchedMovie {
+   movie: Partial<Movies>
+   handleClose: () => void
+}
+
+const SearchedMovie: React.FC<IsearchedMovie> = ({ movie, handleClose }) => {
    const { push }: NextRouter = useRouter()
+
+   const handleClick = (uuid: string) => {
+      handleClose()
+      push({ pathname: '/movies/[id]', query: { id: uuid } })
+   }
 
    return (
       <Grid
@@ -21,29 +26,29 @@ const RelatedMovie: React.FC<Partial<Movies>> = ({
             py: 1,
             cursor: 'pointer',
          }}
-         onClick={() => push({ pathname: '/movies/[id]', query: { id: uuid } })}
+         onClick={() => handleClick(movie.uuid)}
       >
          <Grid item xs={2}>
             <Box>
                <Image
-                  src={photo_url}
+                  src={movie.photo_url}
                   layout="responsive"
                   width={600}
                   height={900}
-                  alt={name}
+                  alt={movie.name}
                />
             </Box>
          </Grid>
          <Grid item xs={10}>
             <Typography variant="subtitle1" component="h4" noWrap>
-               {name}
+               {movie.name}
             </Typography>
             <Typography variant="subtitle2" component="p" color="textSecondary">
-               {release_date}
+               {movie.release_date}
             </Typography>
          </Grid>
       </Grid>
    )
 }
 
-export default RelatedMovie
+export default SearchedMovie

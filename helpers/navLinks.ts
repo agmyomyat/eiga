@@ -6,6 +6,6 @@ type NavLink = {
 
 export const navLinks: NavLink[] = [
    { title: `Browse`, path: `/search` },
-   { title: `Favorites`, path: `/pricing` },
-   { title: `Profile`, path: `/profile` },
+   { title: `Histroy`, path: `/history` },
+   { title: `Favorites`, path: `/favorites` },
 ]

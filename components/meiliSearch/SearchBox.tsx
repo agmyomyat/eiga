@@ -19,14 +19,9 @@ const SearchBox = ({ refine }: SearchBoxProvided) => {
       refine(keywords)
    }
 
-   const handleFocus = () => {}
-   const handleBlur = () => {}
-
    return (
       <Box maxWidth="400px" my={0} mx="auto" py={2}>
          <SearchBoxComponent
-            onFocus={handleFocus}
-            onBlur={handleBlur}
             onSubmit={handleSubmit}
             value={keywords}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

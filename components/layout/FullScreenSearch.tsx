@@ -124,7 +124,11 @@ const FullScreenSearch: React.FC<IfullScreen> = ({
          <Stack sx={{ mb: 3, pl: { xs: 2, sm: 4 }, pt: 1 }}>
             {show &&
                movies?.map((movie) => (
-                  <SearchedMovie key={movie.uuid} {...movie} />
+                  <SearchedMovie
+                     key={movie.uuid}
+                     movie={movie}
+                     handleClose={handleSearchClose}
+                  />
                ))}
          </Stack>
       </Dialog>

@@ -15,7 +15,6 @@ const setAuthLoading = useAuthLoading.getState().setLoading
 
 function redirect() {
    const provider = new GoogleAuthProvider()
-   // provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
    signInWithRedirect(auth, provider)
 }
 /**
@@ -40,7 +39,6 @@ function redirectAuth() {
       .catch((error) => {
          setAuthLoading(false)
          console.log(error)
-         // Handle Errors here.
          const errorCode = error.code
          const errorMessage = error.message
          // The email of the user's account used.
@@ -59,16 +57,6 @@ export default function Profile() {
    useEffect(() => {
       redirectAuth()
    }, [])
-
-   // useEffect(() => {
-   //    if (currentUser !== null && Object.keys(currentUser).length) {
-   //       console.log('current', currentUser);
-   //       return getUser({ variables: { uuid: currentUser.email } });
-   //    }
-   // }, [currentUser, getUser]);
-
-   // //* userData from server
-   // const userData = data?.userData[0];
 
    const handleSignOut = async () => {
       logOut()

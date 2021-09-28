@@ -1,0 +1,18 @@
+mutation updateHistory(
+   $movieId: Int!
+   $movieUuid: String!
+   $season: Int
+   $episode: Int
+) {
+   updateHistory(
+      input: {
+         movieId: $movieId
+         movieUuid: $movieUuid
+         season: $season
+         episode: $episode
+      }
+   ) {
+      status
+      ok
+   }
+}

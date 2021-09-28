@@ -14,6 +14,7 @@ import RelatedMovies from '@components/movies/RelatedMovies'
 import MovieInfo from '@components/movies/MovieInfo'
 import { useAuth } from '@contexts/AuthContext'
 import { useApolloClient } from '@apollo/client'
+import useUpdateHistory from '@contexts/share-hooks/useUpdateHistory'
 
 const client = initializeApollo()
 export interface PageProps {
@@ -40,7 +41,15 @@ export default function MoviePage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop)
    }
+   const { updateHistoryData, updateHistoryError, updateHistoryLoading } =
+      useUpdateHistory({
+         movieId: 27,
+         movieUuid: 'black-widow',
+         episode: 1,
+         season: 1,
+      })
 
+   console.log('updateHistorty', updateHistoryData)
    useEffect(() => {
       // console.log('user', premiumUser);
       // console.log('fallback', router.isFallback);

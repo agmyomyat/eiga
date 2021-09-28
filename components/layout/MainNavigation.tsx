@@ -14,7 +14,7 @@ import {
 
 import SearchIcon from '@mui/icons-material/Search'
 
-import Link from '../ui/Link'
+import Link from '@components/ui/Link'
 import { styled } from '@mui/material/styles'
 import { navLinks } from '@helpers/navLinks'
 import FullScreenSearch from '@components/layout/FullScreenSearch'
@@ -213,6 +213,7 @@ const MainNavigation: React.FC = () => {
                                     searchResults?.search.length > 0
                                  }
                                  movies={searchResults?.search as Movies[]}
+                                 handleBlur={handleBlur}
                               />
                            </Box>
 

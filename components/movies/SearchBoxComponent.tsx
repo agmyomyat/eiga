@@ -4,14 +4,14 @@ import SearchIcon from '@mui/icons-material/Search'
 import { alpha } from '@mui/material/styles'
 
 interface IcustomSearchBox {
-   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
    value: string
-   onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
-   onFocus: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>
-   onBlur: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>
+   onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+   onFocus?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>
+   onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>
 }
 
-const CustomSearchBox: React.FC<IcustomSearchBox> = ({
+const SearchBoxComponent: React.FC<IcustomSearchBox> = ({
    value,
    onChange,
    onSubmit,
@@ -85,4 +85,4 @@ const CustomSearchBox: React.FC<IcustomSearchBox> = ({
    )
 }
 
-export default CustomSearchBox
+export default SearchBoxComponent

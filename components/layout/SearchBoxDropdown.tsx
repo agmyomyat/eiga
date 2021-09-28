@@ -5,9 +5,14 @@ import { Movies as typeMovies } from '@graphgen'
 interface Idropdown {
    movies: Partial<typeMovies[]>
    show: boolean
+   handleBlur: () => void
 }
 
-const SearchBoxDropdown: React.FC<Idropdown> = ({ movies, show }) => {
+const SearchBoxDropdown: React.FC<Idropdown> = ({
+   movies,
+   show,
+   handleBlur,
+}) => {
    return (
       <Fade in={show}>
          <Box
@@ -23,7 +28,11 @@ const SearchBoxDropdown: React.FC<Idropdown> = ({ movies, show }) => {
             }}
          >
             {movies?.map((movie) => (
-               <SearchedMovie key={movie.uuid} {...movie} />
+               <SearchedMovie
+                  key={movie.uuid}
+                  movie={movie}
+                  handleClose={handleBlur}
+               />
             ))}
          </Box>
       </Fade>

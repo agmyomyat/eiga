@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
+import { useRouter, NextRouter } from 'next/router'
 import { useAuth } from '@contexts/AuthContext'
 import { createUser } from '@apollo/mutationfn/createUser'
-import { Container, Button, Grid, Box, Typography, Paper } from '@mui/material'
+import { Container, Button, Stack, Box, Typography, Paper } from '@mui/material'
 import {
    getRedirectResult,
    GoogleAuthProvider,
@@ -10,6 +11,7 @@ import {
 import { auth } from '@lib'
 import { useCheckUser } from '@contexts/global-states/useCheckUser'
 import { useAuthLoading } from '@contexts/global-states/useAuthLoading'
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 
 const setAuthLoading = useAuthLoading.getState().setLoading
 
@@ -56,6 +58,7 @@ function redirectAuth() {
 export default function Profile() {
    const authLoading = useAuthLoading((state) => state.loading)
    const { getUserLoading, userData, logOut } = useAuth()
+   const { push }: NextRouter = useRouter()
    useEffect(() => {
       redirectAuth()
    }, [])
@@ -79,89 +82,133 @@ export default function Profile() {
    }
 
    return (
-      <Box>
-         <h1>
-            {userData?.premium ? 'You Are Premium User' : 'You are free User'}
-         </h1>
+      <Container>
+         <Typography
+            align="center"
+            variant="h5"
+            component="h3"
+            fontWeight="bold"
+         >
+            Profile
+         </Typography>
          {userData?.userName ? (
-            <Container sx={{ mt: 5, mb: '100px', maxWidth: '700px' }}>
-               <Typography
-                  align="center"
-                  variant="h5"
-                  component="h3"
-                  color="textSecondary"
-               >
-                  Your Profile
-               </Typography>
-               <Grid
-                  container
+            <Box sx={{ mt: 1, mb: '100px' }}>
+               <Stack
                   spacing={2}
                   justifyContent="center"
                   alignItems="center"
-                  mt={5}
+                  mt={3}
+                  sx={{
+                     maxWidth: '600px',
+                     mx: 'auto',
+                  }}
                >
-                  <Grid item sm={3} xs={12}>
-                     <Typography component="label" color="textSecondary">
+                  <Paper
+                     sx={{
+                        width: 1,
+                        bgcolor: 'secondary.main',
+                        p: 2,
+                        borderRadius: 3,
+                     }}
+                     elevation={3}
+                  >
+                     <Typography color="textSecondary" sx={{ pb: 2 }}>
                         Email
                      </Typography>
-                  </Grid>
-                  <Grid item sm={9} xs={12}>
-                     <Paper
-                        sx={{
-                           p: 2,
-                           backgroundImage: 'none',
-                        }}
-                     >
-                        {userData.userName}
-                     </Paper>
-                  </Grid>
 
-                  <Grid item sm={3} xs={12}>
-                     <Typography component="label" color="textSecondary">
+                     <Typography>{userData.userName}</Typography>
+                  </Paper>
+
+                  <Paper
+                     sx={{
+                        width: 1,
+                        bgcolor: 'secondary.main',
+                        p: 2,
+                        borderRadius: 3,
+                     }}
+                     elevation={3}
+                  >
+                     <Typography color="textSecondary" sx={{ pb: 2 }}>
+                        Current Plan
+                     </Typography>
+
+                     <Typography>
+                        {userData?.premium ? 'Premium' : 'Free'}
+                     </Typography>
+                  </Paper>
+
+                  <Paper
+                     sx={{
+                        width: 1,
+                        bgcolor: 'secondary.main',
+                        p: 2,
+                        borderRadius: 3,
+                     }}
+                     elevation={3}
+                  >
+                     <Typography color="textSecondary" sx={{ pb: 2 }}>
                         Verified
                      </Typography>
-                  </Grid>
-                  <Grid item sm={9} xs={12}>
-                     <Paper
-                        sx={{
-                           p: 2,
-                           backgroundImage: 'none',
-                        }}
-                     >
-                        {userData.verify ? 'Yes' : 'No'}
-                     </Paper>
-                  </Grid>
 
-                  <Grid item sm={3} xs={12}>
-                     <Typography component="label" color="textSecondary">
+                     <Typography>{userData.verify ? 'Yes' : 'No'}</Typography>
+                  </Paper>
+
+                  <Paper
+                     sx={{
+                        width: 1,
+                        bgcolor: 'secondary.main',
+                        p: 2,
+                        borderRadius: 3,
+                     }}
+                     elevation={3}
+                  >
+                     <Typography color="textSecondary" sx={{ pb: 2 }}>
                         Remaining Time
                      </Typography>
-                  </Grid>
-                  <Grid item sm={9} xs={12}>
-                     <Paper
-                        sx={{
-                           p: 2,
-                           backgroundImage: 'none',
-                        }}
+
+                     <Typography>26 days</Typography>
+                  </Paper>
+
+                  <Paper
+                     sx={{
+                        width: 1,
+                        bgcolor: 'secondary.main',
+                        p: 2,
+                        borderRadius: 3,
+                     }}
+                     elevation={3}
+                  >
+                     <Typography color="textSecondary" sx={{ pb: 2 }}>
+                        How To Subscribe
+                     </Typography>
+
+                     <Button
+                        color="inherit"
+                        endIcon={<ArrowRightAltIcon />}
+                        onClick={() => push('/pricing')}
                      >
-                        26 days
-                     </Paper>
-                  </Grid>
-               </Grid>
-               <Box display="flex" justifyContent="flex-end" mt={3}>
+                        Go Check For Pricing
+                     </Button>
+                  </Paper>
+
                   <Button
                      variant="contained"
-                     color="primary"
+                     color="error"
                      onClick={handleSignOut}
+                     sx={{
+                        px: 3,
+                        py: 1.5,
+                        width: { xs: 1 },
+                     }}
                   >
                      Log Out
                   </Button>
-               </Box>
-            </Container>
+               </Stack>
+            </Box>
          ) : (
             // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
             <button onClick={() => redirect()}>redirect login</button>
          )}
-      </Box>
+      </Container>
    )
 }

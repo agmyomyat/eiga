@@ -14,7 +14,7 @@ export const classes = {
    type: `${PREFIX}-type`,
 }
 
-export const StyledBox = styled(Box)(({ theme }) => ({
+export const StyledBox = styled(Box)(() => ({
    [`& .${classes.skeletonImage}`]: {
       paddingBottom: '150%',
    },

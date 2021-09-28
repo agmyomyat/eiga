@@ -1,19 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter, NextRouter } from 'next/router'
 import { BottomNavigation, BottomNavigationAction } from '@mui/material'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
+import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined'
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined'
 
 const MobileNavigation: React.FC = () => {
    const { push, pathname }: NextRouter = useRouter()
-   const dynamicRoutes = ['/movies/[id]', '/series/[id]']
-   const [value, setValue] = useState(
-      dynamicRoutes.includes(pathname) ? '/' : pathname
-   )
+   const [value, setValue] = useState(pathname)
 
-   console.log('route check', dynamicRoutes.includes(pathname))
+   useEffect(() => {
+      const dynamicRoutes = ['/movies/[id]', '/series/[id]']
+      if (dynamicRoutes.includes(pathname)) {
+         setValue('/')
+      }
+   }, [pathname])
 
    return (
       <BottomNavigation
@@ -45,18 +47,18 @@ const MobileNavigation: React.FC = () => {
          />
          <BottomNavigationAction
             label="Browse"
-            value="/browse"
+            value="/search"
             icon={<ExploreOutlinedIcon />}
          />
          <BottomNavigationAction
-            label="Favorites"
-            value="/pricing"
-            icon={<FavoriteBorderOutlinedIcon />}
+            label="Histroy"
+            value="/hisotry"
+            icon={<HistoryOutlinedIcon />}
          />
          <BottomNavigationAction
-            label="Profile"
-            value="/profile"
-            icon={<AccountCircleOutlinedIcon />}
+            label="Favorites"
+            value="/favorites"
+            icon={<FavoriteBorderOutlinedIcon />}
          />
       </BottomNavigation>
    )

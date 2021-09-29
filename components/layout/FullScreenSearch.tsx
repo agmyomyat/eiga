@@ -8,6 +8,8 @@ import {
    InputBase,
    Slide,
    Stack,
+   Typography,
+   CircularProgress,
 } from '@mui/material'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { TransitionProps } from '@mui/material/transitions'
@@ -32,6 +34,7 @@ interface IfullScreen {
    value: string
    onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
    show: boolean
+   loading: boolean
 }
 
 const FullScreenSearch: React.FC<IfullScreen> = ({
@@ -41,6 +44,7 @@ const FullScreenSearch: React.FC<IfullScreen> = ({
    value,
    onChange,
    show,
+   loading,
 }) => {
    return (
       <Dialog
@@ -121,16 +125,41 @@ const FullScreenSearch: React.FC<IfullScreen> = ({
                </Box>
             </Toolbar>
          </AppBar>
-         <Stack sx={{ mb: 3, pl: { xs: 2, sm: 4 }, pt: 1 }}>
-            {show &&
-               movies?.map((movie) => (
-                  <SearchedMovie
-                     key={movie.uuid}
-                     movie={movie}
-                     handleClose={handleSearchClose}
-                  />
-               ))}
-         </Stack>
+         {show && (
+            <Stack sx={{ mb: 3, pl: { xs: 2, sm: 4 }, pt: 1 }}>
+               {loading ? (
+                  <Box
+                     display="flex"
+                     justifyContent="center"
+                     alignItems="center"
+                     py={5}
+                     mt={5}
+                  >
+                     <CircularProgress />
+                  </Box>
+               ) : (
+                  <>
+                     {movies?.length === 0 ? (
+                        <Typography
+                           variant="subtitle1"
+                           align="center"
+                           sx={{ py: 5 }}
+                        >
+                           No Content To Show.
+                        </Typography>
+                     ) : (
+                        movies?.map((movie) => (
+                           <SearchedMovie
+                              key={movie.uuid}
+                              movie={movie}
+                              handleClose={handleSearchClose}
+                           />
+                        ))
+                     )}
+                  </>
+               )}
+            </Stack>
+         )}
       </Dialog>
    )
 }

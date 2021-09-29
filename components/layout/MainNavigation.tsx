@@ -64,22 +64,28 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 const MainNavigation: React.FC = () => {
    const [keywords, setKeywords] = useState<string>('')
-   const [searchMovie, { data: searchResults }] = useSearchMovieLazyQuery()
+   const [searchMovie, { data: searchResults, loading: queryLoading }] =
+      useSearchMovieLazyQuery()
    const [isSearching, setIsSearching] = useState<boolean>(false)
    const keywordIsValid = Boolean(keywords.trim().length > 0)
    const { pathname }: NextRouter = useRouter()
    const isSearchRoute = pathname === SEARCH_ROUTE
    const [openSearch, setOpenSearch] = useState<boolean>(false)
+   const [isTyping, setIsTyping] = useState<boolean>(false)
 
    useEffect(() => {
+      if (keywordIsValid) {
+         setIsTyping(true)
+      }
       const timeout = setTimeout(() => {
          if (keywordIsValid) {
-            console.log('searching')
             searchMovie({
                variables: { search: keywords },
             })
+            setIsTyping(false)
          }
       }, 500)
+
       return () => clearTimeout(timeout)
    }, [searchMovie, keywordIsValid, keywords])
 
@@ -207,11 +213,8 @@ const MainNavigation: React.FC = () => {
                               />
 
                               <SearchBoxDropdown
-                                 show={
-                                    keywordIsValid &&
-                                    isSearching &&
-                                    searchResults?.search.length > 0
-                                 }
+                                 show={keywordIsValid && isSearching}
+                                 loading={isTyping || queryLoading}
                                  movies={searchResults?.search as Movies[]}
                                  handleBlur={handleBlur}
                               />
@@ -236,6 +239,7 @@ const MainNavigation: React.FC = () => {
                               onChange={handleChange}
                               openSearch={openSearch}
                               handleSearchClose={handleSearchClose}
+                              loading={isTyping || queryLoading}
                               show={keywordIsValid}
                            />
                         </>

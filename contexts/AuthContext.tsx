@@ -69,14 +69,6 @@ export default function AuthProvider({ children }) {
       await getUserRefetch({ token: '' })
    }, [getUserRefetch])
    useEffect(() => {
-      const handleRouteChange = (url, { shallow }) => {
-         console.log(
-            `App is changing to ${url} ${
-               shallow ? 'with' : 'without'
-            } shallow routing`
-         )
-         getUser({ variables: { token: '' } })
-      }
       if (shouldLogOut) {
          logOut()
       }
@@ -85,17 +77,11 @@ export default function AuthProvider({ children }) {
          setCheckUser(false)
       }
       const _accessToken = getAccessToken()
-      if (!_accessToken)
-         return router.events.off('routeChangeComplete', handleRouteChange)
-      // console.log('checkuser', checkUser)
-      // console.log('router', router.asPath)
-
-      router.events.on('routeChangeComplete', handleRouteChange)
-      return () => {
-         // console.log('hey unmouting')
-         router.events.off('routeChangeComplete', handleRouteChange)
-      }
-   }, [checkUser, getUser, logOut, router.events, shouldLogOut])
+      if (!_accessToken) return
+      console.log('path', router.asPath)
+      if (!router.asPath) return
+      getUser({ variables: { token: '' } })
+   }, [checkUser, getUser, logOut, router.asPath, shouldLogOut])
 
    const authContext = {
       userData,

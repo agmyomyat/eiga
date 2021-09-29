@@ -41,15 +41,12 @@ export default function MoviePage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop)
    }
-   const { updateHistoryData, updateHistoryError, updateHistoryLoading } =
-      useUpdateHistory({
-         movieId: 27,
-         movieUuid: 'black-widow',
-         episode: 1,
-         season: 1,
-      })
+   const { updateHistoryData } = useUpdateHistory({
+      movieId: parseInt(movieData?.id || null),
+      movieUuid: movieData?.uuid || null,
+   })
+   console.log('update History data', updateHistoryData)
 
-   console.log('updateHistorty', updateHistoryData)
    useEffect(() => {
       // console.log('user', premiumUser);
       // console.log('fallback', router.isFallback);
@@ -64,7 +61,6 @@ export default function MoviePage(props: PageProps) {
       router.isFallback,
       movieData?.vipServer1,
       movieData?.freeServer1,
-      router.query.id,
       client,
       userData?.premium,
    ])

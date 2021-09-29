@@ -13,6 +13,7 @@ import Iframe from '@components/movies/Iframe'
 import Episodes from '@components/movies/Episodes'
 import { useAuth } from '@contexts/AuthContext'
 import { useApolloClient } from '@apollo/client'
+import useUpdateHistory from '@contexts/share-hooks/useUpdateHistory'
 
 const client = initializeApollo()
 
@@ -45,6 +46,13 @@ export default function SeriesPage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop)
    }
+   const { updateHistoryData } = useUpdateHistory({
+      movieId: parseInt(seriesData?.id || null),
+      movieUuid: seriesData?.uuid || null,
+      season: currentSeason,
+      episode: currentEpisode,
+   })
+   console.log('update History data', updateHistoryData)
 
    useEffect(() => {
       // console.log('user', premiumUser);

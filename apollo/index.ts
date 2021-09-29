@@ -61,7 +61,7 @@ const asyncRefreshTokenLink = setContext(async () => {
    }
    try {
       const { exp }: any = jwt_decode(<string | null>token)
-      console.log('expire', exp)
+      // console.log('expire', exp)
       if (Date.now() >= exp * 1000) {
          shouldFetchOrNot = true
       } else {
@@ -75,7 +75,7 @@ const asyncRefreshTokenLink = setContext(async () => {
       try {
          const res = await handleFetch()
          // setAccessToken(res||''); // see line authLink comment
-         console.log('fetched token success', res)
+         // console.log('fetched token success', res)
          accessToken.token = res || ''
       } catch (e) {
          // gqlInvalidToken({ shouldLogOut: true })
@@ -83,7 +83,7 @@ const asyncRefreshTokenLink = setContext(async () => {
          setAccessToken('')
          console.log('apollo catch', e)
       }
-      console.log('final line')
+      // console.log('final line')
       return { accessToken }
    }
 })
@@ -107,7 +107,7 @@ const authLink = new ApolloLink((operation, forward) => {
     */
    const contextToken = operation.getContext().accessToken?.token || '' //
    const newAccessToken = contextToken ? contextToken : oldToken
-   console.log('access', newAccessToken)
+   // console.log('access', newAccessToken)
    setAccessToken(newAccessToken)
    if (operation.operationName === 'getUser') {
       operation.variables['token'] = newAccessToken

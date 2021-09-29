@@ -13,6 +13,7 @@ import { Exact, useGetUserLazyQuery } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'
 import { useCheckUser } from './global-states/useCheckUser'
 import { useShouldLogOut } from './global-states/useShouldLogOut'
+import { useAuthLoading } from './global-states/useAuthLoading'
 
 type User = {
    __typename?: 'returnUserData'
@@ -46,6 +47,7 @@ const setCheckUser = useCheckUser.getState().setCheckUser
 export default function AuthProvider({ children }) {
    const shouldLogOut = useShouldLogOut((state) => state.logOut)
    const checkUser = useCheckUser((state) => state.checkUser)
+   const authLoading = useAuthLoading((state) => state.loading)
    const [
       getUser,
       {
@@ -57,26 +59,10 @@ export default function AuthProvider({ children }) {
       fetchPolicy: 'network-only',
       ssr: false,
    })
-   const router: NextRouter = useRouter()
    const premiumUser: boolean = gqlCurrentUser?.getUserData?.premium || false
    const userData = gqlCurrentUser?.getUserData
    const reactiveToken = useReactiveVar(gqlInvalidToken)
-   const prevPath = useRef(router.query.id)
-   useEffect(() => {
-      const _accessToken = getAccessToken()
-      if (!_accessToken) return
-      if (
-         (router.query.id && router.query.id !== prevPath.current) ||
-         checkUser //after profile redirect
-      ) {
-         setCheckUser(false)
-         return getUser({
-            variables: { token: '' }, // token will be auto filled in Apollo middleware
-         })
-      }
-      getUser({ variables: { token: '' } }) //to check initial load
-   }, [checkUser, getUser, router.query.id])
-
+   const router = useRouter()
    const logOut = useCallback(async () => {
       setAccessToken('')
       await fetch('http://localhost:1337/logout', {
@@ -85,14 +71,37 @@ export default function AuthProvider({ children }) {
       })
       await getUserRefetch({ token: '' })
    }, [getUserRefetch])
-
    useEffect(() => {
+      const handleRouteChange = (url, { shallow }) => {
+         console.log(
+            `App is changing to ${url} ${
+               shallow ? 'with' : 'without'
+            } shallow routing`
+         )
+         getUser({ variables: { token: '' } })
+      }
       if (shouldLogOut) {
          logOut()
       }
+      if (checkUser) {
+         getUser({ variables: { token: '' } })
+         setCheckUser(false)
+      }
+      const _accessToken = getAccessToken()
+      if (!_accessToken) return
+      // console.log('checkuser', checkUser)
+      // console.log('router', router.asPath)
 
-      console.log('auth checking')
-   }, [shouldLogOut, logOut])
+      router.events.on('routeChangeComplete', handleRouteChange)
+      return () => {
+         console.log('hey unmouting')
+         router.events.off('routeChangeComplete', handleRouteChange)
+      }
+   }, [checkUser, getUser, logOut, router.events, shouldLogOut])
+
+   useEffect(() => {
+      // console.log('auth checking')
+   }, [checkUser, getUser])
 
    const authContext = {
       userData,

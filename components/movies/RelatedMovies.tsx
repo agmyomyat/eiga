@@ -11,7 +11,7 @@ interface IRelatedMovies {
 const RelatedMovies: React.FC<IRelatedMovies> = ({ data, loading }) => {
    const movies = data?.movies
 
-   console.log('related movies', movies)
+   // console.log('related movies', movies)
 
    if (loading) {
       return <h1>loading</h1>

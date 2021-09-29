@@ -3,7 +3,6 @@ import {
    createContext,
    useContext,
    Context,
-   useRef,
    useCallback,
 } from 'react'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
@@ -13,7 +12,6 @@ import { Exact, useGetUserLazyQuery } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'
 import { useCheckUser } from './global-states/useCheckUser'
 import { useShouldLogOut } from './global-states/useShouldLogOut'
-import { useAuthLoading } from './global-states/useAuthLoading'
 
 type User = {
    __typename?: 'returnUserData'
@@ -47,7 +45,6 @@ const setCheckUser = useCheckUser.getState().setCheckUser
 export default function AuthProvider({ children }) {
    const shouldLogOut = useShouldLogOut((state) => state.logOut)
    const checkUser = useCheckUser((state) => state.checkUser)
-   const authLoading = useAuthLoading((state) => state.loading)
    const [
       getUser,
       {
@@ -62,7 +59,7 @@ export default function AuthProvider({ children }) {
    const premiumUser: boolean = gqlCurrentUser?.getUserData?.premium || false
    const userData = gqlCurrentUser?.getUserData
    const reactiveToken = useReactiveVar(gqlInvalidToken)
-   const router = useRouter()
+   const router: NextRouter = useRouter()
    const logOut = useCallback(async () => {
       setAccessToken('')
       await fetch('http://localhost:1337/logout', {

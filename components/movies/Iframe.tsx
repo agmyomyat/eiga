@@ -41,17 +41,17 @@ const Iframe: React.FC<IframeProp> = ({
    const refer = React.useRef(null)
    const copy = React.useRef(currentServer)
 
-   console.log('server1', freeServer1)
-   console.log('server2', freeServer2)
-   console.log('current Server', currentServer)
+   // console.log('server1', freeServer1)
+   // console.log('server2', freeServer2)
+   // console.log('current Server', currentServer)
 
    React.useEffect(() => {
       console.log('current', currentServer)
       copy.current = refer.current.src
    }, [currentServer])
 
-   console.log('iframe src', refer.current?.src)
-   console.log('copy server', copy?.current)
+   // console.log('iframe src', refer.current?.src)
+   // console.log('copy server', copy?.current)
 
    return (
       <>

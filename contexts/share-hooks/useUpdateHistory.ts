@@ -2,7 +2,7 @@ import {
    useUpdateHistoryMutation,
    UpdateHistoryMutationVariables,
 } from '@graphgen'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 
 export default function useUpdateHistory({
@@ -11,24 +11,24 @@ export default function useUpdateHistory({
    const [updateHistory, { data, loading, error }] = useUpdateHistoryMutation({
       variables: prop,
    })
+   const timer = useRef<NodeJS.Timeout | null>(null)
    const router = useRouter()
    useEffect(() => {
-      let timer
-      if (!timer) {
-         updateHistory()
-         return
-      }
       function handleRouteChange() {
-         console.log('timer', timer)
-         return (timer = setTimeout(() => updateHistory(), 3000))
+         if (router.query.id) {
+            clearTimeout(timer.current)
+            // console.log('timer', timer)
+            timer.current = setTimeout(() => {
+               updateHistory()
+            }, 10000)
+         }
       }
-      router.events.on('routeChangeStart', handleRouteChange)
+      handleRouteChange()
       return () => {
-         router.events.off('routeChangeStart', handleRouteChange)
-         clearTimeout(timer)
+         clearTimeout(timer.current)
       }
       //       console.log('updateHistorty', data)
-   }, [router.events, updateHistory])
+   }, [router.query.id, updateHistory])
    const updateHistoryLoading = loading
    const updateHistoryData = data
    const updateHistoryError = error

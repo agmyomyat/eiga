@@ -81,7 +81,7 @@ const ProfileComponent: React.FC = () => {
                py={1.5}
                px={2}
             >
-               {userData ? (
+               {userData?.userName ? (
                   <Box>
                      <Typography
                         variant="subtitle2"
@@ -105,7 +105,7 @@ const ProfileComponent: React.FC = () => {
                )}
             </Box>
             <Divider />
-            {userData ? (
+            {userData?.userName ? (
                <Box>
                   <MenuItem
                      sx={{

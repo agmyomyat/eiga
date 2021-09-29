@@ -341,6 +341,83 @@ export type EmbedVideoInput = {
    updated_by?: Maybe<Scalars['ID']>
 }
 
+export type FavouriteMovieInput = {
+   movie?: Maybe<Scalars['ID']>
+   user_info?: Maybe<Scalars['ID']>
+   published_at?: Maybe<Scalars['DateTime']>
+   created_by?: Maybe<Scalars['ID']>
+   updated_by?: Maybe<Scalars['ID']>
+}
+
+export type FavouriteMovies = {
+   __typename?: 'FavouriteMovies'
+   id: Scalars['ID']
+   created_at: Scalars['DateTime']
+   updated_at: Scalars['DateTime']
+   movie?: Maybe<Movies>
+   user_info?: Maybe<UserData>
+   published_at?: Maybe<Scalars['DateTime']>
+}
+
+export type FavouriteMoviesAggregator = {
+   __typename?: 'FavouriteMoviesAggregator'
+   count?: Maybe<Scalars['Int']>
+   totalCount?: Maybe<Scalars['Int']>
+}
+
+export type FavouriteMoviesConnection = {
+   __typename?: 'FavouriteMoviesConnection'
+   values?: Maybe<Array<Maybe<FavouriteMovies>>>
+   groupBy?: Maybe<FavouriteMoviesGroupBy>
+   aggregate?: Maybe<FavouriteMoviesAggregator>
+}
+
+export type FavouriteMoviesConnectionCreated_At = {
+   __typename?: 'FavouriteMoviesConnectionCreated_at'
+   key?: Maybe<Scalars['DateTime']>
+   connection?: Maybe<FavouriteMoviesConnection>
+}
+
+export type FavouriteMoviesConnectionId = {
+   __typename?: 'FavouriteMoviesConnectionId'
+   key?: Maybe<Scalars['ID']>
+   connection?: Maybe<FavouriteMoviesConnection>
+}
+
+export type FavouriteMoviesConnectionMovie = {
+   __typename?: 'FavouriteMoviesConnectionMovie'
+   key?: Maybe<Scalars['ID']>
+   connection?: Maybe<FavouriteMoviesConnection>
+}
+
+export type FavouriteMoviesConnectionPublished_At = {
+   __typename?: 'FavouriteMoviesConnectionPublished_at'
+   key?: Maybe<Scalars['DateTime']>
+   connection?: Maybe<FavouriteMoviesConnection>
+}
+
+export type FavouriteMoviesConnectionUpdated_At = {
+   __typename?: 'FavouriteMoviesConnectionUpdated_at'
+   key?: Maybe<Scalars['DateTime']>
+   connection?: Maybe<FavouriteMoviesConnection>
+}
+
+export type FavouriteMoviesConnectionUser_Info = {
+   __typename?: 'FavouriteMoviesConnectionUser_info'
+   key?: Maybe<Scalars['ID']>
+   connection?: Maybe<FavouriteMoviesConnection>
+}
+
+export type FavouriteMoviesGroupBy = {
+   __typename?: 'FavouriteMoviesGroupBy'
+   id?: Maybe<Array<Maybe<FavouriteMoviesConnectionId>>>
+   created_at?: Maybe<Array<Maybe<FavouriteMoviesConnectionCreated_At>>>
+   updated_at?: Maybe<Array<Maybe<FavouriteMoviesConnectionUpdated_At>>>
+   movie?: Maybe<Array<Maybe<FavouriteMoviesConnectionMovie>>>
+   user_info?: Maybe<Array<Maybe<FavouriteMoviesConnectionUser_Info>>>
+   published_at?: Maybe<Array<Maybe<FavouriteMoviesConnectionPublished_At>>>
+}
+
 export type FileInfoInput = {
    name?: Maybe<Scalars['String']>
    alternativeText?: Maybe<Scalars['String']>
@@ -474,6 +551,7 @@ export type Morph =
    | VerifyTokenPayload
    | ReturnSignup
    | ReturnUserData
+   | UpdateMovieReturn
    | EmbedUploader
    | EmbedUploaderConnection
    | EmbedUploaderAggregator
@@ -515,6 +593,19 @@ export type Morph =
    | CreateEmbedVideoPayload
    | UpdateEmbedVideoPayload
    | DeleteEmbedVideoPayload
+   | FavouriteMovies
+   | FavouriteMoviesConnection
+   | FavouriteMoviesAggregator
+   | FavouriteMoviesGroupBy
+   | FavouriteMoviesConnectionId
+   | FavouriteMoviesConnectionCreated_At
+   | FavouriteMoviesConnectionUpdated_At
+   | FavouriteMoviesConnectionMovie
+   | FavouriteMoviesConnectionUser_Info
+   | FavouriteMoviesConnectionPublished_At
+   | CreateFavouriteMoviePayload
+   | UpdateFavouriteMoviePayload
+   | DeleteFavouriteMoviePayload
    | Genres
    | GenresConnection
    | GenresAggregator
@@ -902,6 +993,9 @@ export type Mutation = {
    createEmbedVideo?: Maybe<CreateEmbedVideoPayload>
    updateEmbedVideo?: Maybe<UpdateEmbedVideoPayload>
    deleteEmbedVideo?: Maybe<DeleteEmbedVideoPayload>
+   createFavouriteMovie?: Maybe<CreateFavouriteMoviePayload>
+   updateFavouriteMovie?: Maybe<UpdateFavouriteMoviePayload>
+   deleteFavouriteMovie?: Maybe<DeleteFavouriteMoviePayload>
    createGenre?: Maybe<CreateGenrePayload>
    updateGenre?: Maybe<UpdateGenrePayload>
    deleteGenre?: Maybe<DeleteGenrePayload>
@@ -943,6 +1037,7 @@ export type Mutation = {
    verifyToken?: Maybe<VerifyTokenPayload>
    embedRegister?: Maybe<TypeRegisterEmbedUploader>
    signupClient?: Maybe<ReturnSignup>
+   updateHistory?: Maybe<UpdateMovieReturn>
 }
 
 export type MutationCreateEmbedUploaderArgs = {
@@ -967,6 +1062,18 @@ export type MutationUpdateEmbedVideoArgs = {
 
 export type MutationDeleteEmbedVideoArgs = {
    input?: Maybe<DeleteEmbedVideoInput>
+}
+
+export type MutationCreateFavouriteMovieArgs = {
+   input?: Maybe<CreateFavouriteMovieInput>
+}
+
+export type MutationUpdateFavouriteMovieArgs = {
+   input?: Maybe<UpdateFavouriteMovieInput>
+}
+
+export type MutationDeleteFavouriteMovieArgs = {
+   input?: Maybe<DeleteFavouriteMovieInput>
 }
 
 export type MutationCreateGenreArgs = {
@@ -1113,6 +1220,10 @@ export type MutationSignupClientArgs = {
    uuid?: Maybe<Scalars['String']>
 }
 
+export type MutationUpdateHistoryArgs = {
+   input?: Maybe<UpdateHistoryInput>
+}
+
 export enum PublicationState {
    Live = 'LIVE',
    Preview = 'PREVIEW',
@@ -1126,6 +1237,9 @@ export type Query = {
    embedVideo?: Maybe<EmbedVideo>
    embedVideos?: Maybe<Array<Maybe<EmbedVideo>>>
    embedVideosConnection?: Maybe<EmbedVideoConnection>
+   favouriteMovie?: Maybe<FavouriteMovies>
+   favouriteMovies?: Maybe<Array<Maybe<FavouriteMovies>>>
+   favouriteMoviesConnection?: Maybe<FavouriteMoviesConnection>
    genre?: Maybe<Genres>
    genres?: Maybe<Array<Maybe<Genres>>>
    genresConnection?: Maybe<GenresConnection>
@@ -1190,6 +1304,26 @@ export type QueryEmbedVideosArgs = {
 }
 
 export type QueryEmbedVideosConnectionArgs = {
+   sort?: Maybe<Scalars['String']>
+   limit?: Maybe<Scalars['Int']>
+   start?: Maybe<Scalars['Int']>
+   where?: Maybe<Scalars['JSON']>
+}
+
+export type QueryFavouriteMovieArgs = {
+   id: Scalars['ID']
+   publicationState?: Maybe<PublicationState>
+}
+
+export type QueryFavouriteMoviesArgs = {
+   sort?: Maybe<Scalars['String']>
+   limit?: Maybe<Scalars['Int']>
+   start?: Maybe<Scalars['Int']>
+   where?: Maybe<Scalars['JSON']>
+   publicationState?: Maybe<PublicationState>
+}
+
+export type QueryFavouriteMoviesConnectionArgs = {
    sort?: Maybe<Scalars['String']>
    limit?: Maybe<Scalars['Int']>
    start?: Maybe<Scalars['Int']>
@@ -1444,6 +1578,12 @@ export type TvSeryInput = {
    updated_by?: Maybe<Scalars['ID']>
 }
 
+export type UpdateMovieReturn = {
+   __typename?: 'UpdateMovieReturn'
+   status?: Maybe<Scalars['String']>
+   ok?: Maybe<Scalars['Boolean']>
+}
+
 export type UploadFile = {
    __typename?: 'UploadFile'
    id: Scalars['ID']
@@ -1654,9 +1794,17 @@ export type UserData = {
    tokenVersion?: Maybe<Scalars['Int']>
    published_at?: Maybe<Scalars['DateTime']>
    watch_histories?: Maybe<Array<Maybe<WatchHistory>>>
+   favourite_movies?: Maybe<Array<Maybe<FavouriteMovies>>>
 }
 
 export type UserDataWatch_HistoriesArgs = {
+   sort?: Maybe<Scalars['String']>
+   limit?: Maybe<Scalars['Int']>
+   start?: Maybe<Scalars['Int']>
+   where?: Maybe<Scalars['JSON']>
+}
+
+export type UserDataFavourite_MoviesArgs = {
    sort?: Maybe<Scalars['String']>
    limit?: Maybe<Scalars['Int']>
    start?: Maybe<Scalars['Int']>
@@ -1766,6 +1914,7 @@ export type UserDatumInput = {
    expire?: Maybe<Scalars['DateTime']>
    tokenVersion?: Maybe<Scalars['Int']>
    watch_histories?: Maybe<Array<Maybe<Scalars['ID']>>>
+   favourite_movies?: Maybe<Array<Maybe<Scalars['ID']>>>
    published_at?: Maybe<Scalars['DateTime']>
    created_by?: Maybe<Scalars['ID']>
    updated_by?: Maybe<Scalars['ID']>
@@ -2149,6 +2298,16 @@ export type CreateEmbedVideoPayload = {
    embedVideo?: Maybe<EmbedVideo>
 }
 
+export type CreateFavouriteMovieInput = {
+   data?: Maybe<FavouriteMovieInput>
+}
+
+export type CreateFavouriteMoviePayload = {
+   __typename?: 'createFavouriteMoviePayload'
+   favouriteMovie?: Maybe<FavouriteMovies>
+   status?: Maybe<Scalars['String']>
+}
+
 export type CreateGenreInput = {
    data?: Maybe<GenreInput>
 }
@@ -2228,6 +2387,16 @@ export type DeleteEmbedVideoInput = {
 export type DeleteEmbedVideoPayload = {
    __typename?: 'deleteEmbedVideoPayload'
    embedVideo?: Maybe<EmbedVideo>
+}
+
+export type DeleteFavouriteMovieInput = {
+   where?: Maybe<InputId>
+}
+
+export type DeleteFavouriteMoviePayload = {
+   __typename?: 'deleteFavouriteMoviePayload'
+   favouriteMovie?: Maybe<FavouriteMovies>
+   status?: Maybe<Scalars['String']>
 }
 
 export type DeleteFileInput = {
@@ -2341,6 +2510,14 @@ export type EditEmbedVideoInput = {
    updated_by?: Maybe<Scalars['ID']>
 }
 
+export type EditFavouriteMovieInput = {
+   movie?: Maybe<Scalars['ID']>
+   user_info?: Maybe<Scalars['ID']>
+   published_at?: Maybe<Scalars['DateTime']>
+   created_by?: Maybe<Scalars['ID']>
+   updated_by?: Maybe<Scalars['ID']>
+}
+
 export type EditFileInput = {
    name?: Maybe<Scalars['String']>
    alternativeText?: Maybe<Scalars['String']>
@@ -2422,6 +2599,7 @@ export type EditUserDatumInput = {
    expire?: Maybe<Scalars['DateTime']>
    tokenVersion?: Maybe<Scalars['Int']>
    watch_histories?: Maybe<Array<Maybe<Scalars['ID']>>>
+   favourite_movies?: Maybe<Array<Maybe<Scalars['ID']>>>
    published_at?: Maybe<Scalars['DateTime']>
    created_by?: Maybe<Scalars['ID']>
    updated_by?: Maybe<Scalars['ID']>
@@ -2486,6 +2664,7 @@ export type Typeloginembeduploader = {
    jwt?: Maybe<Scalars['String']>
    userName?: Maybe<Scalars['String']>
    verify?: Maybe<Scalars['Boolean']>
+   bnet?: Maybe<Scalars['String']>
 }
 
 export type UpdateEmbedUploaderInput = {
@@ -2508,6 +2687,16 @@ export type UpdateEmbedVideoPayload = {
    embedVideo?: Maybe<EmbedVideo>
 }
 
+export type UpdateFavouriteMovieInput = {
+   where?: Maybe<InputId>
+   data?: Maybe<EditFavouriteMovieInput>
+}
+
+export type UpdateFavouriteMoviePayload = {
+   __typename?: 'updateFavouriteMoviePayload'
+   favouriteMovie?: Maybe<FavouriteMovies>
+}
+
 export type UpdateGenreInput = {
    where?: Maybe<InputId>
    data?: Maybe<EditGenreInput>
@@ -2516,6 +2705,13 @@ export type UpdateGenreInput = {
 export type UpdateGenrePayload = {
    __typename?: 'updateGenrePayload'
    genre?: Maybe<Genres>
+}
+
+export type UpdateHistoryInput = {
+   movieId: Scalars['Int']
+   movieUuid: Scalars['String']
+   season?: Maybe<Scalars['Int']>
+   episode?: Maybe<Scalars['Int']>
 }
 
 export type UpdateMovieInput = {
@@ -2731,6 +2927,22 @@ export type SignUpMutation = {
       ok?: Maybe<boolean>
       status?: Maybe<string>
       accessToken?: Maybe<string>
+   }>
+}
+
+export type UpdateHistoryMutationVariables = Exact<{
+   movieId: Scalars['Int']
+   movieUuid: Scalars['String']
+   season?: Maybe<Scalars['Int']>
+   episode?: Maybe<Scalars['Int']>
+}>
+
+export type UpdateHistoryMutation = {
+   __typename?: 'Mutation'
+   updateHistory?: Maybe<{
+      __typename?: 'UpdateMovieReturn'
+      status?: Maybe<string>
+      ok?: Maybe<boolean>
    }>
 }
 
@@ -3151,4 +3363,70 @@ export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>
 export type SignUpMutationOptions = Apollo.BaseMutationOptions<
    SignUpMutation,
    SignUpMutationVariables
+>
+export const UpdateHistoryDocument = gql`
+   mutation updateHistory(
+      $movieId: Int!
+      $movieUuid: String!
+      $season: Int
+      $episode: Int
+   ) {
+      updateHistory(
+         input: {
+            movieId: $movieId
+            movieUuid: $movieUuid
+            season: $season
+            episode: $episode
+         }
+      ) {
+         status
+         ok
+      }
+   }
+`
+export type UpdateHistoryMutationFn = Apollo.MutationFunction<
+   UpdateHistoryMutation,
+   UpdateHistoryMutationVariables
+>
+
+/**
+ * __useUpdateHistoryMutation__
+ *
+ * To run a mutation, you first call `useUpdateHistoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateHistoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateHistoryMutation, { data, loading, error }] = useUpdateHistoryMutation({
+ *   variables: {
+ *      movieId: // value for 'movieId'
+ *      movieUuid: // value for 'movieUuid'
+ *      season: // value for 'season'
+ *      episode: // value for 'episode'
+ *   },
+ * });
+ */
+export function useUpdateHistoryMutation(
+   baseOptions?: Apollo.MutationHookOptions<
+      UpdateHistoryMutation,
+      UpdateHistoryMutationVariables
+   >
+) {
+   const options = { ...defaultOptions, ...baseOptions }
+   return Apollo.useMutation<
+      UpdateHistoryMutation,
+      UpdateHistoryMutationVariables
+   >(UpdateHistoryDocument, options)
+}
+export type UpdateHistoryMutationHookResult = ReturnType<
+   typeof useUpdateHistoryMutation
+>
+export type UpdateHistoryMutationResult =
+   Apollo.MutationResult<UpdateHistoryMutation>
+export type UpdateHistoryMutationOptions = Apollo.BaseMutationOptions<
+   UpdateHistoryMutation,
+   UpdateHistoryMutationVariables
 >

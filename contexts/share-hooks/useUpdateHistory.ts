@@ -5,9 +5,10 @@ import {
 import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 
-export default function useUpdateHistory({
-   ...prop
-}: UpdateHistoryMutationVariables) {
+export default function useUpdateHistory(
+   { ...prop }: UpdateHistoryMutationVariables,
+   premiumUser: boolean
+) {
    const [updateHistory, { data, loading, error }] = useUpdateHistoryMutation({
       variables: prop,
    })
@@ -17,18 +18,19 @@ export default function useUpdateHistory({
       function handleRouteChange() {
          if (router.query.id) {
             clearTimeout(timer.current)
-            // console.log('timer', timer)
+            console.log('timer', timer.current)
             timer.current = setTimeout(() => {
                updateHistory()
             }, 10000)
          }
       }
-      handleRouteChange()
+      if (premiumUser) return handleRouteChange()
+      clearTimeout(timer.current)
       return () => {
          clearTimeout(timer.current)
       }
       //       console.log('updateHistorty', data)
-   }, [router.query.id, updateHistory])
+   }, [premiumUser, router.query.id, updateHistory])
    const updateHistoryLoading = loading
    const updateHistoryData = data
    const updateHistoryError = error

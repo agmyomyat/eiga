@@ -46,12 +46,15 @@ export default function SeriesPage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop)
    }
-   const { updateHistoryData } = useUpdateHistory({
-      movieId: parseInt(seriesData?.id || null),
-      movieUuid: seriesData?.uuid || null,
-      season: currentSeason,
-      episode: currentEpisode,
-   })
+   const { updateHistoryData } = useUpdateHistory(
+      {
+         movieId: parseInt(seriesData?.id || null),
+         movieUuid: seriesData?.uuid || null,
+         season: currentSeason,
+         episode: currentEpisode,
+      },
+      userData?.premium || null
+   )
    console.log('update History data', updateHistoryData)
 
    useEffect(() => {

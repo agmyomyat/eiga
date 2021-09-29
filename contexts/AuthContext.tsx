@@ -85,20 +85,17 @@ export default function AuthProvider({ children }) {
          setCheckUser(false)
       }
       const _accessToken = getAccessToken()
-      if (!_accessToken) return
+      if (!_accessToken)
+         return router.events.off('routeChangeComplete', handleRouteChange)
       // console.log('checkuser', checkUser)
       // console.log('router', router.asPath)
 
       router.events.on('routeChangeComplete', handleRouteChange)
       return () => {
-         console.log('hey unmouting')
+         // console.log('hey unmouting')
          router.events.off('routeChangeComplete', handleRouteChange)
       }
    }, [checkUser, getUser, logOut, router.events, shouldLogOut])
-
-   useEffect(() => {
-      // console.log('auth checking')
-   }, [checkUser, getUser])
 
    const authContext = {
       userData,

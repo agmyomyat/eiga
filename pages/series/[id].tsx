@@ -126,7 +126,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
    const { id } = context.params
 
-   const { data }: GetSeriesQueryResult = await client.query({
+   const { data }: Partial<GetSeriesQueryResult> = await client.query({
       query: GetSeriesDocument,
       variables: { uuid: id },
    })

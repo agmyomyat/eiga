@@ -94,10 +94,10 @@ if signUp or getUser operations so If any of that two
 graphql name change,
 they should be changed here too.
 */
-const IgnoreTokenRefresh = ApolloLink.split(
-   ({ operationName }) => operationName === 'getUser',
-   asyncRefreshTokenLink
-)
+// const IgnoreTokenRefresh = ApolloLink.split(
+//    ({ operationName }) => operationName !== 'getUser',
+//    asyncRefreshTokenLink
+// )
 
 const authLink = new ApolloLink((operation, forward) => {
    const oldToken = getAccessToken()
@@ -129,7 +129,7 @@ const authLink = new ApolloLink((operation, forward) => {
 function createApolloClient() {
    return new ApolloClient({
       // ssrMode: typeof window === 'undefined',
-      link: from([IgnoreTokenRefresh, authLink, errorLink, httpLink]),
+      link: from([asyncRefreshTokenLink, authLink, errorLink, httpLink]),
       cache: new InMemoryCache(),
    })
 }

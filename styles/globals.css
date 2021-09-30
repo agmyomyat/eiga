@@ -14,7 +14,3 @@ a {
 * {
    box-sizing: border-box;
 }
-
-.active {
-   opacity: 1;
-}

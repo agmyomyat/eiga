@@ -2,12 +2,14 @@ import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 
 const firebase = initializeApp({
-   apiKey: 'AIzaSyCLCicRlhg4L8TZXuM5aIr_SfMd4a8A5-Q',
-   authDomain: 'movie-auth-86c8f.firebaseapp.com',
-   projectId: 'movie-auth-86c8f',
-   storageBucket: 'movie-auth-86c8f.appspot.com',
-   messagingSenderId: '1005160630630',
-   appId: '1:1005160630630:web:01cb2f3317399ac9f7e0a7',
+   apiKey: 'AIzaSyC9uVF1DBvR2qdxHV4Nxa5Mwbc99Okdx2E',
+   authDomain: 'app.eiga.sbs',
+   databaseURL: 'https://urnotalone-a16a9.firebaseio.com',
+   projectId: 'urnotalone-a16a9',
+   storageBucket: 'urnotalone-a16a9.appspot.com',
+   messagingSenderId: '1029380852094',
+   appId: '1:1029380852094:web:c806b50f516642641f4b2f',
+   measurementId: 'G-S374934G2H',
 })
 
 export const auth = getAuth(firebase)

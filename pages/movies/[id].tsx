@@ -46,7 +46,8 @@ export default function MoviePage(props: PageProps) {
          movieId: parseInt(movieData?.id || null),
          movieUuid: movieData?.uuid || null,
       },
-      userData?.premium || null
+      userData?.premium || null,
+      currentServer
    )
    console.log('update History data', updateHistoryData)
 

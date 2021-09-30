@@ -53,7 +53,8 @@ export default function SeriesPage(props: PageProps) {
          season: currentSeason,
          episode: currentEpisode,
       },
-      userData?.premium || null
+      userData?.premium || null,
+      currentServer
    )
    console.log('update History data', updateHistoryData)
 

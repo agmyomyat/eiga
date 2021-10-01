@@ -1355,11 +1355,6 @@ export type QueryGetMovieArgs = {
   uuid?: Maybe<Scalars['String']>;
 };
 
-
-export type QueryGetUserDataArgs = {
-  token?: Maybe<Scalars['String']>;
-};
-
 export type RoleInput = {
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
@@ -2674,9 +2669,7 @@ export type GetSeriesQueryVariables = Exact<{
 
 export type GetSeriesQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'Movies', id: string, uuid?: Maybe<string>, name: string, release_date?: Maybe<number>, body: string, genres?: Maybe<Array<Maybe<{ __typename?: 'Genres', name?: Maybe<string> }>>>, tv_sery?: Maybe<{ __typename?: 'TvSeries', season?: Maybe<Array<Maybe<{ __typename?: 'ComponentTvSeriesSeason', seasonID?: Maybe<number>, episodes?: Maybe<Array<Maybe<{ __typename?: 'ComponentTvSeriesEpisodes', episodeID: number, freeServer1?: Maybe<string>, freeServer2?: Maybe<string>, vipServer1?: Maybe<string>, vipServer2?: Maybe<string> }>>> }>>> }> }> };
 
-export type GetUserQueryVariables = Exact<{
-  token?: Maybe<Scalars['String']>;
-}>;
+export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetUserQuery = { __typename?: 'Query', getUserData?: Maybe<{ __typename?: 'returnUserData', userName?: Maybe<string>, premium?: Maybe<boolean>, expire?: Maybe<string>, verify?: Maybe<boolean> }> };
@@ -2885,8 +2878,8 @@ export type GetSeriesQueryHookResult = ReturnType<typeof useGetSeriesQuery>;
 export type GetSeriesLazyQueryHookResult = ReturnType<typeof useGetSeriesLazyQuery>;
 export type GetSeriesQueryResult = Apollo.QueryResult<GetSeriesQuery, GetSeriesQueryVariables>;
 export const GetUserDocument = gql`
-    query getUser($token: String) {
-  getUserData(token: $token) {
+    query getUser {
+  getUserData {
     userName
     premium
     expire
@@ -2907,7 +2900,6 @@ export const GetUserDocument = gql`
  * @example
  * const { data, loading, error } = useGetUserQuery({
  *   variables: {
- *      token: // value for 'token'
  *   },
  * });
  */

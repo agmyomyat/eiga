@@ -109,9 +109,6 @@ const authLink = new ApolloLink((operation, forward) => {
    const newAccessToken = contextToken ? contextToken : oldToken
    // console.log('access', newAccessToken)
    setAccessToken(newAccessToken)
-   if (operation.operationName === 'getUser') {
-      operation.variables['token'] = newAccessToken
-   }
    console.log('operation', operation)
    operation.setContext(({ headers }) => ({
       headers: {

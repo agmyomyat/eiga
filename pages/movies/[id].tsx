@@ -41,10 +41,14 @@ export default function MoviePage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop)
    }
-   const { updateHistoryData } = useUpdateHistory({
-      movieId: parseInt(movieData?.id || null),
-      movieUuid: movieData?.uuid || null,
-   })
+   const { updateHistoryData } = useUpdateHistory(
+      {
+         movieId: parseInt(movieData?.id || null),
+         movieUuid: movieData?.uuid || null,
+      },
+      userData?.premium || null,
+      currentServer
+   )
    console.log('update History data', updateHistoryData)
 
    useEffect(() => {

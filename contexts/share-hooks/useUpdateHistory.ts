@@ -2,33 +2,36 @@ import {
    useUpdateHistoryMutation,
    UpdateHistoryMutationVariables,
 } from '@graphgen'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
 
-export default function useUpdateHistory({
-   ...prop
-}: UpdateHistoryMutationVariables) {
+export default function useUpdateHistory(
+   { ...prop }: UpdateHistoryMutationVariables,
+   premiumUser: boolean,
+   currentServer: string
+) {
    const [updateHistory, { data, loading, error }] = useUpdateHistoryMutation({
       variables: prop,
    })
-   const timer = useRef<NodeJS.Timeout | null>(null)
+   const memoProp = useMemo(
+      () => {
+         return [prop.episode, prop.season, currentServer]
+      },
+      [currentServer, prop.episode, prop.season] // in production you probably will have dependancies
+   )
+   // const refProp = useRef<UpdateHistoryMutationVariables>(prop)
    const router = useRouter()
    useEffect(() => {
-      function handleRouteChange() {
-         if (router.query.id) {
-            clearTimeout(timer.current)
-            // console.log('timer', timer)
-            timer.current = setTimeout(() => {
-               updateHistory()
-            }, 10000)
-         }
-      }
-      handleRouteChange()
+      if (!premiumUser) return
+      if (!router.asPath) return
+      console.log('ref', memoProp)
+      const timer = setTimeout(updateHistory, 10000)
       return () => {
-         clearTimeout(timer.current)
+         console.log('unmount')
+         clearTimeout(timer)
       }
       //       console.log('updateHistorty', data)
-   }, [router.query.id, updateHistory])
+   }, [premiumUser, memoProp, router.asPath, updateHistory])
    const updateHistoryLoading = loading
    const updateHistoryData = data
    const updateHistoryError = error

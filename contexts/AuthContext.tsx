@@ -3,7 +3,6 @@ import {
    createContext,
    useContext,
    Context,
-   useRef,
    useCallback,
 } from 'react'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
@@ -57,26 +56,10 @@ export default function AuthProvider({ children }) {
       fetchPolicy: 'network-only',
       ssr: false,
    })
-   const router: NextRouter = useRouter()
    const premiumUser: boolean = gqlCurrentUser?.getUserData?.premium || false
    const userData = gqlCurrentUser?.getUserData
    const reactiveToken = useReactiveVar(gqlInvalidToken)
-   const prevPath = useRef(router.query.id)
-   useEffect(() => {
-      const _accessToken = getAccessToken()
-      if (!_accessToken) return
-      if (
-         (router.query.id && router.query.id !== prevPath.current) ||
-         checkUser //after profile redirect
-      ) {
-         setCheckUser(false)
-         return getUser({
-            variables: { token: '' }, // token will be auto filled in Apollo middleware
-         })
-      }
-      getUser({ variables: { token: '' } }) //to check initial load
-   }, [checkUser, getUser, router.query.id])
-
+   const router: NextRouter = useRouter()
    const logOut = useCallback(async () => {
       setAccessToken('')
       await fetch('http://localhost:1337/logout', {
@@ -85,14 +68,20 @@ export default function AuthProvider({ children }) {
       })
       await getUserRefetch({ token: '' })
    }, [getUserRefetch])
-
    useEffect(() => {
       if (shouldLogOut) {
          logOut()
       }
-
-      console.log('auth checking')
-   }, [shouldLogOut, logOut])
+      if (checkUser) {
+         getUser({ variables: { token: '' } })
+         setCheckUser(false)
+      }
+      const _accessToken = getAccessToken()
+      if (!_accessToken) return
+      console.log('path', router.asPath)
+      if (!router.asPath) return
+      getUser({ variables: { token: '' } })
+   }, [checkUser, getUser, logOut, router.asPath, shouldLogOut])
 
    const authContext = {
       userData,

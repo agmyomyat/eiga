@@ -2660,7 +2660,6 @@ export type GetMovieQueryVariables = Exact<{
 }>;
 
 
-
 export type GetMovieQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'Movies', id: string, freeServer1?: Maybe<string>, uuid?: Maybe<string>, freeServer2?: Maybe<string>, vipServer1?: Maybe<string>, vipServer2?: Maybe<string>, name: string, release_date?: Maybe<number>, body: string, genres?: Maybe<Array<Maybe<{ __typename?: 'Genres', name?: Maybe<string> }>>> }> };
 
 export type GetRelatedMoviesQueryVariables = Exact<{ [key: string]: never; }>;
@@ -2673,9 +2672,7 @@ export type GetSeriesQueryVariables = Exact<{
 }>;
 
 
-
 export type GetSeriesQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'Movies', id: string, uuid?: Maybe<string>, name: string, release_date?: Maybe<number>, body: string, genres?: Maybe<Array<Maybe<{ __typename?: 'Genres', name?: Maybe<string> }>>>, tv_sery?: Maybe<{ __typename?: 'TvSeries', season?: Maybe<Array<Maybe<{ __typename?: 'ComponentTvSeriesSeason', seasonID?: Maybe<number>, episodes?: Maybe<Array<Maybe<{ __typename?: 'ComponentTvSeriesEpisodes', episodeID: number, freeServer1?: Maybe<string>, freeServer2?: Maybe<string>, vipServer1?: Maybe<string>, vipServer2?: Maybe<string> }>>> }>>> }> }> };
-
 
 export type GetUserQueryVariables = Exact<{
   token?: Maybe<Scalars['String']>;

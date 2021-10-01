@@ -13,8 +13,9 @@ const MobileNavigation: React.FC = () => {
    useEffect(() => {
       const dynamicRoutes = ['/movies/[id]', '/series/[id]']
       if (dynamicRoutes.includes(pathname)) {
-         setValue('/')
+         return setValue('/')
       }
+      setValue(pathname)
    }, [pathname])
 
    return (

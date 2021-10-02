@@ -19,7 +19,7 @@ function mutationCallback(currentServer, router: NextRouter): MutationCallback {
 
       for (const mutation of mutationsList) {
          if ((mutation.target as any).attributes.src.value !== currentServer)
-            alert('nope')
+            router.push('/404')
          if (mutation.type === 'childList') {
             console.log('A child node has been added or removed.')
          } else if (mutation.type === 'attributes') {
@@ -70,9 +70,9 @@ const Iframe: React.FC<IframeProp> = ({
    React.useEffect(() => {
       const iframeId = document.querySelector('iframe')
       __observer.observe(iframeId, config)
-      console.log('dddddd', __observer)
+      // console.log('dddddd', __observer)
       return () => {
-         console.log('unmount')
+         // console.log('unmount')
          __observer.disconnect()
       }
    }, [__observer])

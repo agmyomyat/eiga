@@ -12,6 +12,7 @@ import { onError } from '@apollo/client/link/error'
 import jwt_decode from 'jwt-decode'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
 import { setContext } from '@apollo/client/link/context'
+import { offsetLimitPagination } from '@apollo/client/utilities'
 const shouldLogOut = useShouldLogOut.getState().setLogOut
 let apolloClient: ApolloClient<NormalizedCacheObject>
 // async function fireAuth() {
@@ -127,7 +128,35 @@ function createApolloClient() {
    return new ApolloClient({
       // ssrMode: typeof window === 'undefined',
       link: from([asyncRefreshTokenLink, authLink, errorLink, httpLink]),
-      cache: new InMemoryCache(),
+      cache: new InMemoryCache({
+         typePolicies: {
+            Query: {
+               fields: {
+                  watchHistories: {
+                     read(existing, { args: { start, limit } }) {
+                        // A read function should always return undefined if existing is
+                        // undefined. Returning undefined signals that the field is
+                        // missing from the cache, which instructs Apollo Client to
+                        // fetch its value from your GraphQL server.
+                        return existing && existing.slice(start, start + limit)
+                     },
+
+                     // The keyArgs list and merge function are the same as above.
+                     keyArgs: [],
+                     merge(existing, incoming, { args: { start = 0 } }) {
+                        const merged = existing ? existing.slice(0) : []
+                        for (let i = 0; i < incoming.length; ++i) {
+                           merged[start + i] = incoming[i]
+                        }
+                        console.log('meges', merged)
+
+                        return merged
+                     },
+                  },
+               },
+            },
+         },
+      }),
    })
 }
 
@@ -155,3 +184,5 @@ export function useApollo<T>(initialState: T) {
    const store = useMemo(() => initializeApollo(initialState), [initialState])
    return store
 }
+
+

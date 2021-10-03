@@ -2650,6 +2650,15 @@ export type GetAllMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date?: Maybe<number>, quality: string, photo_url: string }>>> };
 
+export type WatchHistoriesQueryVariables = Exact<{
+  limit: Scalars['Int'];
+  start: Scalars['Int'];
+  user: Scalars['ID'];
+}>;
+
+
+export type WatchHistoriesQuery = { __typename?: 'Query', watchHistories?: Maybe<Array<Maybe<{ __typename?: 'WatchHistory', movie?: Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, photo_url: string, quality: string }> }>>> };
+
 export type GetMovieQueryVariables = Exact<{
   uuid: Scalars['String'];
 }>;
@@ -2738,6 +2747,53 @@ export function useGetAllMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetAllMoviesQueryHookResult = ReturnType<typeof useGetAllMoviesQuery>;
 export type GetAllMoviesLazyQueryHookResult = ReturnType<typeof useGetAllMoviesLazyQuery>;
 export type GetAllMoviesQueryResult = Apollo.QueryResult<GetAllMoviesQuery, GetAllMoviesQueryVariables>;
+export const WatchHistoriesDocument = gql`
+    query watchHistories($limit: Int!, $start: Int!, $user: ID!) {
+  watchHistories(
+    where: {user_data: $user}
+    start: $start
+    limit: $limit
+    sort: "updated_at:desc"
+  ) {
+    movie {
+      name
+      uuid
+      photo_url
+      quality
+    }
+  }
+}
+    `;
+
+/**
+ * __useWatchHistoriesQuery__
+ *
+ * To run a query within a React component, call `useWatchHistoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWatchHistoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWatchHistoriesQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      start: // value for 'start'
+ *      user: // value for 'user'
+ *   },
+ * });
+ */
+export function useWatchHistoriesQuery(baseOptions: Apollo.QueryHookOptions<WatchHistoriesQuery, WatchHistoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WatchHistoriesQuery, WatchHistoriesQueryVariables>(WatchHistoriesDocument, options);
+      }
+export function useWatchHistoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WatchHistoriesQuery, WatchHistoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WatchHistoriesQuery, WatchHistoriesQueryVariables>(WatchHistoriesDocument, options);
+        }
+export type WatchHistoriesQueryHookResult = ReturnType<typeof useWatchHistoriesQuery>;
+export type WatchHistoriesLazyQueryHookResult = ReturnType<typeof useWatchHistoriesLazyQuery>;
+export type WatchHistoriesQueryResult = Apollo.QueryResult<WatchHistoriesQuery, WatchHistoriesQueryVariables>;
 export const GetMovieDocument = gql`
     query getMovie($uuid: String!) {
   getMovie(uuid: $uuid) {

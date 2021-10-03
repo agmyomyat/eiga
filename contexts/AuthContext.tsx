@@ -12,6 +12,7 @@ import { Exact, useGetUserLazyQuery } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'
 import { useCheckUser } from './global-states/useCheckUser'
 import { useShouldLogOut } from './global-states/useShouldLogOut'
+import { auth } from '@lib'
 
 type User = {
    __typename?: 'returnUserData'
@@ -50,6 +51,7 @@ export default function AuthProvider({ children }) {
       {
          data: gqlCurrentUser,
          loading: getUserLoading,
+         error: getUserError,
          refetch: getUserRefetch,
       },
    ] = useGetUserLazyQuery({
@@ -62,25 +64,27 @@ export default function AuthProvider({ children }) {
    const router: NextRouter = useRouter()
    const logOut = useCallback(async () => {
       setAccessToken('')
+      auth.signOut()
       await fetch('http://localhost:1337/logout', {
          method: 'POST',
          credentials: 'include',
       })
-      await getUserRefetch({ token: '' })
-   }, [getUserRefetch])
+      await getUserRefetch()
+      console.log(getUserError)
+   }, [getUserError, getUserRefetch])
    useEffect(() => {
       if (shouldLogOut) {
          logOut()
       }
       if (checkUser) {
-         getUser({ variables: { token: '' } })
+         getUser()
          setCheckUser(false)
       }
       const _accessToken = getAccessToken()
       if (!_accessToken) return
       console.log('path', router.asPath)
       if (!router.asPath) return
-      getUser({ variables: { token: '' } })
+      getUser()
    }, [checkUser, getUser, logOut, router.asPath, shouldLogOut])
 
    const authContext = {

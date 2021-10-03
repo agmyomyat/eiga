@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction, useMemo } from 'react'
 import { Genres } from '@graphgen'
 import {
    CircularProgress,
@@ -8,10 +8,31 @@ import {
    Button,
 } from '@mui/material'
 import Link from '../ui/Link'
-
+import { NextRouter, useRouter } from 'next/router'
 export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>
 export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[]
 export type TGenres = { genres: PartialGenres }
+const config = { attributes: true, childList: true, subtree: true }
+function mutationCallback(currentServer, router: NextRouter): MutationCallback {
+   return function (mutationsList) {
+      // Use traditional 'for loops' for IE 11
+
+      for (const mutation of mutationsList) {
+         if ((mutation.target as any).attributes.src.value !== currentServer)
+            router.push('/404')
+         if (mutation.type === 'childList') {
+            console.log('A child node has been added or removed.')
+         } else if (mutation.type === 'attributes') {
+            // router.push('/404')
+            console.log(
+               'The ' + mutation.attributeName + ' attribute was modified.'
+            )
+         }
+      }
+   }
+}
+const observer = (callback: MutationCallback) =>
+   typeof window !== 'undefined' && new MutationObserver(callback)
 
 interface IframeProp {
    currentServer: string
@@ -39,16 +60,22 @@ const Iframe: React.FC<IframeProp> = ({
    premiumUser,
 }) => {
    const refer = React.useRef(null)
-   const copy = React.useRef(currentServer)
-
+   const router = useRouter()
+   const _callback = mutationCallback(currentServer, router)
+   const __observer = useMemo(() => observer(_callback), [_callback])
    // console.log('server1', freeServer1)
    // console.log('server2', freeServer2)
    // console.log('current Server', currentServer)
 
    React.useEffect(() => {
-      console.log('current', currentServer)
-      copy.current = refer.current.src
-   }, [currentServer])
+      const iframeId = document.querySelector('iframe')
+      __observer.observe(iframeId, config)
+      // console.log('dddddd', __observer)
+      return () => {
+         // console.log('unmount')
+         __observer.disconnect()
+      }
+   }, [__observer])
 
    // console.log('iframe src', refer.current?.src)
    // console.log('copy server', copy?.current)
@@ -111,6 +138,7 @@ const Iframe: React.FC<IframeProp> = ({
             </Box>
             <Box
                component="iframe"
+               id="ammm"
                ref={refer}
                sx={{
                   position: 'absolute',
@@ -119,11 +147,10 @@ const Iframe: React.FC<IframeProp> = ({
                   border: 0,
                   width: 1,
                   height: 1,
+                  zIndex: 99,
                }}
                onLoad={() => {
-                  refer.current.src !== copy.current
-                     ? console.log('gg')
-                     : setLoading(false)
+                  setLoading(false)
                }}
                src={currentServer}
                scrolling="no"

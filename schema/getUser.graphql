@@ -1,5 +1,5 @@
-query getUser($token: String) {
-   getUserData(token: $token) {
+query getUser {
+   getUserData {
       userName
       premium
       expire

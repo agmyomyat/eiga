@@ -1,0 +1,15 @@
+query watchHistories($limit: Int!, $start: Int!, $user: ID!) {
+   watchHistories(
+      where: { user_data: $user }
+      start: $start
+      limit: $limit
+      sort: "updated_at:desc"
+   ) {
+      movie {
+         name
+         uuid
+         photo_url
+         quality
+      }
+   }
+}

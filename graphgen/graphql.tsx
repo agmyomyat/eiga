@@ -2507,6 +2507,7 @@ export type ReturnSignup = {
 export type ReturnUserData = {
   __typename?: 'returnUserData';
   premium?: Maybe<Scalars['Boolean']>;
+  userId?: Maybe<Scalars['ID']>;
   userName?: Maybe<Scalars['String']>;
   expire?: Maybe<Scalars['String']>;
   verify?: Maybe<Scalars['Boolean']>;
@@ -2681,7 +2682,7 @@ export type GetSeriesQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typena
 export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', getUserData?: Maybe<{ __typename?: 'returnUserData', userName?: Maybe<string>, premium?: Maybe<boolean>, expire?: Maybe<string>, verify?: Maybe<boolean> }> };
+export type GetUserQuery = { __typename?: 'Query', getUserData?: Maybe<{ __typename?: 'returnUserData', userId?: Maybe<string>, userName?: Maybe<string>, premium?: Maybe<boolean>, expire?: Maybe<string>, verify?: Maybe<boolean> }> };
 
 export type SearchMovieQueryVariables = Exact<{
   search: Scalars['String'];
@@ -2936,6 +2937,7 @@ export type GetSeriesQueryResult = Apollo.QueryResult<GetSeriesQuery, GetSeriesQ
 export const GetUserDocument = gql`
     query getUser {
   getUserData {
+    userId
     userName
     premium
     expire

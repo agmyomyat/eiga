@@ -11,7 +11,7 @@ export default function Recents() {
       variables: {
          limit,
          start: 0,
-         user: '11',
+         user: userData?.userId || null,
       },
    })
    if (loading) return <div>loading..</div>
@@ -41,7 +41,7 @@ export default function Recents() {
             onClick={() =>
                fetchMore({
                   variables: {
-                     start: data.watchHistories.length,
+                     start: data?.watchHistories?.length,
                      limit: 1,
                   },
                }).then((fetchMoreResult) => {

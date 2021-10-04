@@ -184,5 +184,3 @@ export function useApollo<T>(initialState: T) {
    const store = useMemo(() => initializeApollo(initialState), [initialState])
    return store
 }
-
-

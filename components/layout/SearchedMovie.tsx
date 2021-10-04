@@ -5,7 +5,7 @@ import { useRouter, NextRouter } from 'next/router'
 
 interface IsearchedMovie {
    movie: Partial<Movies>
-   handleClose: () => void
+   handleClose?: () => void
 }
 
 const SearchedMovie: React.FC<IsearchedMovie> = ({ movie, handleClose }) => {

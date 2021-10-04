@@ -142,7 +142,7 @@ function createApolloClient() {
                      },
 
                      // The keyArgs list and merge function are the same as above.
-                     keyArgs: [],
+                     keyArgs: ['type', 'userId'],
                      merge(existing, incoming, { args: { start = 0 } }) {
                         const merged = existing ? existing.slice(0) : []
                         for (let i = 0; i < incoming.length; ++i) {

@@ -10,7 +10,8 @@ export default function Recents() {
       variables: {
          limit,
          start: 0,
-         user: '31',
+         user: userData?.userId || null,
+
       },
    })
    if (loading) return <div>loading..</div>

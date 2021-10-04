@@ -20,6 +20,7 @@ type User = {
    premium?: boolean
    expire?: string
    verify?: boolean
+   userId?: string
 }
 interface IauthContext {
    userData: User

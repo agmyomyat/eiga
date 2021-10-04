@@ -1,5 +1,6 @@
 query getUser {
    getUserData {
+      userId
       userName
       premium
       expire

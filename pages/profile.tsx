@@ -179,6 +179,28 @@ export default function Profile() {
                      </Button>
                   </Paper>
 
+                  <Paper
+                     sx={{
+                        width: 1,
+                        bgcolor: 'secondary.main',
+                        p: 2,
+                        borderRadius: 3,
+                     }}
+                     elevation={3}
+                  >
+                     <Typography color="textSecondary" sx={{ pb: 2 }}>
+                        History
+                     </Typography>
+
+                     <Button
+                        color="inherit"
+                        endIcon={<ArrowRightAltIcon />}
+                        onClick={() => push('/recents')}
+                     >
+                        Click
+                     </Button>
+                  </Paper>
+
                   <Button
                      variant="contained"
                      color="error"

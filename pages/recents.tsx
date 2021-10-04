@@ -1,24 +1,67 @@
+import React, { useState, useRef, useEffect } from 'react'
 import { useAuth } from '@contexts/AuthContext'
 import { useWatchHistoriesQuery } from '@graphgen'
-import React, { useState } from 'react'
 import Movie from '@components/movies/Movie'
-import { Button, Box } from '@mui/material'
+import { Container, Box, CircularProgress, Typography } from '@mui/material'
 export default function Recents() {
-   const [limit, setLimit] = useState(1)
+   const [limit, setLimit] = useState<number>(1)
    const { userData } = useAuth()
+   const sentinel = useRef<HTMLDivElement>()
+   const [hasMore, setHasMore] = useState<boolean>(true)
+   const [scrollLoading, setScrollLoading] = useState<boolean>(false)
    const { data, loading, fetchMore } = useWatchHistoriesQuery({
       variables: {
          limit,
          start: 0,
          user: userData?.userId || null,
-
       },
    })
-   if (loading) return <div>loading..</div>
+
+   useEffect(() => {
+      const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
+         entries.forEach((entry: IntersectionObserverEntry) => {
+            if (entry.isIntersecting && hasMore) {
+               setScrollLoading(true)
+               fetchMore({
+                  variables: {
+                     start: data.watchHistories.length,
+                     limit: 1,
+                  },
+               }).then((fetchMoreResult) => {
+                  // Update variables.limit for the original query to include
+                  // the newly added feed items.
+                  setScrollLoading(false)
+                  setHasMore(fetchMoreResult.data.watchHistories.length > 0)
+                  setLimit(
+                     data.watchHistories.length +
+                        fetchMoreResult.data.watchHistories.length
+                  )
+               })
+            }
+         })
+      }
+
+      const observer = new IntersectionObserver(onSentinelIntersection, {})
+      if (sentinel.current) {
+         observer.observe(sentinel?.current)
+      }
+
+      return () => observer.disconnect()
+   }, [fetchMore, data?.watchHistories.length, limit, hasMore])
 
    console.log('userData', userData)
+   if (!userData || loading) return <p>Loading</p>
    return (
-      <Box>
+      <Container sx={{ mb: '100px' }}>
+         <Typography
+            variant="h6"
+            fontWeight="bold"
+            sx={{
+               mb: 3,
+            }}
+         >
+            Watch History
+         </Typography>
          {data?.watchHistories ? (
             <>
                <Box
@@ -39,30 +82,32 @@ export default function Recents() {
                      <Movie key={r.movie.uuid} {...r.movie} />
                   ))}
                </Box>
-               <Button
-                  onClick={() =>
-                     fetchMore({
-                        variables: {
-                           start: data.watchHistories.length,
-                           limit,
-                        },
-                     }).then((fetchMoreResult) => {
-                        // Update variables.limit for the original query to include
-                        // the newly added feed items.
-                        setLimit(
-                           data.watchHistories.length +
-                              fetchMoreResult.data.watchHistories.length
-                        )
-                     })
-                  }
-                  variant="outlined"
-               >
-                  Load more
-               </Button>
+               {scrollLoading && (
+                  <Box
+                     display="flex"
+                     justifyContent="center"
+                     alignItems="center"
+                     py={2}
+                  >
+                     <CircularProgress />
+                  </Box>
+               )}
+               <div id="histroySentienl" ref={sentinel}></div>
+               {!hasMore && (
+                  <Typography
+                     variant="subtitle1"
+                     align="center"
+                     sx={{ color: 'text.disabled' }}
+                  >
+                     Youve reached the end of results
+                  </Typography>
+               )}
             </>
          ) : (
-            <p>not found</p>
+            <Typography align="center" sx={{ color: 'text.secondary' }}>
+               No Histories Available
+            </Typography>
          )}
-      </Box>
+      </Container>
    )
 }

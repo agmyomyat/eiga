@@ -70,7 +70,7 @@ export default function Profile() {
    }
 
    return (
-      <Container>
+      <Container sx={{ mb: '100px' }}>
          <Typography
             align="center"
             variant="h5"
@@ -80,7 +80,7 @@ export default function Profile() {
             Profile
          </Typography>
          {userData?.userName ? (
-            <Box sx={{ mt: 1, mb: '100px' }}>
+            <Box sx={{ mt: 1 }}>
                <Stack
                   spacing={2}
                   justifyContent="center"

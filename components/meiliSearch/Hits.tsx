@@ -18,6 +18,7 @@ function Hits({ hits, hasMore, refineNext }: InfiniteHitsProvided) {
       }
 
       const observer = new IntersectionObserver(onSentinelIntersection, {})
+      console.log('observer', observer)
       observer.observe(sentinel.current)
 
       return () => observer.disconnect()

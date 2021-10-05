@@ -26,7 +26,6 @@ const SearchBoxDropdown: React.FC<Idropdown> = ({
                bgcolor: (theme) => theme.palette.background.paper,
                borderRadius: 2,
                mt: 1,
-               px: 2,
                py: 1,
             }}
          >

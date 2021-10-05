@@ -22,7 +22,7 @@ const Movies = ({ movies }: IMovies) => {
             },
          }}
       >
-         {movies.map((movie: Partial<typeMovies>) => (
+         {movies?.map((movie: Partial<typeMovies>) => (
             <Movie key={movie.id} {...movie} />
          ))}
       </Box>

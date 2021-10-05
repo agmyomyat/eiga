@@ -25,6 +25,7 @@ const SearchedMovie: React.FC<IsearchedMovie> = ({ movie, handleClose }) => {
             alignItems: 'center',
             py: 1,
             cursor: 'pointer',
+            px: 2,
          }}
          onClick={() => handleClick(movie.uuid)}
       >

@@ -126,7 +126,7 @@ const FullScreenSearch: React.FC<IfullScreen> = ({
             </Toolbar>
          </AppBar>
          {show && (
-            <Stack sx={{ mb: 3, pl: { xs: 2, sm: 4 }, pt: 1 }}>
+            <Stack sx={{ mb: 3, pt: 1 }}>
                {loading ? (
                   <Box
                      display="flex"

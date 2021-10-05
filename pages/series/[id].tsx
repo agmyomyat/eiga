@@ -63,12 +63,12 @@ export default function SeriesPage(props: PageProps) {
       episode: currentEpisode,
    })
    useEffect(() => {
-      if (getHistoryData) {
+      if (getHistoryData?.watchHistories.length > 0) {
          setCurrentEpisode(getHistoryData.watchHistories[0].episode)
          setCurrentSeason(getHistoryData.watchHistories[0].season)
       }
    }, [getHistoryData])
-   console.log('update History data', updateHistoryData)
+   console.log('Update History data', updateHistoryData)
 
    useEffect(() => {
       // console.log('user', premiumUser);

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useAuth } from '@contexts/AuthContext'
-import { useWatchHistoriesQuery } from '@graphgen'
+import { useWatchHistoriesLazyQuery } from '@graphgen'
 import Movie from '@components/movies/Movie'
 import { Container, Box, CircularProgress, Typography } from '@mui/material'
 export default function Recents() {
@@ -9,15 +9,20 @@ export default function Recents() {
    const sentinel = useRef<HTMLDivElement>()
    const [hasMore, setHasMore] = useState<boolean>(true)
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
-   const { data, loading, fetchMore } = useWatchHistoriesQuery({
-      variables: {
-         limit,
-         start: 0,
-         user: userData?.userId || null,
-      },
-   })
+   const [getHistories, { data, loading, fetchMore }] =
+      useWatchHistoriesLazyQuery()
 
    useEffect(() => {
+      if (userData?.userId) {
+         getHistories({
+            variables: {
+               limit,
+               start: 0,
+               user: userData?.userId || null,
+            },
+         })
+      }
+      console.log('limit is ', limit)
       const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
          entries.forEach((entry: IntersectionObserverEntry) => {
             if (entry.isIntersecting && hasMore) {
@@ -47,10 +52,17 @@ export default function Recents() {
       }
 
       return () => observer.disconnect()
-   }, [fetchMore, data?.watchHistories.length, limit, hasMore])
+   }, [
+      fetchMore,
+      data?.watchHistories.length,
+      limit,
+      hasMore,
+      userData?.userId,
+      getHistories,
+   ])
 
-   console.log('userData', userData)
-   if (!userData || loading) return <p>Loading</p>
+   // console.log('userData', userData)
+   if (loading) return <p>Loading</p>
    return (
       <Container sx={{ mb: '100px' }}>
          <Typography

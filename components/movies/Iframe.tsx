@@ -18,7 +18,10 @@ function mutationCallback(currentServer, router: NextRouter): MutationCallback {
       // Use traditional 'for loops' for IE 11
 
       for (const mutation of mutationsList) {
-         if ((mutation.target as any).attributes.src.value !== currentServer)
+         if (
+            (mutation.target as any).attributes?.src?.value &&
+            (mutation.target as any).attributes?.src?.value !== currentServer
+         )
             router.push('/404')
          if (mutation.type === 'childList') {
             console.log('A child node has been added or removed.')

@@ -12,7 +12,6 @@ import { onError } from '@apollo/client/link/error'
 import jwt_decode from 'jwt-decode'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
 import { setContext } from '@apollo/client/link/context'
-import { offsetLimitPagination } from '@apollo/client/utilities'
 const shouldLogOut = useShouldLogOut.getState().setLogOut
 let apolloClient: ApolloClient<NormalizedCacheObject>
 // async function fireAuth() {
@@ -133,13 +132,14 @@ function createApolloClient() {
             Query: {
                fields: {
                   watchHistories: {
-                     read(existing, { args: { start, limit } }) {
-                        // A read function should always return undefined if existing is
-                        // undefined. Returning undefined signals that the field is
-                        // missing from the cache, which instructs Apollo Client to
-                        // fetch its value from your GraphQL server.
-                        return existing && existing.slice(start, start + limit)
-                     },
+                     // read(existing, { args: { start, limit } }) {
+                     //    // A read function should always return undefined if existing is
+                     //    // undefined. Returning undefined signals that the field is
+                     //    // missing from the cache, which instructs Apollo Client to
+                     //    // fetch its value from your GraphQL server.
+                     //    console.log('existing', existing)
+                     //    return existing && existing.slice(start, start + limit)
+                     // },
 
                      // The keyArgs list and merge function are the same as above.
                      keyArgs: ['type', 'userId'],

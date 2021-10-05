@@ -14,6 +14,7 @@ import Episodes from '@components/movies/Episodes'
 import { useAuth } from '@contexts/AuthContext'
 import { useApolloClient } from '@apollo/client'
 import useUpdateHistory from '@contexts/share-hooks/useUpdateHistory'
+import useResumeMovie from '@contexts/share-hooks/useResumeMovie'
 
 const client = initializeApollo()
 
@@ -56,6 +57,17 @@ export default function SeriesPage(props: PageProps) {
       userData?.premium || null,
       currentServer
    )
+   const { getHistoryData } = useResumeMovie({
+      userId: userData?.userId,
+      season: currentSeason,
+      episode: currentEpisode,
+   })
+   useEffect(() => {
+      if (getHistoryData) {
+         setCurrentEpisode(getHistoryData.watchHistories[0].episode)
+         setCurrentSeason(getHistoryData.watchHistories[0].season)
+      }
+   }, [getHistoryData])
    console.log('update History data', updateHistoryData)
 
    useEffect(() => {

@@ -1,7 +1,9 @@
-import { Box, Typography, Stack, Divider } from '@mui/material'
+import { useState } from 'react'
+import { Box, Typography, Stack, Divider, IconButton } from '@mui/material'
 import { Movies } from '@graphgen'
 import { TMovies, TGenres } from './Iframe'
-import { styled } from '@mui/material/styles'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
 const MovieInfo: React.FC<TMovies<Movies, TGenres>> = ({
    name,
@@ -9,21 +11,35 @@ const MovieInfo: React.FC<TMovies<Movies, TGenres>> = ({
    body,
    genres,
 }) => {
+   const [isFavorite, setIsFavorite] = useState<boolean>(false)
+
    const newGenres = genres.map(
       (genre) => genre.name[0].toUpperCase() + genre.name.slice(1)
    )
    const movieBody = body.replace(/<\/?[^>]+(>|$)/g, '')
 
-   const StyledBody = styled(Box)(({ theme }) => ({
-      [theme.breakpoints.up('sm')]: {
-         maxWidth: '90%',
-      },
-   }))
+   const handleAddFavorite = () => {
+      setIsFavorite((prevState) => !prevState)
+   }
 
    return (
       <Box sx={{ my: 2 }}>
          <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold' }}>
             {name}
+            <IconButton
+               aria-label="favorite-button"
+               color="primary"
+               sx={{ ml: 2 }}
+            >
+               {isFavorite ? (
+                  <FavoriteIcon fontSize="large" onClick={handleAddFavorite} />
+               ) : (
+                  <FavoriteBorderIcon
+                     fontSize="large"
+                     onClick={handleAddFavorite}
+                  />
+               )}
+            </IconButton>
          </Typography>
          <Stack
             direction="row"
@@ -55,19 +71,27 @@ const MovieInfo: React.FC<TMovies<Movies, TGenres>> = ({
                {newGenres.join(' ')}
             </Typography>
          </Stack>
-         <StyledBody>
+         <Box
+            sx={{
+               maxWidth: {
+                  xs: 1,
+                  sm: 0.9,
+               },
+            }}
+         >
             <Typography variant="body1">{movieBody}</Typography>
-         </StyledBody>
-         <Box mt={2} maxWidth={1 / 2}>
+         </Box>
+         <Box mt={2}>
             <Typography
                variant="subtitle2"
                component="span"
                color="textSecondary"
-               sx={{ mr: 1 }}
+               sx={{ mr: 2 }}
             >
                Imdb:
             </Typography>
-            <Typography variant="subtitle2" component="span">
+
+            <Typography variant="subtitle1" component="span" fontWeight="bold">
                7.1
             </Typography>
          </Box>

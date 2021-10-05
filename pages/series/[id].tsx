@@ -69,7 +69,7 @@ export default function SeriesPage(props: PageProps) {
          setCurrentSeason(getHistoryData.watchHistories[0].season)
       }
    }, [getHistoryData])
-   console.log('update History data', updateHistoryData)
+   console.log('Update History data', updateHistoryData)
 
    useEffect(() => {
       // console.log('user', premiumUser);

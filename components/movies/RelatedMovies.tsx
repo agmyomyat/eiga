@@ -23,7 +23,7 @@ const RelatedMovies: React.FC<IRelatedMovies> = ({ data, loading }) => {
             Related Movies
          </Typography>
          <Box>
-            <Movies movies={data.movies as typeMovies[]} />
+            <Movies movies={movies as typeMovies[]} />
          </Box>
       </Box>
    )

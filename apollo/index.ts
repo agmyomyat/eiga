@@ -32,7 +32,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
    if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-async function handleFetch() {
+export async function handleFetch() {
    let _token: string
    await fetch('http://localhost:1337/refreshtoken', {
       method: 'POST',

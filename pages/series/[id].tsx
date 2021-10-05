@@ -63,7 +63,8 @@ export default function SeriesPage(props: PageProps) {
       episode: currentEpisode,
    })
    useEffect(() => {
-      if (getHistoryData) {
+      if (getHistoryData && getHistoryData.watchHistories.length) {
+         console.log('history', getHistoryData)
          setCurrentEpisode(getHistoryData.watchHistories[0].episode)
          setCurrentSeason(getHistoryData.watchHistories[0].season)
       }

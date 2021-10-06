@@ -12,12 +12,14 @@ import { onError } from '@apollo/client/link/error'
 import jwt_decode from 'jwt-decode'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
 import { setContext } from '@apollo/client/link/context'
+import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
 const shouldLogOut = useShouldLogOut.getState().setLogOut
 let apolloClient: ApolloClient<NormalizedCacheObject>
 // async function fireAuth() {
 //    const { auth } = await import('../lib/firebase');
 //    return auth;
 // }
+const setErrorMessage = useErrorMessage.getState().setErrorMessage
 const httpLink = createHttpLink({
    uri: 'http://localhost:1337/graphql',
    credentials: 'include',
@@ -29,7 +31,12 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
             `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
          )
       )
-   if (networkError) console.log(`[Network error]: ${networkError}`)
+   if (networkError) {
+      console.log(`[Network error]: ${networkError}`)
+      setErrorMessage(
+         `[Network error]: ${networkError} Try Refreshing the Page`
+      )
+   }
 })
 
 export async function handleFetch() {
@@ -40,6 +47,7 @@ export async function handleFetch() {
    })
       .then((res) => res.json())
       .then((data) => (_token = data.access))
+      .catch((e) => setErrorMessage(e.message))
    if (!_token) {
       throw 'access token not found'
    } else {

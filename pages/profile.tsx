@@ -12,10 +12,13 @@ import { auth } from '@lib'
 import { useCheckUser } from '@contexts/global-states/useCheckUser'
 import { useAuthLoading } from '@contexts/global-states/useAuthLoading'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
+import { useAlreadyLogin } from '@contexts/global-states/useAlreadyLogin'
 
 const setAuthLoading = useAuthLoading.getState().setLoading
+const setAlreadyLogin = useAlreadyLogin.getState().setLogin
 
 function redirect() {
+   setAlreadyLogin(false)
    const provider = new GoogleAuthProvider()
    signInWithRedirect(auth, provider)
 }
@@ -23,6 +26,8 @@ function redirect() {
  * @TODO: put error handle for redirctAuth user canceled or orther
  */
 function redirectAuth() {
+   const alreadyLogin = useAlreadyLogin.getState().login
+   if (alreadyLogin) return
    setAuthLoading(true)
    getRedirectResult(auth)
       .then((result) => {
@@ -33,6 +38,7 @@ function redirectAuth() {
          createUser(result).then(() => {
             useCheckUser.getState().setCheckUser(true)
             setAuthLoading(false)
+            setAlreadyLogin(true)
          })
 
          // The signed-in user info.

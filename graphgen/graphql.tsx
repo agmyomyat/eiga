@@ -2669,10 +2669,12 @@ export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<May
 export type GetFavouriteMoviesQueryVariables = Exact<{
   userId: Scalars['ID'];
   movieId?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type GetFavouriteMoviesQuery = { __typename?: 'Query', favouriteMovies?: Maybe<Array<Maybe<{ __typename?: 'FavouriteMovies', id: string, movie?: Maybe<{ __typename?: 'Movies', name: string, id: string }> }>>> };
+export type GetFavouriteMoviesQuery = { __typename?: 'Query', favouriteMovies?: Maybe<Array<Maybe<{ __typename?: 'FavouriteMovies', id: string, movie?: Maybe<{ __typename?: 'Movies', name: string, id: string, uuid?: Maybe<string>, photo_url: string, quality: string }> }>>> };
 
 export type WatchHistoriesQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -2847,12 +2849,20 @@ export type GetAllMoviesQueryHookResult = ReturnType<typeof useGetAllMoviesQuery
 export type GetAllMoviesLazyQueryHookResult = ReturnType<typeof useGetAllMoviesLazyQuery>;
 export type GetAllMoviesQueryResult = Apollo.QueryResult<GetAllMoviesQuery, GetAllMoviesQueryVariables>;
 export const GetFavouriteMoviesDocument = gql`
-    query getFavouriteMovies($userId: ID!, $movieId: Int) {
-  favouriteMovies(where: {user_info: $userId, movie: $movieId}) {
+    query getFavouriteMovies($userId: ID!, $movieId: Int, $start: Int, $limit: Int) {
+  favouriteMovies(
+    where: {user_info: $userId, movie: $movieId}
+    start: $start
+    limit: $limit
+    sort: "updated_at:desc"
+  ) {
     id
     movie {
       name
       id
+      uuid
+      photo_url
+      quality
     }
   }
 }
@@ -2872,6 +2882,8 @@ export const GetFavouriteMoviesDocument = gql`
  *   variables: {
  *      userId: // value for 'userId'
  *      movieId: // value for 'movieId'
+ *      start: // value for 'start'
+ *      limit: // value for 'limit'
  *   },
  * });
  */

@@ -57,8 +57,8 @@ const MobileNavigation: React.FC = () => {
             icon={<HistoryOutlinedIcon />}
          />
          <BottomNavigationAction
-            label="Favorites"
-            value="/favorites"
+            label="Favourites"
+            value="/favourites"
             icon={<FavoriteBorderOutlinedIcon />}
          />
       </BottomNavigation>

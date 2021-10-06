@@ -1,9 +1,22 @@
-query getFavouriteMovies($userId: ID!, $movieId: Int) {
-   favouriteMovies(where: { user_info: $userId, movie: $movieId }) {
+query getFavouriteMovies(
+   $userId: ID!
+   $movieId: Int
+   $start: Int
+   $limit: Int
+) {
+   favouriteMovies(
+      where: { user_info: $userId, movie: $movieId }
+      start: $start
+      limit: $limit
+      sort: "updated_at:desc"
+   ) {
       id
       movie {
          name
          id
+         uuid
+         photo_url
+         quality
       }
    }
 }

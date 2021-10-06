@@ -3,7 +3,7 @@ import { useAuth } from '@contexts/AuthContext'
 import { useGetFavouriteMoviesLazyQuery } from '@graphgen'
 import Movie from '@components/movies/Movie'
 import { Container, Box, CircularProgress, Typography } from '@mui/material'
-export default function Recents() {
+export default function Favourites() {
    const [limit, setLimit] = useState<number>(1)
    const { userData } = useAuth()
    const sentinel = useRef<HTMLDivElement>()

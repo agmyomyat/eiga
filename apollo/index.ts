@@ -164,8 +164,18 @@ function createApolloClient() {
                      // },
 
                      // The keyArgs list and merge function are the same as above.
-                     keyArgs: ['type', 'userId'],
-                     merge(existing, incoming, { args: { start = 0 } }) {
+                     keyArgs: false,
+                     merge(
+                        existing,
+                        incoming,
+                        {
+                           args: {
+                              start = 0,
+                              where: { movieName },
+                           },
+                        }
+                     ) {
+                        if (movieName) return incoming
                         const merged = existing ? existing.slice(0) : []
                         for (let i = 0; i < incoming.length; ++i) {
                            merged[start + i] = incoming[i]
@@ -186,8 +196,18 @@ function createApolloClient() {
                      // },
 
                      // The keyArgs list and merge function are the same as above.
-                     keyArgs: ['type', 'userId', 'movieId'],
-                     merge(existing, incoming, { args: { start = 0 } }) {
+                     keyArgs: false,
+                     merge(
+                        existing,
+                        incoming,
+                        {
+                           args: {
+                              start = 0,
+                              where: { movie, user_info },
+                           },
+                        }
+                     ) {
+                        if (movie && user_info) return incoming
                         const merged = existing ? existing.slice(0) : []
                         for (let i = 0; i < incoming.length; ++i) {
                            merged[start + i] = incoming[i]

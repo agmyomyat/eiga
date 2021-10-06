@@ -66,7 +66,7 @@ export default function AuthProvider({ children }) {
    const logOut = useCallback(async () => {
       setAccessToken('')
       auth.signOut()
-      await fetch('http://localhost:1337/logout', {
+      await fetch(`${process.env.API_URL}/logout`, {
          method: 'POST',
          credentials: 'include',
       })

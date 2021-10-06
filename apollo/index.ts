@@ -21,16 +21,18 @@ let apolloClient: ApolloClient<NormalizedCacheObject>
 // }
 const setErrorMessage = useErrorMessage.getState().setErrorMessage
 const httpLink = createHttpLink({
-   uri: 'http://localhost:1337/graphql',
+   uri: `${process.env.API_URL}/graphql`,
    credentials: 'include',
 })
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-   if (graphQLErrors) setErrorMessage('Server Error Try refreshing the page')
-   graphQLErrors.map(({ message, locations, path }) =>
-      console.log(
-         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+   if (graphQLErrors) {
+      setErrorMessage('Server Error Try refreshing the page')
+      graphQLErrors.map(({ message, locations, path }) =>
+         console.log(
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+         )
       )
-   )
+   }
    if (networkError) {
       console.log(`[Network error]: ${networkError}`)
       setErrorMessage(
@@ -43,7 +45,7 @@ export async function handleFetch() {
    let _token: string
    let _status: string
    console.log(_token)
-   await fetch('http://localhost:1337/refreshtoken', {
+   await fetch(`${process.env.API_URL}/refreshtoken`, {
       method: 'POST',
       credentials: 'include',
    })

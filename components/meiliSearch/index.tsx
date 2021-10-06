@@ -11,8 +11,8 @@ import Container from '@mui/material/Container'
 import { transformLabels, transformLabel } from '@helpers/tranformGenereLabels'
 
 const searchClient: InstantMeiliSearchInstance = instantMeiliSearch(
-   'http://localhost:7700',
-   '2e2716d9058e8c26ab4c01f936fd66f16dd5efe785448d2e87bcb53ab9d69588'
+   process.env.MEILISEARCH_ENDPOINT,
+   process.env.MEILI_API_KEY
 )
 
 export const Search: React.FC = () => (

@@ -12,44 +12,62 @@ import { onError } from '@apollo/client/link/error'
 import jwt_decode from 'jwt-decode'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
 import { setContext } from '@apollo/client/link/context'
+import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
 const shouldLogOut = useShouldLogOut.getState().setLogOut
 let apolloClient: ApolloClient<NormalizedCacheObject>
 // async function fireAuth() {
 //    const { auth } = await import('../lib/firebase');
 //    return auth;
 // }
+const setErrorMessage = useErrorMessage.getState().setErrorMessage
 const httpLink = createHttpLink({
-   uri: 'http://localhost:1337/graphql',
+   uri: `${process.env.API_URL}/graphql`,
    credentials: 'include',
 })
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-   if (graphQLErrors)
+   if (graphQLErrors) {
+      setErrorMessage('Server Error Try refreshing the page')
       graphQLErrors.map(({ message, locations, path }) =>
          console.log(
             `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
          )
       )
-   if (networkError) console.log(`[Network error]: ${networkError}`)
+   }
+   if (networkError) {
+      console.log(`[Network error]: ${networkError}`)
+      setErrorMessage(
+         `[Network error]: ${networkError} Try Refreshing the Page`
+      )
+   }
 })
 
 export async function handleFetch() {
    let _token: string
-   await fetch('http://localhost:1337/refreshtoken', {
+   let _status: string
+   console.log(_token)
+   await fetch(`${process.env.API_URL}/refreshtoken`, {
       method: 'POST',
       credentials: 'include',
    })
       .then((res) => res.json())
-      .then((data) => (_token = data.access))
-   if (!_token) {
-      throw 'access token not found'
-   } else {
-      return _token
+      .then((data) => {
+         _token = data.access
+         _status = data.status
+      })
+      .catch((e) => setErrorMessage(e.message))
+   if (!_token && _status === 'tokenVersion not match') {
+      throw Error(_status)
    }
+   if (!_token) {
+      throw Error('you need to relogin')
+   }
+   return _token
 }
 const asyncRefreshTokenLink = setContext(async () => {
    const accessToken = { token: '' }
    let shouldFetchOrNot: boolean
    const token = getAccessToken()
+   console.log('token', token)
 
    /**
     * TODO: even tho Access Token is not available Should check cookies
@@ -60,29 +78,31 @@ const asyncRefreshTokenLink = setContext(async () => {
       return { accessToken }
    }
    try {
-      const { exp }: any = jwt_decode(<string | null>token)
-      // console.log('expire', exp)
+      const { exp }: any = jwt_decode(token)
       if (Date.now() >= exp * 1000) {
          shouldFetchOrNot = true
       } else {
          shouldFetchOrNot = false
       }
-   } catch {
+   } catch (e) {
       shouldFetchOrNot = true
    }
 
    if (shouldFetchOrNot) {
       try {
          const res = await handleFetch()
+         // setErrorMessage(res)
          // setAccessToken(res||''); // see line authLink comment
          // console.log('fetched token success', res)
          accessToken.token = res || ''
       } catch (e) {
          // gqlInvalidToken({ shouldLogOut: true })
-         if (e.message === 'access token not found') {
-            shouldLogOut(true)
-            setAccessToken('')
+         setAccessToken('')
+         if (e.message === 'tokenVersion not match') {
+            return shouldLogOut(true) //this is for another user detection
          }
+         setErrorMessage('You need to login again')
+
          console.log('apollo catch', e)
       }
       // console.log('final line')

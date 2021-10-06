@@ -79,8 +79,10 @@ const asyncRefreshTokenLink = setContext(async () => {
          accessToken.token = res || ''
       } catch (e) {
          // gqlInvalidToken({ shouldLogOut: true })
-         shouldLogOut(true)
-         setAccessToken('')
+         if (e.message === 'access token not found') {
+            shouldLogOut(true)
+            setAccessToken('')
+         }
          console.log('apollo catch', e)
       }
       // console.log('final line')

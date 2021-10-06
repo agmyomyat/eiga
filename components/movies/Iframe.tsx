@@ -1,4 +1,5 @@
-import React, { Dispatch, SetStateAction, useMemo } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
+import jwt_decode from 'jwt-decode'
 import { Genres } from '@graphgen'
 import {
    CircularProgress,
@@ -8,34 +9,35 @@ import {
    Button,
 } from '@mui/material'
 import Link from '../ui/Link'
-import { NextRouter, useRouter } from 'next/router'
+import { getAccessToken, setAccessToken } from '@helpers/accessToken'
+import { handleFetch } from '@apollo/index'
 export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>
 export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[]
 export type TGenres = { genres: PartialGenres }
-const config = { attributes: true, childList: true, subtree: true }
-function mutationCallback(currentServer, router: NextRouter): MutationCallback {
-   return function (mutationsList) {
-      // Use traditional 'for loops' for IE 11
+// const config = { attributes: true, childList: true, subtree: true }
+// function mutationCallback(currentServer, router: NextRouter): MutationCallback {
+//    return function (mutationsList) {
+//       // Use traditional 'for loops' for IE 11
 
-      for (const mutation of mutationsList) {
-         if (
-            (mutation.target as any).attributes?.src?.value &&
-            (mutation.target as any).attributes?.src?.value !== currentServer
-         )
-            router.push('/404')
-         if (mutation.type === 'childList') {
-            console.log('A child node has been added or removed.')
-         } else if (mutation.type === 'attributes') {
-            // router.push('/404')
-            console.log(
-               'The ' + mutation.attributeName + ' attribute was modified.'
-            )
-         }
-      }
-   }
-}
-const observer = (callback: MutationCallback) =>
-   typeof window !== 'undefined' && new MutationObserver(callback)
+//       for (const mutation of mutationsList) {
+//          if (
+//             (mutation.target as any).attributes?.src?.value &&
+//             (mutation.target as any).attributes?.src?.value !== currentServer
+//          )
+//             router.push('/404')
+//          if (mutation.type === 'childList') {
+//             console.log('A child node has been added or removed.')
+//          } else if (mutation.type === 'attributes') {
+//             // router.push('/404')
+//             console.log(
+//                'The ' + mutation.attributeName + ' attribute was modified.'
+//             )
+//          }
+//       }
+//    }
+// }
+// const observer = (callback: MutationCallback) =>
+//    typeof window !== 'undefined' && new MutationObserver(callback)
 
 interface IframeProp {
    currentServer: string
@@ -63,22 +65,40 @@ const Iframe: React.FC<IframeProp> = ({
    premiumUser,
 }) => {
    const refer = React.useRef(null)
-   const router = useRouter()
-   const _callback = mutationCallback(currentServer, router)
-   const __observer = useMemo(() => observer(_callback), [_callback])
-   // console.log('server1', freeServer1)
+   // const _callback = mutationCallback(currentServer, router)
+   // const __observer = useMemo(() => observer(_callback), [_callback])
+   // // console.log('server1', freeServer1)
    // console.log('server2', freeServer2)
    // console.log('current Server', currentServer)
-
+   /**
+    * @description
+    * this useEffect checks accessToken to include in vip server1 url query String
+    * and fetch if token expire
+    */
    React.useEffect(() => {
-      const iframeId = document.querySelector('iframe')
-      __observer.observe(iframeId, config)
-      // console.log('dddddd', __observer)
-      return () => {
-         // console.log('unmount')
-         __observer.disconnect()
+      const accessToken = getAccessToken()
+      if (!currentServer || !refer.current) return
+      async function _setQueryString() {
+         console.log('currentServer', currentServer)
+         console.log('reference', refer.current)
+         if (currentServer === vipServer1) {
+            const { exp }: any = accessToken ?? jwt_decode(accessToken)
+            let _token: string
+            if (accessToken && Date.now() >= exp * 1000) {
+               try {
+                  _token = await handleFetch()
+                  setAccessToken(_token)
+               } catch (e) {
+                  console.log(e.message)
+               }
+            }
+            refer.current.src = vipServer1 + `?token=${_token || accessToken}` //variable _token could be undefined if accessToken is not expire
+            return
+         }
+         refer.current.src = currentServer
       }
-   }, [__observer])
+      _setQueryString()
+   }, [currentServer, vipServer1])
 
    // console.log('iframe src', refer.current?.src)
    // console.log('copy server', copy?.current)
@@ -155,7 +175,6 @@ const Iframe: React.FC<IframeProp> = ({
                onLoad={() => {
                   setLoading(false)
                }}
-               src={currentServer}
                scrolling="no"
                allowFullScreen
                key={currentServer}

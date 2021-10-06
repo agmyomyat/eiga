@@ -32,7 +32,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
    if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-async function handleFetch() {
+export async function handleFetch() {
    let _token: string
    await fetch('http://localhost:1337/refreshtoken', {
       method: 'POST',
@@ -79,8 +79,10 @@ const asyncRefreshTokenLink = setContext(async () => {
          accessToken.token = res || ''
       } catch (e) {
          // gqlInvalidToken({ shouldLogOut: true })
-         shouldLogOut(true)
-         setAccessToken('')
+         if (e.message === 'access token not found') {
+            shouldLogOut(true)
+            setAccessToken('')
+         }
          console.log('apollo catch', e)
       }
       // console.log('final line')

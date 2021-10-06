@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Head from 'next/head'
 import { AppProps } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
@@ -12,6 +11,7 @@ import createEmotionCache from '@components/ui/createEmotionCache'
 import Layout from '@components/layout/Layout'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import DetectOtherLogin from '@components/modals/detectOtherLogin'
+import ErrorHandler from '@components/modals/errorHandler'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -40,6 +40,7 @@ function MyApp(props: MyAppProps) {
                      <CssBaseline />
                      <Component {...pageProps} />
                      <DetectOtherLogin />
+                     <ErrorHandler />
                   </Layout>
                </AuthProvider>
             </ThemeProvider>

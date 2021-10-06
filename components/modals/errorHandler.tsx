@@ -1,25 +1,24 @@
-import { useShouldLogOut } from '@contexts/global-states/useShouldLogOut'
+import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
 import { Snackbar } from '@mui/material'
 import { Alert, AlertTitle } from '@mui/material'
 import React from 'react'
-
+const setMessage = useErrorMessage.getState().setErrorMessage
 const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
    if (reason === 'clickaway') return
-   useShouldLogOut.getState().setLogOut(false)
+   setMessage('')
 }
 
-export default function DetectOtherLogin() {
-   const shouldLogOut = useShouldLogOut((state) => state.logOut)
+export default function ErrorHandler() {
+   const message = useErrorMessage((state) => state.message)
    return (
-      <Snackbar open={shouldLogOut} onClose={handleClose}>
+      <Snackbar open={!!message} onClose={handleClose}>
          <Alert
             onClose={handleClose}
             severity="error"
             elevation={6}
             variant="filled"
          >
-            <AlertTitle>We detected Another Login</AlertTitle>
-            Don&apos;t Share Your Account To Others!
+            <AlertTitle>{message}</AlertTitle>
          </Alert>
       </Snackbar>
    )

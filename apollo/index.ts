@@ -175,6 +175,28 @@ function createApolloClient() {
                         return merged
                      },
                   },
+                  favouriteMovies: {
+                     // read(existing, { args: { start, limit } }) {
+                     //    // A read function should always return undefined if existing is
+                     //    // undefined. Returning undefined signals that the field is
+                     //    // missing from the cache, which instructs Apollo Client to
+                     //    // fetch its value from your GraphQL server.
+                     //    console.log('existing', existing)
+                     //    return existing && existing.slice(start, start + limit)
+                     // },
+
+                     // The keyArgs list and merge function are the same as above.
+                     keyArgs: ['type', 'userId'],
+                     merge(existing, incoming, { args: { start = 0 } }) {
+                        const merged = existing ? existing.slice(0) : []
+                        for (let i = 0; i < incoming.length; ++i) {
+                           merged[start + i] = incoming[i]
+                        }
+                        console.log('meges', merged)
+
+                        return merged
+                     },
+                  },
                },
             },
          },

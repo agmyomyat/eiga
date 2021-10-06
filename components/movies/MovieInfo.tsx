@@ -75,7 +75,7 @@ const MovieInfo: React.FC<ImovieInfo> = ({
                component="span"
                color="textSecondary"
             >
-               {newGenres.join(' ')}
+               {newGenres.join(' • ')}
             </Typography>
          </Stack>
          <Box

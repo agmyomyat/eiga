@@ -185,15 +185,16 @@ function createApolloClient() {
                         return merged
                      },
                   },
-                  favouriteMovies: {
-                     // read(existing, { args: { start, limit } }) {
-                     //    // A read function should always return undefined if existing is
-                     //    // undefined. Returning undefined signals that the field is
-                     //    // missing from the cache, which instructs Apollo Client to
-                     //    // fetch its value from your GraphQL server.
-                     //    console.log('existing', existing)
-                     //    return existing && existing.slice(start, start + limit)
-                     // },
+                  // favouriteMovies: {
+                  //    // read(existing, { args: { start, limit } }) {
+                  //    //    // A read function should always return undefined if existing is
+                  //    //    // undefined. Returning undefined signals that the field is
+                  //    //    // missing from the cache, which instructs Apollo Client to
+                  //    //    // fetch its value from your GraphQL server.
+                  //    //    console.log('existing', existing)
+                  //    //    return existing && existing.slice(start, start + limit)
+                  //    // },
+
 
                      // The keyArgs list and merge function are the same as above.
                      keyArgs: false,
@@ -214,9 +215,10 @@ function createApolloClient() {
                         }
                         console.log('meges', merged)
 
-                        return merged
-                     },
-                  },
+
+                  //       return merged
+                  //    },
+                  // },
                },
             },
          },

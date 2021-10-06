@@ -5,6 +5,7 @@ import {
    GetSeriesDocument,
    GetSeriesQuery,
    GetSeriesQueryResult,
+   Movies,
 } from '@graphgen'
 import { useRouter, NextRouter } from 'next/router'
 import { Box, Divider, Container } from '@mui/material'
@@ -120,12 +121,7 @@ export default function SeriesPage(props: PageProps) {
                   handleSelect={handleSelect}
                />
                <Divider />
-               <MovieInfo
-                  name={seriesData.name}
-                  release_date={seriesData.release_date}
-                  body={seriesData.body}
-                  genres={seriesData.genres}
-               />
+               <MovieInfo movie={seriesData as Partial<Movies>} />
                <Divider />
             </Box>
          )}

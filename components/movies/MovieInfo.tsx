@@ -1,43 +1,50 @@
 import { useState } from 'react'
 import { Box, Typography, Stack, Divider, IconButton } from '@mui/material'
-import { Movies } from '@graphgen'
-import { TMovies, TGenres } from './Iframe'
+import { Movies, GetFavouriteMoviesQuery } from '@graphgen'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
-const MovieInfo: React.FC<TMovies<Movies, TGenres>> = ({
-   name,
-   release_date,
-   body,
-   genres,
-}) => {
-   const [isFavorite, setIsFavorite] = useState<boolean>(false)
+interface ImovieInfo {
+   movie: Partial<Movies>
+   favouriteData: GetFavouriteMoviesQuery
+   isDisabled: boolean
+   handleAddFavourite: () => void
+   handleDeleteFavourite: () => void
+}
 
-   const newGenres = genres.map(
+const MovieInfo: React.FC<ImovieInfo> = ({
+   movie,
+   favouriteData,
+   isDisabled,
+   handleAddFavourite,
+   handleDeleteFavourite,
+}) => {
+   const newGenres = movie.genres.map(
       (genre) => genre.name[0].toUpperCase() + genre.name.slice(1)
    )
-   const movieBody = body.replace(/<\/?[^>]+(>|$)/g, '')
+   const movieBody = movie.body.replace(/<\/?[^>]+(>|$)/g, '')
 
-   const handleAddFavorite = () => {
-      setIsFavorite((prevState) => !prevState)
+   const isFavourite = !!favouriteData?.favouriteMovies.length
+
+   async function handleClick() {
+      isFavourite ? handleDeleteFavourite() : handleAddFavourite()
    }
 
    return (
       <Box sx={{ my: 2 }}>
          <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold' }}>
-            {name}
+            {movie.name}
             <IconButton
                aria-label="favorite-button"
                color="primary"
                sx={{ ml: 2 }}
+               disabled={isDisabled}
+               onClick={handleClick}
             >
-               {isFavorite ? (
-                  <FavoriteIcon fontSize="large" onClick={handleAddFavorite} />
+               {isFavourite ? (
+                  <FavoriteIcon fontSize="large" />
                ) : (
-                  <FavoriteBorderIcon
-                     fontSize="large"
-                     onClick={handleAddFavorite}
-                  />
+                  <FavoriteBorderIcon fontSize="large" />
                )}
             </IconButton>
          </Typography>
@@ -52,7 +59,7 @@ const MovieInfo: React.FC<TMovies<Movies, TGenres>> = ({
                component="span"
                color="textSecondary"
             >
-               {release_date}
+               {movie.release_date}
             </Typography>
 
             <Typography

@@ -4,6 +4,10 @@ import {
    GetMovieQuery,
    useGetRelatedMoviesQuery,
    GetMovieQueryResult,
+   useCreateFavouriteMovieMutation,
+   useDeleteFavouriteMovieMutation,
+   useGetFavouriteMoviesLazyQuery,
+   Movies,
 } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'
 import { Box, Divider, Container } from '@mui/material'
@@ -13,7 +17,7 @@ import Iframe from '@components/movies/Iframe'
 import RelatedMovies from '@components/movies/RelatedMovies'
 import MovieInfo from '@components/movies/MovieInfo'
 import { useAuth } from '@contexts/AuthContext'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, NetworkStatus } from '@apollo/client'
 import useUpdateHistory from '@contexts/share-hooks/useUpdateHistory'
 
 const client = initializeApollo()
@@ -33,14 +37,6 @@ export default function MoviePage(props: PageProps) {
    const serverResult = props.data
    const movieData = serverResult?.getMovie
 
-   function changeServer(server: string) {
-      setCurrentServer(server)
-      setLoading(server !== currentServer)
-   }
-
-   function iframeLoad(prop: boolean) {
-      setLoading(prop)
-   }
    const { updateHistoryData } = useUpdateHistory(
       {
          movieId: parseInt(movieData?.id || null),
@@ -49,7 +45,54 @@ export default function MoviePage(props: PageProps) {
       userData?.premium || null,
       currentServer
    )
-   console.log('update History data', updateHistoryData)
+
+   const [
+      getFavouriteMovie,
+      {
+         data: favouriteMovieData,
+         loading: favouriteMovieLoading,
+         refetch: favouriteMovieRefetch,
+         networkStatus: favouriteMovieNetworkStatus,
+      },
+   ] = useGetFavouriteMoviesLazyQuery({ notifyOnNetworkStatusChange: true })
+
+   const [
+      createFavouriteMovie,
+      { data: createFavouriteMovieData, loading: createFavouriteMovieLoading },
+   ] = useCreateFavouriteMovieMutation()
+
+   const [
+      deleteFavouriteMovie,
+      { data: deleteFavouriteMovieData, loading: deleteFavouriteMovieLoading },
+   ] = useDeleteFavouriteMovieMutation()
+
+   const favouriteMovieId = favouriteMovieData?.favouriteMovies?.[0]?.id
+
+   function changeServer(server: string) {
+      setCurrentServer(server)
+      setLoading(server !== currentServer)
+   }
+
+   function iframeLoad(prop: boolean) {
+      setLoading(prop)
+   }
+
+   function handleAddFavourite() {
+      createFavouriteMovie({
+         variables: {
+            movieId: movieData?.id,
+            userId: userData?.userId,
+         },
+      })
+   }
+
+   function handleDeleteFavourite() {
+      deleteFavouriteMovie({
+         variables: {
+            movieId: favouriteMovieId,
+         },
+      })
+   }
 
    useEffect(() => {
       // console.log('user', premiumUser);
@@ -67,6 +110,30 @@ export default function MoviePage(props: PageProps) {
       movieData?.freeServer1,
       client,
       userData?.premium,
+   ])
+
+   useEffect(() => {
+      if (!userData?.premium) return
+      getFavouriteMovie({
+         variables: {
+            userId: userData.userId,
+            movieId: parseInt(movieData?.id || null),
+         },
+      })
+   }, [getFavouriteMovie, movieData?.id, userData?.premium, userData?.userId])
+
+   useEffect(() => {
+      if (
+         createFavouriteMovieData?.createFavouriteMovie?.status ||
+         deleteFavouriteMovieData?.deleteFavouriteMovie?.status
+      ) {
+         console.log('refetching')
+         favouriteMovieRefetch()
+      }
+   }, [
+      favouriteMovieRefetch,
+      createFavouriteMovieData?.createFavouriteMovie?.status,
+      deleteFavouriteMovieData?.deleteFavouriteMovie?.status,
    ])
 
    return (
@@ -88,10 +155,17 @@ export default function MoviePage(props: PageProps) {
                />
                <Divider />
                <MovieInfo
-                  name={movieData.name}
-                  release_date={movieData.release_date}
-                  body={movieData.body}
-                  genres={movieData.genres}
+                  movie={movieData as Partial<Movies>}
+                  favouriteData={favouriteMovieData}
+                  isDisabled={
+                     !userData?.premium ||
+                     favouriteMovieLoading ||
+                     createFavouriteMovieLoading ||
+                     deleteFavouriteMovieLoading ||
+                     favouriteMovieNetworkStatus === NetworkStatus.refetch
+                  }
+                  handleAddFavourite={handleAddFavourite}
+                  handleDeleteFavourite={handleDeleteFavourite}
                />
                <Divider />
                <RelatedMovies

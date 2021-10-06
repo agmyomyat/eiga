@@ -2646,10 +2646,33 @@ export type VerifyTokenPayload = {
   user?: Maybe<Scalars['String']>;
 };
 
+export type CreateFavouriteMovieMutationVariables = Exact<{
+  movieId: Scalars['ID'];
+  userId: Scalars['ID'];
+}>;
+
+
+export type CreateFavouriteMovieMutation = { __typename?: 'Mutation', createFavouriteMovie?: Maybe<{ __typename?: 'createFavouriteMoviePayload', status?: Maybe<string> }> };
+
+export type DeleteFavouriteMovieMutationVariables = Exact<{
+  movieId: Scalars['ID'];
+}>;
+
+
+export type DeleteFavouriteMovieMutation = { __typename?: 'Mutation', deleteFavouriteMovie?: Maybe<{ __typename?: 'deleteFavouriteMoviePayload', status?: Maybe<string> }> };
+
 export type GetAllMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date?: Maybe<number>, quality: string, photo_url: string }>>> };
+
+export type GetFavouriteMoviesQueryVariables = Exact<{
+  userId: Scalars['ID'];
+  movieId?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type GetFavouriteMoviesQuery = { __typename?: 'Query', favouriteMovies?: Maybe<Array<Maybe<{ __typename?: 'FavouriteMovies', id: string, movie?: Maybe<{ __typename?: 'Movies', name: string, id: string }> }>>> };
 
 export type WatchHistoriesQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -2717,6 +2740,73 @@ export type UpdateHistoryMutationVariables = Exact<{
 export type UpdateHistoryMutation = { __typename?: 'Mutation', updateHistory?: Maybe<{ __typename?: 'UpdateMovieReturn', status?: Maybe<string>, ok?: Maybe<boolean> }> };
 
 
+export const CreateFavouriteMovieDocument = gql`
+    mutation createFavouriteMovie($movieId: ID!, $userId: ID!) {
+  createFavouriteMovie(input: {data: {movie: $movieId, user_info: $userId}}) {
+    status
+  }
+}
+    `;
+export type CreateFavouriteMovieMutationFn = Apollo.MutationFunction<CreateFavouriteMovieMutation, CreateFavouriteMovieMutationVariables>;
+
+/**
+ * __useCreateFavouriteMovieMutation__
+ *
+ * To run a mutation, you first call `useCreateFavouriteMovieMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateFavouriteMovieMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createFavouriteMovieMutation, { data, loading, error }] = useCreateFavouriteMovieMutation({
+ *   variables: {
+ *      movieId: // value for 'movieId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useCreateFavouriteMovieMutation(baseOptions?: Apollo.MutationHookOptions<CreateFavouriteMovieMutation, CreateFavouriteMovieMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateFavouriteMovieMutation, CreateFavouriteMovieMutationVariables>(CreateFavouriteMovieDocument, options);
+      }
+export type CreateFavouriteMovieMutationHookResult = ReturnType<typeof useCreateFavouriteMovieMutation>;
+export type CreateFavouriteMovieMutationResult = Apollo.MutationResult<CreateFavouriteMovieMutation>;
+export type CreateFavouriteMovieMutationOptions = Apollo.BaseMutationOptions<CreateFavouriteMovieMutation, CreateFavouriteMovieMutationVariables>;
+export const DeleteFavouriteMovieDocument = gql`
+    mutation deleteFavouriteMovie($movieId: ID!) {
+  deleteFavouriteMovie(input: {where: {id: $movieId}}) {
+    status
+  }
+}
+    `;
+export type DeleteFavouriteMovieMutationFn = Apollo.MutationFunction<DeleteFavouriteMovieMutation, DeleteFavouriteMovieMutationVariables>;
+
+/**
+ * __useDeleteFavouriteMovieMutation__
+ *
+ * To run a mutation, you first call `useDeleteFavouriteMovieMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteFavouriteMovieMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteFavouriteMovieMutation, { data, loading, error }] = useDeleteFavouriteMovieMutation({
+ *   variables: {
+ *      movieId: // value for 'movieId'
+ *   },
+ * });
+ */
+export function useDeleteFavouriteMovieMutation(baseOptions?: Apollo.MutationHookOptions<DeleteFavouriteMovieMutation, DeleteFavouriteMovieMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteFavouriteMovieMutation, DeleteFavouriteMovieMutationVariables>(DeleteFavouriteMovieDocument, options);
+      }
+export type DeleteFavouriteMovieMutationHookResult = ReturnType<typeof useDeleteFavouriteMovieMutation>;
+export type DeleteFavouriteMovieMutationResult = Apollo.MutationResult<DeleteFavouriteMovieMutation>;
+export type DeleteFavouriteMovieMutationOptions = Apollo.BaseMutationOptions<DeleteFavouriteMovieMutation, DeleteFavouriteMovieMutationVariables>;
 export const GetAllMoviesDocument = gql`
     query getAllMovies {
   movies {
@@ -2756,6 +2846,46 @@ export function useGetAllMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetAllMoviesQueryHookResult = ReturnType<typeof useGetAllMoviesQuery>;
 export type GetAllMoviesLazyQueryHookResult = ReturnType<typeof useGetAllMoviesLazyQuery>;
 export type GetAllMoviesQueryResult = Apollo.QueryResult<GetAllMoviesQuery, GetAllMoviesQueryVariables>;
+export const GetFavouriteMoviesDocument = gql`
+    query getFavouriteMovies($userId: ID!, $movieId: Int) {
+  favouriteMovies(where: {user_info: $userId, movie: $movieId}) {
+    id
+    movie {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetFavouriteMoviesQuery__
+ *
+ * To run a query within a React component, call `useGetFavouriteMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFavouriteMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFavouriteMoviesQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      movieId: // value for 'movieId'
+ *   },
+ * });
+ */
+export function useGetFavouriteMoviesQuery(baseOptions: Apollo.QueryHookOptions<GetFavouriteMoviesQuery, GetFavouriteMoviesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFavouriteMoviesQuery, GetFavouriteMoviesQueryVariables>(GetFavouriteMoviesDocument, options);
+      }
+export function useGetFavouriteMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFavouriteMoviesQuery, GetFavouriteMoviesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFavouriteMoviesQuery, GetFavouriteMoviesQueryVariables>(GetFavouriteMoviesDocument, options);
+        }
+export type GetFavouriteMoviesQueryHookResult = ReturnType<typeof useGetFavouriteMoviesQuery>;
+export type GetFavouriteMoviesLazyQueryHookResult = ReturnType<typeof useGetFavouriteMoviesLazyQuery>;
+export type GetFavouriteMoviesQueryResult = Apollo.QueryResult<GetFavouriteMoviesQuery, GetFavouriteMoviesQueryVariables>;
 export const WatchHistoriesDocument = gql`
     query watchHistories($limit: Int!, $start: Int!, $user: ID!) {
   watchHistories(

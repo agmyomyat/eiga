@@ -13,7 +13,7 @@ import { getAccessToken, setAccessToken } from '@helpers/accessToken'
 import { handleFetch } from '@apollo/index'
 export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>
 export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[]
-export type TGenres = { genres: PartialGenres }
+export type TGenres = { genres: PartialGenres; name: string }
 // const config = { attributes: true, childList: true, subtree: true }
 // function mutationCallback(currentServer, router: NextRouter): MutationCallback {
 //    return function (mutationsList) {

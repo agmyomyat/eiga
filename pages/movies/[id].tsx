@@ -122,7 +122,13 @@ export default function MoviePage(props: PageProps) {
             movieId: parseInt(movieData?.id),
          },
       })
-   }, [getFavouriteMovie, movieData?.id, userData?.premium, userData?.userId])
+   }, [
+      getFavouriteMovie,
+      movieData?.id,
+      userData?.premium,
+      userData?.userId,
+      router.asPath,
+   ])
 
    console.log('fav data', favouriteMovieData?.favouriteMovies)
    return (

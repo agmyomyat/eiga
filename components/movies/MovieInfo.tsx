@@ -6,10 +6,10 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
 interface ImovieInfo {
    movie: Partial<Movies>
-   favouriteData: GetFavouriteMoviesQuery
-   isDisabled: boolean
-   handleAddFavourite: () => void
-   handleDeleteFavourite: () => void
+   favouriteData?: GetFavouriteMoviesQuery
+   isDisabled?: boolean
+   handleAddFavourite?: () => void
+   handleDeleteFavourite?: () => void
 }
 
 const MovieInfo: React.FC<ImovieInfo> = ({

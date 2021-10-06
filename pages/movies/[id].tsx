@@ -8,6 +8,7 @@ import {
    useDeleteFavouriteMovieMutation,
    useGetFavouriteMoviesLazyQuery,
    Movies,
+   GetFavouriteMoviesDocument,
 } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'
 import { Box, Divider, Container } from '@mui/material'
@@ -51,20 +52,15 @@ export default function MoviePage(props: PageProps) {
       {
          data: favouriteMovieData,
          loading: favouriteMovieLoading,
-         refetch: favouriteMovieRefetch,
          networkStatus: favouriteMovieNetworkStatus,
       },
    ] = useGetFavouriteMoviesLazyQuery({ notifyOnNetworkStatusChange: true })
 
-   const [
-      createFavouriteMovie,
-      { data: createFavouriteMovieData, loading: createFavouriteMovieLoading },
-   ] = useCreateFavouriteMovieMutation()
+   const [createFavouriteMovie, { loading: createFavouriteMovieLoading }] =
+      useCreateFavouriteMovieMutation()
 
-   const [
-      deleteFavouriteMovie,
-      { data: deleteFavouriteMovieData, loading: deleteFavouriteMovieLoading },
-   ] = useDeleteFavouriteMovieMutation()
+   const [deleteFavouriteMovie, { loading: deleteFavouriteMovieLoading }] =
+      useDeleteFavouriteMovieMutation()
 
    const favouriteMovieId = favouriteMovieData?.favouriteMovies?.[0]?.id
 
@@ -83,6 +79,7 @@ export default function MoviePage(props: PageProps) {
             movieId: movieData?.id,
             userId: userData?.userId,
          },
+         refetchQueries: [GetFavouriteMoviesDocument],
       })
    }
 
@@ -91,6 +88,7 @@ export default function MoviePage(props: PageProps) {
          variables: {
             movieId: favouriteMovieId,
          },
+         refetchQueries: [GetFavouriteMoviesDocument],
       })
    }
 
@@ -113,28 +111,36 @@ export default function MoviePage(props: PageProps) {
    ])
 
    useEffect(() => {
-      if (!userData?.premium) return
+      if (!userData?.premium || !userData?.userId || !movieData?.id) return
+
       getFavouriteMovie({
          variables: {
             userId: userData.userId,
-            movieId: parseInt(movieData?.id || null),
+            movieId: parseInt(movieData?.id),
          },
       })
    }, [getFavouriteMovie, movieData?.id, userData?.premium, userData?.userId])
 
-   useEffect(() => {
-      if (
-         createFavouriteMovieData?.createFavouriteMovie?.status ||
-         deleteFavouriteMovieData?.deleteFavouriteMovie?.status
-      ) {
-         console.log('refetching')
-         favouriteMovieRefetch()
-      }
-   }, [
-      favouriteMovieRefetch,
-      createFavouriteMovieData?.createFavouriteMovie?.status,
-      deleteFavouriteMovieData?.deleteFavouriteMovie?.status,
-   ])
+   // useEffect(() => {
+   //    console.log('fav loaing', createFavouriteMovieLoading)
+   //    console.log('fav dele loaing', deleteFavouriteMovieLoading)
+   //    if (
+   //       createFavouriteMovieData?.createFavouriteMovie?.status ||
+   //       deleteFavouriteMovieData?.deleteFavouriteMovie?.status
+   //    ) {
+   //       console.log(
+   //          'status is ',
+   //          createFavouriteMovieData?.createFavouriteMovie?.status
+   //       )
+   //       favouriteMovieRefetch()
+   //    }
+   // }, [
+   //    favouriteMovieRefetch,
+   //    createFavouriteMovieData?.createFavouriteMovie?.status,
+   //    deleteFavouriteMovieData?.deleteFavouriteMovie?.status,
+   //    createFavouriteMovieLoading,
+   //    deleteFavouriteMovieLoading,
+   // ])
 
    return (
       <Container sx={{ mb: '100px' }}>

@@ -114,15 +114,24 @@ export default function MoviePage(props: PageProps) {
    ])
 
    useEffect(() => {
+      if (!router.asPath || getUserLoading) return
       if (!userData?.premium || !userData?.userId || !movieData?.id) return
       console.log('refetching')
+      console.log('movieId', movieData?.id)
       getFavouriteMovie({
          variables: {
             userId: userData.userId,
             movieId: parseInt(movieData?.id),
          },
       })
-   }, [getFavouriteMovie, movieData?.id, userData?.premium, userData?.userId])
+   }, [
+      getFavouriteMovie,
+      getUserLoading,
+      movieData?.id,
+      router.asPath,
+      userData?.premium,
+      userData?.userId,
+   ])
 
    console.log('fav data', favouriteMovieData?.favouriteMovies)
    return (

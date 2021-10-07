@@ -14,10 +14,8 @@ import Iframe from '@components/movies/Iframe'
 import RelatedMovies from '@components/movies/RelatedMovies'
 import MovieInfo from '@components/movies/MovieInfo'
 import { useAuth } from '@contexts/AuthContext'
-import { useApolloClient } from '@apollo/client'
 import useUpdateHistory from '@contexts/share-hooks/useUpdateHistory'
 import useFavouriteMovie from '@contexts/share-hooks/useFavouriteMovie'
-import { useUpdateHistoryTimer } from '@contexts/global-states/useUpdateHistoryTimer'
 
 const client = initializeApollo()
 export interface PageProps {
@@ -25,7 +23,6 @@ export interface PageProps {
 }
 
 export default function MoviePage(props: PageProps) {
-   const client = useApolloClient()
    const { data: relatedMoviesData, loading: relatedMoviesLoading } =
       useGetRelatedMoviesQuery()
    const { userData, getUserLoading } = useAuth()

@@ -56,26 +56,6 @@ export default function MoviePage(props: PageProps) {
       router
    )
 
-   // const [
-   //    getFavouriteMovie,
-   //    {
-   //       data: favouriteMovieData,
-   //       loading: favouriteMovieLoading,
-   //       networkStatus: favouriteMovieNetworkStatus,
-   //    },
-   // ] = useGetFavouriteMoviesLazyQuery({
-   //    fetchPolicy: 'network-only',
-   //    notifyOnNetworkStatusChange: true,
-   // })
-
-   // const [createFavouriteMovie, { loading: createFavouriteMovieLoading }] =
-   //    useCreateFavouriteMovieMutation()
-
-   // const [deleteFavouriteMovie, { loading: deleteFavouriteMovieLoading }] =
-   //    useDeleteFavouriteMovieMutation()
-
-   // const favouriteMovieId = favouriteMovieData?.favouriteMovies?.[0]?.id
-
    function changeServer(server: string) {
       setCurrentServer(server)
       setLoading(server !== currentServer)
@@ -85,28 +65,7 @@ export default function MoviePage(props: PageProps) {
       setLoading(prop)
    }
 
-   // function handleAddFavourite() {
-   //    createFavouriteMovie({
-   //       variables: {
-   //          movieId: movieData?.id,
-   //          userId: userData?.userId,
-   //       },
-   //       refetchQueries: [GetFavouriteMoviesDocument],
-   //    })
-   // }
-
-   // function handleDeleteFavourite() {
-   //    deleteFavouriteMovie({
-   //       variables: {
-   //          movieId: favouriteMovieId,
-   //       },
-   //       refetchQueries: [GetFavouriteMoviesDocument],
-   //    })
-   // }
-
    useEffect(() => {
-      // console.log('user', premiumUser);
-      // console.log('fallback', router.isFallback);
       if (!router.isFallback && userData?.premium) {
          return setCurrentServer(movieData.vipServer1)
       } else if (!router.isFallback && !userData?.premium) {
@@ -120,24 +79,6 @@ export default function MoviePage(props: PageProps) {
       movieData?.freeServer1,
       userData?.premium,
    ])
-
-   // useEffect(() => {
-   //    if (!userData?.premium || !userData?.userId || !movieData?.id) return
-   //    console.log('refetching')
-   //    console.log('movieId', movieData?.id)
-   //    getFavouriteMovie({
-   //       variables: {
-   //          userId: userData.userId,
-   //          movieId: movieData?.id,
-   //       },
-   //    })
-   // }, [
-   //    getFavouriteMovie,
-   //    movieData?.id,
-   //    router.asPath,
-   //    userData?.premium,
-   //    userData?.userId,
-   // ])
 
    // console.log('fav data', favouriteMovieData?.favouriteMovies)
    return (

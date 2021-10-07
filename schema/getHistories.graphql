@@ -8,8 +8,11 @@ query watchHistories($limit: Int!, $start: Int!, $user: ID!) {
       movie {
          name
          uuid
-         photo_url
+         id
+         release_date
          quality
+         photo_url
+         isSeries
       }
    }
 }

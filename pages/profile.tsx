@@ -185,28 +185,6 @@ export default function Profile() {
                      </Button>
                   </Paper>
 
-                  <Paper
-                     sx={{
-                        width: 1,
-                        bgcolor: 'secondary.main',
-                        p: 2,
-                        borderRadius: 3,
-                     }}
-                     elevation={3}
-                  >
-                     <Typography color="textSecondary" sx={{ pb: 2 }}>
-                        History
-                     </Typography>
-
-                     <Button
-                        color="inherit"
-                        endIcon={<ArrowRightAltIcon />}
-                        onClick={() => push('/recents')}
-                     >
-                        Click
-                     </Button>
-                  </Paper>
-
                   <Button
                      variant="contained"
                      color="error"
@@ -223,7 +201,27 @@ export default function Profile() {
             </Box>
          ) : (
             // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
-            <button onClick={() => redirect()}>redirect login</button>
+            <Box
+               display="flex"
+               justifyContent="center"
+               alignItems="center"
+               mt={5}
+               py={5}
+               maxWidth={500}
+               mx="auto"
+            >
+               <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                     width: 1,
+                     py: 1,
+                  }}
+                  onClick={() => redirect()}
+               >
+                  Contiune with Google
+               </Button>
+            </Box>
          )}
       </Container>
    )

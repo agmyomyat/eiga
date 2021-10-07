@@ -4,5 +4,6 @@ query searchMovie($search: String!) {
       uuid
       release_date
       photo_url
+      isSeries
    }
 }

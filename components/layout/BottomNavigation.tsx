@@ -53,7 +53,7 @@ const MobileNavigation: React.FC = () => {
          />
          <BottomNavigationAction
             label="Histroy"
-            value="/hisotry"
+            value="/recents"
             icon={<HistoryOutlinedIcon />}
          />
          <BottomNavigationAction

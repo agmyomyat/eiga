@@ -111,13 +111,13 @@ export default function Recents() {
                      align="center"
                      sx={{ color: 'text.disabled' }}
                   >
-                     Youve reached the end of results
+                     You&rsquo;ve reached the end of results
                   </Typography>
                )}
             </>
          ) : (
             <Typography align="center" sx={{ color: 'text.secondary' }}>
-               No Histories Available
+               No Histories Available.
             </Typography>
          )}
       </Container>

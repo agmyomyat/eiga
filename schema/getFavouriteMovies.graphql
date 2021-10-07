@@ -8,10 +8,12 @@ query getFavouriteMovies($userId: ID!, $movieId: ID, $start: Int, $limit: Int) {
       id
       movie {
          name
-         id
          uuid
-         photo_url
+         id
+         release_date
          quality
+         photo_url
+         isSeries
       }
    }
 }

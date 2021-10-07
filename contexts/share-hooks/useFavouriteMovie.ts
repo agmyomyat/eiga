@@ -63,7 +63,7 @@ export default function useFavouriteMovie(
       getFavouriteMovie({
          variables: {
             userId: favVariables.userId,
-            movieId: JSON.parse(favVariables.movieId),
+            movieId: favVariables.movieId,
          },
       })
    }, [

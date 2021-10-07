@@ -62,6 +62,8 @@ export default function Favourites() {
       getFavouriteMovies,
    ])
 
+   console.log('favourite movies', data?.favouriteMovies)
+
    // console.log('userData', userData)
    if (loading) return <p>Loading</p>
    return (
@@ -112,13 +114,13 @@ export default function Favourites() {
                      align="center"
                      sx={{ color: 'text.disabled' }}
                   >
-                     Youve reached the end of results
+                     You&rsquo;ve reached the end of results
                   </Typography>
                )}
             </>
          ) : (
             <Typography align="center" sx={{ color: 'text.secondary' }}>
-               No Histories Available
+               Favourite Movies List Is Empty.
             </Typography>
          )}
       </Container>

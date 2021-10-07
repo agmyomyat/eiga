@@ -6,5 +6,6 @@ query getRelatedMovies {
       release_date
       quality
       photo_url
+      isSeries
    }
 }

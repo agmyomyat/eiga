@@ -1,5 +1,5 @@
 import { Movies } from '@graphgen'
-import { Grid, Box, Typography } from '@mui/material'
+import { Grid, Box, Typography, Stack, Divider } from '@mui/material'
 import Image from 'next/image'
 import { useRouter, NextRouter } from 'next/router'
 
@@ -44,9 +44,26 @@ const SearchedMovie: React.FC<IsearchedMovie> = ({ movie, handleClose }) => {
             <Typography variant="subtitle1" component="h4" noWrap>
                {movie.name}
             </Typography>
-            <Typography variant="subtitle2" component="p" color="textSecondary">
-               {movie.release_date}
-            </Typography>
+            <Stack
+               direction="row"
+               spacing={1}
+               divider={<Divider orientation="vertical" flexItem />}
+            >
+               <Typography
+                  variant="subtitle2"
+                  component="p"
+                  color="textSecondary"
+               >
+                  {movie.release_date}
+               </Typography>
+               <Typography
+                  variant="subtitle2"
+                  component="p"
+                  color="textSecondary"
+               >
+                  {movie.isSeries ? 'Series' : 'Movie'}
+               </Typography>
+            </Stack>
          </Grid>
       </Grid>
    )

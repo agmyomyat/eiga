@@ -16,6 +16,7 @@ import { useAuth } from '@contexts/AuthContext'
 import { useApolloClient } from '@apollo/client'
 import useUpdateHistory from '@contexts/share-hooks/useUpdateHistory'
 import useResumeMovie from '@contexts/share-hooks/useResumeMovie'
+import useFavouriteMovie from '@contexts/share-hooks/useFavouriteMovie'
 
 const client = initializeApollo()
 
@@ -38,7 +39,7 @@ export default function SeriesPage(props: PageProps) {
    const [currentSeason, setCurrentSeason] = useState<number>(1)
    const [currentEpisode, setCurrentEpisode] = useState<number>(1)
    const seasons = seriesData?.tv_sery.season
-   const servers = seasons?.[currentSeason - 1].episodes[currentEpisode - 1]
+   const servers = seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
 
    function changeServer(server: string) {
       setCurrentServer(server)
@@ -63,6 +64,21 @@ export default function SeriesPage(props: PageProps) {
       season: currentSeason,
       episode: currentEpisode,
    })
+
+   const {
+      favouriteMovieData,
+      isDisabled,
+      handleAddFavourite,
+      handleDeleteFavourite,
+   } = useFavouriteMovie(
+      {
+         movieId: seriesData?.id,
+         userId: userData?.userId,
+      },
+      userData?.premium,
+      router
+   )
+
    useEffect(() => {
       if (getHistoryData && getHistoryData.watchHistories.length) {
          console.log('history', getHistoryData)
@@ -96,6 +112,8 @@ export default function SeriesPage(props: PageProps) {
       setCurrentEpisode(id)
    }
 
+   console.log('getHis', getHistoryData)
+
    return (
       <Container sx={{ mb: '100px' }}>
          {(router.isFallback || getUserLoading) && <h2>loading</h2>}
@@ -121,7 +139,13 @@ export default function SeriesPage(props: PageProps) {
                   handleSelect={handleSelect}
                />
                <Divider />
-               <MovieInfo movie={seriesData as Partial<Movies>} />
+               <MovieInfo
+                  movie={seriesData as Partial<Movies>}
+                  favouriteData={favouriteMovieData}
+                  isDisabled={isDisabled}
+                  handleAddFavourite={handleAddFavourite}
+                  handleDeleteFavourite={handleDeleteFavourite}
+               />
                <Divider />
             </Box>
          )}

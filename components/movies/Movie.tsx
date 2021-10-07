@@ -11,6 +11,7 @@ const Movie = ({
    photo_url,
    release_date,
    quality,
+   isSeries,
 }: Partial<Movies>) => {
    const { push }: NextRouter = useRouter()
 
@@ -25,7 +26,12 @@ const Movie = ({
    //
    return (
       <Box
-         onClick={() => push({ pathname: '/movies/[id]', query: { id: uuid } })}
+         onClick={() =>
+            push({
+               pathname: `/${isSeries ? 'series' : 'movies'}/[id]`,
+               query: { id: uuid },
+            })
+         }
       >
          {show ? (
             <Skeleton
@@ -92,7 +98,7 @@ const Movie = ({
                         borderRadius: 1,
                      }}
                   >
-                     Movie
+                     {isSeries ? 'Series' : 'Movie'}
                   </Typography>
                </>
             )}

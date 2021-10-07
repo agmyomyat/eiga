@@ -116,6 +116,7 @@ export default function MoviePage(props: PageProps) {
    useEffect(() => {
       if (!userData?.premium || !userData?.userId || !movieData?.id) return
       console.log('refetching')
+      console.log('movieId', movieData?.id)
       getFavouriteMovie({
          variables: {
             userId: userData.userId,
@@ -125,9 +126,9 @@ export default function MoviePage(props: PageProps) {
    }, [
       getFavouriteMovie,
       movieData?.id,
+      router.asPath,
       userData?.premium,
       userData?.userId,
-      router.asPath,
    ])
 
    console.log('fav data', favouriteMovieData?.favouriteMovies)
@@ -195,3 +196,4 @@ export const getStaticProps: GetStaticProps = async (context) => {
       },
    }
 }
+

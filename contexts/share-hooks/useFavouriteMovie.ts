@@ -59,8 +59,12 @@ export default function useFavouriteMovie(
    useEffect(() => {
       if (!premiumUser || !favVariables?.userId || !favVariables?.movieId)
          return
+
       getFavouriteMovie({
-         variables: favVariables,
+         variables: {
+            userId: favVariables.userId,
+            movieId: JSON.parse(favVariables.movieId),
+         },
       })
    }, [
       getFavouriteMovie,
@@ -68,7 +72,6 @@ export default function useFavouriteMovie(
       router.asPath,
       premiumUser,
       favVariables.userId,
-      favVariables,
    ])
 
    return {

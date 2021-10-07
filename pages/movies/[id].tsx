@@ -121,7 +121,6 @@ export default function MoviePage(props: PageProps) {
       router.isFallback,
       movieData?.vipServer1,
       movieData?.freeServer1,
-      client,
       userData?.premium,
    ])
 

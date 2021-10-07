@@ -1,7 +1,8 @@
+import { useUpdateHistoryTimer } from '@contexts/global-states/useUpdateHistoryTimer'
 import { useGetWatchHistoryLazyQuery } from '@graphgen'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-
+const setTimer = useUpdateHistoryTimer.getState().setTimer
 export default function useResumeMovie({
    userId,
    season,
@@ -25,7 +26,23 @@ export default function useResumeMovie({
       getHistory({
          variables: { movieUuid: router.query.id as string, user: userId },
       })
-   }, [episode, getHistory, router.query.id, season, userId])
+
+      if (
+         userId &&
+         getHistoryData?.watchHistories[0]?.season === season &&
+         getHistoryData?.watchHistories[0]?.episode === episode
+      ) {
+         return setTimer(false)
+      }
+      setTimer(true)
+   }, [
+      episode,
+      getHistory,
+      getHistoryData?.watchHistories,
+      router.query.id,
+      season,
+      userId,
+   ])
    return {
       getHistoryData,
       getHistoryLoading,

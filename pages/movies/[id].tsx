@@ -17,6 +17,7 @@ import { useAuth } from '@contexts/AuthContext'
 import { useApolloClient } from '@apollo/client'
 import useUpdateHistory from '@contexts/share-hooks/useUpdateHistory'
 import useFavouriteMovie from '@contexts/share-hooks/useFavouriteMovie'
+import { useUpdateHistoryTimer } from '@contexts/global-states/useUpdateHistoryTimer'
 
 const client = initializeApollo()
 export interface PageProps {
@@ -35,7 +36,7 @@ export default function MoviePage(props: PageProps) {
    const serverResult = props.data
    const movieData = serverResult?.getMovie
 
-   const { updateHistoryData } = useUpdateHistory(
+   useUpdateHistory(
       {
          movieId: parseInt(movieData?.id || null),
          movieUuid: movieData?.uuid || null,

@@ -2668,7 +2668,7 @@ export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<May
 
 export type GetFavouriteMoviesQueryVariables = Exact<{
   userId: Scalars['ID'];
-  movieId?: Maybe<Scalars['Int']>;
+  movieId?: Maybe<Scalars['ID']>;
   start?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 }>;
@@ -2849,7 +2849,7 @@ export type GetAllMoviesQueryHookResult = ReturnType<typeof useGetAllMoviesQuery
 export type GetAllMoviesLazyQueryHookResult = ReturnType<typeof useGetAllMoviesLazyQuery>;
 export type GetAllMoviesQueryResult = Apollo.QueryResult<GetAllMoviesQuery, GetAllMoviesQueryVariables>;
 export const GetFavouriteMoviesDocument = gql`
-    query getFavouriteMovies($userId: ID!, $movieId: Int, $start: Int, $limit: Int) {
+    query getFavouriteMovies($userId: ID!, $movieId: ID, $start: Int, $limit: Int) {
   favouriteMovies(
     where: {user_info: $userId, movie: $movieId}
     start: $start

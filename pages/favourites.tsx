@@ -17,6 +17,8 @@ export default function Favourites() {
          getFavouriteMovies({
             variables: {
                userId: userData?.userId,
+               start: 0,
+               limit,
             },
          })
       }
@@ -24,6 +26,7 @@ export default function Favourites() {
       const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
          entries.forEach((entry: IntersectionObserverEntry) => {
             if (entry.isIntersecting && hasMore) {
+               console.log('hello')
                setScrollLoading(true)
                fetchMore({
                   variables: {

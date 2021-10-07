@@ -1,9 +1,4 @@
-query getFavouriteMovies(
-   $userId: ID!
-   $movieId: Int
-   $start: Int
-   $limit: Int
-) {
+query getFavouriteMovies($userId: ID!, $movieId: ID, $start: Int, $limit: Int) {
    favouriteMovies(
       where: { user_info: $userId, movie: $movieId }
       start: $start

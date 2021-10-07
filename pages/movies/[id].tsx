@@ -4,11 +4,7 @@ import {
    GetMovieQuery,
    useGetRelatedMoviesQuery,
    GetMovieQueryResult,
-   useCreateFavouriteMovieMutation,
-   useDeleteFavouriteMovieMutation,
-   useGetFavouriteMoviesLazyQuery,
    Movies,
-   GetFavouriteMoviesDocument,
 } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'
 import { Box, Divider, Container } from '@mui/material'
@@ -18,8 +14,9 @@ import Iframe from '@components/movies/Iframe'
 import RelatedMovies from '@components/movies/RelatedMovies'
 import MovieInfo from '@components/movies/MovieInfo'
 import { useAuth } from '@contexts/AuthContext'
-import { useApolloClient, NetworkStatus } from '@apollo/client'
+import { useApolloClient } from '@apollo/client'
 import useUpdateHistory from '@contexts/share-hooks/useUpdateHistory'
+import useFavouriteMovie from '@contexts/share-hooks/useFavouriteMovie'
 
 const client = initializeApollo()
 export interface PageProps {
@@ -47,25 +44,39 @@ export default function MoviePage(props: PageProps) {
       currentServer
    )
 
-   const [
-      getFavouriteMovie,
+   const {
+      favouriteMovieData,
+      isDisabled,
+      handleAddFavourite,
+      handleDeleteFavourite,
+   } = useFavouriteMovie(
       {
-         data: favouriteMovieData,
-         loading: favouriteMovieLoading,
-         networkStatus: favouriteMovieNetworkStatus,
+         movieId: movieData?.id,
+         userId: userData?.userId,
       },
-   ] = useGetFavouriteMoviesLazyQuery({
-      fetchPolicy: 'network-only',
-      notifyOnNetworkStatusChange: true,
-   })
+      userData?.premium,
+      router
+   )
 
-   const [createFavouriteMovie, { loading: createFavouriteMovieLoading }] =
-      useCreateFavouriteMovieMutation()
+   // const [
+   //    getFavouriteMovie,
+   //    {
+   //       data: favouriteMovieData,
+   //       loading: favouriteMovieLoading,
+   //       networkStatus: favouriteMovieNetworkStatus,
+   //    },
+   // ] = useGetFavouriteMoviesLazyQuery({
+   //    fetchPolicy: 'network-only',
+   //    notifyOnNetworkStatusChange: true,
+   // })
 
-   const [deleteFavouriteMovie, { loading: deleteFavouriteMovieLoading }] =
-      useDeleteFavouriteMovieMutation()
+   // const [createFavouriteMovie, { loading: createFavouriteMovieLoading }] =
+   //    useCreateFavouriteMovieMutation()
 
-   const favouriteMovieId = favouriteMovieData?.favouriteMovies?.[0]?.id
+   // const [deleteFavouriteMovie, { loading: deleteFavouriteMovieLoading }] =
+   //    useDeleteFavouriteMovieMutation()
+
+   // const favouriteMovieId = favouriteMovieData?.favouriteMovies?.[0]?.id
 
    function changeServer(server: string) {
       setCurrentServer(server)
@@ -76,24 +87,24 @@ export default function MoviePage(props: PageProps) {
       setLoading(prop)
    }
 
-   function handleAddFavourite() {
-      createFavouriteMovie({
-         variables: {
-            movieId: movieData?.id,
-            userId: userData?.userId,
-         },
-         refetchQueries: [GetFavouriteMoviesDocument],
-      })
-   }
+   // function handleAddFavourite() {
+   //    createFavouriteMovie({
+   //       variables: {
+   //          movieId: movieData?.id,
+   //          userId: userData?.userId,
+   //       },
+   //       refetchQueries: [GetFavouriteMoviesDocument],
+   //    })
+   // }
 
-   function handleDeleteFavourite() {
-      deleteFavouriteMovie({
-         variables: {
-            movieId: favouriteMovieId,
-         },
-         refetchQueries: [GetFavouriteMoviesDocument],
-      })
-   }
+   // function handleDeleteFavourite() {
+   //    deleteFavouriteMovie({
+   //       variables: {
+   //          movieId: favouriteMovieId,
+   //       },
+   //       refetchQueries: [GetFavouriteMoviesDocument],
+   //    })
+   // }
 
    useEffect(() => {
       // console.log('user', premiumUser);
@@ -113,25 +124,25 @@ export default function MoviePage(props: PageProps) {
       userData?.premium,
    ])
 
-   useEffect(() => {
-      if (!userData?.premium || !userData?.userId || !movieData?.id) return
-      console.log('refetching')
-      console.log('movieId', movieData?.id)
-      getFavouriteMovie({
-         variables: {
-            userId: userData.userId,
-            movieId: parseInt(movieData?.id),
-         },
-      })
-   }, [
-      getFavouriteMovie,
-      movieData?.id,
-      router.asPath,
-      userData?.premium,
-      userData?.userId,
-   ])
+   // useEffect(() => {
+   //    if (!userData?.premium || !userData?.userId || !movieData?.id) return
+   //    console.log('refetching')
+   //    console.log('movieId', movieData?.id)
+   //    getFavouriteMovie({
+   //       variables: {
+   //          userId: userData.userId,
+   //          movieId: movieData?.id,
+   //       },
+   //    })
+   // }, [
+   //    getFavouriteMovie,
+   //    movieData?.id,
+   //    router.asPath,
+   //    userData?.premium,
+   //    userData?.userId,
+   // ])
 
-   console.log('fav data', favouriteMovieData?.favouriteMovies)
+   // console.log('fav data', favouriteMovieData?.favouriteMovies)
    return (
       <Container sx={{ mb: '100px' }}>
          {(router.isFallback || getUserLoading) && <h2>loading</h2>}
@@ -153,13 +164,7 @@ export default function MoviePage(props: PageProps) {
                <MovieInfo
                   movie={movieData as Partial<Movies>}
                   favouriteData={favouriteMovieData}
-                  isDisabled={
-                     !userData?.premium ||
-                     favouriteMovieLoading ||
-                     createFavouriteMovieLoading ||
-                     deleteFavouriteMovieLoading ||
-                     favouriteMovieNetworkStatus === NetworkStatus.refetch
-                  }
+                  isDisabled={isDisabled}
                   handleAddFavourite={handleAddFavourite}
                   handleDeleteFavourite={handleDeleteFavourite}
                />
@@ -196,4 +201,3 @@ export const getStaticProps: GetStaticProps = async (context) => {
       },
    }
 }
-

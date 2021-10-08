@@ -3,7 +3,7 @@ import { setAccessToken } from '@helpers/accessToken'
 import { initializeApollo } from '..'
 const client = initializeApollo()
 export async function createUser(authResult) {
-   const { data, error }: SignUpMutationResult = await client.mutate({
+   const { data, error }: Partial<SignUpMutationResult> = await client.mutate({
       mutation: SignUpDocument,
       variables: { uuid: authResult.user.email },
    })

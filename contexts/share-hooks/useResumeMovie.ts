@@ -35,6 +35,7 @@ export default function useResumeMovie({
          return setTimer(false)
       }
       setTimer(true)
+      return () => setTimer(true) //to update movies if route change from here
    }, [
       episode,
       getHistory,

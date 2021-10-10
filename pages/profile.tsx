@@ -21,6 +21,7 @@ function redirect() {
    setAlreadyLogin(false)
    const provider = new GoogleAuthProvider()
    signInWithRedirect(auth, provider)
+   setAuthLoading(true)
 }
 /**
  * @TODO: put error handle for redirctAuth user canceled or orther

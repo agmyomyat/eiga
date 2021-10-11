@@ -4,13 +4,24 @@ import { NextLinkComposed } from '@components/ui/Link'
 import { useRouter, NextRouter } from 'next/router'
 import { ThemeProvider, useTheme } from '@mui/material/styles'
 import theme from '@components/ui/theme'
+import { useAuth } from '@contexts/AuthContext'
 
 const NavTabsComponent: React.FC = () => {
    const { pathname }: NextRouter = useRouter()
+   const { userData, getUserLoading } = useAuth()
    const theme = useTheme()
    const matches = useMediaQuery(theme.breakpoints.up('sm'))
+   const newNavLinks = navLinks.map((nav) => {
+      if (nav.path === '/favourites') {
+         return userData?.premium || getUserLoading
+            ? nav
+            : { title: 'Pricing', path: '/pricing' }
+      }
+      return nav
+   })
+   console.log('getUserLoaindg', getUserLoading)
    const value =
-      navLinks.map((nav) => nav.path).includes(pathname) && matches
+      newNavLinks.map((nav) => nav.path).includes(pathname) && matches
          ? pathname
          : false
 
@@ -31,7 +42,7 @@ const NavTabsComponent: React.FC = () => {
                },
             }}
          >
-            {navLinks.map((nav) => (
+            {newNavLinks.map((nav) => (
                <Tab
                   key={nav.title}
                   label={nav.title}

@@ -105,6 +105,7 @@ export default function MoviePage(props: PageProps) {
                   isDisabled={isDisabled}
                   handleAddFavourite={handleAddFavourite}
                   handleDeleteFavourite={handleDeleteFavourite}
+                  premium={userData?.premium}
                />
                <Divider />
                <RelatedMovies

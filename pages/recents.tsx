@@ -5,7 +5,7 @@ import Movie from '@components/movies/Movie'
 import { Container, Box, CircularProgress, Typography } from '@mui/material'
 export default function Recents() {
    const [limit, setLimit] = useState<number>(1)
-   const { userData } = useAuth()
+   const { userData, getUserLoading } = useAuth()
    const sentinel = useRef<HTMLDivElement>()
    const [hasMore, setHasMore] = useState<boolean>(true)
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
@@ -22,7 +22,6 @@ export default function Recents() {
             },
          })
       }
-      console.log('limit is ', limit)
       const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
          entries.forEach((entry: IntersectionObserverEntry) => {
             if (entry.isIntersecting && hasMore) {
@@ -62,7 +61,7 @@ export default function Recents() {
    ])
 
    // console.log('userData', userData)
-   if (loading) return <p>Loading</p>
+   if (loading || getUserLoading) return <p>Loading</p>
    return (
       <Container sx={{ mb: '100px' }}>
          <Typography
@@ -72,7 +71,7 @@ export default function Recents() {
                mb: 3,
             }}
          >
-            Watch History
+            Watch Histories
          </Typography>
          {data?.watchHistories ? (
             <>

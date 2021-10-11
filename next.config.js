@@ -6,5 +6,6 @@ module.exports = {
    env: {
       API_URL: process.env.API_URL,
       MEILISEARCH_ENDPOINT: process.env.MEILISEARCH_ENDPOINT,
+      MEILISEARCH_API_KEY: process.env.MEILI_API_KEY,
    },
 }

@@ -6,8 +6,6 @@ interface IBarProps {
 }
 
 const Bar: React.FC<IBarProps> = ({ animationDuration, progress }) => {
-   console.log('progress', progress)
-
    return (
       <Box
          bgcolor="primary.main"

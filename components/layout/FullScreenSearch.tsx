@@ -35,6 +35,7 @@ interface IfullScreen {
    onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
    show: boolean
    loading: boolean
+   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 const FullScreenSearch: React.FC<IfullScreen> = ({
@@ -45,6 +46,7 @@ const FullScreenSearch: React.FC<IfullScreen> = ({
    onChange,
    show,
    loading,
+   onSubmit,
 }) => {
    return (
       <Dialog
@@ -79,6 +81,10 @@ const FullScreenSearch: React.FC<IfullScreen> = ({
                   <ChevronLeftIcon fontSize="large" />
                </IconButton>
                <Box
+                  component="form"
+                  noValidate
+                  role="search"
+                  onSubmit={onSubmit}
                   sx={{
                      position: 'relative',
                      borderRadius: 2,

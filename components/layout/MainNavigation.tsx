@@ -40,10 +40,12 @@ const MainNavigation: React.FC = () => {
       useSearchMovieLazyQuery()
    const [isSearching, setIsSearching] = useState<boolean>(false)
    const keywordIsValid = Boolean(keywords.trim().length > 0)
-   const { pathname }: NextRouter = useRouter()
+   const { pathname, push }: NextRouter = useRouter()
    const isSearchRoute = pathname === SEARCH_ROUTE
    const [openSearch, setOpenSearch] = useState<boolean>(false)
    const [isTyping, setIsTyping] = useState<boolean>(false)
+
+   console.log('searchResults', searchResults)
 
    useEffect(() => {
       if (keywordIsValid) {
@@ -63,6 +65,15 @@ const MainNavigation: React.FC = () => {
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
+      const results = searchResults?.search
+      if (results?.length) {
+         push({
+            pathname: `/${results[0].isSeries ? 'series' : 'movies'}/[id]`,
+            query: { id: results[0].uuid },
+         })
+         setKeywords('')
+         setOpenSearch(false)
+      }
    }
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +95,7 @@ const MainNavigation: React.FC = () => {
 
    const handleSearchClose = () => {
       setOpenSearch(false)
+      setKeywords('')
    }
 
    return (
@@ -169,6 +181,7 @@ const MainNavigation: React.FC = () => {
                               movies={searchResults?.search as Movies[]}
                               value={keywords}
                               onChange={handleChange}
+                              onSubmit={handleSubmit}
                               openSearch={openSearch}
                               handleSearchClose={handleSearchClose}
                               loading={isTyping || queryLoading}

@@ -15,6 +15,7 @@ import DetectOtherLogin from '@components/modals/detectOtherLogin'
 import ErrorHandler from '@components/modals/errorHandler'
 import Progress from '@components/progressBar/Progress'
 import { useProgress } from '@contexts/global-states/useProgress'
+import LoadingModal from '@components/ui/LoadingModal'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -29,6 +30,7 @@ function MyApp(props: MyAppProps) {
    const setIsAnimating = useProgress((state) => state.setIsAnimating)
    const isAnimating = useProgress((state) => state.isAnimating)
    const router: NextRouter = useRouter()
+   const fallbackLoading = router?.isFallback
 
    useEffect(() => {
       const handleStart = () => {
@@ -63,12 +65,13 @@ function MyApp(props: MyAppProps) {
             <ThemeProvider theme={theme}>
                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                <AuthProvider>
+                  <CssBaseline />
                   <Progress isAnimating={isAnimating} />
                   <Layout>
-                     <CssBaseline />
                      <Component {...pageProps} />
                      <DetectOtherLogin />
                      <ErrorHandler />
+                     <LoadingModal open={fallbackLoading} />
                   </Layout>
                </AuthProvider>
             </ThemeProvider>

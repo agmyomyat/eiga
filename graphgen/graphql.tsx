@@ -2770,7 +2770,8 @@ export type SearchMovieQueryVariables = Exact<{
 export type SearchMovieQuery = { __typename?: 'Query', search?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, release_date: number, photo_url: string, isSeries: boolean }>>> };
 
 export type SignUpMutationVariables = Exact<{
-  uuid?: Maybe<Scalars['String']>;
+  uuid: Scalars['String'];
+  fuuid: Scalars['String'];
 }>;
 
 
@@ -3253,8 +3254,8 @@ export type SearchMovieQueryHookResult = ReturnType<typeof useSearchMovieQuery>;
 export type SearchMovieLazyQueryHookResult = ReturnType<typeof useSearchMovieLazyQuery>;
 export type SearchMovieQueryResult = Apollo.QueryResult<SearchMovieQuery, SearchMovieQueryVariables>;
 export const SignUpDocument = gql`
-    mutation signUp($uuid: String) {
-  signupClient(uuid: $uuid) {
+    mutation signUp($uuid: String!, $fuuid: String!) {
+  signupClient(uuid: $uuid, fuuid: $fuuid) {
     ok
     status
     accessToken
@@ -3277,6 +3278,7 @@ export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMut
  * const [signUpMutation, { data, loading, error }] = useSignUpMutation({
  *   variables: {
  *      uuid: // value for 'uuid'
+ *      fuuid: // value for 'fuuid'
  *   },
  * });
  */

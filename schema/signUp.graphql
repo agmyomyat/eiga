@@ -1,5 +1,5 @@
-mutation signUp($uuid: String) {
-   signupClient(uuid: $uuid) {
+mutation signUp($uuid: String!, $fuuid: String!) {
+   signupClient(uuid: $uuid, fuuid: $fuuid) {
       ok
       status
       accessToken

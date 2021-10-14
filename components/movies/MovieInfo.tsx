@@ -2,6 +2,7 @@ import { Box, Typography, Stack, Divider, IconButton } from '@mui/material'
 import { Movies, GetFavouriteMoviesQuery } from '@graphgen'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import { useRouter } from 'next/router'
 
 interface ImovieInfo {
    movie: Partial<Movies>
@@ -10,6 +11,8 @@ interface ImovieInfo {
    handleAddFavourite?: () => void
    handleDeleteFavourite?: () => void
    premium?: boolean
+   currentEpisode?: number
+   currentSeason?: number
 }
 
 const MovieInfo: React.FC<ImovieInfo> = ({
@@ -19,17 +22,36 @@ const MovieInfo: React.FC<ImovieInfo> = ({
    handleAddFavourite,
    handleDeleteFavourite,
    premium,
+   currentEpisode,
+   currentSeason,
 }) => {
+   const router = useRouter()
    const newGenres = movie.genres.map(
       (genre) => genre.name[0].toUpperCase() + genre.name.slice(1)
    )
    const movieBody = movie.body.replace(/<\/?[^>]+(>|$)/g, '')
 
    const isFavourite = !!favouriteData?.favouriteMovies.length
-   const durationHour = parseInt(movie.duration.split(':')[0])
-   const durationMinute = parseInt(movie.duration.split(':')[1])
+   const durationHour =
+      router.pathname.includes('series') || currentEpisode
+         ? parseInt(
+              movie.tv_sery?.season[currentSeason - 1].episodes[
+                 currentEpisode - 1
+              ].duration?.split(':')[0] || null
+           )
+         : parseInt(movie.duration?.split(':')[0] || null)
+   const durationMinute =
+      router.pathname.includes('series') || currentSeason
+         ? parseInt(
+              movie.tv_sery?.season[currentSeason - 1].episodes[
+                 currentEpisode - 1
+              ].duration?.split(':')[1] || null
+           )
+         : parseInt(movie.duration?.split(':')[1] || null)
    const duration = `${
-      durationHour > 0 ? `${durationHour}hr${durationHour > 1 ? 's' : ''}` : ''
+      durationHour > 0
+         ? `${durationHour}hr${durationHour > 1 ? 's' : ''}`
+         : 'not available'
    } ${durationMinute > 0 ? `${durationMinute}min` : ''}`
 
    async function handleClick() {

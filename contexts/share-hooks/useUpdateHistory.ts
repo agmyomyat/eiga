@@ -22,15 +22,23 @@ export default function useUpdateHistory(
    useEffect(() => {
       if (!router.asPath) return
       if (!premiumUser) return
+      if (!prop.movieId || !prop.movieUuid) return
       const timerRef = setTimeout(updateHistory, 5000)
-      console.log('what the hell')
       if (!useTimer) {
          clearTimeout(timerRef)
       }
       return () => {
          clearTimeout(timerRef)
       }
-   }, [premiumUser, router.asPath, updateHistory, currentServer, useTimer])
+   }, [
+      premiumUser,
+      router.asPath,
+      updateHistory,
+      currentServer,
+      useTimer,
+      prop.movieId,
+      prop.movieUuid,
+   ])
    const updateHistoryLoading = loading
    const updateHistoryData = data
    const updateHistoryError = error

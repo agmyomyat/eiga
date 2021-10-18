@@ -4,7 +4,6 @@ import CustomCurrentRefinements from './CurrentRefinement'
 import CustomSearchBox from './SearchBox'
 import Container from '@mui/material/Container'
 import { transformLabels, transformLabel } from '@helpers/tranformGenereLabels'
-<<<<<<< HEAD
 import { useCallback, useEffect, useState } from 'react'
 import { FacetsDistribution, MeiliSearch } from 'meilisearch'
 import { Preview } from '@mui/icons-material'
@@ -153,26 +152,6 @@ export const Search: React.FC = () => {
             refine={refineGenres}
             isRefined={meiliProp.filter.genres}
          />
-=======
-
-const searchClient: InstantMeiliSearchInstance = instantMeiliSearch(
-   process.env.MEILISEARCH_ENDPOINT,
-   '',
-   {
-      paginationTotalHits: 2, // default: 200.
-      // placeholderSearch: false,
-   }
-)
-const CustomIsSeries = CustomRefinementList({ name: 'MovieTypes' })
-const CustomGenres = CustomRefinementList({ name: 'Genres' })
-const CustomRelease_date = CustomRefinementList({ name: 'Release Dates' })
-
-export const Search: React.FC = () => (
-   <InstantSearch searchClient={searchClient} indexName="movies">
-      <Container>
-         <Configure hitsPerPage={30} />
-         <CustomSearchBox />
->>>>>>> main
          <CustomIsSeries
             items={refinementList.isSeries}
             refine={refineIsSeries}

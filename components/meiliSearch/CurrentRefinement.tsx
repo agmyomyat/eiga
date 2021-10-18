@@ -1,5 +1,3 @@
-import { connectCurrentRefinements } from 'react-instantsearch-dom'
-import { CurrentRefinementsProvided } from 'react-instantsearch-core'
 import { Chip, Box } from '@mui/material'
 
 const CurrentRefinements = ({ items, refine }) => {

@@ -14,6 +14,7 @@ import { handleFetch } from '@apollo/index'
 export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>
 export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[]
 export type TGenres = { genres: PartialGenres; name: string }
+
 // const config = { attributes: true, childList: true, subtree: true }
 // function mutationCallback(currentServer, router: NextRouter): MutationCallback {
 //    return function (mutationsList) {
@@ -50,6 +51,7 @@ interface IframeProp {
    vipServer2: string
    changeServer: (server: string) => void
    premiumUser: boolean
+   isSeries: boolean
 }
 
 const Iframe: React.FC<IframeProp> = ({
@@ -63,6 +65,7 @@ const Iframe: React.FC<IframeProp> = ({
    vipServer2,
    changeServer,
    premiumUser,
+   isSeries,
 }) => {
    const refer = React.useRef(null)
    // const _callback = mutationCallback(currentServer, router)
@@ -130,7 +133,7 @@ const Iframe: React.FC<IframeProp> = ({
                   fontSize: { xs: 'caption.fontSize', sm: 'body1.fontSize' },
                }}
             >
-               Movies
+               {isSeries ? 'series' : 'movies'}
             </Typography>
             <Typography
                color="textPrimary"

@@ -16,6 +16,10 @@ import MovieInfo from '@components/movies/MovieInfo'
 import { useAuth } from '@contexts/AuthContext'
 import useUpdateHistory from '@contexts/share-hooks/useUpdateHistory'
 import useFavouriteMovie from '@contexts/share-hooks/useFavouriteMovie'
+import DynamicSkeleton from '@components/skeleton/DynamicSkeleton'
+import IframeSkeleton from '@components/skeleton/IframeSkeleton'
+import MovieInfoSkeleton from '@components/skeleton/MovieInfoSkeleton'
+import RelatedMoviesSkeleton from '@components/skeleton/RelatedMoviesSkeleton'
 
 const client = initializeApollo()
 export interface PageProps {
@@ -83,8 +87,13 @@ export default function MoviePage(props: PageProps) {
    // console.log('fav data', favouriteMovieData?.favouriteMovies)
    return (
       <Container sx={{ mb: '100px' }}>
-         {(router.isFallback || getUserLoading) && <h2>loading</h2>}
-         {!router.isFallback && !getUserLoading && (
+         {router?.isFallback || getUserLoading ? (
+            <DynamicSkeleton>
+               <IframeSkeleton />
+               <MovieInfoSkeleton />
+               <RelatedMoviesSkeleton />
+            </DynamicSkeleton>
+         ) : (
             <Box>
                <Iframe
                   currentServer={currentServer}
@@ -97,6 +106,7 @@ export default function MoviePage(props: PageProps) {
                   vipServer2={movieData.vipServer2}
                   changeServer={changeServer}
                   premiumUser={userData?.premium}
+                  isSeries={movieData.isSeries}
                />
                <Divider />
                <MovieInfo
@@ -108,10 +118,11 @@ export default function MoviePage(props: PageProps) {
                   premium={userData?.premium}
                />
                <Divider />
-               <RelatedMovies
-                  data={relatedMoviesData}
-                  loading={relatedMoviesLoading}
-               />
+               {relatedMoviesLoading ? (
+                  <RelatedMoviesSkeleton />
+               ) : (
+                  <RelatedMovies data={relatedMoviesData} />
+               )}
             </Box>
          )}
       </Container>

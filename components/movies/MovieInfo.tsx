@@ -49,9 +49,7 @@ const MovieInfo: React.FC<ImovieInfo> = ({
            )
          : parseInt(movie.duration?.split(':')[1] || null)
    const duration = `${
-      durationHour > 0
-         ? `${durationHour}hr${durationHour > 1 ? 's' : ''}`
-         : 'not available'
+      durationHour > 0 ? `${durationHour}hr${durationHour > 1 ? 's' : ''}` : ''
    } ${durationMinute > 0 ? `${durationMinute}min` : ''}`
 
    async function handleClick() {
@@ -132,15 +130,7 @@ const MovieInfo: React.FC<ImovieInfo> = ({
                </IconButton>
             </Box>
          )}
-         <Box
-            mt={2}
-            sx={{
-               maxWidth: {
-                  xs: 1,
-                  sm: 0.9,
-               },
-            }}
-         >
+         <Box mt={2}>
             <Typography variant="subtitle2">{movieBody}</Typography>
          </Box>
       </Box>

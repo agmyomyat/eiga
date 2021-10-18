@@ -7,7 +7,6 @@ import {
    Button,
 } from '@mui/material'
 import { ComponentTvSeriesSeason, ComponentTvSeriesEpisodes } from '@graphgen'
-import { styled } from '@mui/material/styles'
 
 type Episodes = Partial<ComponentTvSeriesEpisodes>
 type OmitEpi = Omit<ComponentTvSeriesSeason, 'episodes'>
@@ -93,22 +92,23 @@ export const Episode: React.FC<Iepisode> = ({
 }) => {
    const isSelected = season === currentSeason && id === currentEpisode
 
-   const StyledButton = styled(Button)(({ theme }) => ({
-      width: '100%',
-      margin: theme.spacing(1, 0),
-      [theme.breakpoints.up('sm')]: {
-         width: '70%',
-         maxWidth: 250,
-         marginRight: theme.spacing(2),
-      },
-   }))
    return (
-      <StyledButton
-         onClick={() => handleSelect(season, id)}
-         variant={isSelected ? 'contained' : 'outlined'}
-         color="primary"
+      <Box
+         width={1}
+         my={1}
+         sx={{
+            maxWidth: { sm: 250 },
+            mr: { sm: 2 },
+         }}
       >
-         Episode {id}
-      </StyledButton>
+         <Button
+            sx={{ width: 1 }}
+            onClick={() => handleSelect(season, id)}
+            variant={isSelected ? 'contained' : 'outlined'}
+            color="primary"
+         >
+            Episode {id}
+         </Button>
+      </Box>
    )
 }

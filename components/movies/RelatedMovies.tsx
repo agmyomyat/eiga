@@ -5,17 +5,10 @@ import Movies from '@components/movies/Movies'
 
 interface IRelatedMovies {
    data: GetRelatedMoviesQuery
-   loading: boolean
 }
 
-const RelatedMovies: React.FC<IRelatedMovies> = ({ data, loading }) => {
+const RelatedMovies: React.FC<IRelatedMovies> = ({ data }) => {
    const movies = data?.movies
-
-   // console.log('related movies', movies)
-
-   if (loading) {
-      return <h1>loading</h1>
-   }
 
    return (
       <Box>

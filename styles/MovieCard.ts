@@ -4,14 +4,8 @@ import { styled } from '@mui/material/styles'
 const PREFIX = 'Movie'
 
 export const classes = {
-   root: `${PREFIX}-root`,
-   card: `${PREFIX}-card`,
    skeletonImage: `${PREFIX}-skeletonImage`,
    media: `${PREFIX}-media`,
-   quality: `${PREFIX}-quality`,
-   title: `${PREFIX}-title`,
-   content: `${PREFIX}-content`,
-   type: `${PREFIX}-type`,
 }
 
 export const StyledBox = styled(Box)(() => ({

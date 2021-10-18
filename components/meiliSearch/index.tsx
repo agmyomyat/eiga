@@ -152,6 +152,7 @@ export const Search: React.FC = () => {
             refine={refineGenres}
             isRefined={meiliProp.filter.genres}
          />
+
          <CustomIsSeries
             items={refinementList.isSeries}
             refine={refineIsSeries}

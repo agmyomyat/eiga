@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 
 interface IDynamicSkeletonProps {
-   children: JSX.Element
+   children: JSX.Element | JSX.Element[]
 }
 
 const DynamicSkeleton: React.FC<IDynamicSkeletonProps> = ({ children }) => {

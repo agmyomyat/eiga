@@ -130,15 +130,7 @@ const MovieInfo: React.FC<ImovieInfo> = ({
                </IconButton>
             </Box>
          )}
-         <Box
-            mt={2}
-            sx={{
-               maxWidth: {
-                  xs: 1,
-                  sm: 0.9,
-               },
-            }}
-         >
+         <Box mt={2}>
             <Typography variant="subtitle2">{movieBody}</Typography>
          </Box>
       </Box>

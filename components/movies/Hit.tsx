@@ -86,25 +86,23 @@ const Hit: React.FC<THitProps> = ({
             justifyContent="space-between"
             color="text.disabled"
          >
-            <>
-               {releaseDate[0]}
-               <Typography
-                  component="label"
-                  sx={{
-                     display: 'inline-block',
-                     color: 'primary.main',
-                     fontStyle: 'normal',
-                     fontSize: '0.65rem',
-                     fontWeight: 'bold',
-                     padding: 0.4,
-                     border: 1,
-                     borderColor: 'primary.main',
-                     borderRadius: 1,
-                  }}
-               >
-                  {isSeries[0] === 'series' ? 'Series' : 'Movie'}
-               </Typography>
-            </>
+            {releaseDate[0]}
+            <Typography
+               component="label"
+               sx={{
+                  display: 'inline-block',
+                  color: 'primary.main',
+                  fontStyle: 'normal',
+                  fontSize: '0.65rem',
+                  fontWeight: 'bold',
+                  padding: 0.4,
+                  border: 1,
+                  borderColor: 'primary.main',
+                  borderRadius: 1,
+               }}
+            >
+               {isSeries[0] === 'series' ? 'Series' : 'Movie'}
+            </Typography>
          </Box>
       </Box>
    )

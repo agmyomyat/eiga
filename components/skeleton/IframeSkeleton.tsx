@@ -18,7 +18,7 @@ const NavigationSke: React.FC = () => {
             <Skeleton variant="rectangular" sx={{ pb: '56.25%' }} />
          </Box>
          <Box py={1} my={2}>
-            <Skeleton height={30} width="30%" />
+            <Skeleton height={30} width="40%" />
          </Box>
          <Divider />
       </>

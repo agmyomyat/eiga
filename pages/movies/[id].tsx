@@ -7,7 +7,7 @@ import {
    Movies,
 } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'
-import { Box, Divider, Container, Button } from '@mui/material'
+import { Box, Divider, Container } from '@mui/material'
 import { initializeApollo } from '@apollo/index'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Iframe from '@components/movies/Iframe'
@@ -18,6 +18,8 @@ import useUpdateHistory from '@contexts/share-hooks/useUpdateHistory'
 import useFavouriteMovie from '@contexts/share-hooks/useFavouriteMovie'
 import DynamicSkeleton from '@components/skeleton/DynamicSkeleton'
 import IframeSkeleton from '@components/skeleton/IframeSkeleton'
+import MovieInfoSkeleton from '@components/skeleton/MovieInfoSkeleton'
+import RelatedMoviesSkeleton from '@components/skeleton/RelatedMoviesSkeleton'
 
 const client = initializeApollo()
 export interface PageProps {
@@ -34,8 +36,6 @@ export default function MoviePage(props: PageProps) {
    const { id } = router.query
    const serverResult = props.data
    const movieData = serverResult?.getMovie
-
-   const [show, setShow] = useState(false)
 
    useUpdateHistory(
       {
@@ -87,10 +87,11 @@ export default function MoviePage(props: PageProps) {
    // console.log('fav data', favouriteMovieData?.favouriteMovies)
    return (
       <Container sx={{ mb: '100px' }}>
-         <Button onClick={() => setShow((prev) => !prev)}>Toggle</Button>
-         {show ? (
+         {router?.isFallback || getUserLoading ? (
             <DynamicSkeleton>
                <IframeSkeleton />
+               <MovieInfoSkeleton />
+               <RelatedMoviesSkeleton />
             </DynamicSkeleton>
          ) : (
             <Box>
@@ -117,10 +118,11 @@ export default function MoviePage(props: PageProps) {
                   premium={userData?.premium}
                />
                <Divider />
-               <RelatedMovies
-                  data={relatedMoviesData}
-                  loading={relatedMoviesLoading}
-               />
+               {relatedMoviesLoading ? (
+                  <RelatedMoviesSkeleton />
+               ) : (
+                  <RelatedMovies data={relatedMoviesData} />
+               )}
             </Box>
          )}
       </Container>

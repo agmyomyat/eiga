@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react'
 import { NextRouter, useRouter } from 'next/router'
 import { Movies } from '@graphgen'
 import { Box, Card, Typography } from '@mui/material'
 import Image from 'next/image'
-import Skeleton from '@mui/material/Skeleton'
 
 const Movie = ({
    uuid,
@@ -34,15 +32,6 @@ const Movie = ({
          ? Buffer.from(str).toString('base64')
          : window.btoa(str)
 
-   // will delete later
-   const [show, setShow] = useState<boolean>(false)
-   useEffect(() => {
-      const timeout = setTimeout(() => {
-         setShow(false)
-      }, 3000)
-      return () => clearTimeout(timeout)
-   })
-   //
    return (
       <Box
          onClick={() =>
@@ -52,48 +41,38 @@ const Movie = ({
             })
          }
       >
-         {show ? (
-            <Skeleton
-               variant="rectangular"
+         <Card sx={{ width: 1, cursor: 'pointer', position: 'relative' }}>
+            <Image
+               src={photo_url}
+               blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                  shimmer(700, 475)
+               )}`}
+               layout="responsive"
+               width={600}
+               height={900}
+               alt={name}
+               placeholder="blur"
+            />
+            <Typography
+               component="label"
                sx={{
-                  pb: '150%',
+                  position: 'absolute',
+                  top: '4%',
+                  left: '5%',
+                  fontWeight: 'bold',
+                  py: 0.6,
+                  px: 0.8,
+                  bgcolor: 'primary.main',
+                  borderRadius: 1,
+                  boxShadow: 5,
                }}
-               width="100%"
-            ></Skeleton>
-         ) : (
-            <Card sx={{ width: 1, cursor: 'pointer', position: 'relative' }}>
-               <Image
-                  src={photo_url}
-                  blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                     shimmer(700, 475)
-                  )}`}
-                  layout="responsive"
-                  width={600}
-                  height={900}
-                  alt={name}
-                  placeholder="blur"
-               />
-               <Typography
-                  component="label"
-                  sx={{
-                     position: 'absolute',
-                     top: '4%',
-                     left: '5%',
-                     fontWeight: 'bold',
-                     py: 0.6,
-                     px: 0.8,
-                     bgcolor: 'primary.main',
-                     borderRadius: 1,
-                     boxShadow: 5,
-                  }}
-               >
-                  {quality}
-               </Typography>
-            </Card>
-         )}
+            >
+               {quality}
+            </Typography>
+         </Card>
 
          <Typography sx={{ py: 1 }} variant="subtitle2" component="h4" noWrap>
-            {show ? <Skeleton /> : name}
+            {name}
          </Typography>
 
          <Box
@@ -102,29 +81,23 @@ const Movie = ({
             justifyContent="space-between"
             color="text.disabled"
          >
-            {show ? (
-               <Skeleton width="50%" />
-            ) : (
-               <>
-                  {release_date}
-                  <Typography
-                     component="label"
-                     sx={{
-                        display: 'inline-block',
-                        color: 'primary.main',
-                        fontStyle: 'normal',
-                        fontSize: '0.65rem',
-                        fontWeight: 'bold',
-                        padding: 0.4,
-                        border: 1,
-                        borderColor: 'primary.main',
-                        borderRadius: 1,
-                     }}
-                  >
-                     {isSeries ? 'Series' : 'Movie'}
-                  </Typography>
-               </>
-            )}
+            {release_date}
+            <Typography
+               component="label"
+               sx={{
+                  display: 'inline-block',
+                  color: 'primary.main',
+                  fontStyle: 'normal',
+                  fontSize: '0.65rem',
+                  fontWeight: 'bold',
+                  padding: 0.4,
+                  border: 1,
+                  borderColor: 'primary.main',
+                  borderRadius: 1,
+               }}
+            >
+               {isSeries ? 'Series' : 'Movie'}
+            </Typography>
          </Box>
       </Box>
    )

@@ -1,15 +1,13 @@
-import { useState } from 'react'
-import { connectMenu } from 'react-instantsearch-dom'
-import { MenuProvided } from 'react-instantsearch-core'
+import { useState, useMemo, useEffect } from 'react'
 import { Chip, Box, Grid, Button, MenuItem } from '@mui/material'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import { alpha, styled } from '@mui/material/styles'
 import Menu, { MenuProps } from '@mui/material/Menu'
 function CustomRefinementList({ name }) {
-   const RefinementList = ({ items, refine }: MenuProvided) => {
+   const RefinementList = ({ items, refine, isRefined }) => {
       const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
+      // console.log('items', items)
       const open = Boolean(anchorEl)
-
       const handleOpen = (
          event: React.MouseEvent<HTMLButtonElement, MouseEvent>
       ): void => {
@@ -21,6 +19,7 @@ function CustomRefinementList({ name }) {
       }
 
       const handleRefine = (value: string) => {
+         console.log('value is', typeof value)
          refine(value)
          setAnchorEl(null)
       }
@@ -46,12 +45,12 @@ function CustomRefinementList({ name }) {
                },
             }}
          >
-            {items.map((item) => (
-               <Grid item key={item.label}>
+            {Object.entries(items).map(([key]) => (
+               <Grid item key={key}>
                   <Chip
-                     color={`${item.isRefined ? 'primary' : 'default'}`}
-                     label={`${item.label}`}
-                     onClick={() => refine(item.value)}
+                     color={`${isRefined === `${key}` ? 'primary' : 'default'}`}
+                     label={`${key}`}
+                     onClick={() => refine(key)}
                   />
                </Grid>
             ))}
@@ -117,12 +116,9 @@ function CustomRefinementList({ name }) {
             </Button>
             {/* Will Fix Later */}
             <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
-               {items.map((item) => (
-                  <MenuItem
-                     key={item.label}
-                     onClick={() => handleRefine(item.value)}
-                  >
-                     {item.label}
+               {Object.entries(items).map(([key]) => (
+                  <MenuItem key={key} onClick={() => handleRefine(key)}>
+                     {key}
                   </MenuItem>
                ))}
             </StyledMenu>
@@ -136,7 +132,7 @@ function CustomRefinementList({ name }) {
          </>
       )
    }
-   const CustomRefinementList = connectMenu(RefinementList)
+   const CustomRefinementList = RefinementList
    return CustomRefinementList
 }
 

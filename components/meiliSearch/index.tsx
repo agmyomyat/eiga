@@ -1,45 +1,204 @@
-import {
-   instantMeiliSearch,
-   InstantMeiliSearchInstance,
-} from '@meilisearch/instant-meilisearch'
-import { InstantSearch, Configure } from 'react-instantsearch-dom'
 import CustomHits from './Hits'
 import CustomRefinementList from './RefinementList'
 import CustomCurrentRefinements from './CurrentRefinement'
 import CustomSearchBox from './SearchBox'
 import Container from '@mui/material/Container'
 import { transformLabels, transformLabel } from '@helpers/tranformGenereLabels'
-
-const searchClient: InstantMeiliSearchInstance = instantMeiliSearch(
-   process.env.MEILISEARCH_ENDPOINT,
-   '',
-   {
-      paginationTotalHits: 30, // default: 200.
-   }
-)
+import { useCallback, useEffect, useState } from 'react'
+import { FacetsDistribution, MeiliSearch } from 'meilisearch'
+import { Preview } from '@mui/icons-material'
+const meiliClient = new MeiliSearch({
+   host: 'http://localhost:7700',
+})
+meiliClient
+   .index('movies')
+   .updateFilterableAttributes(['isSeries', 'genres', 'releaseDate'])
 const CustomIsSeries = CustomRefinementList({ name: 'MovieTypes' })
 const CustomGenres = CustomRefinementList({ name: 'Genres' })
 const CustomRelease_date = CustomRefinementList({ name: 'Release Dates' })
-
-export const Search: React.FC = () => (
-   <InstantSearch searchClient={searchClient} indexName="movies">
-      <Container>
-         <Configure hitsPerPage={1} />
-         <CustomSearchBox />
+export const Search: React.FC = () => {
+   const [refinementList, setRefinementList] = useState<FacetsDistribution>()
+   const [meiliProp, setMeiliProp] = useState({
+      hasmore: true,
+      offset: 0,
+      filter: {
+         genres: '',
+         isSeries: '',
+         releaseDate: '',
+      },
+      searchWords: '',
+   })
+   const [hits, setHits] = useState<null | Array<any>>([])
+   function currentRefinements(value) {
+      setHits([])
+      setMeiliProp((prev) => ({
+         ...prev,
+         offset: 0,
+         hasmore: true,
+         searchWords: '',
+         filter: { ...prev.filter, [value]: '' },
+      }))
+   }
+   const refineSearch = useCallback((value: string) => {
+      return (
+         setHits([]),
+         setMeiliProp((prev) => ({
+            ...prev,
+            hasmore: true,
+            offset: 0,
+            filter: {
+               ...prev.filter,
+               genres: '',
+               isSeries: '',
+               releaseDate: '',
+            },
+            searchWords: value,
+         }))
+      )
+   }, [])
+   function refineGenres(value: string) {
+      return (
+         setHits([]),
+         setMeiliProp((prev) => ({
+            ...prev,
+            hasmore: true,
+            offset: 0,
+            filter: {
+               ...prev.filter,
+               genres: prev.filter.genres === value ? '' : value,
+            },
+         }))
+      )
+   }
+   function refineIsSeries(value: string) {
+      return (
+         setHits([]),
+         setMeiliProp((prev) => ({
+            ...prev,
+            hasmore: true,
+            offset: 0,
+            filter: {
+               ...prev.filter,
+               isSeries: prev.filter.isSeries === value ? '' : value,
+            },
+         }))
+      )
+   }
+   function refineReleaseDate(value: string) {
+      return (
+         setHits([]),
+         setMeiliProp((prev) => ({
+            ...prev,
+            hasmore: true,
+            offset: 0,
+            filter: {
+               ...prev.filter,
+               releaseDate: prev.filter.releaseDate === value ? '' : value,
+            },
+         }))
+      )
+   }
+   useEffect(() => {
+      meiliClient
+         .index('movies')
+         .search('', {
+            limit: 0,
+            facetsDistribution: ['genres', 'isSeries', 'releaseDate'],
+         })
+         .then((res) => setRefinementList(res.facetsDistribution))
+   }, [])
+   useEffect(() => {
+      console.log('hits', hits)
+   }, [hits])
+   useEffect(() => {
+      let _var = []
+      if (meiliProp.filter.genres) {
+         _var = [..._var, `genres = ${meiliProp.filter.genres}`]
+      }
+      if (meiliProp.filter.isSeries) {
+         _var = [..._var, `isSeries = ${meiliProp.filter.isSeries}`]
+      }
+      if (meiliProp.filter.releaseDate) {
+         _var = [..._var, `releaseDate = ${meiliProp.filter.releaseDate}`]
+      }
+      meiliClient
+         .index('movies')
+         .search(meiliProp.searchWords, {
+            limit: 5,
+            offset: meiliProp.offset,
+            filter: [..._var],
+         })
+         .then((res) => {
+            console.log('result', res)
+            if (!res.hits.length)
+               return setMeiliProp((prev) => ({ ...prev, hasmore: false }))
+            if (meiliProp.offset)
+               return setHits((prev) => [...prev, ...res.hits])
+            setHits(res.hits)
+         })
+   }, [
+      meiliProp.filter.genres,
+      meiliProp.filter.isSeries,
+      meiliProp.filter.releaseDate,
+      meiliProp.offset,
+      meiliProp.searchWords,
+   ])
+   if (!refinementList) return null
+   return (
+      <>
+         <CustomSearchBox refine={refineSearch} />
+         <CustomGenres
+            items={refinementList.genres}
+            refine={refineGenres}
+            isRefined={meiliProp.filter.genres}
+         />
          <CustomIsSeries
-            attribute="isSeries"
-            transformItems={transformLabels}
+            items={refinementList.isSeries}
+            refine={refineIsSeries}
+            isRefined={meiliProp.filter.isSeries}
          />
          <CustomRelease_date
-            attribute="releaseDate"
-            transformItems={transformLabels}
+            items={refinementList.releaseDate}
+            refine={refineReleaseDate}
+            isRefined={meiliProp.filter.releaseDate}
          />
-         <CustomGenres attribute="genres" transformItems={transformLabels} />
+         <CustomHits
+            hasMore={meiliProp.hasmore}
+            refineNext={() =>
+               setMeiliProp((prev) => ({ ...prev, offset: hits.length }))
+            }
+            hits={hits}
+         />
          <CustomCurrentRefinements
-            clearsQuery
-            transformItems={transformLabel}
+            items={meiliProp.filter}
+            refine={currentRefinements}
          />
-         <CustomHits />
-      </Container>
-   </InstantSearch>
-)
+      </>
+      // <InstantSearch searchClient={searchClient} indexName="movies">
+      //    <Container>
+      //       <Configure hitsPerPage={3} />
+      //       <CustomSearchBox />
+      //       <CustomIsSeries
+      //          attribute="isSeries"
+      //          transformItems={transformLabels}
+      //          operator={'or'}
+      //       />
+      //       <CustomRelease_date
+      //          operator={'or'}
+      //          attribute="releaseDate"
+      //          transformItems={transformLabels}
+      //       />
+      //       <CustomGenres
+      //          operator={'or'}
+      //          attribute="genres"
+      //          transformItems={transformLabels}
+      //       />
+
+      //       <CustomCurrentRefinements
+      //          clearsQuery
+      //          transformItems={transformLabel}
+      //       />
+      //    </Container>
+      // </InstantSearch>
+   )
+}

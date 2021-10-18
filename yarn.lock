@@ -1563,12 +1563,12 @@
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
   integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
 
-"@meilisearch/instant-meilisearch@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@meilisearch/instant-meilisearch/-/instant-meilisearch-0.5.0.tgz#dbad2ff0f7e6ced2cb8ecc176e7b7e82ee34f6b8"
-  integrity sha512-f2pocX10r8MR+dNr4pN7AoUjjGV30hZqBojGiRZRaVkcSm9+TPJ6fDljo1mp6CPMIi6ja3pC/ALSEpAgPINAWg==
+"@meilisearch/instant-meilisearch@^0.5.6":
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/@meilisearch/instant-meilisearch/-/instant-meilisearch-0.5.6.tgz#ab69d635ed115acf4c578310d0b86dc12449e06f"
+  integrity sha512-R3WJ4HTigUuF30kaeYGtDqRA9hiKu74EhoUGjR+XaH1HNcdqF7A/KOAIHJ2dpVsbTCWQcFDchZAc/OIAOK7aMA==
   dependencies:
-    meilisearch "^0.18.1"
+    meilisearch "^0.21.0"
 
 "@mui/core@5.0.0-alpha.47":
   version "5.0.0-alpha.47"
@@ -5155,10 +5155,10 @@ mdn-data@2.0.14:
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.14.tgz#7113fc4281917d63ce29b43446f701e68c25ba50"
   integrity sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==
 
-meilisearch@^0.18.1:
-  version "0.18.2"
-  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.18.2.tgz#e26d33a4bf163b2d96b14015063ec5979a004793"
-  integrity sha512-L65u+yNNtIyai3V1XB7BOq+fAt6MzB2KtsqvaW6GNahPtWCZF9SKvWOl6fjhzH3KOHDyT++A65UoYJP4J7vnVA==
+meilisearch@^0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.21.0.tgz#440f686803314444eb97a821ec143c8d01b33f64"
+  integrity sha512-LBLePf0lgTEHX2vIkdC9AH2a7XITssKTYHBaUjuCnE394Q6ntLmvpYWjGCfv6fqGTv9q9vkfy1kdfYrqL9a2XA==
   dependencies:
     cross-fetch "^3.1.4"
 

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { connectInfiniteHits } from 'react-instantsearch-dom'
 import { InfiniteHitsProvided } from 'react-instantsearch-core'
-import Movies from '@components/movies/Movies'
+import HitsComponent from '@components/movies/Hits'
 
 function Hits({ hits, hasMore, refineNext }: InfiniteHitsProvided) {
    const sentinel = useRef<HTMLDivElement | null>(null)
@@ -26,7 +26,7 @@ function Hits({ hits, hasMore, refineNext }: InfiniteHitsProvided) {
 
    return (
       <>
-         <Movies movies={hits} />
+         <HitsComponent hits={hits} />
          <div id="sentinel" ref={sentinel} />
       </>
    )

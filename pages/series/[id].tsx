@@ -112,7 +112,7 @@ export default function SeriesPage(props: PageProps) {
       setCurrentEpisode(id)
    }
 
-   console.log('getHis', getHistoryData)
+   console.log('seriesData', seriesData)
 
    return (
       <Container sx={{ mb: '100px' }}>
@@ -130,6 +130,7 @@ export default function SeriesPage(props: PageProps) {
                   vipServer2={servers.vipServer2}
                   changeServer={changeServer}
                   premiumUser={userData?.premium}
+                  isSeries={seriesData?.isSeries}
                />
                <Divider />
                <Episodes

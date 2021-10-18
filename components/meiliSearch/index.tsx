@@ -12,9 +12,10 @@ import { transformLabels, transformLabel } from '@helpers/tranformGenereLabels'
 
 const searchClient: InstantMeiliSearchInstance = instantMeiliSearch(
    process.env.MEILISEARCH_ENDPOINT,
-   '46bd992c4b247adc6414afdd55b094ece9869c88494b08a94fd014bd1bb0bd13',
+   '',
    {
       paginationTotalHits: 2, // default: 200.
+      // placeholderSearch: false,
    }
 )
 const CustomIsSeries = CustomRefinementList({ name: 'MovieTypes' })

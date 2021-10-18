@@ -15,6 +15,7 @@ query getSeries($uuid: String!) {
          season {
             seasonID
             episodes {
+               duration
                episodeID
                freeServer1
                freeServer2

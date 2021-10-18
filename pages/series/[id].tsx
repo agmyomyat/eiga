@@ -51,8 +51,8 @@ export default function SeriesPage(props: PageProps) {
    }
    const { updateHistoryData } = useUpdateHistory(
       {
-         movieId: parseInt(seriesData?.id || null),
-         movieUuid: seriesData?.uuid || null,
+         movieId: JSON.parse(seriesData?.id || null),
+         movieUuid: seriesData?.uuid,
          season: currentSeason,
          episode: currentEpisode,
       },
@@ -146,6 +146,8 @@ export default function SeriesPage(props: PageProps) {
                   isDisabled={isDisabled}
                   handleAddFavourite={handleAddFavourite}
                   handleDeleteFavourite={handleDeleteFavourite}
+                  currentEpisode={currentEpisode}
+                  currentSeason={currentSeason}
                />
                <Divider />
             </Box>

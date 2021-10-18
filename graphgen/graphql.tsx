@@ -41,6 +41,7 @@ export type ComponentTvSeriesEpisodeInput = {
   vipServer1?: Maybe<Scalars['String']>;
   vipServer2?: Maybe<Scalars['String']>;
   episodeName?: Maybe<Scalars['String']>;
+  duration?: Maybe<Scalars['Time']>;
 };
 
 export type ComponentTvSeriesEpisodes = {
@@ -52,6 +53,7 @@ export type ComponentTvSeriesEpisodes = {
   vipServer1?: Maybe<Scalars['String']>;
   vipServer2?: Maybe<Scalars['String']>;
   episodeName?: Maybe<Scalars['String']>;
+  duration?: Maybe<Scalars['Time']>;
 };
 
 export type ComponentTvSeriesSeason = {
@@ -2382,6 +2384,7 @@ export type EditComponentTvSeriesEpisodeInput = {
   vipServer1?: Maybe<Scalars['String']>;
   vipServer2?: Maybe<Scalars['String']>;
   episodeName?: Maybe<Scalars['String']>;
+  duration?: Maybe<Scalars['Time']>;
 };
 
 export type EditComponentTvSeriesSeasonInput = {
@@ -2755,7 +2758,7 @@ export type GetSeriesQueryVariables = Exact<{
 }>;
 
 
-export type GetSeriesQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'Movies', id: string, uuid?: Maybe<string>, name: string, release_date: number, body: string, duration: any, Imdb: number, isSeries: boolean, genres?: Maybe<Array<Maybe<{ __typename?: 'Genres', name?: Maybe<string> }>>>, tv_sery?: Maybe<{ __typename?: 'TvSeries', season?: Maybe<Array<Maybe<{ __typename?: 'ComponentTvSeriesSeason', seasonID?: Maybe<number>, episodes?: Maybe<Array<Maybe<{ __typename?: 'ComponentTvSeriesEpisodes', episodeID: number, freeServer1?: Maybe<string>, freeServer2?: Maybe<string>, vipServer1?: Maybe<string>, vipServer2?: Maybe<string> }>>> }>>> }> }> };
+export type GetSeriesQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'Movies', id: string, uuid?: Maybe<string>, name: string, release_date: number, body: string, duration: any, Imdb: number, isSeries: boolean, genres?: Maybe<Array<Maybe<{ __typename?: 'Genres', name?: Maybe<string> }>>>, tv_sery?: Maybe<{ __typename?: 'TvSeries', season?: Maybe<Array<Maybe<{ __typename?: 'ComponentTvSeriesSeason', seasonID?: Maybe<number>, episodes?: Maybe<Array<Maybe<{ __typename?: 'ComponentTvSeriesEpisodes', duration?: Maybe<any>, episodeID: number, freeServer1?: Maybe<string>, freeServer2?: Maybe<string>, vipServer1?: Maybe<string>, vipServer2?: Maybe<string> }>>> }>>> }> }> };
 
 export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3141,6 +3144,7 @@ export const GetSeriesDocument = gql`
       season {
         seasonID
         episodes {
+          duration
           episodeID
           freeServer1
           freeServer2

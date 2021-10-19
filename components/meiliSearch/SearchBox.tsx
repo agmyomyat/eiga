@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react'
-import { connectSearchBox } from 'react-instantsearch-dom'
-import { SearchBoxProvided } from 'react-instantsearch-core'
 import { Box } from '@mui/material'
 import SearchBoxComponent from '@components/movies/SearchBoxComponent'
 
-const SearchBox = ({ refine }: SearchBoxProvided) => {
+const SearchBox = ({ refine }) => {
    const [keywords, setKeywords] = useState<string>('')
 
    useEffect(() => {
@@ -32,6 +30,6 @@ const SearchBox = ({ refine }: SearchBoxProvided) => {
    )
 }
 
-const CustomSearchBox = connectSearchBox(SearchBox)
+const CustomSearchBox = SearchBox
 
 export default CustomSearchBox

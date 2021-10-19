@@ -1,9 +1,7 @@
 import { useEffect, useRef } from 'react'
-import { connectInfiniteHits } from 'react-instantsearch-dom'
-import { InfiniteHitsProvided } from 'react-instantsearch-core'
-import HitsComponent from '@components/movies/Hits'
+import Movies from '@components/movies/Movies'
 
-function Hits({ hits, hasMore, refineNext }: InfiniteHitsProvided) {
+function Hits({ hits, hasMore, refineNext }) {
    const sentinel = useRef<HTMLDivElement | null>(null)
    // console.log('sentinel', sentinel);
 
@@ -11,14 +9,14 @@ function Hits({ hits, hasMore, refineNext }: InfiniteHitsProvided) {
       const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
          entries.forEach((entry: IntersectionObserverEntry) => {
             if (entry.isIntersecting && hasMore) {
-               console.log('refining')
+               // console.log('refining')
                refineNext()
             }
          })
       }
 
       const observer = new IntersectionObserver(onSentinelIntersection, {})
-      console.log('observer', observer)
+      // console.log('observer', observer)
       observer.observe(sentinel.current)
 
       return () => observer.disconnect()
@@ -26,12 +24,12 @@ function Hits({ hits, hasMore, refineNext }: InfiniteHitsProvided) {
 
    return (
       <>
-         <HitsComponent hits={hits} />
+         <Movies movies={hits} />
          <div id="sentinel" ref={sentinel} />
       </>
    )
 }
 
-const CustomHits = connectInfiniteHits(Hits)
+const CustomHits = Hits
 
 export default CustomHits

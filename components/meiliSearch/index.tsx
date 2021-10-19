@@ -146,7 +146,10 @@ export const Search: React.FC = () => {
    if (!refinementList) return null
    return (
       <>
-         <CustomSearchBox refine={refineSearch} />
+         <CustomSearchBox
+            searchWords={meiliProp.searchWords}
+            refine={refineSearch}
+         />
          <CustomGenres
             items={refinementList.genres}
             refine={refineGenres}

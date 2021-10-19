@@ -143,6 +143,12 @@ export const Search: React.FC = () => {
       meiliProp.offset,
       meiliProp.searchWords,
    ])
+   console.log('looping')
+
+   const refineNext = useCallback(() => {
+      setMeiliProp((prev) => ({ ...prev, offset: hits.length }))
+   }, [hits.length])
+   console.log('refinement', refinementList)
    if (!refinementList) return null
    return (
       <>
@@ -164,9 +170,7 @@ export const Search: React.FC = () => {
          />
          <CustomHits
             hasMore={meiliProp.hasmore}
-            refineNext={() =>
-               setMeiliProp((prev) => ({ ...prev, offset: hits.length }))
-            }
+            refineNext={refineNext}
             hits={hits}
          />
          <CustomCurrentRefinements

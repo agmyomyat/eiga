@@ -9,7 +9,6 @@ import {
    Slide,
    Stack,
    Typography,
-   CircularProgress,
 } from '@mui/material'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { TransitionProps } from '@mui/material/transitions'
@@ -17,6 +16,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { alpha } from '@mui/material/styles'
 import { Movies as typeMovies } from '@graphgen'
 import SearchedMovie from '@components/layout/SearchedMovie'
+import SearchedMoviesSkeleton from '@components/skeleton/SearchedMoviesSkeleton'
 
 const Transition = React.forwardRef(function Transition(
    props: TransitionProps & {
@@ -134,15 +134,7 @@ const FullScreenSearch: React.FC<IfullScreen> = ({
          {show && (
             <Stack sx={{ mb: 3, pt: 1 }}>
                {loading ? (
-                  <Box
-                     display="flex"
-                     justifyContent="center"
-                     alignItems="center"
-                     py={5}
-                     mt={5}
-                  >
-                     <CircularProgress />
-                  </Box>
+                  <SearchedMoviesSkeleton items={2} />
                ) : (
                   <>
                      {movies?.length === 0 ? (

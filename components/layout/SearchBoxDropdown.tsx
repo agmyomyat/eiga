@@ -1,6 +1,7 @@
-import { Box, Fade, Typography, CircularProgress } from '@mui/material'
+import { Box, Fade, Typography } from '@mui/material'
 import SearchedMovie from './SearchedMovie'
 import { Movies as typeMovies } from '@graphgen'
+import SearchedMoviesSkeleton from '@components/skeleton/SearchedMoviesSkeleton'
 
 interface Idropdown {
    movies: Partial<typeMovies[]>
@@ -30,14 +31,7 @@ const SearchBoxDropdown: React.FC<Idropdown> = ({
             }}
          >
             {loading ? (
-               <Box
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  py={3}
-               >
-                  <CircularProgress />
-               </Box>
+               <SearchedMoviesSkeleton items={2} />
             ) : (
                <>
                   {movies?.length === 0 ? (

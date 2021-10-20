@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
    Box,
    FormControl,
@@ -25,7 +25,9 @@ const Episodes: React.FC<Iepisodes> = ({
    handleSelect,
 }) => {
    const [season, setSeason] = useState<number>(1)
-
+   useEffect(() => {
+      setSeason(currentSeason)
+   }, [currentSeason])
    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
       setSeason(+event.target.value as number)
    }

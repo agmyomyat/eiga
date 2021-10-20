@@ -57,16 +57,19 @@ export default function SeriesPage(props: PageProps) {
       {
          movieId: JSON.parse(seriesData?.id || null),
          movieUuid: seriesData?.uuid,
-         season: currentSeason,
-         episode: currentEpisode,
+         season: seasons?.[currentSeason - 1].seasonID,
+         episode:
+            seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
+               .episodeID,
       },
       userData?.premium || null,
       currentServer
    )
    const { getHistoryData } = useResumeMovie({
       userId: userData?.userId,
-      season: currentSeason,
-      episode: currentEpisode,
+      season: seasons?.[currentSeason - 1].seasonID,
+      episode:
+         seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1].episodeID,
    })
 
    const {
@@ -85,12 +88,16 @@ export default function SeriesPage(props: PageProps) {
 
    useEffect(() => {
       if (getHistoryData && getHistoryData.watchHistories.length) {
-         console.log('history', getHistoryData)
-         setCurrentEpisode(getHistoryData.watchHistories[0].episode)
-         setCurrentSeason(getHistoryData.watchHistories[0].season)
+         seasons.map((seriesData, index) => {
+            if (seriesData.seasonID === getHistoryData.watchHistories[0].season)
+               setCurrentSeason(index + 1)
+            seriesData.episodes.map((epi, idx) => {
+               if (epi.episodeID === getHistoryData.watchHistories[0].episode)
+                  setCurrentEpisode(idx + 1)
+            })
+         })
       }
-   }, [getHistoryData])
-   console.log('Update History data', updateHistoryData)
+   }, [getHistoryData, seasons])
 
    useEffect(() => {
       // console.log('user', premiumUser);
@@ -115,8 +122,6 @@ export default function SeriesPage(props: PageProps) {
       setCurrentSeason(season)
       setCurrentEpisode(id)
    }
-
-   console.log('seriesData', seriesData)
 
    return (
       <Container sx={{ mb: '100px' }}>

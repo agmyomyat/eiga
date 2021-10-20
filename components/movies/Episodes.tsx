@@ -43,8 +43,8 @@ const Episodes: React.FC<Iepisodes> = ({
                   id: 'select-season',
                }}
             >
-               {seasons.map((season) => (
-                  <option key={season.seasonID} value={season.seasonID}>
+               {seasons.map((season, index) => (
+                  <option key={season.seasonID} value={index + 1}>
                      Season {season.seasonID}
                   </option>
                ))}
@@ -58,10 +58,11 @@ const Episodes: React.FC<Iepisodes> = ({
             overflow="auto"
             my={2}
          >
-            {seasons[season - 1].episodes.map((episode: Episodes) => (
+            {seasons[season - 1].episodes.map((episode: Episodes, index) => (
                <Episode
                   key={episode.episodeID}
-                  id={episode.episodeID}
+                  id={index + 1}
+                  episodeId={episode.episodeID}
                   currentSeason={currentSeason}
                   currentEpisode={currentEpisode}
                   handleSelect={handleSelect}
@@ -81,6 +82,7 @@ interface Iepisode {
    currentSeason: number
    currentEpisode: number
    handleSelect: (season: number, id: number) => void
+   episodeId: number
 }
 
 export const Episode: React.FC<Iepisode> = ({
@@ -89,6 +91,7 @@ export const Episode: React.FC<Iepisode> = ({
    handleSelect,
    currentEpisode,
    currentSeason,
+   episodeId,
 }) => {
    const isSelected = season === currentSeason && id === currentEpisode
 
@@ -107,7 +110,7 @@ export const Episode: React.FC<Iepisode> = ({
             variant={isSelected ? 'contained' : 'outlined'}
             color="primary"
          >
-            Episode {id}
+            Episode {episodeId}
          </Button>
       </Box>
    )

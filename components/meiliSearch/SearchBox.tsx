@@ -16,11 +16,12 @@ const SearchBox = ({ refine, searchWords }) => {
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      refine(keywords)
+      // will fix later
+      // refine(keywords)
    }
 
    return (
-      <Box maxWidth="400px" my={0} mx="auto" py={2}>
+      <Box maxWidth="400px" my={0} mx="auto" py={1}>
          <SearchBoxComponent
             onSubmit={handleSubmit}
             value={keywords}

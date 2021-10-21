@@ -3,14 +3,21 @@ import { Movies } from '@graphgen'
 import { Box, Card, Typography } from '@mui/material'
 import Image from 'next/image'
 
-const Movie = ({
+type TMovies<P, U> = Partial<Omit<P, 'isSeries' | 'release_date'> & U>
+type TSeriesNDate = {
+   isSeries: string[] | boolean
+   release_date: string[] | number
+}
+export type TMovieProps = TMovies<Movies, TSeriesNDate>
+
+const Movie: React.FC<TMovieProps> = ({
    uuid,
    name,
    photo_url,
    release_date,
    quality,
    isSeries,
-}: Partial<Movies>) => {
+}) => {
    const { push }: NextRouter = useRouter()
 
    const shimmer = (w, h) => `
@@ -32,11 +39,18 @@ const Movie = ({
          ? Buffer.from(str).toString('base64')
          : window.btoa(str)
 
+   const newIsSeries =
+      typeof isSeries === 'boolean' ? isSeries : isSeries[0] === 'series'
+   const newReleaseDate =
+      typeof release_date === 'number'
+         ? release_date
+         : parseInt(release_date[0])
+
    return (
       <Box
          onClick={() =>
             push({
-               pathname: `/${isSeries ? 'series' : 'movies'}/[id]`,
+               pathname: `/${newIsSeries ? 'series' : 'movies'}/[id]`,
                query: { id: uuid },
             })
          }
@@ -54,6 +68,7 @@ const Movie = ({
                placeholder="blur"
             />
             <Typography
+               variant="caption"
                component="label"
                sx={{
                   position: 'absolute',
@@ -62,7 +77,8 @@ const Movie = ({
                   fontWeight: 'bold',
                   py: 0.6,
                   px: 0.8,
-                  bgcolor: 'primary.main',
+                  bgcolor: '#fff',
+                  color: 'secondary.main',
                   borderRadius: 1,
                   boxShadow: 5,
                }}
@@ -81,22 +97,22 @@ const Movie = ({
             justifyContent="space-between"
             color="text.disabled"
          >
-            {release_date}
+            {newReleaseDate}
             <Typography
                component="label"
                sx={{
                   display: 'inline-block',
-                  color: 'primary.main',
+                  color: (theme) => theme.palette.text.secondary,
                   fontStyle: 'normal',
                   fontSize: '0.65rem',
-                  fontWeight: 'bold',
-                  padding: 0.4,
+                  fontWeight: 'light',
+                  padding: 0.5,
                   border: 1,
-                  borderColor: 'primary.main',
+                  borderColor: (theme) => theme.palette.text.secondary,
                   borderRadius: 1,
                }}
             >
-               {isSeries ? 'Series' : 'Movie'}
+               {newIsSeries ? 'Series' : 'Movie'}
             </Typography>
          </Box>
       </Box>

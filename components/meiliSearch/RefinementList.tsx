@@ -1,10 +1,46 @@
-import { useState, useMemo, useEffect } from 'react'
-import { Chip, Box, Grid, Button, MenuItem } from '@mui/material'
-import FilterListIcon from '@mui/icons-material/FilterList'
+import { useState } from 'react'
+import { Chip, Box, Button, MenuItem } from '@mui/material'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { alpha, styled } from '@mui/material/styles'
 import Menu, { MenuProps } from '@mui/material/Menu'
+
+const StyledMenu = styled((props: MenuProps) => (
+   <Menu
+      id="refinementList-menu"
+      keepMounted
+      anchorOrigin={{
+         vertical: 'top',
+         horizontal: 'right',
+      }}
+      transformOrigin={{
+         vertical: 'top',
+         horizontal: 'left',
+      }}
+      {...props}
+   />
+))(({ theme }) => ({
+   '& .MuiList-root': {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, minmax(200px, 1fr))',
+      columnGap: 20,
+      padding: theme.spacing(2),
+      backgroundColor: theme.palette.background.paper,
+   },
+   '& .MuiPaper-root': {
+      marginLeft: theme.spacing(2),
+   },
+   '& .MuiMenuItem-root': {
+      paddingRight: theme.spacing(3),
+      '&:hover': {
+         backgroundColor: alpha(theme.palette.secondary.main, 0.8),
+         color: theme.palette.primary.main,
+         borderRadius: theme.shape.borderRadius,
+      },
+   },
+}))
+
 function CustomRefinementList({ name }) {
-   const RefinementList = ({ items, refine, isRefined }) => {
+   const RefinementList = ({ items, refine, isRefined, show }) => {
       const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
       // console.log('items', items)
       const open = Boolean(anchorEl)
@@ -24,73 +60,22 @@ function CustomRefinementList({ name }) {
          setAnchorEl(null)
       }
 
-      const StyledMobileGrid = styled(Grid)(() => ({
-         flexWrap: 'nowrap',
-         overflowX: 'scroll',
-         msOverflowStyle: 'none',
-         scrollbarWidth: 'none',
-         '&::-webkit-scrollbar': {
-            display: 'none',
-         },
-      }))
-
       const MobileFilter = (
-         <StyledMobileGrid
-            container
-            spacing={1}
-            sx={{
-               display: {
-                  xs: 'flex',
-                  sm: 'none',
-               },
-            }}
-         >
-            {Object.entries(items).map(([key]) => (
-               <Grid item key={key}>
-                  <Chip
-                     color={`${isRefined === `${key}` ? 'primary' : 'default'}`}
-                     label={`${key}`}
-                     onClick={() => refine(key)}
-                  />
-               </Grid>
-            ))}
-         </StyledMobileGrid>
+         <>
+            {show &&
+               Object.entries(items).map(([key], i) => (
+                  <Box key={key + i} sx={{ px: 0.6, display: { sm: 'none' } }}>
+                     <Chip
+                        color={`${
+                           isRefined === `${key}` ? 'primary' : 'default'
+                        }`}
+                        label={`${key}`}
+                        onClick={() => refine(key)}
+                     />
+                  </Box>
+               ))}
+         </>
       )
-
-      const StyledMenu = styled((props: MenuProps) => (
-         <Menu
-            id="refinementList-menu"
-            keepMounted
-            anchorOrigin={{
-               vertical: 'top',
-               horizontal: 'right',
-            }}
-            transformOrigin={{
-               vertical: 'top',
-               horizontal: 'left',
-            }}
-            {...props}
-         />
-      ))(({ theme }) => ({
-         '& .MuiList-root': {
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, minmax(200px, 1fr))',
-            columnGap: 20,
-            padding: theme.spacing(2),
-            backgroundColor: theme.palette.background.paper,
-         },
-         '& .MuiPaper-root': {
-            marginLeft: theme.spacing(2),
-         },
-         '& .MuiMenuItem-root': {
-            paddingRight: theme.spacing(3),
-            '&:hover': {
-               backgroundColor: alpha(theme.palette.secondary.main, 0.8),
-               color: theme.palette.primary.main,
-               borderRadius: theme.shape.borderRadius,
-            },
-         },
-      }))
 
       const DesktopFilter = (
          <Box
@@ -102,15 +87,15 @@ function CustomRefinementList({ name }) {
             }}
          >
             <Button
-               aria-controls="simple-menu"
+               id="refinement-toggle-button"
+               aria-controls="refinement-list"
                aria-haspopup="true"
-               variant="contained"
-               color="primary"
-               size="small"
-               sx={{ mr: 3 }}
-               startIcon={<FilterListIcon />}
-               onClick={handleOpen}
+               aria-expanded={open ? 'true' : undefined}
+               variant="outlined"
                disableElevation
+               sx={{ mr: 2, py: 0.9 }}
+               endIcon={<KeyboardArrowDownIcon />}
+               onClick={handleOpen}
             >
                {name}
             </Button>
@@ -135,5 +120,4 @@ function CustomRefinementList({ name }) {
    const CustomRefinementList = RefinementList
    return CustomRefinementList
 }
-
 export default CustomRefinementList

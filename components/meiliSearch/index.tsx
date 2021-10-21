@@ -2,7 +2,9 @@ import CustomHits from './Hits'
 import CustomRefinementList from './RefinementList'
 import CustomCurrentRefinements from './CurrentRefinement'
 import CustomSearchBox from './SearchBox'
-import Container from '@mui/material/Container'
+import MoviesOrSeries from './MoviesOrSeries'
+import { Box, Divider, Button, Typography } from '@mui/material'
+import FilterAltIcon from '@mui/icons-material/FilterAlt'
 import { transformLabels, transformLabel } from '@helpers/tranformGenereLabels'
 import { useCallback, useEffect, useState } from 'react'
 import { FacetsDistribution, MeiliSearch } from 'meilisearch'
@@ -12,11 +14,13 @@ const meiliClient = new MeiliSearch({
 })
 meiliClient
    .index('movies')
-   .updateFilterableAttributes(['isSeries', 'genres', 'releaseDate'])
-const CustomIsSeries = CustomRefinementList({ name: 'MovieTypes' })
+   .updateFilterableAttributes(['isSeries', 'genres', 'release_date'])
+// const CustomIsSeries = CustomRefinementList({ name: 'MovieTypes' })
 const CustomGenres = CustomRefinementList({ name: 'Genres' })
-const CustomRelease_date = CustomRefinementList({ name: 'Release Dates' })
+const CustomReleaseDate = CustomRefinementList({ name: 'Release Dates' })
+
 export const Search: React.FC = () => {
+   const [isGenres, setIsGenres] = useState<boolean>(true)
    const [refinementList, setRefinementList] = useState<FacetsDistribution>()
    const [meiliProp, setMeiliProp] = useState({
       hasmore: true,
@@ -24,7 +28,7 @@ export const Search: React.FC = () => {
       filter: {
          genres: '',
          isSeries: '',
-         releaseDate: '',
+         release_date: '',
       },
       searchWords: '',
    })
@@ -50,7 +54,7 @@ export const Search: React.FC = () => {
                ...prev.filter,
                genres: '',
                isSeries: '',
-               releaseDate: '',
+               release_date: '',
             },
             searchWords: value,
          }))
@@ -93,17 +97,22 @@ export const Search: React.FC = () => {
             offset: 0,
             filter: {
                ...prev.filter,
-               releaseDate: prev.filter.releaseDate === value ? '' : value,
+               release_date: prev.filter.release_date === value ? '' : value,
             },
          }))
       )
    }
+
+   const refineNext = () => {
+      setMeiliProp((prev) => ({ ...prev, offset: hits.length }))
+   }
+
    useEffect(() => {
       meiliClient
          .index('movies')
          .search('', {
             limit: 0,
-            facetsDistribution: ['genres', 'isSeries', 'releaseDate'],
+            facetsDistribution: ['genres', 'isSeries', 'release_date'],
          })
          .then((res) => setRefinementList(res.facetsDistribution))
    }, [])
@@ -118,8 +127,8 @@ export const Search: React.FC = () => {
       if (meiliProp.filter.isSeries) {
          _var = [..._var, `isSeries = ${meiliProp.filter.isSeries}`]
       }
-      if (meiliProp.filter.releaseDate) {
-         _var = [..._var, `releaseDate = ${meiliProp.filter.releaseDate}`]
+      if (meiliProp.filter.release_date) {
+         _var = [..._var, `release_date = ${meiliProp.filter.release_date}`]
       }
       meiliClient
          .index('movies')
@@ -139,15 +148,12 @@ export const Search: React.FC = () => {
    }, [
       meiliProp.filter.genres,
       meiliProp.filter.isSeries,
-      meiliProp.filter.releaseDate,
+      meiliProp.filter.release_date,
       meiliProp.offset,
       meiliProp.searchWords,
    ])
    console.log('looping')
 
-   const refineNext = useCallback(() => {
-      setMeiliProp((prev) => ({ ...prev, offset: hits.length }))
-   }, [hits.length])
    console.log('refinement', refinementList)
    if (!refinementList) return null
    return (
@@ -156,21 +162,78 @@ export const Search: React.FC = () => {
             searchWords={meiliProp.searchWords}
             refine={refineSearch}
          />
-         <CustomGenres
-            items={refinementList.genres}
-            refine={refineGenres}
-            isRefined={meiliProp.filter.genres}
-         />
-         <CustomIsSeries
+
+         <Box
+            sx={{
+               display: { xs: 'block', sm: 'flex' },
+               mt: { xs: 1, sm: 2 },
+               alignItems: 'center',
+            }}
+         >
+            <MoviesOrSeries
+               items={refinementList.isSeries}
+               refine={refineIsSeries}
+            />
+            <Divider sx={{ my: 1, display: { sm: 'none' } }} />
+            <Box
+               sx={{
+                  display: 'flex',
+                  flexWrap: 'nowrap',
+                  overflowX: 'scroll',
+                  msOverflowStyle: 'none',
+                  scrollbarWidth: 'none',
+                  '&::-webkit-scrollbar': {
+                     display: 'none',
+                  },
+               }}
+            >
+               <Button
+                  id="refinement-toggle-button"
+                  aria-controls="refinement-chip-list"
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  variant="outlined"
+                  disableElevation
+                  size="small"
+                  startIcon={<FilterAltIcon />}
+                  onClick={() => setIsGenres((prev) => !prev)}
+                  sx={{
+                     flexShrink: 0,
+                     mr: 0.6,
+                     display: { sm: 'none' },
+                  }}
+               >
+                  <Typography variant="caption">
+                     {isGenres ? 'Genres' : 'Date'}
+                  </Typography>
+               </Button>
+               <Divider
+                  orientation="vertical"
+                  flexItem
+                  sx={{ mx: 1, display: { sm: 'none' } }}
+               />
+               <CustomGenres
+                  items={refinementList.genres}
+                  refine={refineGenres}
+                  isRefined={meiliProp.filter.genres}
+                  show={isGenres}
+               />
+               <CustomReleaseDate
+                  items={refinementList.release_date}
+                  refine={refineReleaseDate}
+                  isRefined={meiliProp.filter.release_date}
+                  show={!isGenres}
+               />
+            </Box>
+            <Divider sx={{ mt: 1, display: { sm: 'none' } }} />
+         </Box>
+
+         {/* <CustomIsSeries
             items={refinementList.isSeries}
             refine={refineIsSeries}
             isRefined={meiliProp.filter.isSeries}
-         />
-         <CustomRelease_date
-            items={refinementList.releaseDate}
-            refine={refineReleaseDate}
-            isRefined={meiliProp.filter.releaseDate}
-         />
+         />*/}
+
          <CustomHits
             hasMore={meiliProp.hasmore}
             refineNext={refineNext}

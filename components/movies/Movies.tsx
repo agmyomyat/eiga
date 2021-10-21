@@ -1,12 +1,11 @@
 import Box from '@mui/material/Box'
-import Movie from './Movie'
-import { Movies as typeMovies } from '@graphgen'
+import Movie, { TMovieProps } from './Movie'
 
 interface IMovies {
-   movies: Partial<typeMovies[]>
+   movies: TMovieProps[]
 }
 
-const Movies = ({ movies }: IMovies) => {
+const Movies: React.FC<IMovies> = ({ movies }) => {
    return (
       <Box
          display="grid"
@@ -22,7 +21,7 @@ const Movies = ({ movies }: IMovies) => {
             },
          }}
       >
-         {movies?.map((movie: Partial<typeMovies>) => (
+         {movies?.map((movie: TMovieProps) => (
             <Movie key={movie.id} {...movie} />
          ))}
       </Box>

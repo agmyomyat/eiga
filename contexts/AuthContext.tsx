@@ -6,8 +6,7 @@ import {
    useCallback,
 } from 'react'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
-import { QueryLazyOptions, useReactiveVar } from '@apollo/client'
-import { gqlInvalidToken, ReactiveValue } from '@apollo/apolloReactiveVar'
+import { QueryLazyOptions } from '@apollo/client'
 import { Exact, useGetUserLazyQuery } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'
 import { useCheckUser } from './global-states/useCheckUser'
@@ -25,7 +24,6 @@ type User = {
 interface IauthContext {
    userData: User
    logOut: () => void
-   reactiveToken: ReactiveValue
    premiumUser: boolean
    getUserLoading: boolean
    getUser: (
@@ -61,7 +59,6 @@ export default function AuthProvider({ children }) {
    })
    const premiumUser: boolean = gqlCurrentUser?.getUserData?.premium || false
    const userData = gqlCurrentUser?.getUserData
-   const reactiveToken = useReactiveVar(gqlInvalidToken)
    const router: NextRouter = useRouter()
    const logOut = useCallback(async () => {
       setAccessToken('')
@@ -83,7 +80,6 @@ export default function AuthProvider({ children }) {
       }
       const _accessToken = getAccessToken()
       if (!_accessToken) return
-      console.log('path', router.asPath)
       if (!router.asPath) return
       getUser()
    }, [checkUser, getUser, logOut, router.asPath, shouldLogOut])
@@ -93,7 +89,6 @@ export default function AuthProvider({ children }) {
       premiumUser,
       getUserLoading,
       logOut,
-      reactiveToken,
       getUser,
    }
 

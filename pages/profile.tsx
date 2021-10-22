@@ -13,6 +13,7 @@ import { useCheckUser } from '@contexts/global-states/useCheckUser'
 import { useAuthLoading } from '@contexts/global-states/useAuthLoading'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import { useAlreadyLogin } from '@contexts/global-states/useAlreadyLogin'
+import ProfileSkeleton from '@components/movies/ProfileSkeleton'
 
 const setAuthLoading = useAuthLoading.getState().setLoading
 const setAlreadyLogin = useAlreadyLogin.getState().setLogin
@@ -72,10 +73,6 @@ export default function Profile() {
       logOut()
    }
 
-   if (getUserLoading || authLoading) {
-      return <h1>Loading...</h1>
-   }
-
    return (
       <Container sx={{ mb: '100px' }}>
          <Typography
@@ -86,143 +83,151 @@ export default function Profile() {
          >
             Profile
          </Typography>
-         {userData?.userName ? (
-            <Box sx={{ mt: 1 }}>
-               <Stack
-                  spacing={2}
-                  justifyContent="center"
-                  alignItems="center"
-                  mt={3}
-                  sx={{
-                     maxWidth: '600px',
-                     mx: 'auto',
-                  }}
-               >
-                  <Paper
-                     sx={{
-                        width: 1,
-                        bgcolor: 'secondary.main',
-                        p: 2,
-                        borderRadius: 3,
-                     }}
-                     elevation={3}
-                  >
-                     <Typography color="textSecondary" sx={{ pb: 2 }}>
-                        Email
-                     </Typography>
-
-                     <Typography>{userData.userName}</Typography>
-                  </Paper>
-
-                  <Paper
-                     sx={{
-                        width: 1,
-                        bgcolor: 'secondary.main',
-                        p: 2,
-                        borderRadius: 3,
-                     }}
-                     elevation={3}
-                  >
-                     <Typography color="textSecondary" sx={{ pb: 2 }}>
-                        Current Plan
-                     </Typography>
-
-                     <Typography>
-                        {userData?.premium ? 'Premium' : 'Free'}
-                     </Typography>
-                  </Paper>
-
-                  <Paper
-                     sx={{
-                        width: 1,
-                        bgcolor: 'secondary.main',
-                        p: 2,
-                        borderRadius: 3,
-                     }}
-                     elevation={3}
-                  >
-                     <Typography color="textSecondary" sx={{ pb: 2 }}>
-                        Verified
-                     </Typography>
-
-                     <Typography>{userData.verify ? 'Yes' : 'No'}</Typography>
-                  </Paper>
-
-                  <Paper
-                     sx={{
-                        width: 1,
-                        bgcolor: 'secondary.main',
-                        p: 2,
-                        borderRadius: 3,
-                     }}
-                     elevation={3}
-                  >
-                     <Typography color="textSecondary" sx={{ pb: 2 }}>
-                        Remaining Time
-                     </Typography>
-
-                     <Typography>26 days</Typography>
-                  </Paper>
-
-                  <Paper
-                     sx={{
-                        width: 1,
-                        bgcolor: 'secondary.main',
-                        p: 2,
-                        borderRadius: 3,
-                     }}
-                     elevation={3}
-                  >
-                     <Typography color="textSecondary" sx={{ pb: 2 }}>
-                        How To Subscribe
-                     </Typography>
-
-                     <Button
-                        color="inherit"
-                        endIcon={<ArrowRightAltIcon />}
-                        onClick={() => push('/pricing')}
-                     >
-                        Go Check For Pricing
-                     </Button>
-                  </Paper>
-
-                  <Button
-                     variant="contained"
-                     color="error"
-                     onClick={handleSignOut}
-                     sx={{
-                        px: 3,
-                        py: 1.5,
-                        width: { xs: 1 },
-                     }}
-                  >
-                     Log Out
-                  </Button>
-               </Stack>
-            </Box>
+         {getUserLoading || authLoading ? (
+            <ProfileSkeleton />
          ) : (
-            // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
-            <Box
-               display="flex"
-               justifyContent="center"
-               alignItems="center"
-               mt={5}
-               py={5}
-               maxWidth={500}
-               mx="auto"
-            >
-               <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{
-                     width: 1,
-                     py: 1,
-                  }}
-                  onClick={() => redirect()}
-               >
-                  Contiune with Google
-               </Button>
-            </Box>
+            <>
+               {userData?.userName ? (
+                  <Box sx={{ mt: 1 }}>
+                     <Stack
+                        spacing={2}
+                        justifyContent="center"
+                        alignItems="center"
+                        mt={3}
+                        sx={{
+                           maxWidth: '600px',
+                           mx: 'auto',
+                        }}
+                     >
+                        <Paper
+                           sx={{
+                              width: 1,
+                              bgcolor: 'secondary.main',
+                              p: 2,
+                              borderRadius: 3,
+                           }}
+                           elevation={3}
+                        >
+                           <Typography color="textSecondary" sx={{ pb: 2 }}>
+                              Email
+                           </Typography>
+
+                           <Typography>{userData.userName}</Typography>
+                        </Paper>
+
+                        <Paper
+                           sx={{
+                              width: 1,
+                              bgcolor: 'secondary.main',
+                              p: 2,
+                              borderRadius: 3,
+                           }}
+                           elevation={3}
+                        >
+                           <Typography color="textSecondary" sx={{ pb: 2 }}>
+                              Current Plan
+                           </Typography>
+
+                           <Typography>
+                              {userData?.premium ? 'Premium' : 'Free'}
+                           </Typography>
+                        </Paper>
+
+                        <Paper
+                           sx={{
+                              width: 1,
+                              bgcolor: 'secondary.main',
+                              p: 2,
+                              borderRadius: 3,
+                           }}
+                           elevation={3}
+                        >
+                           <Typography color="textSecondary" sx={{ pb: 2 }}>
+                              Verified
+                           </Typography>
+
+                           <Typography>
+                              {userData.verify ? 'Yes' : 'No'}
+                           </Typography>
+                        </Paper>
+
+                        <Paper
+                           sx={{
+                              width: 1,
+                              bgcolor: 'secondary.main',
+                              p: 2,
+                              borderRadius: 3,
+                           }}
+                           elevation={3}
+                        >
+                           <Typography color="textSecondary" sx={{ pb: 2 }}>
+                              Remaining Time
+                           </Typography>
+
+                           <Typography>26 days</Typography>
+                        </Paper>
+
+                        <Paper
+                           sx={{
+                              width: 1,
+                              bgcolor: 'secondary.main',
+                              p: 2,
+                              borderRadius: 3,
+                           }}
+                           elevation={3}
+                        >
+                           <Typography color="textSecondary" sx={{ pb: 2 }}>
+                              How To Subscribe
+                           </Typography>
+
+                           <Button
+                              color="inherit"
+                              endIcon={<ArrowRightAltIcon />}
+                              onClick={() => push('/pricing')}
+                           >
+                              Go Check For Pricing
+                           </Button>
+                        </Paper>
+
+                        <Button
+                           variant="contained"
+                           color="error"
+                           onClick={handleSignOut}
+                           sx={{
+                              px: 3,
+                              py: 1.5,
+                              width: { xs: 1 },
+                           }}
+                        >
+                           Log Out
+                        </Button>
+                     </Stack>
+                  </Box>
+               ) : (
+                  // <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
+                  <Box
+                     display="flex"
+                     justifyContent="center"
+                     alignItems="center"
+                     mt={5}
+                     py={5}
+                     maxWidth={500}
+                     mx="auto"
+                  >
+                     <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{
+                           width: 1,
+                           py: 1,
+                        }}
+                        onClick={() => redirect()}
+                     >
+                        Contiune with Google
+                     </Button>
+                  </Box>
+               )}
+            </>
          )}
       </Container>
    )

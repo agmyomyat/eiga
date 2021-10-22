@@ -46,7 +46,6 @@ const MainNavigation: React.FC = () => {
    const isSearchRoute = pathname === SEARCH_ROUTE
    const [openSearch, setOpenSearch] = useState<boolean>(false)
    const [isTyping, setIsTyping] = useState<boolean>(false)
-   const { getUserLoading } = useAuth()
 
    console.log('searchResults', searchResults)
 
@@ -116,7 +115,7 @@ const MainNavigation: React.FC = () => {
                   sx={{ alignItems: 'center', justifyContent: 'space-between' }}
                >
                   {/* Title */}
-                  {getUserLoading || isFallback ? (
+                  {isFallback ? (
                      <NavigationSkeleton />
                   ) : (
                      <>

@@ -21,6 +21,7 @@ import DynamicSkeleton from '@components/skeleton/DynamicSkeleton'
 import IframeSkeleton from '@components/skeleton/IframeSkeleton'
 import EpisodesSkeleton from '@components/skeleton/EpisodesSkeleton'
 import MovieInfoSkeleton from '@components/skeleton/MovieInfoSkeleton'
+import useUpdateViews from '@contexts/share-hooks/useUpdateViews'
 
 const client = initializeApollo()
 
@@ -44,6 +45,7 @@ export default function SeriesPage(props: PageProps) {
    const [currentEpisode, setCurrentEpisode] = useState<number>(1)
    const seasons = seriesData?.tv_sery.season
    const servers = seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
+   useUpdateViews(seriesData.uuid)
 
    function changeServer(server: string) {
       setCurrentServer(server)

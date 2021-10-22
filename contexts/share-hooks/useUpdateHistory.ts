@@ -22,14 +22,13 @@ export default function useUpdateHistory(
    useEffect(() => {
       if (!router.asPath) return
       if (!premiumUser) return
-      if (!prop.movieId || !prop.movieUuid || !prop.episode || !prop.season)
-         return
-      const timerRef = setTimeout(updateHistory, 5000)
+      if (!prop.movieId || !prop.movieUuid) return
+      const _timerRef = setTimeout(updateHistory, 180000)
       if (!useTimer) {
-         clearTimeout(timerRef)
+         clearTimeout(_timerRef)
       }
       return () => {
-         clearTimeout(timerRef)
+         clearTimeout(_timerRef)
       }
    }, [
       premiumUser,

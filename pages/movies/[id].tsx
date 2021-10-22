@@ -20,6 +20,7 @@ import DynamicSkeleton from '@components/skeleton/DynamicSkeleton'
 import IframeSkeleton from '@components/skeleton/IframeSkeleton'
 import MovieInfoSkeleton from '@components/skeleton/MovieInfoSkeleton'
 import RelatedMoviesSkeleton from '@components/skeleton/RelatedMoviesSkeleton'
+import useUpdateViews from '@contexts/share-hooks/useUpdateViews'
 
 const client = initializeApollo()
 export interface PageProps {
@@ -36,6 +37,7 @@ export default function MoviePage(props: PageProps) {
    const { id } = router.query
    const serverResult = props.data
    const movieData = serverResult?.getMovie
+   useUpdateViews(movieData.uuid)
 
    useUpdateHistory(
       {

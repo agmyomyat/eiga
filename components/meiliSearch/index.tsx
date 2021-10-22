@@ -5,10 +5,8 @@ import CustomSearchBox from './SearchBox'
 import MoviesOrSeries from './MoviesOrSeries'
 import { Box, Divider, Button, Typography } from '@mui/material'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
-import { transformLabels, transformLabel } from '@helpers/tranformGenereLabels'
 import { useCallback, useEffect, useState } from 'react'
 import { FacetsDistribution, MeiliSearch } from 'meilisearch'
-import { Preview } from '@mui/icons-material'
 import { SelectChangeEvent } from '@mui/material/Select'
 
 const meiliClient = new MeiliSearch({
@@ -106,9 +104,9 @@ export const Search: React.FC = () => {
       )
    }
 
-   const refineNext = () => {
+   const refineNext = useCallback(() => {
       setMeiliProp((prev) => ({ ...prev, offset: hits.length }))
-   }
+   }, [hits.length])
 
    const handleChange = (event: SelectChangeEvent) => {
       setType(event.target.value as string)
@@ -169,7 +167,6 @@ export const Search: React.FC = () => {
       meiliProp.searchWords,
    ])
 
-   console.log('refinement', refinementList)
    if (!refinementList) return null
    return (
       <>
@@ -259,31 +256,5 @@ export const Search: React.FC = () => {
             hits={hits}
          />
       </>
-      // <InstantSearch searchClient={searchClient} indexName="movies">
-      //    <Container>
-      //       <Configure hitsPerPage={3} />
-      //       <CustomSearchBox />
-      //       <CustomIsSeries
-      //          attribute="isSeries"
-      //          transformItems={transformLabels}
-      //          operator={'or'}
-      //       />
-      //       <CustomRelease_date
-      //          operator={'or'}
-      //          attribute="releaseDate"
-      //          transformItems={transformLabels}
-      //       />
-      //       <CustomGenres
-      //          operator={'or'}
-      //          attribute="genres"
-      //          transformItems={transformLabels}
-      //       />
-
-      //       <CustomCurrentRefinements
-      //          clearsQuery
-      //          transformItems={transformLabel}
-      //       />
-      //    </Container>
-      // </InstantSearch>
    )
 }

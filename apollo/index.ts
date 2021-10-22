@@ -110,17 +110,6 @@ const asyncRefreshTokenLink = setContext(async () => {
    }
 })
 
-/*
-IgnoreTokenRefresh ignore tokenRefreshLink middleware
-if signUp or getUser operations so If any of that two 
-graphql name change,
-they should be changed here too.
-*/
-// const IgnoreTokenRefresh = ApolloLink.split(
-//    ({ operationName }) => operationName !== 'getUser',
-//    asyncRefreshTokenLink
-// )
-
 const authLink = new ApolloLink((operation, forward) => {
    const oldToken = getAccessToken()
    /**
@@ -154,16 +143,6 @@ function createApolloClient() {
             Query: {
                fields: {
                   watchHistories: {
-                     // read(existing, { args: { start, limit } }) {
-                     //    // A read function should always return undefined if existing is
-                     //    // undefined. Returning undefined signals that the field is
-                     //    // missing from the cache, which instructs Apollo Client to
-                     //    // fetch its value from your GraphQL server.
-                     //    console.log('existing', existing)
-                     //    return existing && existing.slice(start, start + limit)
-                     // },
-
-                     // The keyArgs list and merge function are the same as above.
                      keyArgs: false,
                      merge(
                         existing,
@@ -186,16 +165,6 @@ function createApolloClient() {
                      },
                   },
                   favouriteMovies: {
-                     //    // read(existing, { args: { start, limit } }) {
-                     //    //    // A read function should always return undefined if existing is
-                     //    //    // undefined. Returning undefined signals that the field is
-                     //    //    // missing from the cache, which instructs Apollo Client to
-                     //    //    // fetch its value from your GraphQL server.
-                     //    //    console.log('existing', existing)
-                     //    //    return existing && existing.slice(start, start + limit)
-                     //    // },
-
-                     // The keyArgs list and merge function are the same as above.
                      keyArgs: false,
                      merge(
                         existing,

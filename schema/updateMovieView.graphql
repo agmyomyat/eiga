@@ -1,0 +1,5 @@
+mutation UpdateMovieView($uuid: ID!) {
+   updateMovieView(uuid: $uuid) {
+      name
+   }
+}

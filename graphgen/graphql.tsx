@@ -853,6 +853,7 @@ export type Mutation = {
   loginEmbedUploader?: Maybe<Typeloginembeduploader>;
   verifyToken?: Maybe<VerifyTokenPayload>;
   embedRegister?: Maybe<TypeRegisterEmbedUploader>;
+  updateMovieView?: Maybe<Movies>;
   signupClient?: Maybe<ReturnSignup>;
   updateHistory?: Maybe<UpdateMovieReturn>;
 };
@@ -1072,6 +1073,11 @@ export type MutationLoginEmbedUploaderArgs = {
 
 export type MutationEmbedRegisterArgs = {
   input?: Maybe<LoginEmbedInput>;
+};
+
+
+export type MutationUpdateMovieViewArgs = {
+  uuid: Scalars['ID'];
 };
 
 
@@ -2790,6 +2796,13 @@ export type UpdateHistoryMutationVariables = Exact<{
 
 export type UpdateHistoryMutation = { __typename?: 'Mutation', updateHistory?: Maybe<{ __typename?: 'UpdateMovieReturn', status?: Maybe<string>, ok?: Maybe<boolean> }> };
 
+export type UpdateMovieViewMutationVariables = Exact<{
+  uuid: Scalars['ID'];
+}>;
+
+
+export type UpdateMovieViewMutation = { __typename?: 'Mutation', updateMovieView?: Maybe<{ __typename?: 'Movies', name: string }> };
+
 
 export const CreateFavouriteMovieDocument = gql`
     mutation createFavouriteMovie($movieId: ID!, $userId: ID!) {
@@ -3336,3 +3349,36 @@ export function useUpdateHistoryMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateHistoryMutationHookResult = ReturnType<typeof useUpdateHistoryMutation>;
 export type UpdateHistoryMutationResult = Apollo.MutationResult<UpdateHistoryMutation>;
 export type UpdateHistoryMutationOptions = Apollo.BaseMutationOptions<UpdateHistoryMutation, UpdateHistoryMutationVariables>;
+export const UpdateMovieViewDocument = gql`
+    mutation UpdateMovieView($uuid: ID!) {
+  updateMovieView(uuid: $uuid) {
+    name
+  }
+}
+    `;
+export type UpdateMovieViewMutationFn = Apollo.MutationFunction<UpdateMovieViewMutation, UpdateMovieViewMutationVariables>;
+
+/**
+ * __useUpdateMovieViewMutation__
+ *
+ * To run a mutation, you first call `useUpdateMovieViewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMovieViewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMovieViewMutation, { data, loading, error }] = useUpdateMovieViewMutation({
+ *   variables: {
+ *      uuid: // value for 'uuid'
+ *   },
+ * });
+ */
+export function useUpdateMovieViewMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMovieViewMutation, UpdateMovieViewMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMovieViewMutation, UpdateMovieViewMutationVariables>(UpdateMovieViewDocument, options);
+      }
+export type UpdateMovieViewMutationHookResult = ReturnType<typeof useUpdateMovieViewMutation>;
+export type UpdateMovieViewMutationResult = Apollo.MutationResult<UpdateMovieViewMutation>;
+export type UpdateMovieViewMutationOptions = Apollo.BaseMutationOptions<UpdateMovieViewMutation, UpdateMovieViewMutationVariables>;

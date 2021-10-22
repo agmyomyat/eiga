@@ -1,15 +1,7 @@
-import { useState } from 'react'
 import { Box, FormControl, InputLabel, MenuItem } from '@mui/material'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
+import Select from '@mui/material/Select'
 
-const MoviesOrSeries = ({ items, refine }) => {
-   const [type, setType] = useState('')
-
-   const handleChange = (event: SelectChangeEvent) => {
-      setType(event.target.value as string)
-      refine(event.target.value)
-   }
-
+const MoviesOrSeries = ({ items, type, onChange }) => {
    return (
       <Box
          sx={{
@@ -18,17 +10,14 @@ const MoviesOrSeries = ({ items, refine }) => {
             mr: { xs: 0, sm: 2 },
          }}
       >
-         <FormControl
-            sx={{ minWidth: 120, width: { xs: 1, sm: 0 } }}
-            size="small"
-         >
+         <FormControl sx={{ minWidth: 120, width: 1 }} size="small">
             <InputLabel id="demo-simple-select-label">Type</InputLabel>
             <Select
                labelId="demo-simple-select-label"
                id="demo-simple-select"
                value={type}
                label="Type"
-               onChange={handleChange}
+               onChange={onChange}
             >
                <MenuItem value="">
                   <em>None</em>

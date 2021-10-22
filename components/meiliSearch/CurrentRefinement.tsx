@@ -6,23 +6,21 @@ const CurrentRefinements = ({ items, refine }) => {
    return (
       <Box
          sx={{
-            display: {
-               xs: 'none',
-               sm: 'inline-block',
-            },
-            mr: 1,
+            m: 1.5,
+            ml: 0,
          }}
       >
          {Object.entries(items).map(
             ([key, value]) =>
                value && (
-                  <Chip
-                     key={key}
-                     variant="outlined"
-                     color="primary"
-                     label={`${value}`}
-                     onDelete={() => refine(key)}
-                  />
+                  <Box key={key + value} mr={1} display="inline-block">
+                     <Chip
+                        variant="outlined"
+                        color="primary"
+                        label={`${value}`}
+                        onDelete={() => refine(key, value)}
+                     />
+                  </Box>
                )
          )}
       </Box>

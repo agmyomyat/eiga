@@ -9,6 +9,8 @@ import { transformLabels, transformLabel } from '@helpers/tranformGenereLabels'
 import { useCallback, useEffect, useState } from 'react'
 import { FacetsDistribution, MeiliSearch } from 'meilisearch'
 import { Preview } from '@mui/icons-material'
+import { SelectChangeEvent } from '@mui/material/Select'
+
 const meiliClient = new MeiliSearch({
    host: 'http://localhost:7700',
 })
@@ -20,6 +22,7 @@ const CustomGenres = CustomRefinementList({ name: 'Genres' })
 const CustomReleaseDate = CustomRefinementList({ name: 'Release Dates' })
 
 export const Search: React.FC = () => {
+   const [type, setType] = useState('')
    const [isGenres, setIsGenres] = useState<boolean>(true)
    const [refinementList, setRefinementList] = useState<FacetsDistribution>()
    const [meiliProp, setMeiliProp] = useState({
@@ -107,6 +110,19 @@ export const Search: React.FC = () => {
       setMeiliProp((prev) => ({ ...prev, offset: hits.length }))
    }
 
+   const handleChange = (event: SelectChangeEvent) => {
+      setType(event.target.value as string)
+      refineIsSeries(event.target.value)
+   }
+
+   const handleDeleteRefinements = (key: string, value: string) => {
+      if (type === value) {
+         setType('')
+         // delete currentRefinements of isSeries and Type select box change to null.
+      }
+      currentRefinements(key)
+   }
+
    useEffect(() => {
       meiliClient
          .index('movies')
@@ -152,7 +168,6 @@ export const Search: React.FC = () => {
       meiliProp.offset,
       meiliProp.searchWords,
    ])
-   console.log('looping')
 
    console.log('refinement', refinementList)
    if (!refinementList) return null
@@ -172,7 +187,8 @@ export const Search: React.FC = () => {
          >
             <MoviesOrSeries
                items={refinementList.isSeries}
-               refine={refineIsSeries}
+               type={type}
+               onChange={handleChange}
             />
             <Divider sx={{ my: 1, display: { sm: 'none' } }} />
             <Box
@@ -227,7 +243,10 @@ export const Search: React.FC = () => {
             </Box>
             <Divider sx={{ mt: 1, display: { sm: 'none' } }} />
          </Box>
-
+         <CustomCurrentRefinements
+            items={meiliProp.filter}
+            refine={handleDeleteRefinements}
+         />
          {/* <CustomIsSeries
             items={refinementList.isSeries}
             refine={refineIsSeries}
@@ -238,10 +257,6 @@ export const Search: React.FC = () => {
             hasMore={meiliProp.hasmore}
             refineNext={refineNext}
             hits={hits}
-         />
-         <CustomCurrentRefinements
-            items={meiliProp.filter}
-            refine={currentRefinements}
          />
       </>
       // <InstantSearch searchClient={searchClient} indexName="movies">

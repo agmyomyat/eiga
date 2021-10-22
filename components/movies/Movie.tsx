@@ -105,7 +105,6 @@ const Movie: React.FC<TMovieProps> = ({
                   color: (theme) => theme.palette.text.secondary,
                   fontStyle: 'normal',
                   fontSize: '0.65rem',
-                  fontWeight: 'light',
                   padding: 0.5,
                   border: 1,
                   borderColor: (theme) => theme.palette.text.secondary,

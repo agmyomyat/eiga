@@ -45,7 +45,7 @@ export default function SeriesPage(props: PageProps) {
    const [currentEpisode, setCurrentEpisode] = useState<number>(1)
    const seasons = seriesData?.tv_sery.season
    const servers = seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
-   useUpdateViews(seriesData.uuid)
+   useUpdateViews(seriesData?.uuid)
 
    function changeServer(server: string) {
       setCurrentServer(server)

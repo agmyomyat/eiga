@@ -10,7 +10,7 @@ import { FacetsDistribution, MeiliSearch } from 'meilisearch'
 import { SelectChangeEvent } from '@mui/material/Select'
 
 const meiliClient = new MeiliSearch({
-   host: 'http://localhost:7700',
+   host: process.env.MEILISEARCH_ENDPOINT,
 })
 meiliClient
    .index('movies')

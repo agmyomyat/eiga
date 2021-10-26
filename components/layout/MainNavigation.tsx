@@ -17,7 +17,6 @@ import ProfileComponent from '@components/layout/ProfileComponent'
 import SearchBoxDropdown from './SearchBoxDropdown'
 import { useSearchMovieLazyQuery } from '@graphgen'
 import { Movies } from '@graphgen'
-import { useAuth } from '@contexts/AuthContext'
 import NavigationSkeleton from '@components/skeleton/NavigationSkeleton'
 
 interface IhideOnScroll {

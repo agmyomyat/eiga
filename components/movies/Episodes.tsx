@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
    Box,
    FormControl,
@@ -7,7 +7,6 @@ import {
    Button,
 } from '@mui/material'
 import { ComponentTvSeriesSeason, ComponentTvSeriesEpisodes } from '@graphgen'
-import { styled } from '@mui/material/styles'
 
 type Episodes = Partial<ComponentTvSeriesEpisodes>
 type OmitEpi = Omit<ComponentTvSeriesSeason, 'episodes'>
@@ -26,7 +25,9 @@ const Episodes: React.FC<Iepisodes> = ({
    handleSelect,
 }) => {
    const [season, setSeason] = useState<number>(1)
-
+   useEffect(() => {
+      setSeason(currentSeason)
+   }, [currentSeason])
    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
       setSeason(+event.target.value as number)
    }
@@ -44,8 +45,8 @@ const Episodes: React.FC<Iepisodes> = ({
                   id: 'select-season',
                }}
             >
-               {seasons.map((season) => (
-                  <option key={season.seasonID} value={season.seasonID}>
+               {seasons.map((season, index) => (
+                  <option key={season.seasonID} value={index + 1}>
                      Season {season.seasonID}
                   </option>
                ))}
@@ -59,10 +60,11 @@ const Episodes: React.FC<Iepisodes> = ({
             overflow="auto"
             my={2}
          >
-            {seasons[season - 1].episodes.map((episode: Episodes) => (
+            {seasons[season - 1].episodes.map((episode: Episodes, index) => (
                <Episode
                   key={episode.episodeID}
-                  id={episode.episodeID}
+                  id={index + 1}
+                  episodeId={episode.episodeID}
                   currentSeason={currentSeason}
                   currentEpisode={currentEpisode}
                   handleSelect={handleSelect}
@@ -82,6 +84,7 @@ interface Iepisode {
    currentSeason: number
    currentEpisode: number
    handleSelect: (season: number, id: number) => void
+   episodeId: number
 }
 
 export const Episode: React.FC<Iepisode> = ({
@@ -90,25 +93,27 @@ export const Episode: React.FC<Iepisode> = ({
    handleSelect,
    currentEpisode,
    currentSeason,
+   episodeId,
 }) => {
    const isSelected = season === currentSeason && id === currentEpisode
 
-   const StyledButton = styled(Button)(({ theme }) => ({
-      width: '100%',
-      margin: theme.spacing(1, 0),
-      [theme.breakpoints.up('sm')]: {
-         width: '70%',
-         maxWidth: 250,
-         marginRight: theme.spacing(2),
-      },
-   }))
    return (
-      <StyledButton
-         onClick={() => handleSelect(season, id)}
-         variant={isSelected ? 'contained' : 'outlined'}
-         color="primary"
+      <Box
+         width={1}
+         my={1}
+         sx={{
+            maxWidth: { sm: 250 },
+            mr: { sm: 2 },
+         }}
       >
-         Episode {id}
-      </StyledButton>
+         <Button
+            sx={{ width: 1 }}
+            onClick={() => handleSelect(season, id)}
+            variant={isSelected ? 'contained' : 'outlined'}
+            color="primary"
+         >
+            Episode {episodeId}
+         </Button>
+      </Box>
    )
 }

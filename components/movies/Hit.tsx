@@ -3,54 +3,46 @@ import { Movies } from '@graphgen'
 import { Box, Card, Typography } from '@mui/material'
 import Image from 'next/image'
 
-type TMovies<P, U> = Partial<Omit<P, 'isSeries' | 'release_date'> & U>
-type TSeriesNDate = {
-   isSeries: string[] | boolean
-   release_date: string[] | number
-}
-export type TMovieProps = TMovies<Movies, TSeriesNDate>
+type TMovies<P, U> = Partial<Omit<P, 'isSeries' | 'releaseDate'> & U>
+type TSeriesNDate<T> = { isSeries: T[]; releaseDate: T[] }
+export type THitProps = TMovies<Movies, TSeriesNDate<string>>
 
-const Movie: React.FC<TMovieProps> = ({
-   uuid,
+const Hit: React.FC<THitProps> = ({
    name,
-   photo_url,
-   release_date,
+   uuid,
    quality,
+   photo_url,
+   releaseDate,
    isSeries,
 }) => {
    const { push }: NextRouter = useRouter()
 
-   const shimmer = (w, h) => `
-<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <linearGradient id="g">
-      <stop stop-color="#333" offset="20%" />
-      <stop stop-color="#222" offset="50%" />
-      <stop stop-color="#333" offset="70%" />
-    </linearGradient>
-  </defs>
-  <rect width="${w}" height="${h}" fill="#333" />
-  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
-  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
-</svg>`
+   const shimmer = (w: number, h: number): string => `
+ <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <defs>
+     <linearGradient id="g">
+       <stop stop-color="#333" offset="20%" />
+       <stop stop-color="#222" offset="50%" />
+       <stop stop-color="#333" offset="70%" />
+     </linearGradient>
+   </defs>
+   <rect width="${w}" height="${h}" fill="#333" />
+   <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
+   <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
+ </svg>`
 
-   const toBase64 = (str) =>
+   const toBase64 = (str: string) =>
       typeof window === 'undefined'
          ? Buffer.from(str).toString('base64')
          : window.btoa(str)
-
-   const newIsSeries =
-      typeof isSeries === 'boolean' ? isSeries : isSeries[0] === 'series'
-   const newReleaseDate =
-      typeof release_date === 'number'
-         ? release_date
-         : parseInt(release_date[0])
 
    return (
       <Box
          onClick={() =>
             push({
-               pathname: `/${newIsSeries ? 'series' : 'movies'}/[id]`,
+               pathname: `/${
+                  isSeries[0] === 'series' ? 'series' : 'movies'
+               }/[id]`,
                query: { id: uuid },
             })
          }
@@ -68,7 +60,6 @@ const Movie: React.FC<TMovieProps> = ({
                placeholder="blur"
             />
             <Typography
-               variant="caption"
                component="label"
                sx={{
                   position: 'absolute',
@@ -77,8 +68,7 @@ const Movie: React.FC<TMovieProps> = ({
                   fontWeight: 'bold',
                   py: 0.6,
                   px: 0.8,
-                  bgcolor: '#fff',
-                  color: 'secondary.main',
+                  bgcolor: 'primary.main',
                   borderRadius: 1,
                   boxShadow: 5,
                }}
@@ -90,32 +80,32 @@ const Movie: React.FC<TMovieProps> = ({
          <Typography sx={{ py: 1 }} variant="subtitle2" component="h4" noWrap>
             {name}
          </Typography>
-
          <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
             color="text.disabled"
          >
-            {newReleaseDate}
+            {releaseDate[0]}
             <Typography
                component="label"
                sx={{
                   display: 'inline-block',
-                  color: (theme) => theme.palette.text.secondary,
+                  color: 'primary.main',
                   fontStyle: 'normal',
                   fontSize: '0.65rem',
-                  padding: 0.5,
+                  fontWeight: 'bold',
+                  padding: 0.4,
                   border: 1,
-                  borderColor: (theme) => theme.palette.text.secondary,
+                  borderColor: 'primary.main',
                   borderRadius: 1,
                }}
             >
-               {newIsSeries ? 'Series' : 'Movie'}
+               {isSeries[0] === 'series' ? 'Series' : 'Movie'}
             </Typography>
          </Box>
       </Box>
    )
 }
 
-export default Movie
+export default Hit

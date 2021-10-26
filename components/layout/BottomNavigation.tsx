@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react'
 import { useRouter, NextRouter } from 'next/router'
 import { BottomNavigation, BottomNavigationAction } from '@mui/material'
+import { useAuth } from '@contexts/AuthContext'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined'
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined'
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined'
 
 const MobileNavigation: React.FC = () => {
    const { push, pathname }: NextRouter = useRouter()
    const [value, setValue] = useState(pathname)
+   const { userData, getUserLoading } = useAuth()
 
    useEffect(() => {
       const dynamicRoutes = ['/movies/[id]', '/series/[id]']
@@ -56,11 +59,19 @@ const MobileNavigation: React.FC = () => {
             value="/recents"
             icon={<HistoryOutlinedIcon />}
          />
-         <BottomNavigationAction
-            label="Favourites"
-            value="/favourites"
-            icon={<FavoriteBorderOutlinedIcon />}
-         />
+         {userData?.premium || getUserLoading ? (
+            <BottomNavigationAction
+               label="Favourites"
+               value="/favourites"
+               icon={<FavoriteBorderOutlinedIcon />}
+            />
+         ) : (
+            <BottomNavigationAction
+               label="Pricing"
+               value="/pricing"
+               icon={<LocalOfferOutlinedIcon />}
+            />
+         )}
       </BottomNavigation>
    )
 }

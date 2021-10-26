@@ -1,33 +1,32 @@
-import { connectCurrentRefinements } from 'react-instantsearch-dom'
-import { CurrentRefinementsProvided } from 'react-instantsearch-core'
 import { Chip, Box } from '@mui/material'
 
-const CurrentRefinements = ({ items, refine }: CurrentRefinementsProvided) => {
-   console.log('items', items)
+const CurrentRefinements = ({ items, refine }) => {
+   // console.log('items', items)
 
    return (
       <Box
          sx={{
-            display: {
-               xs: 'none',
-               sm: 'inline-block',
-            },
-            mr: 1,
+            m: 1.5,
+            ml: 0,
          }}
       >
-         {items.map((item) => (
-            <Chip
-               key={item.label}
-               variant="outlined"
-               color="primary"
-               label={`${item.currentRefinement}`}
-               onDelete={() => refine(item.value)}
-            />
-         ))}
+         {Object.entries(items).map(
+            ([key, value]) =>
+               value && (
+                  <Box key={key + value} mr={1} display="inline-block">
+                     <Chip
+                        variant="outlined"
+                        color="primary"
+                        label={`${value}`}
+                        onDelete={() => refine(key, value)}
+                     />
+                  </Box>
+               )
+         )}
       </Box>
    )
 }
 
-const CustomCurrentRefinements = connectCurrentRefinements(CurrentRefinements)
+const CustomCurrentRefinements = CurrentRefinements
 
 export default CustomCurrentRefinements

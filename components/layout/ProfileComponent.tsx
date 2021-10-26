@@ -58,6 +58,7 @@ const ProfileComponent: React.FC = () => {
             sx={{
                '& .MuiPaper-root': {
                   backgroundImage: 'none',
+                  // transition: 'none !important',
                },
             }}
             id="menu-appbar"

@@ -1,26 +1,27 @@
 import { useEffect, useState } from 'react'
-import { connectSearchBox } from 'react-instantsearch-dom'
-import { SearchBoxProvided } from 'react-instantsearch-core'
 import { Box } from '@mui/material'
 import SearchBoxComponent from '@components/movies/SearchBoxComponent'
 
-const SearchBox = ({ refine }: SearchBoxProvided) => {
+const SearchBox = ({ refine, searchWords }) => {
    const [keywords, setKeywords] = useState<string>('')
 
    useEffect(() => {
+      if (!keywords && !searchWords) return
+      if (keywords === searchWords) return
       const timeout = setTimeout(() => {
          refine(keywords)
       }, 500)
       return () => clearTimeout(timeout)
-   }, [keywords, refine])
+   }, [keywords, refine, searchWords])
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      refine(keywords)
+      // will fix later
+      // refine(keywords)
    }
 
    return (
-      <Box maxWidth="400px" my={0} mx="auto" py={2}>
+      <Box maxWidth="400px" my={0} mx="auto" py={1}>
          <SearchBoxComponent
             onSubmit={handleSubmit}
             value={keywords}
@@ -32,6 +33,6 @@ const SearchBox = ({ refine }: SearchBoxProvided) => {
    )
 }
 
-const CustomSearchBox = connectSearchBox(SearchBox)
+const CustomSearchBox = SearchBox
 
 export default CustomSearchBox

@@ -5,7 +5,7 @@ const client = initializeApollo()
 export async function createUser(authResult) {
    const { data, error }: Partial<SignUpMutationResult> = await client.mutate({
       mutation: SignUpDocument,
-      variables: { uuid: authResult.user.email },
+      variables: { uuid: authResult.user.email, fuuid: authResult.user.uid },
    })
    console.log('firebase callback', data)
    setAccessToken(data.signupClient.accessToken)

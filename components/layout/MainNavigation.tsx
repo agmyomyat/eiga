@@ -17,6 +17,8 @@ import ProfileComponent from '@components/layout/ProfileComponent'
 import SearchBoxDropdown from './SearchBoxDropdown'
 import { useSearchMovieLazyQuery } from '@graphgen'
 import { Movies } from '@graphgen'
+import { useAuth } from '@contexts/AuthContext'
+import NavigationSkeleton from '@components/skeleton/NavigationSkeleton'
 
 interface IhideOnScroll {
    children: React.ReactElement
@@ -40,10 +42,13 @@ const MainNavigation: React.FC = () => {
       useSearchMovieLazyQuery()
    const [isSearching, setIsSearching] = useState<boolean>(false)
    const keywordIsValid = Boolean(keywords.trim().length > 0)
-   const { pathname }: NextRouter = useRouter()
+   const { pathname, push, isFallback }: NextRouter = useRouter()
    const isSearchRoute = pathname === SEARCH_ROUTE
    const [openSearch, setOpenSearch] = useState<boolean>(false)
    const [isTyping, setIsTyping] = useState<boolean>(false)
+   const { getUserLoading } = useAuth()
+
+   console.log('searchResults', searchResults)
 
    useEffect(() => {
       if (keywordIsValid) {
@@ -63,6 +68,15 @@ const MainNavigation: React.FC = () => {
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
+      const results = searchResults?.search
+      if (results?.length) {
+         push({
+            pathname: `/${results[0].isSeries ? 'series' : 'movies'}/[id]`,
+            query: { id: results[0].uuid },
+         })
+         setKeywords('')
+         setOpenSearch(false)
+      }
    }
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +98,7 @@ const MainNavigation: React.FC = () => {
 
    const handleSearchClose = () => {
       setOpenSearch(false)
+      setKeywords('')
    }
 
    return (
@@ -101,83 +116,97 @@ const MainNavigation: React.FC = () => {
                   sx={{ alignItems: 'center', justifyContent: 'space-between' }}
                >
                   {/* Title */}
-                  <Box display="flex" alignItems="center" mr={5}>
-                     <Typography
-                        variant="h5"
-                        component="h2"
-                        noWrap
-                        sx={{
-                           flexGrow: 1,
-                           flexShrink: 0,
-                           mr: 2,
-                        }}
-                     >
-                        EIGA
-                     </Typography>
-
-                     {/* will delete now */}
-                     <NavTabs />
-                     {/* will delete now */}
-                  </Box>
-                  {/* Profile avatar */}
-                  <Box
-                     display="flex"
-                     alignItems="center"
-                     justifyContent="flex-end"
-                     width={1}
-                  >
-                     {!isSearchRoute && (
-                        <>
-                           {/* Desktop Search */}
-                           <Box
-                              width="100%"
-                              maxWidth="400px"
-                              mr={3}
-                              position="relative"
-                              sx={{ display: { xs: 'none', md: 'block' } }}
-                           >
-                              <SearchBoxComponent
-                                 value={keywords}
-                                 onChange={handleChange}
-                                 onSubmit={handleSubmit}
-                                 onFocus={handleFocus}
-                                 onBlur={handleBlur}
-                              />
-
-                              <SearchBoxDropdown
-                                 show={keywordIsValid && isSearching}
-                                 loading={isTyping || queryLoading}
-                                 movies={searchResults?.search as Movies[]}
-                                 handleBlur={handleBlur}
-                              />
-                           </Box>
-
-                           {/* Mobile Search */}
-                           <IconButton
-                              aria-label="search box"
-                              aria-controls="searchbox-appbar"
-                              aria-haspopup="true"
-                              color="inherit"
-                              onClick={handleSearchOpen}
+                  {getUserLoading || isFallback ? (
+                     <NavigationSkeleton />
+                  ) : (
+                     <>
+                        <Box display="flex" alignItems="center" mr={5}>
+                           <Typography
+                              variant="h5"
+                              component="h2"
+                              noWrap
                               sx={{
-                                 display: { xs: 'inline-flex', md: 'none' },
+                                 flexGrow: 1,
+                                 flexShrink: 0,
+                                 mr: 2,
                               }}
                            >
-                              <SearchIcon fontSize="large" />
-                           </IconButton>
-                           <FullScreenSearch
-                              movies={searchResults?.search as Movies[]}
-                              value={keywords}
-                              onChange={handleChange}
-                              openSearch={openSearch}
-                              handleSearchClose={handleSearchClose}
-                              loading={isTyping || queryLoading}
-                              show={keywordIsValid}
-                           />
-                        </>
-                     )}
-                     <ProfileComponent />
-                  </Box>
+                              EIGA
+                           </Typography>
+
+                           {/* will delete now */}
+                           <NavTabs />
+                           {/* will delete now */}
+                        </Box>
+                        {/* Profile avatar */}
+                        <Box
+                           display="flex"
+                           alignItems="center"
+                           justifyContent="flex-end"
+                           width={1}
+                        >
+                           {!isSearchRoute && (
+                              <>
+                                 {/* Desktop Search */}
+                                 <Box
+                                    width="100%"
+                                    maxWidth="400px"
+                                    mr={3}
+                                    position="relative"
+                                    sx={{
+                                       display: { xs: 'none', md: 'block' },
+                                    }}
+                                 >
+                                    <SearchBoxComponent
+                                       value={keywords}
+                                       onChange={handleChange}
+                                       onSubmit={handleSubmit}
+                                       onFocus={handleFocus}
+                                       onBlur={handleBlur}
+                                    />
+
+                                    <SearchBoxDropdown
+                                       show={keywordIsValid && isSearching}
+                                       loading={isTyping || queryLoading}
+                                       movies={
+                                          searchResults?.search as Movies[]
+                                       }
+                                       handleBlur={handleBlur}
+                                    />
+                                 </Box>
+
+                                 {/* Mobile Search */}
+                                 <IconButton
+                                    aria-label="search box"
+                                    aria-controls="searchbox-appbar"
+                                    aria-haspopup="true"
+                                    color="inherit"
+                                    onClick={handleSearchOpen}
+                                    sx={{
+                                       display: {
+                                          xs: 'inline-flex',
+                                          md: 'none',
+                                       },
+                                    }}
+                                 >
+                                    <SearchIcon fontSize="large" />
+                                 </IconButton>
+                                 <FullScreenSearch
+                                    movies={searchResults?.search as Movies[]}
+                                    value={keywords}
+                                    onChange={handleChange}
+                                    onSubmit={handleSubmit}
+                                    openSearch={openSearch}
+                                    handleSearchClose={handleSearchClose}
+                                    loading={isTyping || queryLoading}
+                                    show={keywordIsValid}
+                                 />
+                              </>
+                           )}
+                           <ProfileComponent />
+                        </Box>
+                     </>
+                  )}
                </Toolbar>
             </AppBar>
          </HideOnScroll>

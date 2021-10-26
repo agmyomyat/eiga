@@ -17,6 +17,11 @@ import { useApolloClient } from '@apollo/client'
 import useUpdateHistory from '@contexts/share-hooks/useUpdateHistory'
 import useResumeMovie from '@contexts/share-hooks/useResumeMovie'
 import useFavouriteMovie from '@contexts/share-hooks/useFavouriteMovie'
+import DynamicSkeleton from '@components/skeleton/DynamicSkeleton'
+import IframeSkeleton from '@components/skeleton/IframeSkeleton'
+import EpisodesSkeleton from '@components/skeleton/EpisodesSkeleton'
+import MovieInfoSkeleton from '@components/skeleton/MovieInfoSkeleton'
+import useUpdateViews from '@contexts/share-hooks/useUpdateViews'
 
 const client = initializeApollo()
 
@@ -40,6 +45,7 @@ export default function SeriesPage(props: PageProps) {
    const [currentEpisode, setCurrentEpisode] = useState<number>(1)
    const seasons = seriesData?.tv_sery.season
    const servers = seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
+   useUpdateViews(seriesData?.uuid)
 
    function changeServer(server: string) {
       setCurrentServer(server)
@@ -51,18 +57,21 @@ export default function SeriesPage(props: PageProps) {
    }
    const { updateHistoryData } = useUpdateHistory(
       {
-         movieId: parseInt(seriesData?.id || null),
-         movieUuid: seriesData?.uuid || null,
-         season: currentSeason,
-         episode: currentEpisode,
+         movieId: JSON.parse(seriesData?.id || null),
+         movieUuid: seriesData?.uuid,
+         season: seasons?.[currentSeason - 1].seasonID,
+         episode:
+            seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
+               .episodeID,
       },
       userData?.premium || null,
       currentServer
    )
    const { getHistoryData } = useResumeMovie({
       userId: userData?.userId,
-      season: currentSeason,
-      episode: currentEpisode,
+      season: seasons?.[currentSeason - 1].seasonID,
+      episode:
+         seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1].episodeID,
    })
 
    const {
@@ -81,12 +90,16 @@ export default function SeriesPage(props: PageProps) {
 
    useEffect(() => {
       if (getHistoryData && getHistoryData.watchHistories.length) {
-         console.log('history', getHistoryData)
-         setCurrentEpisode(getHistoryData.watchHistories[0].episode)
-         setCurrentSeason(getHistoryData.watchHistories[0].season)
+         seasons.map((seriesData, index) => {
+            if (seriesData.seasonID === getHistoryData.watchHistories[0].season)
+               setCurrentSeason(index + 1)
+            seriesData.episodes.map((epi, idx) => {
+               if (epi.episodeID === getHistoryData.watchHistories[0].episode)
+                  setCurrentEpisode(idx + 1)
+            })
+         })
       }
-   }, [getHistoryData])
-   console.log('Update History data', updateHistoryData)
+   }, [getHistoryData, seasons])
 
    useEffect(() => {
       // console.log('user', premiumUser);
@@ -112,12 +125,15 @@ export default function SeriesPage(props: PageProps) {
       setCurrentEpisode(id)
    }
 
-   console.log('getHis', getHistoryData)
-
    return (
       <Container sx={{ mb: '100px' }}>
-         {(router.isFallback || getUserLoading) && <h2>loading</h2>}
-         {!router.isFallback && !getUserLoading && (
+         {router?.isFallback || getUserLoading ? (
+            <DynamicSkeleton>
+               <IframeSkeleton />
+               <EpisodesSkeleton />
+               <MovieInfoSkeleton />
+            </DynamicSkeleton>
+         ) : (
             <Box>
                <Iframe
                   currentServer={currentServer}
@@ -130,6 +146,7 @@ export default function SeriesPage(props: PageProps) {
                   vipServer2={servers.vipServer2}
                   changeServer={changeServer}
                   premiumUser={userData?.premium}
+                  isSeries={seriesData?.isSeries}
                />
                <Divider />
                <Episodes
@@ -145,6 +162,8 @@ export default function SeriesPage(props: PageProps) {
                   isDisabled={isDisabled}
                   handleAddFavourite={handleAddFavourite}
                   handleDeleteFavourite={handleDeleteFavourite}
+                  currentEpisode={currentEpisode}
+                  currentSeason={currentSeason}
                />
                <Divider />
             </Box>

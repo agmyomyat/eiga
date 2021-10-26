@@ -75,7 +75,7 @@ export default function Favourites() {
                mb: 3,
             }}
          >
-            Watch History
+            Favourites
          </Typography>
          {data?.favouriteMovies ? (
             <>

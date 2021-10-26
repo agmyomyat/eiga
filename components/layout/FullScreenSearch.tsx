@@ -9,7 +9,6 @@ import {
    Slide,
    Stack,
    Typography,
-   CircularProgress,
 } from '@mui/material'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { TransitionProps } from '@mui/material/transitions'
@@ -17,6 +16,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { alpha } from '@mui/material/styles'
 import { Movies as typeMovies } from '@graphgen'
 import SearchedMovie from '@components/layout/SearchedMovie'
+import SearchedMoviesSkeleton from '@components/skeleton/SearchedMoviesSkeleton'
 
 const Transition = React.forwardRef(function Transition(
    props: TransitionProps & {
@@ -35,6 +35,7 @@ interface IfullScreen {
    onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
    show: boolean
    loading: boolean
+   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 const FullScreenSearch: React.FC<IfullScreen> = ({
@@ -45,6 +46,7 @@ const FullScreenSearch: React.FC<IfullScreen> = ({
    onChange,
    show,
    loading,
+   onSubmit,
 }) => {
    return (
       <Dialog
@@ -79,6 +81,10 @@ const FullScreenSearch: React.FC<IfullScreen> = ({
                   <ChevronLeftIcon fontSize="large" />
                </IconButton>
                <Box
+                  component="form"
+                  noValidate
+                  role="search"
+                  onSubmit={onSubmit}
                   sx={{
                      position: 'relative',
                      borderRadius: 2,
@@ -128,15 +134,7 @@ const FullScreenSearch: React.FC<IfullScreen> = ({
          {show && (
             <Stack sx={{ mb: 3, pt: 1 }}>
                {loading ? (
-                  <Box
-                     display="flex"
-                     justifyContent="center"
-                     alignItems="center"
-                     py={5}
-                     mt={5}
-                  >
-                     <CircularProgress />
-                  </Box>
+                  <SearchedMoviesSkeleton items={2} />
                ) : (
                   <>
                      {movies?.length === 0 ? (

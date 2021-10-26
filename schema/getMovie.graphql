@@ -9,6 +9,9 @@ query getMovie($uuid: String!) {
       name
       release_date
       body
+      duration
+      Imdb
+      isSeries
       genres {
          name
       }

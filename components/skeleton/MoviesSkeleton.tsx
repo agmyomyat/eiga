@@ -1,11 +1,11 @@
-import Box from '@mui/material/Box'
-import Movie, { TMovieProps } from './Movie'
+import { Box } from '@mui/material'
+import MovieCardSkeleton from './MovieCardSkeleton'
 
-interface IMovies {
-   movies: TMovieProps[]
+interface IMoviesProps {
+   items: number
 }
 
-const Movies: React.FC<IMovies> = ({ movies }) => {
+const Movies: React.FC<IMoviesProps> = ({ items }) => {
    return (
       <Box
          display="grid"
@@ -21,8 +21,8 @@ const Movies: React.FC<IMovies> = ({ movies }) => {
             },
          }}
       >
-         {movies?.map((movie: TMovieProps) => (
-            <Movie key={movie.id} {...movie} />
+         {[...Array(items)].map((_arr, i) => (
+            <MovieCardSkeleton key={i} />
          ))}
       </Box>
    )

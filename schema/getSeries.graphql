@@ -5,6 +5,9 @@ query getSeries($uuid: String!) {
       name
       release_date
       body
+      duration
+      Imdb
+      isSeries
       genres {
          name
       }
@@ -12,6 +15,7 @@ query getSeries($uuid: String!) {
          season {
             seasonID
             episodes {
+               duration
                episodeID
                freeServer1
                freeServer2

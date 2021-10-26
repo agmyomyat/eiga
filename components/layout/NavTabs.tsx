@@ -19,7 +19,7 @@ const NavTabsComponent: React.FC = () => {
       }
       return nav
    })
-   console.log('getUserLoaindg', getUserLoading)
+
    const value =
       newNavLinks.map((nav) => nav.path).includes(pathname) && matches
          ? pathname

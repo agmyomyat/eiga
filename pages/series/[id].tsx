@@ -164,6 +164,7 @@ export default function SeriesPage(props: PageProps) {
                   handleDeleteFavourite={handleDeleteFavourite}
                   currentEpisode={currentEpisode}
                   currentSeason={currentSeason}
+                  premium={userData?.premium}
                />
                <Divider />
             </Box>

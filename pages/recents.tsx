@@ -12,9 +12,10 @@ export default function Recents() {
    const [hasMore, setHasMore] = useState<boolean>(true)
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
    const [getHistories, { data, loading, fetchMore }] =
-      useWatchHistoriesLazyQuery()
+      useWatchHistoriesLazyQuery({})
 
    useEffect(() => {
+      if (!userData?.userId) return
       if (userData?.userId) {
          getHistories({
             variables: {
@@ -24,7 +25,10 @@ export default function Recents() {
             },
          })
       }
+      console.log('current observer ', sentinel.current)
+      const _sentinel = document.getElementById('histroySentienl')
       const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
+         console.log('intersecting', entries)
          entries.forEach((entry: IntersectionObserverEntry) => {
             if (entry.isIntersecting && hasMore) {
                setScrollLoading(true)
@@ -49,10 +53,13 @@ export default function Recents() {
 
       const observer = new IntersectionObserver(onSentinelIntersection, {})
       if (sentinel.current) {
-         observer.observe(sentinel?.current)
+         observer.observe(sentinel.current)
       }
 
-      return () => observer.disconnect()
+      return () => {
+         observer.disconnect()
+         console.log('unmount')
+      }
    }, [
       fetchMore,
       data?.watchHistories.length,
@@ -107,7 +114,6 @@ export default function Recents() {
                            <CircularProgress />
                         </Box>
                      )}
-                     <div id="histroySentienl" ref={sentinel}></div>
                      {!hasMore && (
                         <Typography
                            variant="subtitle1"
@@ -125,6 +131,7 @@ export default function Recents() {
                )}
             </>
          )}
+         <div id="histroySentienl" ref={sentinel}></div>
       </Container>
    )
 }

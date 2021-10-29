@@ -4,6 +4,7 @@ import { useWatchHistoriesLazyQuery } from '@graphgen'
 import Movie from '@components/movies/Movie'
 import { Container, Box, CircularProgress, Typography } from '@mui/material'
 import MoviesSkeleton from '@components/skeleton/MoviesSkeleton'
+import { useApolloClient } from '@apollo/client'
 
 export default function Recents() {
    const [limit, setLimit] = useState<number>(1)
@@ -11,11 +12,13 @@ export default function Recents() {
    const sentinel = useRef<HTMLDivElement>()
    const [hasMore, setHasMore] = useState<boolean>(true)
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
+   const apolloClient = useApolloClient()
    const [getHistories, { data, loading, fetchMore }] =
-      useWatchHistoriesLazyQuery({})
+      useWatchHistoriesLazyQuery()
 
    useEffect(() => {
       if (!userData?.userId) return
+      console.log('user is ', userData.userId)
       if (userData?.userId) {
          getHistories({
             variables: {
@@ -25,8 +28,6 @@ export default function Recents() {
             },
          })
       }
-      console.log('current observer ', sentinel.current)
-      const _sentinel = document.getElementById('histroySentienl')
       const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
          console.log('intersecting', entries)
          entries.forEach((entry: IntersectionObserverEntry) => {

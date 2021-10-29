@@ -12,9 +12,10 @@ export default function Favourites() {
    const [hasMore, setHasMore] = useState<boolean>(true)
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
    const [getFavouriteMovies, { data, loading, fetchMore }] =
-      useGetFavouriteMoviesLazyQuery()
+      useGetFavouriteMoviesLazyQuery({})
 
    useEffect(() => {
+      if (!userData?.userId) return
       if (userData?.userId) {
          getFavouriteMovies({
             variables: {
@@ -25,6 +26,7 @@ export default function Favourites() {
          })
       }
       console.log('limit is ', limit)
+      console.log('hasmore is ', hasMore)
       const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
          entries.forEach((entry: IntersectionObserverEntry) => {
             if (entry.isIntersecting && hasMore) {
@@ -113,7 +115,6 @@ export default function Favourites() {
                            <CircularProgress />
                         </Box>
                      )}
-                     <div id="histroySentienl" ref={sentinel}></div>
                      {!hasMore && (
                         <Typography
                            variant="subtitle1"
@@ -131,6 +132,7 @@ export default function Favourites() {
                )}
             </>
          )}
+         <div id="histroySentienl" ref={sentinel}></div>
       </Container>
    )
 }

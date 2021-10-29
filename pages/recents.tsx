@@ -4,6 +4,7 @@ import { useWatchHistoriesLazyQuery } from '@graphgen'
 import Movie from '@components/movies/Movie'
 import { Container, Box, CircularProgress, Typography } from '@mui/material'
 import MoviesSkeleton from '@components/skeleton/MoviesSkeleton'
+import { useApolloClient } from '@apollo/client'
 
 export default function Recents() {
    const [limit, setLimit] = useState<number>(1)
@@ -11,10 +12,13 @@ export default function Recents() {
    const sentinel = useRef<HTMLDivElement>()
    const [hasMore, setHasMore] = useState<boolean>(true)
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
+   const apolloClient = useApolloClient()
    const [getHistories, { data, loading, fetchMore }] =
       useWatchHistoriesLazyQuery()
 
    useEffect(() => {
+      if (!userData?.userId) return
+      console.log('user is ', userData.userId)
       if (userData?.userId) {
          getHistories({
             variables: {
@@ -25,6 +29,7 @@ export default function Recents() {
          })
       }
       const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
+         console.log('intersecting', entries)
          entries.forEach((entry: IntersectionObserverEntry) => {
             if (entry.isIntersecting && hasMore) {
                setScrollLoading(true)
@@ -49,10 +54,13 @@ export default function Recents() {
 
       const observer = new IntersectionObserver(onSentinelIntersection, {})
       if (sentinel.current) {
-         observer.observe(sentinel?.current)
+         observer.observe(sentinel.current)
       }
 
-      return () => observer.disconnect()
+      return () => {
+         observer.disconnect()
+         console.log('unmount')
+      }
    }, [
       fetchMore,
       data?.watchHistories.length,
@@ -107,7 +115,6 @@ export default function Recents() {
                            <CircularProgress />
                         </Box>
                      )}
-                     <div id="histroySentienl" ref={sentinel}></div>
                      {!hasMore && (
                         <Typography
                            variant="subtitle1"
@@ -125,6 +132,7 @@ export default function Recents() {
                )}
             </>
          )}
+         <div id="histroySentienl" ref={sentinel}></div>
       </Container>
    )
 }

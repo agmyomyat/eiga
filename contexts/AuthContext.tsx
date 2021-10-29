@@ -12,6 +12,7 @@ import { NextRouter, useRouter } from 'next/router'
 import { useCheckUser } from './global-states/useCheckUser'
 import { useShouldLogOut } from './global-states/useShouldLogOut'
 import { auth } from '@lib'
+import { useApolloClient } from '@apollo/client'
 
 type User = {
    __typename?: 'returnUserData'
@@ -43,6 +44,7 @@ export function useAuth() {
 
 const setCheckUser = useCheckUser.getState().setCheckUser
 export default function AuthProvider({ children }) {
+   const apolloClient = useApolloClient()
    const shouldLogOut = useShouldLogOut((state) => state.logOut)
    const checkUser = useCheckUser((state) => state.checkUser)
    const [
@@ -62,25 +64,26 @@ export default function AuthProvider({ children }) {
    const router: NextRouter = useRouter()
    const logOut = useCallback(async () => {
       setAccessToken('')
-      auth.signOut()
+      await auth.signOut()
       await fetch(`${process.env.API_URL}/logout`, {
          method: 'POST',
          credentials: 'include',
       })
+      await apolloClient.clearStore()
       await getUserRefetch()
-      console.log(getUserError)
-   }, [getUserError, getUserRefetch])
+   }, [apolloClient, getUserRefetch])
    useEffect(() => {
       if (shouldLogOut) {
          logOut()
       }
       if (checkUser) {
          getUser()
-         setCheckUser(false)
+         return setCheckUser(false)
       }
       const _accessToken = getAccessToken()
       if (!_accessToken) return
       if (!router.asPath) return
+      console.log('looping')
       getUser()
    }, [checkUser, getUser, logOut, router.asPath, shouldLogOut])
 

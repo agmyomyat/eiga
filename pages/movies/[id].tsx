@@ -145,7 +145,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       query: GetMovieDocument,
       variables: { uuid: id },
    })
-   console.log('asdfl', data)
 
    return {
       props: {

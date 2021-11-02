@@ -4,7 +4,6 @@ import { useWatchHistoriesLazyQuery } from '@graphgen'
 import Movie from '@components/movies/Movie'
 import { Container, Box, CircularProgress, Typography } from '@mui/material'
 import MoviesSkeleton from '@components/skeleton/MoviesSkeleton'
-import { useApolloClient } from '@apollo/client'
 
 export default function Recents() {
    const [limit, setLimit] = useState<number>(1)

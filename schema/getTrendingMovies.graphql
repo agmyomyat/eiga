@@ -1,0 +1,11 @@
+query getTrendingMovies($last7day: String) {
+   movies(sort: "views:desc", limit: 6, where: { updated_at_gte: $last7day }) {
+      name
+      uuid
+      id
+      release_date
+      quality
+      photo_url
+      isSeries
+   }
+}

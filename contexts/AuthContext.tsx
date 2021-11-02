@@ -69,8 +69,7 @@ export default function AuthProvider({ children }) {
          credentials: 'include',
       })
       await apolloClient.resetStore()
-      await getUserRefetch()
-   }, [apolloClient, getUserRefetch])
+   }, [apolloClient])
    useEffect(() => {
       if (shouldLogOut) {
          logOut()

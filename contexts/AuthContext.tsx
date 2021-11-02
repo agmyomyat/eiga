@@ -52,7 +52,6 @@ export default function AuthProvider({ children }) {
       {
          data: gqlCurrentUser,
          loading: getUserLoading,
-         error: getUserError,
          refetch: getUserRefetch,
       },
    ] = useGetUserLazyQuery({

@@ -27,6 +27,7 @@ export default function Favourites() {
       }
       console.log('limit is ', limit)
       console.log('hasmore is ', hasMore)
+      if (!data?.favouriteMovies?.length) return
       const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
          entries.forEach((entry: IntersectionObserverEntry) => {
             if (entry.isIntersecting && hasMore) {

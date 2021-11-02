@@ -12,7 +12,6 @@ export default function Recents() {
    const sentinel = useRef<HTMLDivElement>()
    const [hasMore, setHasMore] = useState<boolean>(true)
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
-   const apolloClient = useApolloClient()
    const [getHistories, { data, loading, fetchMore }] =
       useWatchHistoriesLazyQuery()
 
@@ -28,6 +27,7 @@ export default function Recents() {
             },
          })
       }
+      if (!data?.watchHistories.length) return
       const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
          console.log('intersecting', entries)
          entries.forEach((entry: IntersectionObserverEntry) => {
@@ -35,7 +35,7 @@ export default function Recents() {
                setScrollLoading(true)
                fetchMore({
                   variables: {
-                     start: data.watchHistories.length,
+                     start: data?.watchHistories?.length,
                      limit: 1,
                   },
                }).then((fetchMoreResult) => {
@@ -63,11 +63,12 @@ export default function Recents() {
       }
    }, [
       fetchMore,
-      data?.watchHistories.length,
+      data?.watchHistories?.length,
       limit,
       hasMore,
       userData?.userId,
       getHistories,
+      loading,
    ])
 
    return (

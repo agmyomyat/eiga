@@ -69,7 +69,7 @@ export default function AuthProvider({ children }) {
          method: 'POST',
          credentials: 'include',
       })
-      await apolloClient.clearStore()
+      await apolloClient.resetStore()
       await getUserRefetch()
    }, [apolloClient, getUserRefetch])
    useEffect(() => {

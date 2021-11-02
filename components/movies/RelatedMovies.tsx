@@ -13,7 +13,7 @@ const RelatedMovies: React.FC<IRelatedMovies> = ({ data }) => {
    return (
       <Box>
          <Typography variant="subtitle1" component="h3" sx={{ my: 1, py: 2 }}>
-            Related Movies
+            You May Like
          </Typography>
          <Box>
             <Movies movies={movies as typeMovies[]} />

@@ -26,7 +26,6 @@ const httpLink = createHttpLink({
 })
 const errorLink = onError(({ graphQLErrors, networkError }) => {
    if (graphQLErrors) {
-      setErrorMessage('Server Error Try refreshing the page')
       graphQLErrors.map(({ message, locations, path }) =>
          console.log(
             `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`

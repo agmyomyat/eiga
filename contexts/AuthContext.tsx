@@ -52,7 +52,6 @@ export default function AuthProvider({ children }) {
       {
          data: gqlCurrentUser,
          loading: getUserLoading,
-         error: getUserError,
          refetch: getUserRefetch,
       },
    ] = useGetUserLazyQuery({
@@ -69,9 +68,8 @@ export default function AuthProvider({ children }) {
          method: 'POST',
          credentials: 'include',
       })
-      await apolloClient.clearStore()
-      await getUserRefetch()
-   }, [apolloClient, getUserRefetch])
+      await apolloClient.resetStore()
+   }, [apolloClient])
    useEffect(() => {
       if (shouldLogOut) {
          logOut()

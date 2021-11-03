@@ -19,7 +19,8 @@ export default function DetectOtherLogin() {
             variant="filled"
          >
             <AlertTitle>We detected Another Login</AlertTitle>
-            Don&apos;t Share Your Account To Others!
+            This alert shows if you logged in from another device recently.You
+            need to relogin again.
          </Alert>
       </Snackbar>
    )

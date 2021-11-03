@@ -3206,7 +3206,7 @@ export type GetSeriesLazyQueryHookResult = ReturnType<typeof useGetSeriesLazyQue
 export type GetSeriesQueryResult = Apollo.QueryResult<GetSeriesQuery, GetSeriesQueryVariables>;
 export const GetTrendingMoviesDocument = gql`
     query getTrendingMovies($last7day: String) {
-  movies(sort: "views:desc", limit: 6, where: {updated_at_gte: $last7day}) {
+  movies(sort: "views:desc", limit: 10, where: {updated_at_gte: $last7day}) {
     name
     uuid
     id

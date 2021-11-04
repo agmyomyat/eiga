@@ -2880,7 +2880,7 @@ export type DeleteFavouriteMovieMutationResult = Apollo.MutationResult<DeleteFav
 export type DeleteFavouriteMovieMutationOptions = Apollo.BaseMutationOptions<DeleteFavouriteMovieMutation, DeleteFavouriteMovieMutationVariables>;
 export const GetAllMoviesDocument = gql`
     query getAllMovies {
-  movies {
+  movies(where: {recommend: true}) {
     name
     uuid
     id

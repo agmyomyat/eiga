@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { GetStaticProps } from 'next'
 import { useAuth } from '@contexts/AuthContext'
 import { useGetFavouriteMoviesLazyQuery } from '@graphgen'
 import Movie from '@components/movies/Movie'
@@ -130,4 +131,12 @@ export default function Favourites() {
          <div id="histroySentienl" ref={sentinel}></div>
       </Container>
    )
+}
+
+export const getStaticProps: GetStaticProps = () => {
+   return {
+      props: {
+         title: `Favourite Movies`,
+      },
+   }
 }

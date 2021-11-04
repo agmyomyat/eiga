@@ -90,6 +90,7 @@ export const getStaticProps: GetStaticProps = async () => {
       props: {
          initialApolloState: apolloClient.cache.extract(),
          data,
+         title: `Home Page`,
       },
       revalidate: 300,
    }

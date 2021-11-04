@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { GetStaticProps } from 'next'
 import { useAuth } from '@contexts/AuthContext'
 import { useWatchHistoriesLazyQuery } from '@graphgen'
 import Movie from '@components/movies/Movie'
@@ -129,4 +130,12 @@ export default function Recents() {
          <div id="histroySentienl" ref={sentinel}></div>
       </Container>
    )
+}
+
+export const getStaticProps: GetStaticProps = () => {
+   return {
+      props: {
+         title: `Watch History`,
+      },
+   }
 }

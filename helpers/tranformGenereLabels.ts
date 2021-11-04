@@ -1,34 +1,13 @@
-import { orderBy } from 'lodash'
 // import { MenuProvided} from 'react-instantsearch-core'
 
-interface RefinementItem {
-   label: string
-   value: string
-   count: number
-   isRefined: boolean
+export const transformLabels = (item) => {
+   if (typeof item === 'string') {
+      const newItem = item[0].toUpperCase() + item.slice(1)
+      return newItem
+   }
 }
 
-interface CurrentRefinement {
-   attribute: string
-   currentRefinement: string
-   id: string
-   index: string
-   label: string
-   value: string
-}
-
-interface RefinementItems extends Array<RefinementItem> {}
-
-export const transformLabels = (items: RefinementItems) => {
-   const newItems = items.map((item) => ({
-      ...item,
-      label: item.label[0].toUpperCase() + item.label.slice(1),
-   }))
-
-   return orderBy(newItems, 'label', 'asc')
-}
-
-export const transformLabel = (items: CurrentRefinement[]) =>
+export const transformLabel = (items) =>
    items.map((item) => ({
       ...item,
       currentRefinement:

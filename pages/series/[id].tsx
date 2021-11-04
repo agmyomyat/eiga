@@ -189,7 +189,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
    })
 
    return {
-      props: { data },
+      props: { data, title: data?.getMovie?.name },
       revalidate: 300,
    }
 }

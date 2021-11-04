@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { GetStaticProps } from 'next'
 import { useRouter, NextRouter } from 'next/router'
 import { useAuth } from '@contexts/AuthContext'
 import { createUser } from '@apollo/mutationfn/createUser'
@@ -65,6 +66,15 @@ export default function Profile() {
    const authLoading = useAuthLoading((state) => state.loading)
    const { getUserLoading, userData, logOut } = useAuth()
    const { push }: NextRouter = useRouter()
+   const currentDate = new Date().getTime()
+   const msToDay = 24 * 60 * 60 * 1000
+   const expireDate = new Date(userData?.expire).getTime()
+   const remainingDays = Math.round(
+      Math.abs((expireDate - currentDate) / msToDay)
+   )
+
+   console.log('expire', new Date(userData?.expire))
+
    useEffect(() => {
       redirectAuth()
    }, [])
@@ -164,7 +174,7 @@ export default function Profile() {
                               Remaining Time
                            </Typography>
 
-                           <Typography>26 days</Typography>
+                           <Typography>{remainingDays || '-'} days</Typography>
                         </Paper>
 
                         <Paper
@@ -231,4 +241,12 @@ export default function Profile() {
          )}
       </Container>
    )
+}
+
+export const getStaticProps: GetStaticProps = () => {
+   return {
+      props: {
+         title: 'Profile',
+      },
+   }
 }

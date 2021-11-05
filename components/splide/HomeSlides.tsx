@@ -16,7 +16,7 @@ const HomeSlides: React.FC<IHomeSlide> = ({
    loading,
 }) => {
    const theme = useTheme()
-
+   console.log('history', historyMovies)
    return (
       <>
          {loading && (
@@ -30,8 +30,8 @@ const HomeSlides: React.FC<IHomeSlide> = ({
                <CircularProgress />
             </Box>
          )}
-         {historyMovies?.length && (
-            <Box>
+         {historyMovies?.length > 0 && (
+            <Box mb={5}>
                <Typography
                   variant="h6"
                   fontWeight="bold"
@@ -72,7 +72,7 @@ const HomeSlides: React.FC<IHomeSlide> = ({
                </Box>
             </Box>
          )}
-         <Box mt={5}>
+         <Box>
             <Typography
                variant="h6"
                fontWeight="bold"

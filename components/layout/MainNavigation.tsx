@@ -127,9 +127,11 @@ const MainNavigation: React.FC = () => {
                                  flexGrow: 1,
                                  flexShrink: 0,
                                  mr: 2,
+                                 color: 'primary.main',
+                                 fontWeight: 'bold',
                               }}
                            >
-                              EIGA
+                              ROSE
                            </Typography>
 
                            {/* will delete now */}

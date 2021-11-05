@@ -6,11 +6,3 @@ export const transformLabels = (item) => {
       return newItem
    }
 }
-
-export const transformLabel = (items) =>
-   items.map((item) => ({
-      ...item,
-      currentRefinement:
-         item.currentRefinement[0].toUpperCase() +
-         item.currentRefinement.slice(1),
-   }))

@@ -12,6 +12,7 @@ query getMovie($uuid: String!) {
       duration
       Imdb
       isSeries
+      mmsub
       genres {
          name
       }

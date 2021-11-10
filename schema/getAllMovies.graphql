@@ -1,5 +1,5 @@
 query getAllMovies {
-   movies(where: { recommend: true }) {
+   movies(where: { recommend: true }, limit: 12) {
       name
       uuid
       id

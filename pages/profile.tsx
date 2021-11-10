@@ -161,21 +161,23 @@ export default function Profile() {
                            </Typography>
                         </Paper>
 
-                        <Paper
-                           sx={{
-                              width: 1,
-                              bgcolor: 'secondary.main',
-                              p: 2,
-                              borderRadius: 3,
-                           }}
-                           elevation={3}
-                        >
-                           <Typography color="textSecondary" sx={{ pb: 2 }}>
-                              Remaining Time
-                           </Typography>
+                        {userData?.premium && (
+                           <Paper
+                              sx={{
+                                 width: 1,
+                                 bgcolor: 'secondary.main',
+                                 p: 2,
+                                 borderRadius: 3,
+                              }}
+                              elevation={3}
+                           >
+                              <Typography color="textSecondary" sx={{ pb: 2 }}>
+                                 Remaining Time
+                              </Typography>
 
-                           <Typography>{remainingDays || '-'} days</Typography>
-                        </Paper>
+                              <Typography>{remainingDays} days</Typography>
+                           </Paper>
+                        )}
 
                         <Paper
                            sx={{

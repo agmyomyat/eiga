@@ -98,7 +98,7 @@ export default function Pricing() {
             />
          )}
          {activeStep === STEP_THREE && (
-            <HowToSubscribe handleNext={handleNext} />
+            <HowToSubscribe handleNext={handleNext} handleBack={handleBack} />
          )}
       </Container>
    )

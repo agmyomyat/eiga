@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { GetStaticProps } from 'next'
 import { useAuth } from '@contexts/AuthContext'
 import { useWatchHistoriesLazyQuery } from '@graphgen'
 import Movie from '@components/movies/Movie'
 import { Container, Box, CircularProgress, Typography } from '@mui/material'
 import MoviesSkeleton from '@components/skeleton/MoviesSkeleton'
-import { useApolloClient } from '@apollo/client'
+import { grid } from '@helpers/moviesGrid'
 
 export default function Recents() {
    const [limit, setLimit] = useState<number>(1)
@@ -12,7 +13,6 @@ export default function Recents() {
    const sentinel = useRef<HTMLDivElement>()
    const [hasMore, setHasMore] = useState<boolean>(true)
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
-   const apolloClient = useApolloClient()
    const [getHistories, { data, loading, fetchMore }] =
       useWatchHistoriesLazyQuery()
 
@@ -28,6 +28,7 @@ export default function Recents() {
             },
          })
       }
+      if (!data?.watchHistories.length) return
       const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
          console.log('intersecting', entries)
          entries.forEach((entry: IntersectionObserverEntry) => {
@@ -35,7 +36,7 @@ export default function Recents() {
                setScrollLoading(true)
                fetchMore({
                   variables: {
-                     start: data.watchHistories.length,
+                     start: data?.watchHistories?.length,
                      limit: 1,
                   },
                }).then((fetchMoreResult) => {
@@ -63,11 +64,12 @@ export default function Recents() {
       }
    }, [
       fetchMore,
-      data?.watchHistories.length,
+      data?.watchHistories?.length,
       limit,
       hasMore,
       userData?.userId,
       getHistories,
+      loading,
    ])
 
    return (
@@ -85,21 +87,14 @@ export default function Recents() {
             <MoviesSkeleton items={6} />
          ) : (
             <>
-               {data?.watchHistories ? (
+               {data?.watchHistories.length ? (
                   <>
                      <Box
                         display="grid"
                         rowGap={3}
                         columnGap={2}
                         py={2}
-                        sx={{
-                           gridTemplateColumns: {
-                              xs: 'repeat(auto-fill, minmax(120px,1fr))',
-                              sm: 'repeat(auto-fill, minmax(150px,1fr))',
-                              md: 'repeat(auto-fill, minmax(170px,1fr))',
-                              lg: 'repeat(auto-fill, minmax(200px,1fr))',
-                           },
-                        }}
+                        sx={grid}
                      >
                         {data.watchHistories.map((r) => (
                            <Movie key={r.movie.uuid} {...r.movie} />
@@ -135,4 +130,12 @@ export default function Recents() {
          <div id="histroySentienl" ref={sentinel}></div>
       </Container>
    )
+}
+
+export const getStaticProps: GetStaticProps = () => {
+   return {
+      props: {
+         title: `Watch History`,
+      },
+   }
 }

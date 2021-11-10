@@ -15,10 +15,7 @@ const Bar: React.FC<IBarProps> = ({ animationDuration, progress }) => {
          position="fixed"
          zIndex={5000}
          sx={{
-            height: {
-               xs: '1px',
-               md: '2px',
-            },
+            height: 3,
             ml: `${(-1 + progress) * 100}%`,
             transition: `margin-left ${animationDuration}ms linear`,
          }}

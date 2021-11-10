@@ -3,6 +3,7 @@ import { Chip, Box, Button, MenuItem } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { alpha, styled } from '@mui/material/styles'
 import Menu, { MenuProps } from '@mui/material/Menu'
+import { transformLabels } from '@helpers/tranformGenereLabels'
 
 const StyledMenu = styled((props: MenuProps) => (
    <Menu
@@ -69,7 +70,7 @@ function CustomRefinementList({ name }) {
                         color={`${
                            isRefined === `${key}` ? 'primary' : 'default'
                         }`}
-                        label={`${key}`}
+                        label={`${transformLabels(key)}`}
                         onClick={() => refine(key)}
                      />
                   </Box>

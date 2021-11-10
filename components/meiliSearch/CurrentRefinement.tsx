@@ -1,4 +1,5 @@
 import { Chip, Box, Typography } from '@mui/material'
+import { transformLabels } from '@helpers/tranformGenereLabels'
 
 const CurrentRefinements = ({ items, refine }) => {
    return (
@@ -36,7 +37,7 @@ const CurrentRefinements = ({ items, refine }) => {
                         <Chip
                            variant="filled"
                            // color="primary"
-                           label={`${value}`}
+                           label={`${transformLabels(value)}`}
                            onDelete={() => refine(key, value)}
                         />
                      </Box>

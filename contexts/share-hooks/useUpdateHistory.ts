@@ -23,7 +23,7 @@ export default function useUpdateHistory(
       if (!router.asPath) return
       if (!premiumUser) return
       if (!prop.movieId || !prop.movieUuid) return
-      const _timerRef = setTimeout(updateHistory, 180000)
+      const _timerRef = setTimeout(updateHistory, 18000)
       if (!useTimer) {
          clearTimeout(_timerRef)
       }

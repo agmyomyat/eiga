@@ -26,15 +26,6 @@ export default function useResumeMovie({
       getHistory({
          variables: { movieUuid: router.query.id as string, user: userId },
       })
-
-      if (
-         userId &&
-         getHistoryData?.watchHistories[0]?.season === season &&
-         getHistoryData?.watchHistories[0]?.episode === episode
-      ) {
-         return setTimer(false)
-      }
-      setTimer(true)
       return () => setTimer(true) //to update movies if route change from here
    }, [
       episode,

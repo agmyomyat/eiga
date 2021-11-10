@@ -1,6 +1,6 @@
 import { Box, Skeleton, Divider } from '@mui/material'
 
-const NavigationSke: React.FC = () => {
+const NavigationSkeleton: React.FC = () => {
    return (
       <>
          <Box
@@ -25,4 +25,4 @@ const NavigationSke: React.FC = () => {
    )
 }
 
-export default NavigationSke
+export default NavigationSkeleton

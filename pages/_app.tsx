@@ -55,7 +55,7 @@ function MyApp(props: MyAppProps) {
    return (
       <CacheProvider value={emotionCache}>
          <Head>
-            <title>My page</title>
+            <title>{pageProps.title} | Rose Stream</title>
             <meta
                name="viewport"
                content="minimum-scale=1, initial-scale=1, width=device-width"

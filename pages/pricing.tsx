@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { GetStaticProps } from 'next'
 import {
    Container,
    Box,
@@ -101,4 +102,12 @@ export default function Pricing() {
          )}
       </Container>
    )
+}
+
+export const getStaticProps: GetStaticProps = () => {
+   return {
+      props: {
+         title: `Pricing`,
+      },
+   }
 }

@@ -249,12 +249,13 @@ export const Search: React.FC = () => {
             refine={refineIsSeries}
             isRefined={meiliProp.filter.isSeries}
          />*/}
-
-         <CustomHits
-            hasMore={meiliProp.hasmore}
-            refineNext={refineNext}
-            hits={hits}
-         />
+         <Box mt={3}>
+            <CustomHits
+               hasMore={meiliProp.hasmore}
+               refineNext={refineNext}
+               hits={hits}
+            />
+         </Box>
       </>
    )
 }

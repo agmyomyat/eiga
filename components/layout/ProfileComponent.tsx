@@ -11,7 +11,6 @@ import {
 } from '@mui/material'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 
@@ -119,17 +118,6 @@ const ProfileComponent: React.FC = () => {
                      onClick={handleViewProfile}
                   >
                      <PersonOutlineIcon fontSize="small" /> View Profile
-                  </MenuItem>
-                  <MenuItem
-                     sx={{
-                        color: 'text.secondary',
-                        py: 0.5,
-                        px: 3,
-                        my: 0.5,
-                        fontSize: 'body2.fontSize',
-                     }}
-                  >
-                     <FavoriteBorderIcon fontSize="small" /> Favourites
                   </MenuItem>
                   <MenuItem
                      sx={{

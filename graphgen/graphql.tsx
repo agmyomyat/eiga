@@ -2750,9 +2750,16 @@ export type GetAllMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean }>>> };
 
-export type GetFavouriteMoviesQueryVariables = Exact<{
+export type GetFavouriteMovieQueryVariables = Exact<{
   userId: Scalars['ID'];
   movieId?: Maybe<Scalars['ID']>;
+}>;
+
+
+export type GetFavouriteMovieQuery = { __typename?: 'Query', favouriteMovies?: Maybe<Array<Maybe<{ __typename?: 'FavouriteMovies', id: string, movie?: Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean }> }>>> };
+
+export type GetFavouriteMoviesQueryVariables = Exact<{
+  userId: Scalars['ID'];
   start?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 }>;
@@ -2948,10 +2955,55 @@ export function useGetAllMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetAllMoviesQueryHookResult = ReturnType<typeof useGetAllMoviesQuery>;
 export type GetAllMoviesLazyQueryHookResult = ReturnType<typeof useGetAllMoviesLazyQuery>;
 export type GetAllMoviesQueryResult = Apollo.QueryResult<GetAllMoviesQuery, GetAllMoviesQueryVariables>;
+export const GetFavouriteMovieDocument = gql`
+    query getFavouriteMovie($userId: ID!, $movieId: ID) {
+  favouriteMovies(where: {user_info: $userId, movie: $movieId}, limit: 1) {
+    id
+    movie {
+      name
+      uuid
+      id
+      release_date
+      quality
+      photo_url
+      isSeries
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetFavouriteMovieQuery__
+ *
+ * To run a query within a React component, call `useGetFavouriteMovieQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFavouriteMovieQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFavouriteMovieQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      movieId: // value for 'movieId'
+ *   },
+ * });
+ */
+export function useGetFavouriteMovieQuery(baseOptions: Apollo.QueryHookOptions<GetFavouriteMovieQuery, GetFavouriteMovieQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFavouriteMovieQuery, GetFavouriteMovieQueryVariables>(GetFavouriteMovieDocument, options);
+      }
+export function useGetFavouriteMovieLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFavouriteMovieQuery, GetFavouriteMovieQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFavouriteMovieQuery, GetFavouriteMovieQueryVariables>(GetFavouriteMovieDocument, options);
+        }
+export type GetFavouriteMovieQueryHookResult = ReturnType<typeof useGetFavouriteMovieQuery>;
+export type GetFavouriteMovieLazyQueryHookResult = ReturnType<typeof useGetFavouriteMovieLazyQuery>;
+export type GetFavouriteMovieQueryResult = Apollo.QueryResult<GetFavouriteMovieQuery, GetFavouriteMovieQueryVariables>;
 export const GetFavouriteMoviesDocument = gql`
-    query getFavouriteMovies($userId: ID!, $movieId: ID, $start: Int, $limit: Int) {
+    query getFavouriteMovies($userId: ID!, $start: Int, $limit: Int) {
   favouriteMovies(
-    where: {user_info: $userId, movie: $movieId}
+    where: {user_info: $userId}
     start: $start
     limit: $limit
     sort: "updated_at:desc"
@@ -2983,7 +3035,6 @@ export const GetFavouriteMoviesDocument = gql`
  * const { data, loading, error } = useGetFavouriteMoviesQuery({
  *   variables: {
  *      userId: // value for 'userId'
- *      movieId: // value for 'movieId'
  *      start: // value for 'start'
  *      limit: // value for 'limit'
  *   },

@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import { NetworkStatus } from '@apollo/client'
+import { NetworkStatus, useApolloClient } from '@apollo/client'
 import {
-   useGetFavouriteMoviesLazyQuery,
    useCreateFavouriteMovieMutation,
    useDeleteFavouriteMovieMutation,
-   GetFavouriteMoviesDocument,
+   GetFavouriteMovieDocument,
    CreateFavouriteMovieMutationVariables,
+   useGetFavouriteMovieLazyQuery,
 } from '@graphgen'
 import { NextRouter } from 'next/router'
 
@@ -14,6 +14,7 @@ export default function useFavouriteMovie(
    premiumUser: boolean,
    router: NextRouter
 ) {
+   const apolloClient = useApolloClient()
    const [
       getFavouriteMovie,
       {
@@ -21,7 +22,7 @@ export default function useFavouriteMovie(
          loading: favouriteMovieLoading,
          networkStatus: favouriteMovieNetworkStatus,
       },
-   ] = useGetFavouriteMoviesLazyQuery({
+   ] = useGetFavouriteMovieLazyQuery({
       fetchPolicy: 'network-only',
       notifyOnNetworkStatusChange: true,
    })
@@ -43,7 +44,7 @@ export default function useFavouriteMovie(
    function handleAddFavourite() {
       createFavouriteMovie({
          variables: favVariables,
-         refetchQueries: [GetFavouriteMoviesDocument],
+         refetchQueries: [GetFavouriteMovieDocument],
       })
    }
 
@@ -52,7 +53,7 @@ export default function useFavouriteMovie(
          variables: {
             movieId: favouriteMovieId,
          },
-         refetchQueries: [GetFavouriteMoviesDocument],
+         refetchQueries: [GetFavouriteMovieDocument],
       })
    }
 
@@ -69,7 +70,6 @@ export default function useFavouriteMovie(
    }, [
       getFavouriteMovie,
       favVariables.movieId,
-      router.asPath,
       premiumUser,
       favVariables.userId,
    ])

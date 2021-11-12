@@ -143,6 +143,27 @@ function createApolloClient() {
                fields: {
                   watchHistories: {
                      keyArgs: false,
+                     read(
+                        existing,
+                        {
+                           args: {
+                              start,
+                              limit,
+                              where: { movieName },
+                           },
+                        }
+                     ) {
+                        if (movieName) return existing && existing
+                        // A read function should always return undefined if existing is
+                        // undefined. Returning undefined signals that the field is
+                        // missing from the cache, which instructs Apollo Client to
+                        // fetch its value from your GraphQL server.
+                        return (
+                           existing &&
+                           existing.length &&
+                           existing.slice(start, start + limit)
+                        )
+                     },
                      merge(
                         existing,
                         incoming,
@@ -165,6 +186,27 @@ function createApolloClient() {
                   },
                   favouriteMovies: {
                      keyArgs: false,
+                     read(
+                        existing,
+                        {
+                           args: {
+                              start,
+                              limit,
+                              where: { movie, user_info },
+                           },
+                        }
+                     ) {
+                        if (movie && user_info) return existing && existing
+                        // A read function should always return undefined if existing is
+                        // undefined. Returning undefined signals that the field is
+                        // missing from the cache, which instructs Apollo Client to
+                        // fetch its value from your GraphQL server.
+                        return (
+                           existing &&
+                           existing.length &&
+                           existing.slice(start, start + limit)
+                        )
+                     },
                      merge(
                         existing,
                         incoming,
@@ -175,7 +217,9 @@ function createApolloClient() {
                            },
                         }
                      ) {
-                        if (movie && user_info) return incoming
+                        if (movie && user_info) {
+                           return incoming
+                        }
                         const merged = existing ? existing.slice(0) : []
                         for (let i = 0; i < incoming.length; ++i) {
                            merged[start + i] = incoming[i]

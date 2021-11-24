@@ -5,6 +5,7 @@ import {
    GetSeriesDocument,
    GetSeriesQuery,
    GetSeriesQueryResult,
+   useGetRelatedMoviesQuery,
    Movies,
 } from '@graphgen'
 import { useRouter, NextRouter } from 'next/router'
@@ -22,6 +23,8 @@ import IframeSkeleton from '@components/skeleton/IframeSkeleton'
 import EpisodesSkeleton from '@components/skeleton/EpisodesSkeleton'
 import MovieInfoSkeleton from '@components/skeleton/MovieInfoSkeleton'
 import useUpdateViews from '@contexts/share-hooks/useUpdateViews'
+import RelatedMovies from '@components/movies/RelatedMovies'
+import RelatedMoviesSkeleton from '@components/skeleton/RelatedMoviesSkeleton'
 
 const client = initializeApollo()
 
@@ -33,6 +36,8 @@ export default function SeriesPage(props: PageProps) {
    // const theme = useTheme();
    // const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
    // const containerRef = useRef(null);
+   const { data: relatedMoviesData, loading: relatedMoviesLoading } =
+      useGetRelatedMoviesQuery()
    const client = useApolloClient()
    const { userData, getUserLoading } = useAuth()
    const router: NextRouter = useRouter()
@@ -167,6 +172,11 @@ export default function SeriesPage(props: PageProps) {
                   premium={userData?.premium}
                />
                <Divider />
+               {relatedMoviesLoading ? (
+                  <RelatedMoviesSkeleton />
+               ) : (
+                  <RelatedMovies data={relatedMoviesData} />
+               )}
             </Box>
          )}
       </Container>

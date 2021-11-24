@@ -14,10 +14,11 @@ export default function Favourites() {
    const [hasMore, setHasMore] = useState<boolean>(true)
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
    const [getFavouriteMovies, { data, loading, fetchMore }] =
-      useGetFavouriteMoviesLazyQuery({})
+      useGetFavouriteMoviesLazyQuery()
 
    useEffect(() => {
       if (!userData?.userId) return
+      console.log('user in fav', userData.userId)
       if (userData?.userId) {
          getFavouriteMovies({
             variables: {
@@ -59,7 +60,9 @@ export default function Favourites() {
          observer.observe(sentinel?.current)
       }
 
-      return () => observer.disconnect()
+      return () => {
+         observer.disconnect()
+      }
    }, [
       fetchMore,
       data?.favouriteMovies.length,

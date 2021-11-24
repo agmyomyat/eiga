@@ -58,9 +58,28 @@ const MovieInfo: React.FC<ImovieInfo> = ({
 
    return (
       <Box sx={{ my: 2 }}>
-         <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold' }}>
-            {movie.name}
-         </Typography>
+         <Box display="flex" alignItems="center">
+            <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold' }}>
+               {movie.name}
+            </Typography>
+            {movie.mmsub && (
+               <Typography
+                  variant="caption"
+                  component="span"
+                  sx={{
+                     ml: 2,
+                     p: 0.5,
+                     borderRadius: 1,
+                     bgcolor: 'primary.main',
+                     color: (theme) => theme.palette.common.black,
+                     fontWeight: 'bold',
+                  }}
+               >
+                  MMSub
+               </Typography>
+            )}
+         </Box>
+
          <Stack
             direction="row"
             alignItems="center"

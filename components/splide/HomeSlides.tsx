@@ -39,7 +39,7 @@ const HomeSlides: React.FC<IHomeSlide> = ({
                      mb: 3,
                   }}
                >
-                  Histories
+                  Your Histories
                </Typography>
                <Box
                   my={2}

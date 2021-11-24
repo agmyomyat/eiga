@@ -1,0 +1,14 @@
+query getFavouriteMovie($userId: ID!, $movieId: ID) {
+   favouriteMovies(where: { user_info: $userId, movie: $movieId }, limit: 1) {
+      id
+      movie {
+         name
+         uuid
+         id
+         release_date
+         quality
+         photo_url
+         isSeries
+      }
+   }
+}

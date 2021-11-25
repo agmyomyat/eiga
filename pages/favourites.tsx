@@ -8,7 +8,7 @@ import MoviesSkeleton from '@components/skeleton/MoviesSkeleton'
 import { grid } from '@helpers/moviesGrid'
 
 export default function Favourites() {
-   const [limit, setLimit] = useState<number>(1)
+   const [limit, setLimit] = useState<number>(5)
    const { userData, getUserLoading } = useAuth()
    const sentinel = useRef<HTMLDivElement>()
    const [hasMore, setHasMore] = useState<boolean>(true)
@@ -39,7 +39,7 @@ export default function Favourites() {
                fetchMore({
                   variables: {
                      start: data?.favouriteMovies.length,
-                     limit: 1,
+                     limit: 5,
                   },
                }).then((fetchMoreResult) => {
                   // Update variables.limit for the original query to include

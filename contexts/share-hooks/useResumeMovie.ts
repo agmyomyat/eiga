@@ -26,7 +26,7 @@ export default function useResumeMovie({
    useEffect(() => {
       if (getHistoryData?.watchHistories[0]?.id) {
          const normalizedId = apolloClient.cache.identify({
-            movieUuid: router.query.id as string,
+            id: getHistoryData?.watchHistories[0].id,
             __typename: 'WatchHistory',
          })
          apolloClient.cache.evict({ id: normalizedId })
@@ -43,7 +43,7 @@ export default function useResumeMovie({
       apolloClient.cache,
       episode,
       getHistory,
-      getHistoryData.watchHistories,
+      getHistoryData?.watchHistories,
       router.query.id,
       season,
       userId,

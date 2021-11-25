@@ -1,3 +1,4 @@
+import { useApolloClient } from '@apollo/client'
 import { useUpdateHistoryTimer } from '@contexts/global-states/useUpdateHistoryTimer'
 import { useGetWatchHistoryLazyQuery } from '@graphgen'
 import { useRouter } from 'next/router'
@@ -13,6 +14,7 @@ export default function useResumeMovie({
    episode: number
 }) {
    const router = useRouter()
+   const apolloClient = useApolloClient()
    const [
       getHistory,
       {
@@ -22,15 +24,26 @@ export default function useResumeMovie({
       },
    ] = useGetWatchHistoryLazyQuery()
    useEffect(() => {
+      if (getHistoryData?.watchHistories[0]?.id) {
+         const normalizedId = apolloClient.cache.identify({
+            movieUuid: router.query.id as string,
+            __typename: 'WatchHistory',
+         })
+         apolloClient.cache.evict({ id: normalizedId })
+         apolloClient.cache.gc()
+      }
+   }, [apolloClient.cache, getHistoryData?.watchHistories, router.query.id])
+   useEffect(() => {
       if (!router.query.id || !userId || !season || !episode) return
       getHistory({
          variables: { movieUuid: router.query.id as string, user: userId },
       })
       return () => setTimer(true) //to update movies if route change from here
    }, [
+      apolloClient.cache,
       episode,
       getHistory,
-      getHistoryData?.watchHistories,
+      getHistoryData.watchHistories,
       router.query.id,
       season,
       userId,

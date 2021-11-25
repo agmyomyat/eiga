@@ -142,7 +142,7 @@ function createApolloClient() {
             Query: {
                fields: {
                   watchHistories: {
-                     keyArgs: ['movieUuid'],
+                     keyArgs: false,
                      read(
                         existing,
                         {
@@ -185,7 +185,7 @@ function createApolloClient() {
                      },
                   },
                   favouriteMovies: {
-                     keyArgs: ['movieId'],
+                     keyArgs: false,
                      read(
                         existing,
                         {

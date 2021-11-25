@@ -3,6 +3,7 @@ query getWatchHistory($user: ID!, $movieUuid: String!) {
       where: { user_data: $user, movieName: $movieUuid }
       limit: 1
    ) {
+      id
       season
       episode
    }

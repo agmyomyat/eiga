@@ -1,5 +1,5 @@
 import { Movies } from '@graphgen'
-import { Grid, Box, Typography, Stack, Divider } from '@mui/material'
+import { Grid, Box, Typography, Stack, Divider, MenuItem } from '@mui/material'
 import Image from 'next/image'
 import { useRouter, NextRouter } from 'next/router'
 
@@ -20,55 +20,60 @@ const SearchedMovie: React.FC<IsearchedMovie> = ({ movie, handleClose }) => {
    }
 
    return (
-      <Grid
-         container
-         spacing={2}
-         sx={{
-            width: 1,
-            alignItems: 'center',
-            py: 1,
-            cursor: 'pointer',
-            px: 2,
-         }}
+      <MenuItem
+         sx={{ p: 0 }}
+         component="div"
          onClick={() => handleClick(movie.uuid)}
       >
-         <Grid item xs={2}>
-            <Box>
-               <Image
-                  src={movie.photo_url}
-                  layout="responsive"
-                  width={600}
-                  height={900}
-                  alt={movie.name}
-               />
-            </Box>
-         </Grid>
-         <Grid item xs={10}>
-            <Typography variant="subtitle1" component="h4" noWrap>
-               {movie.name}
-            </Typography>
-            <Stack
-               direction="row"
-               spacing={1}
-               divider={<Divider orientation="vertical" flexItem />}
-            >
-               <Typography
-                  variant="subtitle2"
-                  component="p"
-                  color="textSecondary"
-               >
-                  {movie.release_date}
+         <Grid
+            container
+            spacing={2}
+            sx={{
+               width: 1,
+               alignItems: 'center',
+               py: 1,
+               cursor: 'pointer',
+               px: 2,
+            }}
+         >
+            <Grid item xs={2}>
+               <Box>
+                  <Image
+                     src={movie.photo_url}
+                     layout="responsive"
+                     width={600}
+                     height={900}
+                     alt={movie.name}
+                  />
+               </Box>
+            </Grid>
+            <Grid item xs={10}>
+               <Typography variant="subtitle1" component="h4" noWrap>
+                  {movie.name}
                </Typography>
-               <Typography
-                  variant="subtitle2"
-                  component="p"
-                  color="textSecondary"
+               <Stack
+                  direction="row"
+                  spacing={1}
+                  divider={<Divider orientation="vertical" flexItem />}
                >
-                  {movie.isSeries ? 'Series' : 'Movie'}
-               </Typography>
-            </Stack>
+                  <Typography
+                     variant="subtitle2"
+                     component="p"
+                     color="textSecondary"
+                  >
+                     {movie.release_date}
+                  </Typography>
+                  <Typography
+                     variant="subtitle2"
+                     component="p"
+                     color="textSecondary"
+                  >
+                     {movie.isSeries ? 'Series' : 'Movie'}
+                  </Typography>
+               </Stack>
+            </Grid>
          </Grid>
-      </Grid>
+      </MenuItem>
    )
 }
 

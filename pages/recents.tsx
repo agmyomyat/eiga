@@ -73,7 +73,7 @@ export default function Recents() {
    ])
 
    return (
-      <Container sx={{ mb: '100px' }}>
+      <Container>
          <Typography
             variant="h6"
             fontWeight="bold"

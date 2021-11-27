@@ -84,7 +84,7 @@ export default function Profile() {
    }
 
    return (
-      <Container sx={{ mb: '100px' }}>
+      <Container>
          <Typography
             align="center"
             variant="h5"

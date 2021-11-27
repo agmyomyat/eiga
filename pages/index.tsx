@@ -46,7 +46,7 @@ function Home(props: Props) {
    }, [getHistories, userData])
 
    return (
-      <Container sx={{ mb: '100px' }}>
+      <Container>
          <HomeSlides
             trendingMovies={trendingMovies as Partial<typeMovies[]>}
             historyMovies={historyMovies as Partial<WatchHistory[]>}

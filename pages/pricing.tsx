@@ -52,7 +52,7 @@ export default function Pricing() {
    }
 
    return (
-      <Container sx={{ mb: '100px' }}>
+      <Container>
          <Box sx={{ width: 1 }}>
             <Stepper activeStep={activeStep} alternativeLabel>
                {steps.map((step, index) => {

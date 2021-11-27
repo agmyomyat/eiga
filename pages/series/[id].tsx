@@ -131,7 +131,7 @@ export default function SeriesPage(props: PageProps) {
    }
 
    return (
-      <Container sx={{ mb: '100px' }}>
+      <Container>
          {router?.isFallback || getUserLoading ? (
             <DynamicSkeleton>
                <IframeSkeleton />

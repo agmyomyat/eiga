@@ -77,7 +77,7 @@ export default function Favourites() {
    // console.log('userData', userData)
 
    return (
-      <Container sx={{ mb: '100px' }}>
+      <Container>
          <Typography
             variant="h6"
             fontWeight="bold"

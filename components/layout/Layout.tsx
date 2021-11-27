@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles'
-
+import { Box } from '@mui/material'
 import MobileNavigation from './BottomNavigation'
 import MainNavigation from './MainNavigation'
 
@@ -22,9 +22,9 @@ const Layout: React.FC<PropsChildren> = ({ children }) => {
       <Root>
          <MainNavigation />
 
-         <div className={classes.offset}></div>
+         <Box className={classes.offset}></Box>
          {/* offset will delete later */}
-         {children}
+         <Box mb="100px">{children}</Box>
          <MobileNavigation />
       </Root>
    )

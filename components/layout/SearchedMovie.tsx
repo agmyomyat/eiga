@@ -2,6 +2,7 @@ import { Movies } from '@graphgen'
 import { Grid, Box, Typography, Stack, Divider } from '@mui/material'
 import Image from 'next/image'
 import { useRouter, NextRouter } from 'next/router'
+import { alpha } from '@mui/material/styles'
 
 interface IsearchedMovie {
    movie: Partial<Movies>
@@ -22,17 +23,22 @@ const SearchedMovie: React.FC<IsearchedMovie> = ({ movie, handleClose }) => {
    return (
       <Grid
          container
-         spacing={2}
          sx={{
             width: 1,
             alignItems: 'center',
-            py: 1,
+            my: 0.5,
+            py: 1.5,
             cursor: 'pointer',
             px: 2,
+            '&:hover': {
+               backgroundColor: (theme) =>
+                  alpha(theme.palette.secondary.main, 0.8),
+               color: (theme) => theme.palette.primary.main,
+            },
          }}
          onClick={() => handleClick(movie.uuid)}
       >
-         <Grid item xs={2}>
+         <Grid item xs={2} sx={{ pr: 1 }}>
             <Box>
                <Image
                   src={movie.photo_url}
@@ -43,7 +49,7 @@ const SearchedMovie: React.FC<IsearchedMovie> = ({ movie, handleClose }) => {
                />
             </Box>
          </Grid>
-         <Grid item xs={10}>
+         <Grid item xs={10} sx={{ pl: 1 }}>
             <Typography variant="subtitle1" component="h4" noWrap>
                {movie.name}
             </Typography>

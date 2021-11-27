@@ -13,16 +13,16 @@ const SearchedMoviesSkeleton: React.FC<ISearchedMoviesSkeletonProps> = ({
             <Grid
                key={i}
                container
-               spacing={2}
                sx={{
                   width: 1,
                   alignItems: 'center',
-                  py: 1,
+                  my: 0.5,
+                  py: 1.5,
                   cursor: 'pointer',
                   px: 2,
                }}
             >
-               <Grid item xs={2}>
+               <Grid item xs={2} sx={{ pr: 1 }}>
                   <Box>
                      <Skeleton
                         variant="rectangular"
@@ -30,7 +30,7 @@ const SearchedMoviesSkeleton: React.FC<ISearchedMoviesSkeletonProps> = ({
                      />
                   </Box>
                </Grid>
-               <Grid item xs={10}>
+               <Grid item xs={10} sx={{ pl: 1 }}>
                   <Typography variant="subtitle1">
                      <Skeleton height={10} width="50%" />
                   </Typography>

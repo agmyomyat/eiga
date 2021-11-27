@@ -154,16 +154,15 @@ function createApolloClient() {
                         }
                      ) {
                         if (movieName) return existing && existing
-                        console.log('movie name', movieName)
+                        console.log('existing is ', existing)
                         // A read function should always return undefined if existing is
                         // undefined. Returning undefined signals that the field is
                         // missing from the cache, which instructs Apollo Client to
                         // fetch its value from your GraphQL server.
-                        return (
-                           existing &&
-                           existing.length &&
-                           existing.slice(start, start + limit)
-                        )
+                        if (existing && existing.length) {
+                           return existing.slice(start, start + limit)
+                        }
+                        return undefined
                      },
                      merge(
                         existing,
@@ -175,7 +174,7 @@ function createApolloClient() {
                            },
                         }
                      ) {
-                        if (movieName) return
+                        if (movieName) return incoming
                         const merged = existing ? existing.slice(0) : []
                         for (let i = 0; i < incoming.length; ++i) {
                            merged[start + i] = incoming[i]
@@ -198,15 +197,15 @@ function createApolloClient() {
                         }
                      ) {
                         if (movie && user_info) return existing && existing
+                        console.log('existing is ', existing)
                         // A read function should always return undefined if existing is
                         // undefined. Returning undefined signals that the field is
                         // missing from the cache, which instructs Apollo Client to
                         // fetch its value from your GraphQL server.
-                        return (
-                           existing &&
-                           existing.length &&
-                           existing.slice(start, start + limit)
-                        )
+                        if (existing && existing.length) {
+                           return existing.slice(start, start + limit)
+                        }
+                        return undefined
                      },
                      merge(
                         existing,
@@ -219,7 +218,7 @@ function createApolloClient() {
                         }
                      ) {
                         if (movie && user_info) {
-                           return
+                           return incoming
                         }
                         const merged = existing ? existing.slice(0) : []
                         for (let i = 0; i < incoming.length; ++i) {

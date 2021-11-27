@@ -6,8 +6,10 @@ import Movie from '@components/movies/Movie'
 import { Container, Box, CircularProgress, Typography } from '@mui/material'
 import MoviesSkeleton from '@components/skeleton/MoviesSkeleton'
 import { grid } from '@helpers/moviesGrid'
+import { useApolloClient } from '@apollo/client'
 
 export default function Recents() {
+   const apolloClient = useApolloClient()
    const [limit, setLimit] = useState<number>(5)
    const { userData, getUserLoading } = useAuth()
    const sentinel = useRef<HTMLDivElement>()
@@ -15,7 +17,13 @@ export default function Recents() {
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
    const [getHistories, { data, loading, fetchMore }] =
       useWatchHistoriesLazyQuery()
-
+   useEffect(() => {
+      apolloClient.cache.evict({
+         fieldName: 'watchHistories',
+         broadcast: false,
+      })
+      apolloClient.cache.gc()
+   }, [apolloClient.cache])
    useEffect(() => {
       if (!userData?.userId) return
       console.log('user is ', userData.userId)

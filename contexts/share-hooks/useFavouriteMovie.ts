@@ -56,17 +56,17 @@ export default function useFavouriteMovie(
          refetchQueries: [GetFavouriteMovieDocument],
       })
    }
-   useEffect(() => {
-      if (favouriteMovieId) {
-         const normalizedId = apolloClient.cache.identify({
-            id: '154',
-            __typename: 'FavouriteMovies',
-         })
-         console.log('cache normal', normalizedId)
-         apolloClient.cache.evict({ id: normalizedId })
-         apolloClient.cache.gc()
-      }
-   }, [apolloClient.cache, favouriteMovieId])
+   // useEffect(() => {
+   //    if (favouriteMovieData?.favouriteMovies[0]?.id) {
+   //       const normalizedId = apolloClient.cache.identify({
+   //          id: favouriteMovieData.favouriteMovies[0].id,
+   //          __typename: 'FavouriteMovies',
+   //       })
+   //       console.log('cache normal', normalizedId)
+   //       apolloClient.cache.evict({ id: normalizedId })
+   //       apolloClient.cache.gc()
+   //    }
+   // }, [apolloClient.cache, favouriteMovieData?.favouriteMovies])
 
    useEffect(() => {
       if (!premiumUser || !favVariables?.userId || !favVariables?.movieId)
@@ -83,7 +83,6 @@ export default function useFavouriteMovie(
       favVariables.movieId,
       premiumUser,
       favVariables.userId,
-      apolloClient.cache,
    ])
 
    return {

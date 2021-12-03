@@ -14,7 +14,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { TransitionProps } from '@mui/material/transitions'
 import SearchIcon from '@mui/icons-material/Search'
 import { alpha } from '@mui/material/styles'
-import { Movies as typeMovies } from '@graphgen'
+import { OptionalMovies } from '@graphgen'
 import SearchedMovie from '@components/layout/SearchedMovie'
 import SearchedMoviesSkeleton from '@components/skeleton/SearchedMoviesSkeleton'
 
@@ -30,7 +30,7 @@ const Transition = React.forwardRef(function Transition(
 interface IfullScreen {
    openSearch: boolean
    handleSearchClose: () => void
-   movies: Partial<typeMovies[]>
+   movies: OptionalMovies[]
    value: string
    onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
    show: boolean

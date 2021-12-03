@@ -10,7 +10,12 @@ import {
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import jwt_decode from 'jwt-decode'
-import { getAccessToken, setAccessToken } from '@helpers/accessToken'
+import {
+   getAccessToken,
+   getRefreshToken,
+   setAccessToken,
+   setRefreshToken,
+} from '@helpers/accessToken'
 import { setContext } from '@apollo/client/link/context'
 import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
 const shouldLogOut = useShouldLogOut.getState().setLogOut
@@ -47,11 +52,14 @@ export async function handleFetch() {
    await fetch(`${process.env.API_URL}/refreshtoken`, {
       method: 'POST',
       credentials: 'include',
+      // prettier-ignore
+      headers: { 'rt': getRefreshToken() },
    })
       .then((res) => res.json())
       .then((data) => {
          _token = data.access
          _status = data.status
+         setRefreshToken(data.refreshToken || '')
       })
       .catch((e) => setErrorMessage(e.message))
    if (!_token && _status === 'tokenVersion not match') {
@@ -60,10 +68,10 @@ export async function handleFetch() {
    if (!_token) {
       throw Error('you need to relogin')
    }
-   return _token
+   return { accessToken: _token }
 }
 const asyncRefreshTokenLink = setContext(async () => {
-   const accessToken = { token: '' }
+   const _tokens = { accessToken: '' }
    let shouldFetchOrNot: boolean
    const token = getAccessToken()
    console.log('token', token)
@@ -74,7 +82,7 @@ const asyncRefreshTokenLink = setContext(async () => {
     */
    if (!token) {
       // let _auth = await fireAuth();
-      return { accessToken }
+      return _tokens
    }
    try {
       const { exp }: any = jwt_decode(token)
@@ -93,10 +101,11 @@ const asyncRefreshTokenLink = setContext(async () => {
          // setErrorMessage(res)
          // setAccessToken(res||''); // see line authLink comment
          // console.log('fetched token success', res)
-         accessToken.token = res || ''
+         _tokens.accessToken = res.accessToken || ''
       } catch (e) {
          // gqlInvalidToken({ shouldLogOut: true })
          setAccessToken('')
+         setRefreshToken('')
          if (e.message === 'tokenVersion not match') {
             return shouldLogOut(true) //this is for another user detection
          }
@@ -105,7 +114,7 @@ const asyncRefreshTokenLink = setContext(async () => {
          console.log('apollo catch', e)
       }
       // console.log('final line')
-      return { accessToken }
+      return { ..._tokens }
    }
 })
 
@@ -115,7 +124,7 @@ const authLink = new ApolloLink((operation, forward) => {
     * this line might not need here, context link await already set token but will not remove cause
     * context link only run on premiumUserCheck query UPDATE: removed context link set Token function
     */
-   const contextToken = operation.getContext().accessToken?.token || '' //
+   const contextToken = operation.getContext().accessToken || '' //
    const newAccessToken = contextToken ? contextToken : oldToken
    // console.log('access', newAccessToken)
    setAccessToken(newAccessToken)

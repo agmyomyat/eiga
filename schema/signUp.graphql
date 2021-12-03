@@ -3,5 +3,6 @@ mutation signUp($uuid: String!, $fuuid: String!) {
       ok
       status
       accessToken
+      refreshToken
    }
 }

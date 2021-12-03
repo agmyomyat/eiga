@@ -14,7 +14,6 @@ export default function useFavouriteMovie(
    premiumUser: boolean,
    router: NextRouter
 ) {
-   const apolloClient = useApolloClient()
    const [
       getFavouriteMovie,
       {
@@ -56,6 +55,17 @@ export default function useFavouriteMovie(
          refetchQueries: [GetFavouriteMovieDocument],
       })
    }
+   // useEffect(() => {
+   //    if (favouriteMovieData?.favouriteMovies[0]?.id) {
+   //       const normalizedId = apolloClient.cache.identify({
+   //          id: favouriteMovieData.favouriteMovies[0].id,
+   //          __typename: 'FavouriteMovies',
+   //       })
+   //       console.log('cache normal', normalizedId)
+   //       apolloClient.cache.evict({ id: normalizedId })
+   //       apolloClient.cache.gc()
+   //    }
+   // }, [apolloClient.cache, favouriteMovieData?.favouriteMovies])
 
    useEffect(() => {
       if (!premiumUser || !favVariables?.userId || !favVariables?.movieId)

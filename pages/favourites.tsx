@@ -6,8 +6,10 @@ import Movie from '@components/movies/Movie'
 import { Container, Box, CircularProgress, Typography } from '@mui/material'
 import MoviesSkeleton from '@components/skeleton/MoviesSkeleton'
 import { grid } from '@helpers/moviesGrid'
+import { useApolloClient } from '@apollo/client'
 
 export default function Favourites() {
+   const apolloClient = useApolloClient()
    const [limit, setLimit] = useState<number>(5)
    const { userData, getUserLoading } = useAuth()
    const sentinel = useRef<HTMLDivElement>()
@@ -15,10 +17,19 @@ export default function Favourites() {
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
    const [getFavouriteMovies, { data, loading, fetchMore }] =
       useGetFavouriteMoviesLazyQuery()
-
+   /**
+    * @description
+    * this useEffect is to avoid duplicate data showing if coming from dynamic route
+    */
+   useEffect(() => {
+      apolloClient.cache.evict({
+         fieldName: 'favouriteMovies',
+         broadcast: false,
+      })
+      apolloClient.cache.gc()
+   }, [apolloClient.cache])
    useEffect(() => {
       if (!userData?.userId) return
-      console.log('user in fav', userData.userId)
       if (userData?.userId) {
          getFavouriteMovies({
             variables: {
@@ -70,6 +81,7 @@ export default function Favourites() {
       hasMore,
       userData?.userId,
       getFavouriteMovies,
+      apolloClient.cache,
    ])
 
    console.log('favourite movies', data?.favouriteMovies)

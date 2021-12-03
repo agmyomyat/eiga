@@ -21,6 +21,16 @@ export default function useResumeMovie({
          error: getHistoryError,
       },
    ] = useGetWatchHistoryLazyQuery()
+   // useEffect(() => {
+   //    if (getHistoryData?.watchHistories[0]?.id) {
+   //       const normalizedId = apolloClient.cache.identify({
+   //          id: getHistoryData?.watchHistories[0].id,
+   //          __typename: 'WatchHistory',
+   //       })
+   //       apolloClient.cache.evict({ id: normalizedId })
+   //       apolloClient.cache.gc()
+   //    }
+   // }, [apolloClient.cache, getHistoryData?.watchHistories, router.query.id])
    useEffect(() => {
       if (!router.query.id || !userId || !season || !episode) return
       getHistory({

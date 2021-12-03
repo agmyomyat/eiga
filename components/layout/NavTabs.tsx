@@ -28,7 +28,7 @@ const NavTabsComponent: React.FC = () => {
    return (
       <Box
          sx={{
-            mx: 2,
+            mx: 1,
             width: 1,
          }}
       >
@@ -50,7 +50,7 @@ const NavTabsComponent: React.FC = () => {
                   to={{ pathname: nav.path }}
                   component={NextLinkComposed}
                   sx={{
-                     px: 1,
+                     px: 0,
                      py: 3,
                   }}
                />

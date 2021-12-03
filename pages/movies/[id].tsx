@@ -88,7 +88,7 @@ export default function MoviePage(props: PageProps) {
 
    // console.log('fav data', favouriteMovieData?.favouriteMovies)
    return (
-      <Container sx={{ mb: '100px' }}>
+      <Container>
          {router?.isFallback || getUserLoading ? (
             <DynamicSkeleton>
                <IframeSkeleton />

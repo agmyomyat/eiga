@@ -12,3 +12,17 @@ export function setAccessToken(value: string) {
       return ''
    }
 }
+export function getRefreshToken() {
+   if (typeof window !== 'undefined') {
+      return localStorage.getItem('egrt')
+   } else {
+      return ''
+   }
+}
+export function setRefreshToken(value: string) {
+   if (typeof window !== 'undefined') {
+      return localStorage.setItem('egrt', value)
+   } else {
+      return ''
+   }
+}

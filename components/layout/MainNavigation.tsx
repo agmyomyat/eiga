@@ -5,7 +5,6 @@ import {
    AppBar,
    Toolbar,
    IconButton,
-   Typography,
    Box,
    useScrollTrigger,
    Slide,
@@ -18,6 +17,9 @@ import SearchBoxDropdown from './SearchBoxDropdown'
 import { useSearchMovieLazyQuery } from '@graphgen'
 import { Movies } from '@graphgen'
 import NavigationSkeleton from '@components/skeleton/NavigationSkeleton'
+import { NextLinkComposed } from 'components/ui/Link'
+import Image from 'next/image'
+import logo from '../../public/logo.png'
 
 interface IhideOnScroll {
    children: React.ReactElement
@@ -118,25 +120,36 @@ const MainNavigation: React.FC = () => {
                      <NavigationSkeleton />
                   ) : (
                      <>
-                        <Box display="flex" alignItems="center" mr={5}>
-                           <Typography
-                              variant="h5"
-                              component="h2"
-                              noWrap
+                        <Box display="flex" alignItems="center">
+                           {/* Logo  */}
+                           <Box
+                              height={1}
+                              display="flex"
+                              justifyContent="center"
+                              alignItems="center"
                               sx={{
-                                 flexGrow: 1,
-                                 flexShrink: 0,
-                                 mr: 2,
-                                 color: 'primary.main',
-                                 fontWeight: 'bold',
+                                 mr: {
+                                    xs: 1,
+                                    md: 5,
+                                 },
                               }}
                            >
-                              ROSE
-                           </Typography>
+                              <Box
+                                 component={NextLinkComposed}
+                                 to={{ pathname: '/' }}
+                              >
+                                 <Image
+                                    src={logo}
+                                    layout="fixed"
+                                    width={80}
+                                    height={30}
+                                    alt="logo"
+                                    priority
+                                 />
+                              </Box>
+                           </Box>
 
-                           {/* will delete now */}
                            <NavTabs />
-                           {/* will delete now */}
                         </Box>
                         {/* Profile avatar */}
                         <Box

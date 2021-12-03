@@ -1,5 +1,5 @@
 import { SignUpDocument, SignUpMutationResult } from '@graphgen'
-import { setAccessToken } from '@helpers/accessToken'
+import { setAccessToken, setRefreshToken } from '@helpers/accessToken'
 import { initializeApollo } from '..'
 const client = initializeApollo()
 export async function createUser(authResult) {
@@ -9,5 +9,6 @@ export async function createUser(authResult) {
    })
    console.log('firebase callback', data)
    setAccessToken(data.signupClient.accessToken)
+   setRefreshToken(data.signupClient.refreshToken)
    console.log('error', error)
 }

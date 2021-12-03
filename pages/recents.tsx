@@ -17,6 +17,10 @@ export default function Recents() {
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
    const [getHistories, { data, loading, fetchMore }] =
       useWatchHistoriesLazyQuery()
+   /**
+    * @description
+    * this useEffect is to avoid duplicate data showing if coming from dynamic route
+    */
    useEffect(() => {
       apolloClient.cache.evict({
          fieldName: 'watchHistories',
@@ -81,7 +85,7 @@ export default function Recents() {
    ])
 
    return (
-      <Container sx={{ mb: '100px' }}>
+      <Container>
          <Typography
             variant="h6"
             fontWeight="bold"

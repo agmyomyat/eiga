@@ -17,6 +17,10 @@ export default function Favourites() {
    const [scrollLoading, setScrollLoading] = useState<boolean>(false)
    const [getFavouriteMovies, { data, loading, fetchMore }] =
       useGetFavouriteMoviesLazyQuery()
+   /**
+    * @description
+    * this useEffect is to avoid duplicate data showing if coming from dynamic route
+    */
    useEffect(() => {
       apolloClient.cache.evict({
          fieldName: 'favouriteMovies',
@@ -85,7 +89,7 @@ export default function Favourites() {
    // console.log('userData', userData)
 
    return (
-      <Container sx={{ mb: '100px' }}>
+      <Container>
          <Typography
             variant="h6"
             fontWeight="bold"

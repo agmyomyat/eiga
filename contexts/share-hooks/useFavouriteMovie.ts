@@ -14,7 +14,6 @@ export default function useFavouriteMovie(
    premiumUser: boolean,
    router: NextRouter
 ) {
-   const apolloClient = useApolloClient()
    const [
       getFavouriteMovie,
       {

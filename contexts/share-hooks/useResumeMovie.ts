@@ -1,4 +1,3 @@
-import { useApolloClient } from '@apollo/client'
 import { useUpdateHistoryTimer } from '@contexts/global-states/useUpdateHistoryTimer'
 import { useGetWatchHistoryLazyQuery } from '@graphgen'
 import { useRouter } from 'next/router'

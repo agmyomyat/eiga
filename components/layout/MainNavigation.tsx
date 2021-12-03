@@ -181,9 +181,7 @@ const MainNavigation: React.FC = () => {
                                     <SearchBoxDropdown
                                        show={keywordIsValid && isSearching}
                                        loading={isTyping || queryLoading}
-                                       movies={
-                                          searchResults?.search as Movies[]
-                                       }
+                                       movies={searchResults?.search}
                                        handleBlur={handleBlur}
                                     />
                                  </Box>
@@ -205,7 +203,7 @@ const MainNavigation: React.FC = () => {
                                     <SearchIcon fontSize="large" />
                                  </IconButton>
                                  <FullScreenSearch
-                                    movies={searchResults?.search as Movies[]}
+                                    movies={searchResults?.search}
                                     value={keywords}
                                     onChange={handleChange}
                                     onSubmit={handleSubmit}

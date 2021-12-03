@@ -1,11 +1,11 @@
-import { Movies } from '@graphgen'
+import { OptionalMovies } from '@graphgen'
 import { Grid, Box, Typography, Stack, Divider } from '@mui/material'
 import Image from 'next/image'
 import { useRouter, NextRouter } from 'next/router'
 import { alpha } from '@mui/material/styles'
 
 interface IsearchedMovie {
-   movie: Partial<Movies>
+   movie: OptionalMovies
    handleClose?: () => void
 }
 

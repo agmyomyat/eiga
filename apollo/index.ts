@@ -163,7 +163,7 @@ function createApolloClient() {
                         }
                      ) {
                         if (movieName) return existing && existing
-                        console.log('existing is ', existing)
+                        // console.log('existing is ', existing)
                         // A read function should always return undefined if existing is
                         // undefined. Returning undefined signals that the field is
                         // missing from the cache, which instructs Apollo Client to
@@ -188,7 +188,7 @@ function createApolloClient() {
                         for (let i = 0; i < incoming.length; ++i) {
                            merged[start + i] = incoming[i]
                         }
-                        console.log('meges', merged)
+                        // console.log('meges', merged)
 
                         return merged
                      },

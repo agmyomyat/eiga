@@ -27,7 +27,7 @@ export default function Recents() {
          broadcast: false,
       })
       apolloClient.cache.gc()
-   }, [apolloClient.cache, data?.watchHistories.length])
+   }, [apolloClient.cache])
    useEffect(() => {
       if (!userData?.userId) return
       console.log('user is ', userData.userId)

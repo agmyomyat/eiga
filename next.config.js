@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
    images: {
-      domains: ['cdn.themovieseries.net', 'm.media-amazon.com','plyr.eiga.sbs'],
+      domains: [
+         'cdn.themovieseries.net',
+         'm.media-amazon.com',
+         'plyr.eiga.sbs',
+         'tn.eiga.sbs',
+      ],
    },
    env: {
       API_URL: process.env.API_URL,

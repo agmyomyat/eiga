@@ -1,10 +1,10 @@
 import { Box, Fade, Typography } from '@mui/material'
 import SearchedMovie from './SearchedMovie'
-import { Movies as typeMovies } from '@graphgen'
+import { OptionalMovies } from '@graphgen'
 import SearchedMoviesSkeleton from '@components/skeleton/SearchedMoviesSkeleton'
 
 interface Idropdown {
-   movies: Partial<typeMovies[]>
+   movies: OptionalMovies[]
    show: boolean
    handleBlur: () => void
    loading: boolean

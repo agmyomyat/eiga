@@ -5,7 +5,11 @@ import {
    Context,
    useCallback,
 } from 'react'
-import { getAccessToken, setAccessToken } from '@helpers/accessToken'
+import {
+   getAccessToken,
+   setAccessToken,
+   setRefreshToken,
+} from '@helpers/accessToken'
 import { QueryLazyOptions } from '@apollo/client'
 import { Exact, useGetUserLazyQuery } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'
@@ -63,11 +67,8 @@ export default function AuthProvider({ children }) {
    const router: NextRouter = useRouter()
    const logOut = useCallback(async () => {
       setAccessToken('')
+      setRefreshToken('')
       await auth.signOut()
-      await fetch(`${process.env.API_URL}/logout`, {
-         method: 'POST',
-         credentials: 'include',
-      })
       await apolloClient.resetStore()
    }, [apolloClient])
    useEffect(() => {

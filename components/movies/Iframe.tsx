@@ -86,11 +86,11 @@ const Iframe: React.FC<IframeProp> = ({
          console.log('reference', refer.current)
          if (currentServer === vipServer1) {
             const { exp }: any = accessToken ?? jwt_decode(accessToken)
-            let _token: string
+            let _token: { accessToken: string }
             if (accessToken && Date.now() >= exp * 1000) {
                try {
                   _token = await handleFetch()
-                  setAccessToken(_token)
+                  setAccessToken(_token.accessToken)
                } catch (e) {
                   console.log(e.message)
                }

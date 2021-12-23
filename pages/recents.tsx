@@ -81,7 +81,6 @@ export default function Recents() {
       hasMore,
       userData?.userId,
       getHistories,
-      loading,
    ])
 
    return (

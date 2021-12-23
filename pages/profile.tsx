@@ -79,8 +79,9 @@ export default function Profile() {
    console.log('expire', new Date(userData?.expire))
 
    useEffect(() => {
+      if (getUserLoading || userData?.userName) return
       redirectAuth()
-   }, [])
+   }, [getUserLoading, userData?.userName])
 
    const handleSignOut = async () => {
       logOut()

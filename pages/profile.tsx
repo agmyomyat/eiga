@@ -15,11 +15,11 @@ import { useAuthLoading } from '@contexts/global-states/useAuthLoading'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import { useAlreadyLogin } from '@contexts/global-states/useAlreadyLogin'
 import ProfileSkeleton from '@components/movies/ProfileSkeleton'
-import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
+// import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
 
 const setAuthLoading = useAuthLoading.getState().setLoading
 const setAlreadyLogin = useAlreadyLogin.getState().setLogin
-const setErrorMessageModal = useErrorMessage.getState().setErrorMessage
+// const setErrorMessageModal = useErrorMessage.getState().setErrorMessage
 
 function redirect() {
    setAlreadyLogin(false)
@@ -54,7 +54,6 @@ function redirectAuth() {
          console.log(error)
          const errorCode = error.code
          const errorMessage = error.message
-         setErrorMessageModal(error.message)
          // The email of the user's account used.
          const email = error.email
          // The AuthCredential type that was used.

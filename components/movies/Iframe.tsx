@@ -199,7 +199,7 @@ const Iframe: React.FC<IframeProp> = ({
                   my: 2,
                }}
             >
-               Server1
+               EngSub
             </Button>
             <Button
                variant={`${
@@ -217,7 +217,7 @@ const Iframe: React.FC<IframeProp> = ({
                   ml: 2,
                }}
             >
-               Server2
+               MMSub
             </Button>
          </Box>
       </>

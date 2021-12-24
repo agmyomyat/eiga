@@ -3100,7 +3100,7 @@ export type GetFavouriteMoviesQueryVariables = Exact<{
 }>;
 
 
-export type GetFavouriteMoviesQuery = { __typename?: 'Query', favouriteMovies?: Maybe<Array<Maybe<{ __typename?: 'FavouriteMovies', id: string, movie?: Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean }> }>>> };
+export type GetFavouriteMoviesQuery = { __typename?: 'Query', favouriteMovies?: Maybe<Array<Maybe<{ __typename?: 'FavouriteMovies', id: string, movie?: Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: Maybe<boolean> }> }>>> };
 
 export type WatchHistoriesQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -3109,7 +3109,7 @@ export type WatchHistoriesQueryVariables = Exact<{
 }>;
 
 
-export type WatchHistoriesQuery = { __typename?: 'Query', watchHistories?: Maybe<Array<Maybe<{ __typename?: 'WatchHistory', movie?: Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean }> }>>> };
+export type WatchHistoriesQuery = { __typename?: 'Query', watchHistories?: Maybe<Array<Maybe<{ __typename?: 'WatchHistory', movie?: Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: Maybe<boolean> }> }>>> };
 
 export type GetWatchHistoryQueryVariables = Exact<{
   user: Scalars['ID'];
@@ -3129,7 +3129,7 @@ export type GetMovieQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typenam
 export type GetRelatedMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetRelatedMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean }>>> };
+export type GetRelatedMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: Maybe<boolean> }>>> };
 
 export type GetSeriesQueryVariables = Exact<{
   uuid: Scalars['String'];
@@ -3143,7 +3143,7 @@ export type GetTrendingMoviesQueryVariables = Exact<{
 }>;
 
 
-export type GetTrendingMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean }>>> };
+export type GetTrendingMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: Maybe<boolean> }>>> };
 
 export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3353,6 +3353,7 @@ export const GetFavouriteMoviesDocument = gql`
       quality
       photo_url
       isSeries
+      mmsub
     }
   }
 }
@@ -3403,6 +3404,7 @@ export const WatchHistoriesDocument = gql`
       quality
       photo_url
       isSeries
+      mmsub
     }
   }
 }
@@ -3535,6 +3537,7 @@ export const GetRelatedMoviesDocument = gql`
     quality
     photo_url
     isSeries
+    mmsub
   }
 }
     `;
@@ -3634,6 +3637,7 @@ export const GetTrendingMoviesDocument = gql`
     quality
     photo_url
     isSeries
+    mmsub
   }
 }
     `;

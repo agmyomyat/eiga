@@ -7,5 +7,6 @@ query getRelatedMovies {
       quality
       photo_url
       isSeries
+      mmsub
    }
 }

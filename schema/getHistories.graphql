@@ -13,6 +13,7 @@ query watchHistories($limit: Int!, $start: Int!, $user: ID!) {
          quality
          photo_url
          isSeries
+         mmsub
       }
    }
 }

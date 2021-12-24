@@ -17,6 +17,7 @@ const Movie: React.FC<TMovieProps> = ({
    release_date,
    quality,
    isSeries,
+   mmsub,
 }) => {
    const { push }: NextRouter = useRouter()
 
@@ -88,7 +89,7 @@ const Movie: React.FC<TMovieProps> = ({
                   borderRadius: 1,
                }}
             >
-               {newIsSeries ? 'Series' : 'Movie'}
+               {mmsub ? 'MMSub' : 'EngSub'}
             </Typography>
          </Box>
       </Box>

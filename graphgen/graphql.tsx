@@ -3083,7 +3083,7 @@ export type DeleteFavouriteMovieMutation = { __typename?: 'Mutation', deleteFavo
 export type GetAllMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean }>>> };
+export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: Maybe<boolean> }>>> };
 
 export type GetFavouriteMovieQueryVariables = Exact<{
   userId: Scalars['ID'];
@@ -3260,6 +3260,7 @@ export const GetAllMoviesDocument = gql`
     quality
     photo_url
     isSeries
+    mmsub
   }
 }
     `;

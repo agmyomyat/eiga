@@ -22,14 +22,9 @@ const setAuthLoading = useAuthLoading.getState().setLoading
 const setAlreadyLogin = useAlreadyLogin.getState().setLogin
 const setErrorMessageModal = useErrorMessage.getState().setErrorMessage
 
-function redirect() {
-   setAlreadyLogin(false)
-   const provider = new GoogleAuthProvider()
-   signInWithRedirect(auth, provider)
-   setAuthLoading(true)
-}
 function popUpLogin() {
    const provider = new GoogleAuthProvider()
+   setAuthLoading(true)
    signInWithPopup(auth, provider)
       .then((result) => {
          createUser(result).then(() => {
@@ -46,48 +41,14 @@ function popUpLogin() {
       })
       .catch((error) => {
          // Handle Errors here.
-         const errorCode = error.code
-         const errorMessage = error.message
-         // The email of the user's account used.
-         const email = error.email
-         // The AuthCredential type that was used.
-         const credential = GoogleAuthProvider.credentialFromError(error)
-         // ...
-      })
-}
-/**
- * @TODO: put error handle for redirctAuth user canceled or orther
- */
-function redirectAuth() {
-   const alreadyLogin = useAlreadyLogin.getState().login
-   if (alreadyLogin) return
-   setAuthLoading(true)
-   getRedirectResult(auth)
-      .then((result) => {
-         // This gives you a Google Access Token. You can use it to access Google APIs.
-         const credential = GoogleAuthProvider.credentialFromResult(result)
-         const token = credential.accessToken
-         console.log('asdlfdaskfkdsf', result)
-         createUser(result).then(() => {
-            useCheckUser.getState().setCheckUser(true)
-            setAuthLoading(false)
-            setAlreadyLogin(true)
-         })
-
-         // The signed-in user info.
-         const user = result.user
-      })
-      .catch((error) => {
          setAuthLoading(false)
-         console.log(error)
+         setErrorMessageModal(error.message)
          const errorCode = error.code
          const errorMessage = error.message
          // The email of the user's account used.
          const email = error.email
          // The AuthCredential type that was used.
          const credential = GoogleAuthProvider.credentialFromError(error)
-         console.log(errorCode)
-         console.log(errorMessage)
          // ...
       })
 }

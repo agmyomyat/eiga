@@ -103,7 +103,7 @@ const Iframe: React.FC<IframeProp> = ({
       _setQueryString()
    }, [currentServer, vipServer1])
 
-   // console.log('iframe src', refer.current?.src)
+   console.log('iframe src', refer.current?.src)
    // console.log('copy server', copy?.current)
 
    return (
@@ -161,6 +161,9 @@ const Iframe: React.FC<IframeProp> = ({
                }}
             >
                {loading && <CircularProgress color="inherit" />}
+               {!loading && !refer.current.src && (
+                  <Typography variant="h5">Not Available</Typography>
+               )}
             </Box>
             <Box
                component="iframe"

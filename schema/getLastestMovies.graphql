@@ -1,0 +1,12 @@
+query getLastestMovies {
+   movies(sort: "created_at:desc", limit: 12) {
+      name
+      uuid
+      id
+      release_date
+      quality
+      photo_url
+      isSeries
+      mmsub
+   }
+}

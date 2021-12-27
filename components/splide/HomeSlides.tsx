@@ -6,6 +6,7 @@ import { Splide } from '@splidejs/react-splide'
 
 interface IHomeSlide {
    trendingMovies: Partial<Movies[]>
+   lastestMovies: Partial<Movies[]>
    historyMovies: Partial<WatchHistory[]>
    loading: boolean
 }
@@ -13,10 +14,12 @@ interface IHomeSlide {
 const HomeSlides: React.FC<IHomeSlide> = ({
    trendingMovies,
    historyMovies,
+   lastestMovies,
    loading,
 }) => {
    const theme = useTheme()
-   console.log('history', historyMovies)
+   console.log('lastest', lastestMovies)
+   console.log('trending', trendingMovies)
    return (
       <>
          {loading && (
@@ -106,6 +109,44 @@ const HomeSlides: React.FC<IHomeSlide> = ({
                      }}
                   >
                      <Slides movies={trendingMovies as Partial<Movies[]>} />
+                  </Splide>
+               </Box>
+            </Box>
+         </Box>
+         <Box>
+            <Typography
+               variant="h6"
+               fontWeight="bold"
+               sx={{
+                  mb: 3,
+               }}
+            >
+               Lastest
+            </Typography>
+            <Box
+               my={2}
+               sx={{
+                  bgcolor: {
+                     xs: 'transparent',
+                     md: 'secondary.main',
+                  },
+                  p: {
+                     xs: 0,
+                     md: 3,
+                  },
+               }}
+            >
+               <Box>
+                  <Splide
+                     options={{
+                        rewind: true,
+                        gap: '1rem',
+                        fixedWidth: theme.spacing(15),
+                        arrows: 'slider',
+                        pagination: false,
+                     }}
+                  >
+                     <Slides movies={lastestMovies as Partial<Movies[]>} />
                   </Splide>
                </Box>
             </Box>

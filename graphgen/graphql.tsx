@@ -3119,6 +3119,11 @@ export type GetWatchHistoryQueryVariables = Exact<{
 
 export type GetWatchHistoryQuery = { __typename?: 'Query', watchHistories?: Maybe<Array<Maybe<{ __typename?: 'WatchHistory', id: string, season?: Maybe<number>, episode?: Maybe<number> }>>> };
 
+export type GetLastestMoviesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetLastestMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: Maybe<boolean> }>>> };
+
 export type GetMovieQueryVariables = Exact<{
   uuid: Scalars['String'];
 }>;
@@ -3477,6 +3482,47 @@ export function useGetWatchHistoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetWatchHistoryQueryHookResult = ReturnType<typeof useGetWatchHistoryQuery>;
 export type GetWatchHistoryLazyQueryHookResult = ReturnType<typeof useGetWatchHistoryLazyQuery>;
 export type GetWatchHistoryQueryResult = Apollo.QueryResult<GetWatchHistoryQuery, GetWatchHistoryQueryVariables>;
+export const GetLastestMoviesDocument = gql`
+    query getLastestMovies {
+  movies(sort: "created_at:desc", limit: 12) {
+    name
+    uuid
+    id
+    release_date
+    quality
+    photo_url
+    isSeries
+    mmsub
+  }
+}
+    `;
+
+/**
+ * __useGetLastestMoviesQuery__
+ *
+ * To run a query within a React component, call `useGetLastestMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLastestMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLastestMoviesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetLastestMoviesQuery(baseOptions?: Apollo.QueryHookOptions<GetLastestMoviesQuery, GetLastestMoviesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLastestMoviesQuery, GetLastestMoviesQueryVariables>(GetLastestMoviesDocument, options);
+      }
+export function useGetLastestMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLastestMoviesQuery, GetLastestMoviesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLastestMoviesQuery, GetLastestMoviesQueryVariables>(GetLastestMoviesDocument, options);
+        }
+export type GetLastestMoviesQueryHookResult = ReturnType<typeof useGetLastestMoviesQuery>;
+export type GetLastestMoviesLazyQueryHookResult = ReturnType<typeof useGetLastestMoviesLazyQuery>;
+export type GetLastestMoviesQueryResult = Apollo.QueryResult<GetLastestMoviesQuery, GetLastestMoviesQueryVariables>;
 export const GetMovieDocument = gql`
     query getMovie($uuid: String!) {
   getMovie(uuid: $uuid) {

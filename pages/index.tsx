@@ -9,6 +9,9 @@ import {
    GetTrendingMoviesDocument,
    GetTrendingMoviesQuery,
    GetTrendingMoviesQueryResult,
+   GetLastestMoviesDocument,
+   GetLastestMoviesQuery,
+   GetLastestMoviesQueryResult,
    useWatchHistoriesLazyQuery,
 } from '@graphgen'
 import { GetStaticProps } from 'next'
@@ -21,6 +24,7 @@ const apolloClient = initializeApollo()
 
 interface Props {
    data: GetTrendingMoviesQuery
+   lastestMovies: GetLastestMoviesQuery
 }
 
 function Home(props: Props) {
@@ -31,6 +35,7 @@ function Home(props: Props) {
       { data: watchHistoriesData, loading: watchHistoriesLoading },
    ] = useWatchHistoriesLazyQuery()
    const { movies: trendingMovies } = props.data
+   const { movies: lastestMovies } = props.lastestMovies
    const historyMovies = watchHistoriesData?.watchHistories
 
    useEffect(() => {
@@ -49,6 +54,7 @@ function Home(props: Props) {
       <Container>
          <HomeSlides
             trendingMovies={trendingMovies as Partial<typeMovies[]>}
+            lastestMovies={lastestMovies as Partial<typeMovies[]>}
             historyMovies={historyMovies as Partial<WatchHistory[]>}
             loading={watchHistoriesLoading}
          />
@@ -84,10 +90,16 @@ export const getStaticProps: GetStaticProps = async () => {
          variables: { last7day: sevenDaysAgo.toISOString() },
       })
 
+   const { data: lastestMovies }: Partial<GetLastestMoviesQueryResult> =
+      await apolloClient.query({
+         query: GetLastestMoviesDocument,
+      })
+
    return {
       props: {
          initialApolloState: apolloClient.cache.extract(),
          data,
+         lastestMovies,
          title: `Home Page`,
       },
       revalidate: 300,

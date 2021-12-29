@@ -1,15 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { GetStaticProps } from 'next'
 import { useRouter, NextRouter } from 'next/router'
 import { useAuth } from '@contexts/AuthContext'
 import { createUser } from '@apollo/mutationfn/createUser'
 import { Container, Button, Stack, Box, Typography, Paper } from '@mui/material'
-import {
-   getRedirectResult,
-   GoogleAuthProvider,
-   signInWithPopup,
-   signInWithRedirect,
-} from 'firebase/auth'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '@lib'
 import { useCheckUser } from '@contexts/global-states/useCheckUser'
 import { useAuthLoading } from '@contexts/global-states/useAuthLoading'

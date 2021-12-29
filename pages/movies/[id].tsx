@@ -88,8 +88,6 @@ export default function MoviePage(props: PageProps) {
 
    // console.log('fav data', favouriteMovieData?.favouriteMovies)
 
-   console.log('server 1', movieData?.vipServer1)
-
    return (
       <Container>
          {router?.isFallback || getUserLoading ? (

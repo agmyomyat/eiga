@@ -160,10 +160,10 @@ const Iframe: React.FC<IframeProp> = ({
                   zIndex: 1000,
                }}
             >
-               {loading && <CircularProgress color="inherit" />}
-               {!loading && !refer.current.src && (
+               {!refer.current.src && (
                   <Typography variant="h5">Not Available</Typography>
                )}
+               {loading && <CircularProgress color="inherit" />}
             </Box>
             <Box
                component="iframe"

@@ -15,6 +15,7 @@ query getFavouriteMovies($userId: ID!, $start: Int, $limit: Int) {
          photo_url
          isSeries
          mmsub
+         Imdb
       }
    }
 }

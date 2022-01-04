@@ -15,9 +15,9 @@ const Movie: React.FC<TMovieProps> = ({
    name,
    photo_url,
    release_date,
-   quality,
    isSeries,
    mmsub,
+   Imdb,
 }) => {
    const { push }: NextRouter = useRouter()
 
@@ -54,14 +54,14 @@ const Movie: React.FC<TMovieProps> = ({
                   left: '5%',
                   fontWeight: 'bold',
                   py: 0.6,
-                  px: 0.8,
+                  px: 0.6,
                   bgcolor: '#fff',
                   color: 'secondary.main',
                   borderRadius: 1,
                   boxShadow: 5,
                }}
             >
-               {quality}
+               {Imdb.toFixed(1)}
             </Typography>
          </Card>
 

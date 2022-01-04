@@ -8,5 +8,6 @@ query getAllMovies {
       photo_url
       isSeries
       mmsub
+      Imdb
    }
 }

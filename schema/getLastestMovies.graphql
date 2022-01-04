@@ -8,5 +8,6 @@ query getLastestMovies {
       photo_url
       isSeries
       mmsub
+      Imdb
    }
 }

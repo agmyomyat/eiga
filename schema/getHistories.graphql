@@ -14,6 +14,7 @@ query watchHistories($limit: Int!, $start: Int!, $user: ID!) {
          photo_url
          isSeries
          mmsub
+         Imdb
       }
    }
 }

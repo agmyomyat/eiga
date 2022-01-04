@@ -8,5 +8,6 @@ query getTrendingMovies($last7day: String) {
       photo_url
       isSeries
       mmsub
+      Imdb
    }
 }

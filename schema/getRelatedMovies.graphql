@@ -8,5 +8,6 @@ query getRelatedMovies {
       photo_url
       isSeries
       mmsub
+      Imdb
    }
 }

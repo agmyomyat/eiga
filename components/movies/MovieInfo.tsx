@@ -1,12 +1,12 @@
 import { Box, Typography, Stack, Divider, IconButton } from '@mui/material'
-import { Movies, GetFavouriteMoviesQuery } from '@graphgen'
+import { Movies, GetFavouriteMovieQuery } from '@graphgen'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import { useRouter } from 'next/router'
 
 interface ImovieInfo {
    movie: Partial<Movies>
-   favouriteData?: GetFavouriteMoviesQuery
+   favouriteData?: GetFavouriteMovieQuery
    isDisabled?: boolean
    handleAddFavourite?: () => void
    handleDeleteFavourite?: () => void

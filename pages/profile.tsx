@@ -1,14 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { GetStaticProps } from 'next'
 import { useRouter, NextRouter } from 'next/router'
 import { useAuth } from '@contexts/AuthContext'
 import { createUser } from '@apollo/mutationfn/createUser'
 import { Container, Button, Stack, Box, Typography, Paper } from '@mui/material'
-import {
-   getRedirectResult,
-   GoogleAuthProvider,
-   signInWithRedirect,
-} from 'firebase/auth'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '@lib'
 import { useCheckUser } from '@contexts/global-states/useCheckUser'
 import { useAuthLoading } from '@contexts/global-states/useAuthLoading'
@@ -21,46 +17,33 @@ const setAuthLoading = useAuthLoading.getState().setLoading
 const setAlreadyLogin = useAlreadyLogin.getState().setLogin
 const setErrorMessageModal = useErrorMessage.getState().setErrorMessage
 
-function redirect() {
-   setAlreadyLogin(false)
+function popUpLogin() {
    const provider = new GoogleAuthProvider()
-   signInWithRedirect(auth, provider)
    setAuthLoading(true)
-}
-/**
- * @TODO: put error handle for redirctAuth user canceled or orther
- */
-function redirectAuth() {
-   const alreadyLogin = useAlreadyLogin.getState().login
-   if (alreadyLogin) return
-   setAuthLoading(true)
-   getRedirectResult(auth)
+   signInWithPopup(auth, provider)
       .then((result) => {
-         // This gives you a Google Access Token. You can use it to access Google APIs.
-         const credential = GoogleAuthProvider.credentialFromResult(result)
-         const token = credential.accessToken
-         console.log('asdlfdaskfkdsf', result)
          createUser(result).then(() => {
             useCheckUser.getState().setCheckUser(true)
             setAuthLoading(false)
             setAlreadyLogin(true)
          })
-
+         // This gives you a Google Access Token. You can use it to access the Google API.
+         const credential = GoogleAuthProvider.credentialFromResult(result)
+         const token = credential.accessToken
          // The signed-in user info.
          const user = result.user
+         // ...
       })
       .catch((error) => {
+         // Handle Errors here.
          setAuthLoading(false)
-         console.log(error)
+         setErrorMessageModal(error.message)
          const errorCode = error.code
          const errorMessage = error.message
-         setErrorMessageModal(error.message)
          // The email of the user's account used.
          const email = error.email
          // The AuthCredential type that was used.
          const credential = GoogleAuthProvider.credentialFromError(error)
-         console.log(errorCode)
-         console.log(errorMessage)
          // ...
       })
 }
@@ -77,10 +60,6 @@ export default function Profile() {
    )
 
    console.log('expire', new Date(userData?.expire))
-
-   useEffect(() => {
-      redirectAuth()
-   }, [])
 
    const handleSignOut = async () => {
       logOut()
@@ -236,7 +215,7 @@ export default function Profile() {
                            width: 1,
                            py: 1,
                         }}
-                        onClick={() => redirect()}
+                        onClick={() => popUpLogin()}
                      >
                         Contiune with Google
                      </Button>

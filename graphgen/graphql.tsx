@@ -3083,7 +3083,7 @@ export type DeleteFavouriteMovieMutation = { __typename?: 'Mutation', deleteFavo
 export type GetAllMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean }>>> };
+export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: Maybe<boolean>, Imdb: number }>>> };
 
 export type GetFavouriteMovieQueryVariables = Exact<{
   userId: Scalars['ID'];
@@ -3100,7 +3100,7 @@ export type GetFavouriteMoviesQueryVariables = Exact<{
 }>;
 
 
-export type GetFavouriteMoviesQuery = { __typename?: 'Query', favouriteMovies?: Maybe<Array<Maybe<{ __typename?: 'FavouriteMovies', id: string, movie?: Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean }> }>>> };
+export type GetFavouriteMoviesQuery = { __typename?: 'Query', favouriteMovies?: Maybe<Array<Maybe<{ __typename?: 'FavouriteMovies', id: string, movie?: Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: Maybe<boolean>, Imdb: number }> }>>> };
 
 export type WatchHistoriesQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -3109,7 +3109,7 @@ export type WatchHistoriesQueryVariables = Exact<{
 }>;
 
 
-export type WatchHistoriesQuery = { __typename?: 'Query', watchHistories?: Maybe<Array<Maybe<{ __typename?: 'WatchHistory', movie?: Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean }> }>>> };
+export type WatchHistoriesQuery = { __typename?: 'Query', watchHistories?: Maybe<Array<Maybe<{ __typename?: 'WatchHistory', movie?: Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: Maybe<boolean>, Imdb: number }> }>>> };
 
 export type GetWatchHistoryQueryVariables = Exact<{
   user: Scalars['ID'];
@@ -3118,6 +3118,11 @@ export type GetWatchHistoryQueryVariables = Exact<{
 
 
 export type GetWatchHistoryQuery = { __typename?: 'Query', watchHistories?: Maybe<Array<Maybe<{ __typename?: 'WatchHistory', id: string, season?: Maybe<number>, episode?: Maybe<number> }>>> };
+
+export type GetLastestMoviesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetLastestMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: Maybe<boolean>, Imdb: number }>>> };
 
 export type GetMovieQueryVariables = Exact<{
   uuid: Scalars['String'];
@@ -3129,7 +3134,7 @@ export type GetMovieQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typenam
 export type GetRelatedMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetRelatedMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean }>>> };
+export type GetRelatedMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: Maybe<boolean>, Imdb: number }>>> };
 
 export type GetSeriesQueryVariables = Exact<{
   uuid: Scalars['String'];
@@ -3143,7 +3148,7 @@ export type GetTrendingMoviesQueryVariables = Exact<{
 }>;
 
 
-export type GetTrendingMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean }>>> };
+export type GetTrendingMoviesQuery = { __typename?: 'Query', movies?: Maybe<Array<Maybe<{ __typename?: 'Movies', name: string, uuid?: Maybe<string>, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: Maybe<boolean>, Imdb: number }>>> };
 
 export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3260,6 +3265,8 @@ export const GetAllMoviesDocument = gql`
     quality
     photo_url
     isSeries
+    mmsub
+    Imdb
   }
 }
     `;
@@ -3352,6 +3359,8 @@ export const GetFavouriteMoviesDocument = gql`
       quality
       photo_url
       isSeries
+      mmsub
+      Imdb
     }
   }
 }
@@ -3402,6 +3411,8 @@ export const WatchHistoriesDocument = gql`
       quality
       photo_url
       isSeries
+      mmsub
+      Imdb
     }
   }
 }
@@ -3474,6 +3485,48 @@ export function useGetWatchHistoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetWatchHistoryQueryHookResult = ReturnType<typeof useGetWatchHistoryQuery>;
 export type GetWatchHistoryLazyQueryHookResult = ReturnType<typeof useGetWatchHistoryLazyQuery>;
 export type GetWatchHistoryQueryResult = Apollo.QueryResult<GetWatchHistoryQuery, GetWatchHistoryQueryVariables>;
+export const GetLastestMoviesDocument = gql`
+    query getLastestMovies {
+  movies(sort: "created_at:desc", limit: 12) {
+    name
+    uuid
+    id
+    release_date
+    quality
+    photo_url
+    isSeries
+    mmsub
+    Imdb
+  }
+}
+    `;
+
+/**
+ * __useGetLastestMoviesQuery__
+ *
+ * To run a query within a React component, call `useGetLastestMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLastestMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLastestMoviesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetLastestMoviesQuery(baseOptions?: Apollo.QueryHookOptions<GetLastestMoviesQuery, GetLastestMoviesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLastestMoviesQuery, GetLastestMoviesQueryVariables>(GetLastestMoviesDocument, options);
+      }
+export function useGetLastestMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLastestMoviesQuery, GetLastestMoviesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLastestMoviesQuery, GetLastestMoviesQueryVariables>(GetLastestMoviesDocument, options);
+        }
+export type GetLastestMoviesQueryHookResult = ReturnType<typeof useGetLastestMoviesQuery>;
+export type GetLastestMoviesLazyQueryHookResult = ReturnType<typeof useGetLastestMoviesLazyQuery>;
+export type GetLastestMoviesQueryResult = Apollo.QueryResult<GetLastestMoviesQuery, GetLastestMoviesQueryVariables>;
 export const GetMovieDocument = gql`
     query getMovie($uuid: String!) {
   getMovie(uuid: $uuid) {
@@ -3534,6 +3587,8 @@ export const GetRelatedMoviesDocument = gql`
     quality
     photo_url
     isSeries
+    mmsub
+    Imdb
   }
 }
     `;
@@ -3633,6 +3688,8 @@ export const GetTrendingMoviesDocument = gql`
     quality
     photo_url
     isSeries
+    mmsub
+    Imdb
   }
 }
     `;

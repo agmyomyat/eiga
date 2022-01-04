@@ -7,5 +7,7 @@ query getAllMovies {
       quality
       photo_url
       isSeries
+      mmsub
+      Imdb
    }
 }

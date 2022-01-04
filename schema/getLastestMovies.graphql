@@ -1,5 +1,5 @@
-query getRelatedMovies {
-   movies(limit: 6) {
+query getLastestMovies {
+   movies(sort: "created_at:desc", limit: 12) {
       name
       uuid
       id

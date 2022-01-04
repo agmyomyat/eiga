@@ -9,7 +9,7 @@ interface ITrendingMovies {
 const TrendingSlide: React.FC<ITrendingMovies> = ({ movies }) => {
    return (
       <>
-         {movies.map((movie: Partial<Movies>) => (
+         {movies?.map((movie: Partial<Movies>) => (
             <Slide key={movie.uuid} movie={movie} />
          ))}
       </>

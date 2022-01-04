@@ -20,7 +20,7 @@
       "@splidejs/react-splide": "^0.6.7",
       "@tanem/react-nprogress": "^3.0.80",
       "clsx": "^1.1.1",
-      "firebase": "9.0.2",
+      "firebase": "9.6.1",
       "graphql": "^15.5.1",
       "jwt-decode": "^3.1.2",
       "meilisearch": "^0.22.1",

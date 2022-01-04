@@ -7,5 +7,7 @@ query getTrendingMovies($last7day: String) {
       quality
       photo_url
       isSeries
+      mmsub
+      Imdb
    }
 }

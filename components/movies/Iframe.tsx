@@ -103,7 +103,7 @@ const Iframe: React.FC<IframeProp> = ({
       _setQueryString()
    }, [currentServer, vipServer1])
 
-   // console.log('iframe src', refer.current?.src)
+   console.log('iframe src', refer.current?.src)
    // console.log('copy server', copy?.current)
 
    return (
@@ -160,7 +160,11 @@ const Iframe: React.FC<IframeProp> = ({
                   zIndex: 1000,
                }}
             >
-               {loading && <CircularProgress color="inherit" />}
+               {!currentServer ? (
+                  <Typography variant="h5">Not Available</Typography>
+               ) : (
+                  loading && <CircularProgress color="inherit" />
+               )}
             </Box>
             <Box
                component="iframe"
@@ -199,7 +203,7 @@ const Iframe: React.FC<IframeProp> = ({
                   my: 2,
                }}
             >
-               Server1
+               MMSub
             </Button>
             <Button
                variant={`${
@@ -217,7 +221,7 @@ const Iframe: React.FC<IframeProp> = ({
                   ml: 2,
                }}
             >
-               Server2
+               EngSub
             </Button>
          </Box>
       </>

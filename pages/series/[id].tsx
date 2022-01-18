@@ -152,6 +152,7 @@ export default function SeriesPage(props: PageProps) {
                   changeServer={changeServer}
                   premiumUser={userData?.premium}
                   isSeries={seriesData?.isSeries}
+                  premiumOnly={seriesData?.premiumOnly}
                />
                <Divider />
                <Episodes

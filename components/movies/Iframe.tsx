@@ -89,7 +89,7 @@ const Iframe: React.FC<IframeProp> = ({
       async function _setQueryString() {
          console.log('currentServer', currentServer)
          console.log('reference', refer.current)
-         if (currentServer === vipServer1) {
+         if (currentServer === vipServer1 || currentServer === vipServer2) {
             const { exp }: any = accessToken ?? jwt_decode(accessToken)
             let _token: { accessToken: string }
             if (accessToken && Date.now() >= exp * 1000) {
@@ -100,13 +100,16 @@ const Iframe: React.FC<IframeProp> = ({
                   console.log(e.message)
                }
             }
-            refer.current.src = vipServer1 + `?token=${_token || accessToken}` //variable _token could be undefined if accessToken is not expire
+            refer.current.src =
+               currentServer === vipServer1
+                  ? vipServer1
+                  : vipServer2 + `?token=${_token || accessToken}` //variable _token could be undefined if accessToken is not expire
             return
          }
          refer.current.src = currentServer
       }
       _setQueryString()
-   }, [currentServer, vipServer1, notAccessPremium])
+   }, [currentServer, vipServer1, vipServer2, notAccessPremium])
 
    console.log('iframe src', refer.current?.src)
    // console.log('copy server', copy?.current)
@@ -166,7 +169,9 @@ const Iframe: React.FC<IframeProp> = ({
                }}
             >
                {notAccessPremium ? (
-                  <Typography variant="h5">Premium Only</Typography>
+                  <Typography variant="body2">
+                     This movie is only available for premium users
+                  </Typography>
                ) : (
                   <>
                      {!currentServer ? (

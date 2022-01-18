@@ -70,6 +70,7 @@ const Iframe: React.FC<IframeProp> = ({
    premiumOnly,
 }) => {
    const refer = React.useRef(null)
+   const notAccessPremium = premiumOnly && !premiumUser
    // const _callback = mutationCallback(currentServer, router)
    // const __observer = useMemo(() => observer(_callback), [_callback])
    // // console.log('server1', freeServer1)
@@ -83,6 +84,8 @@ const Iframe: React.FC<IframeProp> = ({
    React.useEffect(() => {
       const accessToken = getAccessToken()
       if (!currentServer || !refer.current) return
+      if (notAccessPremium) return
+
       async function _setQueryString() {
          console.log('currentServer', currentServer)
          console.log('reference', refer.current)
@@ -103,7 +106,7 @@ const Iframe: React.FC<IframeProp> = ({
          refer.current.src = currentServer
       }
       _setQueryString()
-   }, [currentServer, vipServer1])
+   }, [currentServer, vipServer1, notAccessPremium])
 
    console.log('iframe src', refer.current?.src)
    // console.log('copy server', copy?.current)
@@ -162,7 +165,7 @@ const Iframe: React.FC<IframeProp> = ({
                   zIndex: 1000,
                }}
             >
-               {premiumOnly && !premiumUser ? (
+               {notAccessPremium ? (
                   <Typography variant="h5">Premium Only</Typography>
                ) : (
                   <>

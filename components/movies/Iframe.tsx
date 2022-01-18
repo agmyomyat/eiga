@@ -166,7 +166,9 @@ const Iframe: React.FC<IframeProp> = ({
                }}
             >
                {notAccessPremium ? (
-                  <Typography variant="h5">Premium Only</Typography>
+                  <Typography variant="body2">
+                     This movie is only available for premium users
+                  </Typography>
                ) : (
                   <>
                      {!currentServer ? (

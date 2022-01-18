@@ -110,6 +110,7 @@ export default function MoviePage(props: PageProps) {
                   changeServer={changeServer}
                   premiumUser={userData?.premium}
                   isSeries={movieData.isSeries}
+                  premiumOnly={movieData.premiumOnly}
                />
                <Divider />
                <MovieInfo

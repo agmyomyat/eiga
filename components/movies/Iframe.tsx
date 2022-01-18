@@ -52,6 +52,7 @@ interface IframeProp {
    changeServer: (server: string) => void
    premiumUser: boolean
    isSeries: boolean
+   premiumOnly: boolean
 }
 
 const Iframe: React.FC<IframeProp> = ({
@@ -66,6 +67,7 @@ const Iframe: React.FC<IframeProp> = ({
    changeServer,
    premiumUser,
    isSeries,
+   premiumOnly,
 }) => {
    const refer = React.useRef(null)
    // const _callback = mutationCallback(currentServer, router)
@@ -160,10 +162,16 @@ const Iframe: React.FC<IframeProp> = ({
                   zIndex: 1000,
                }}
             >
-               {!currentServer ? (
-                  <Typography variant="h5">Not Available</Typography>
+               {premiumOnly && !premiumUser ? (
+                  <Typography variant="h5">Premium Only</Typography>
                ) : (
-                  loading && <CircularProgress color="inherit" />
+                  <>
+                     {!currentServer ? (
+                        <Typography variant="h5">Not Available</Typography>
+                     ) : (
+                        loading && <CircularProgress color="inherit" />
+                     )}
+                  </>
                )}
             </Box>
             <Box

@@ -121,7 +121,7 @@ const HomeSlides: React.FC<IHomeSlide> = ({
                   mb: 3,
                }}
             >
-               Lastest
+               Latest
             </Typography>
             <Box
                my={2}

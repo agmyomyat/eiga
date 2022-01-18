@@ -169,13 +169,15 @@ const Iframe: React.FC<IframeProp> = ({
                }}
             >
                {notAccessPremium ? (
-                  <Typography variant="body2">
+                  <Typography variant="body2" sx={{ textAlign: 'center' }}>
                      This movie is only available for premium users
                   </Typography>
                ) : (
                   <>
                      {!currentServer ? (
-                        <Typography variant="h5">Not Available</Typography>
+                        <Typography variant="h5" sx={{ textAlign: 'center' }}>
+                           Not Available
+                        </Typography>
                      ) : (
                         loading && <CircularProgress color="inherit" />
                      )}

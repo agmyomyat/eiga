@@ -11,6 +11,7 @@ import {
 import Link from '../ui/Link'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
 import { handleFetch } from '@apollo/index'
+import { useRouter, NextRouter } from 'next/router'
 export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>
 export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[]
 export type TGenres = { genres: PartialGenres; name: string }
@@ -53,6 +54,7 @@ interface IframeProp {
    premiumUser: boolean
    isSeries: boolean
    premiumOnly: boolean
+   movieName: string
 }
 
 const Iframe: React.FC<IframeProp> = ({
@@ -68,8 +70,11 @@ const Iframe: React.FC<IframeProp> = ({
    premiumUser,
    isSeries,
    premiumOnly,
+   movieName,
 }) => {
    const refer = React.useRef(null)
+   const downloadUrl = React.useRef(null)
+   const { push }: NextRouter = useRouter()
    const notAccessPremium = premiumOnly && !premiumUser
    // const _callback = mutationCallback(currentServer, router)
    // const __observer = useMemo(() => observer(_callback), [_callback])
@@ -100,16 +105,18 @@ const Iframe: React.FC<IframeProp> = ({
                   console.log(e.message)
                }
             }
-            refer.current.src =
-               currentServer === vipServer1
-                  ? vipServer1
-                  : vipServer2 + `?token=${_token || accessToken}` //variable _token could be undefined if accessToken is not expire
+            downloadUrl.current = `${currentServer}?token=${
+               _token || accessToken
+            }&name=${movieName}`
+            refer.current.src = `${
+               currentServer === vipServer1 ? vipServer1 : vipServer2
+            }?token=${_token || accessToken}` //variable _token could be undefined if accessToken is not expire
             return
          }
          refer.current.src = currentServer
       }
       _setQueryString()
-   }, [currentServer, vipServer1, vipServer2, notAccessPremium])
+   }, [currentServer, vipServer1, vipServer2, notAccessPremium, movieName])
 
    console.log('iframe src', refer.current?.src)
    // console.log('copy server', copy?.current)
@@ -234,6 +241,18 @@ const Iframe: React.FC<IframeProp> = ({
                onClick={() =>
                   changeServer(premiumUser ? vipServer2 : freeServer2)
                }
+               sx={{
+                  my: 2,
+                  ml: 2,
+               }}
+            >
+               EngSub
+            </Button>
+            <Button
+               variant="contained"
+               size="small"
+               color="success"
+               onClick={() => push(downloadUrl.current)}
                sx={{
                   my: 2,
                   ml: 2,

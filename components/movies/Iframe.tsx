@@ -111,7 +111,7 @@ const Iframe: React.FC<IframeProp> = ({
             const uuid = reversedUrl
                .slice(0, index)
                .split('')
-               .reverse('')
+               .reverse()
                .join('')
             downloadUrl.current = `https://embed.eiga.sbs/download/${uuid}?token=${
                _token || accessToken

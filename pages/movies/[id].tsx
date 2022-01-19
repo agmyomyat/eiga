@@ -103,6 +103,7 @@ export default function MoviePage(props: PageProps) {
                   loading={loading}
                   setLoading={iframeLoad}
                   id={id}
+                  movieName={movieData.uuid}
                   freeServer1={movieData.freeServer1}
                   freeServer2={movieData.freeServer2}
                   vipServer1={movieData.vipServer1}

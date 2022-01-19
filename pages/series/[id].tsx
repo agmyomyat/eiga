@@ -145,6 +145,7 @@ export default function SeriesPage(props: PageProps) {
                   loading={loading}
                   setLoading={iframeLoad}
                   id={id}
+                  movieName={seriesData?.uuid}
                   freeServer1={servers.freeServer1}
                   freeServer2={servers.freeServer2}
                   vipServer1={servers.vipServer1}

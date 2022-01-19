@@ -105,7 +105,11 @@ const Iframe: React.FC<IframeProp> = ({
                   console.log(e.message)
                }
             }
-            downloadUrl.current = `${currentServer}?token=${
+
+            const reversedUrl = currentServer.split('').reverse().join('')
+            const index = reversedUrl.indexOf('/')
+            const uuid = reversedUrl.slice(0, index)
+            downloadUrl.current = `https://embed.eiga.sbs/download/${uuid}?token=${
                _token || accessToken
             }&name=${movieName}`
             refer.current.src = `${

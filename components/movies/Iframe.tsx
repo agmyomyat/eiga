@@ -108,7 +108,11 @@ const Iframe: React.FC<IframeProp> = ({
 
             const reversedUrl = currentServer.split('').reverse().join('')
             const index = reversedUrl.indexOf('/')
-            const uuid = reversedUrl.slice(0, index)
+            const uuid = reversedUrl
+               .slice(0, index)
+               .split('')
+               .reverse('')
+               .join('')
             downloadUrl.current = `https://embed.eiga.sbs/download/${uuid}?token=${
                _token || accessToken
             }&name=${movieName}`
@@ -262,7 +266,7 @@ const Iframe: React.FC<IframeProp> = ({
                   ml: 2,
                }}
             >
-               EngSub
+               Download
             </Button>
          </Box>
       </>

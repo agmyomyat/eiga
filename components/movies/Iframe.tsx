@@ -11,7 +11,6 @@ import {
 import Link from '../ui/Link'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
 import { handleFetch } from '@apollo/index'
-import { useRouter, NextRouter } from 'next/router'
 export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>
 export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[]
 export type TGenres = { genres: PartialGenres; name: string }
@@ -73,8 +72,6 @@ const Iframe: React.FC<IframeProp> = ({
    movieName,
 }) => {
    const refer = React.useRef(null)
-   const downloadUrl = React.useRef(null)
-   const { push }: NextRouter = useRouter()
    const notAccessPremium = premiumOnly && !premiumUser
    // const _callback = mutationCallback(currentServer, router)
    // const __observer = useMemo(() => observer(_callback), [_callback])
@@ -106,16 +103,6 @@ const Iframe: React.FC<IframeProp> = ({
                }
             }
 
-            const reversedUrl = currentServer.split('').reverse().join('')
-            const index = reversedUrl.indexOf('/')
-            const uuid = reversedUrl
-               .slice(0, index)
-               .split('')
-               .reverse()
-               .join('')
-            downloadUrl.current = `https://embed.eiga.sbs/download/${uuid}?token=${
-               _token || accessToken
-            }&name=${movieName}`
             refer.current.src = `${
                currentServer === vipServer1 ? vipServer1 : vipServer2
             }?token=${_token || accessToken}` //variable _token could be undefined if accessToken is not expire
@@ -255,18 +242,6 @@ const Iframe: React.FC<IframeProp> = ({
                }}
             >
                EngSub
-            </Button>
-            <Button
-               variant="contained"
-               size="small"
-               color="success"
-               onClick={() => push(downloadUrl.current)}
-               sx={{
-                  my: 2,
-                  ml: 2,
-               }}
-            >
-               Download
             </Button>
          </Box>
       </>

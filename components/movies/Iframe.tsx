@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { useState, Dispatch, SetStateAction } from 'react'
 import jwt_decode from 'jwt-decode'
 import { Genres } from '@graphgen'
 import {
@@ -14,31 +14,6 @@ import { handleFetch } from '@apollo/index'
 export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>
 export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[]
 export type TGenres = { genres: PartialGenres; name: string }
-
-// const config = { attributes: true, childList: true, subtree: true }
-// function mutationCallback(currentServer, router: NextRouter): MutationCallback {
-//    return function (mutationsList) {
-//       // Use traditional 'for loops' for IE 11
-
-//       for (const mutation of mutationsList) {
-//          if (
-//             (mutation.target as any).attributes?.src?.value &&
-//             (mutation.target as any).attributes?.src?.value !== currentServer
-//          )
-//             router.push('/404')
-//          if (mutation.type === 'childList') {
-//             console.log('A child node has been added or removed.')
-//          } else if (mutation.type === 'attributes') {
-//             // router.push('/404')
-//             console.log(
-//                'The ' + mutation.attributeName + ' attribute was modified.'
-//             )
-//          }
-//       }
-//    }
-// }
-// const observer = (callback: MutationCallback) =>
-//    typeof window !== 'undefined' && new MutationObserver(callback)
 
 interface IframeProp {
    currentServer: string
@@ -71,6 +46,7 @@ const Iframe: React.FC<IframeProp> = ({
    premiumOnly,
    movieName,
 }) => {
+   const [isServer1, setIsServer1] = useState(true)
    const refer = React.useRef(null)
    const notAccessPremium = premiumOnly && !premiumUser
    // const _callback = mutationCallback(currentServer, router)
@@ -210,15 +186,18 @@ const Iframe: React.FC<IframeProp> = ({
          <Box py={1}>
             <Button
                variant={`${
-                  currentServer === freeServer1 || currentServer === vipServer1
+                  isServer1 &&
+                  (currentServer === freeServer1 ||
+                     currentServer === vipServer1)
                      ? 'contained'
                      : 'outlined'
                }`}
                size="small"
                color="primary"
-               onClick={() =>
+               onClick={() => {
+                  setIsServer1(true)
                   changeServer(premiumUser ? vipServer1 : freeServer1)
-               }
+               }}
                sx={{
                   my: 2,
                }}
@@ -227,15 +206,18 @@ const Iframe: React.FC<IframeProp> = ({
             </Button>
             <Button
                variant={`${
-                  currentServer === freeServer2 || currentServer === vipServer2
+                  !isServer1 &&
+                  (currentServer === freeServer2 ||
+                     currentServer === vipServer2)
                      ? 'contained'
                      : 'outlined'
                }`}
                size="small"
                color="primary"
-               onClick={() =>
+               onClick={() => {
+                  setIsServer1(false)
                   changeServer(premiumUser ? vipServer2 : freeServer2)
-               }
+               }}
                sx={{
                   my: 2,
                   ml: 2,

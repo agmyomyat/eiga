@@ -72,7 +72,7 @@ export default function SeriesPage(props: PageProps) {
       userData?.premium || null,
       currentServer
    )
-   const { getHistoryData } = useResumeMovie({
+   const { getHistoryData, getHistoryLoading } = useResumeMovie({
       userId: userData?.userId,
       season: seasons?.[currentSeason - 1].seasonID,
       episode:
@@ -142,6 +142,8 @@ export default function SeriesPage(props: PageProps) {
             <Box>
                <Iframe
                   currentServer={currentServer}
+                  current_time={getHistoryData?.watchHistories[0].current_time}
+                  getHistoryLoading={getHistoryLoading}
                   loading={loading}
                   setLoading={iframeLoad}
                   id={id}

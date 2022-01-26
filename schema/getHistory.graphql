@@ -6,5 +6,6 @@ query getWatchHistory($user: ID!, $movieUuid: String!) {
       id
       season
       episode
+      current_time
    }
 }

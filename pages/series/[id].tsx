@@ -64,18 +64,11 @@ export default function SeriesPage(props: PageProps) {
       {
          movieId: JSON.parse(seriesData?.id || null),
          movieUuid: seriesData?.uuid,
-         season: seasons?.[currentSeason - 1].seasonID,
-         episode:
-            seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
-               .episodeID,
       },
       userData?.premium || null
    )
    const { getHistoryData, getHistoryLoading } = useResumeMovie({
       userId: userData?.userId,
-      season: seasons?.[currentSeason - 1].seasonID,
-      episode:
-         seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1].episodeID,
    })
 
    const {

@@ -69,8 +69,6 @@ const Iframe: React.FC<IframeProp> = ({
       if (!currentServer || !refer.current) return
       if (notAccessPremium) return
       if (getHistoryLoading) return // currenttime is not available if this loading
-      if (currentVideoTime.current) return
-      currentVideoTime.current = current_time || ''
 
       async function _setQueryString() {
          console.log('currentServer', currentServer)
@@ -102,8 +100,10 @@ const Iframe: React.FC<IframeProp> = ({
       notAccessPremium,
       movieName,
       getHistoryLoading,
-      current_time,
    ])
+   React.useEffect(() => {
+      currentVideoTime.current = current_time || ''
+   }, [current_time])
 
    console.log('iframe src', refer.current?.src)
 

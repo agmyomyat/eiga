@@ -3,6 +3,7 @@ mutation updateHistory(
    $movieUuid: String!
    $season: Int
    $episode: Int
+   $current_time: String
 ) {
    updateHistory(
       input: {
@@ -10,9 +11,11 @@ mutation updateHistory(
          movieUuid: $movieUuid
          season: $season
          episode: $episode
+         current_time: $current_time
       }
    ) {
       status
       ok
+      current_time
    }
 }

@@ -9,8 +9,8 @@ export default function useResumeMovie({
    episode,
 }: {
    userId: string
-   season: number
-   episode: number
+   season?: number
+   episode?: number
 }) {
    const router = useRouter()
    const [
@@ -20,7 +20,7 @@ export default function useResumeMovie({
          loading: getHistoryLoading,
          error: getHistoryError,
       },
-   ] = useGetWatchHistoryLazyQuery()
+   ] = useGetWatchHistoryLazyQuery({ fetchPolicy: 'network-only' })
    // useEffect(() => {
    //    if (getHistoryData?.watchHistories[0]?.id) {
    //       const normalizedId = apolloClient.cache.identify({
@@ -32,7 +32,7 @@ export default function useResumeMovie({
    //    }
    // }, [apolloClient.cache, getHistoryData?.watchHistories, router.query.id])
    useEffect(() => {
-      if (!router.query.id || !userId || !season || !episode) return
+      if (!router.query.id || !userId || router.isFallback) return
       getHistory({
          variables: { movieUuid: router.query.id as string, user: userId },
       })
@@ -41,6 +41,7 @@ export default function useResumeMovie({
       episode,
       getHistory,
       getHistoryData?.watchHistories,
+      router.isFallback,
       router.query.id,
       season,
       userId,

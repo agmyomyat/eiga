@@ -13,12 +13,22 @@ export default function useUpdateHistory(
 ) {
    const [updateHistory, { data, loading, error }] = useUpdateHistoryMutation({
       variables: prop,
-      refetchQueries:
-         prop.season && prop.episode ? [GetWatchHistoryDocument] : null,
+      refetchQueries: [GetWatchHistoryDocument],
    })
    const useTimer = useUpdateHistoryTimer((state) => state.timer)
    // const refProp = useRef<UpdateHistoryMutationVariables>(prop)
    const router = useRouter()
+   useEffect(() => {
+      if (!prop.movieId || !prop.movieUuid) return
+      window.addEventListener(
+         'message',
+         (event) => {
+            if (event.origin !== 'https://embed.eiga.sbs') return
+            updateHistory({ variables: { ...prop, current_time: event.data } })
+         },
+         false
+      )
+   }, [prop, updateHistory])
    useEffect(() => {
       if (!router.asPath) return
       if (!premiumUser) return

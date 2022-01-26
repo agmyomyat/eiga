@@ -29,6 +29,8 @@ interface IframeProp {
    isSeries: boolean
    premiumOnly: boolean
    movieName: string
+   current_time: string
+   getHistoryLoading: boolean
 }
 
 const Iframe: React.FC<IframeProp> = ({
@@ -45,6 +47,8 @@ const Iframe: React.FC<IframeProp> = ({
    isSeries,
    premiumOnly,
    movieName,
+   current_time,
+   getHistoryLoading,
 }) => {
    const [isServer1, setIsServer1] = useState(true)
    const refer = React.useRef(null)
@@ -63,6 +67,7 @@ const Iframe: React.FC<IframeProp> = ({
       const accessToken = getAccessToken()
       if (!currentServer || !refer.current) return
       if (notAccessPremium) return
+      if (getHistoryLoading) return
 
       async function _setQueryString() {
          console.log('currentServer', currentServer)
@@ -81,15 +86,24 @@ const Iframe: React.FC<IframeProp> = ({
 
             refer.current.src = `${
                currentServer === vipServer1 ? vipServer1 : vipServer2
-            }?token=${_token || accessToken}` //variable _token could be undefined if accessToken is not expire
+            }?token=${_token || accessToken}&ct=${current_time}` //variable _token could be undefined if accessToken is not expire
             return
          }
          refer.current.src = currentServer
       }
       _setQueryString()
-   }, [currentServer, vipServer1, vipServer2, notAccessPremium, movieName])
+   }, [
+      currentServer,
+      vipServer1,
+      vipServer2,
+      notAccessPremium,
+      movieName,
+      getHistoryLoading,
+      current_time,
+   ])
 
    console.log('iframe src', refer.current?.src)
+
    // console.log('copy server', copy?.current)
 
    return (

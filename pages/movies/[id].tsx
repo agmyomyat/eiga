@@ -21,6 +21,7 @@ import IframeSkeleton from '@components/skeleton/IframeSkeleton'
 import MovieInfoSkeleton from '@components/skeleton/MovieInfoSkeleton'
 import RelatedMoviesSkeleton from '@components/skeleton/RelatedMoviesSkeleton'
 import useUpdateViews from '@contexts/share-hooks/useUpdateViews'
+import useResumeMovie from '@contexts/share-hooks/useResumeMovie'
 
 const client = initializeApollo()
 export interface PageProps {
@@ -38,8 +39,11 @@ export default function MoviePage(props: PageProps) {
    const serverResult = props.data
    const movieData = serverResult?.getMovie
    useUpdateViews(movieData?.uuid)
+   const { getHistoryData, getHistoryLoading } = useResumeMovie({
+      userId: userData?.userId,
+   })
 
-   useUpdateHistory(
+   const updatedHistory = useUpdateHistory(
       {
          movieId: parseInt(movieData?.id || null),
          movieUuid: movieData?.uuid || null,
@@ -100,6 +104,8 @@ export default function MoviePage(props: PageProps) {
             <Box>
                <Iframe
                   currentServer={currentServer}
+                  current_time={getHistoryData?.watchHistories[0].current_time}
+                  getHistoryLoading={getHistoryLoading}
                   loading={loading}
                   setLoading={iframeLoad}
                   id={id}

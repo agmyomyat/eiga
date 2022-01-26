@@ -69,8 +69,7 @@ export default function SeriesPage(props: PageProps) {
             seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
                .episodeID,
       },
-      userData?.premium || null,
-      currentServer
+      userData?.premium || null
    )
    const { getHistoryData, getHistoryLoading } = useResumeMovie({
       userId: userData?.userId,

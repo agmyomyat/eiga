@@ -25,11 +25,19 @@ export default function useUpdateHistory(
          (event) => {
             if (event.origin !== 'https://embed.eiga.sbs') return
             console.log('window add listener looping')
-            updateHistory({ variables: { ...prop, current_time: event.data } })
+            updateHistory({
+               variables: {
+                  movieId: prop.movieId,
+                  movieUuid: prop.movieUuid,
+                  season: prop.season,
+                  episode: prop.episode,
+                  current_time: event.data,
+               },
+            })
          },
          false
       )
-   }, [prop, updateHistory])
+   }, [prop.episode, prop.movieId, prop.movieUuid, prop.season, updateHistory])
    useEffect(() => {
       console.log('sencond useeffect looping')
       if (!router.asPath) return

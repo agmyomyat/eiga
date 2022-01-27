@@ -9,6 +9,7 @@ export default function useResumeMovie({ userId }: { userId: string }) {
          data: getHistoryData,
          loading: getHistoryLoading,
          error: getHistoryError,
+         refetch: getHistoryRefetch,
       },
    ] = useGetWatchHistoryLazyQuery({ fetchPolicy: 'network-only' })
    // useEffect(() => {
@@ -31,5 +32,6 @@ export default function useResumeMovie({ userId }: { userId: string }) {
       getHistoryData,
       getHistoryLoading,
       getHistoryError,
+      getHistoryRefetch,
    }
 }

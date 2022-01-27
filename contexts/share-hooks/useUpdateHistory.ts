@@ -26,7 +26,7 @@ export default function useUpdateHistory(
                movieUuid: prop.movieUuid,
                season: prop.season,
                episode: prop.episode,
-               current_time: '120',
+               current_time: event.data,
             },
          })
       }

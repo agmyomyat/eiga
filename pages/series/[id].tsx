@@ -66,7 +66,7 @@ export default function SeriesPage(props: PageProps) {
    })
 
    const { season: historySeason, episode: historyEpisode } =
-      getHistoryData.watchHistories[0]
+      getHistoryData?.watchHistories[0]
    const isSameHistoryWithCurrent =
       historySeason === currentSeason && historyEpisode === currentEpisode
    const { updateHistoryData } = useUpdateHistory(

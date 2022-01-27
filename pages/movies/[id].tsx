@@ -103,7 +103,7 @@ export default function MoviePage(props: PageProps) {
             <Box>
                <Iframe
                   currentServer={currentServer}
-                  current_time={getHistoryData?.watchHistories[0].current_time}
+                  current_time={getHistoryData?.watchHistories[0]?.current_time}
                   getHistoryLoading={getHistoryLoading}
                   loading={loading}
                   setLoading={iframeLoad}

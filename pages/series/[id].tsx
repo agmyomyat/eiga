@@ -71,9 +71,10 @@ export default function SeriesPage(props: PageProps) {
       },
       userData?.premium || null
    )
-   const { getHistoryData, getHistoryLoading } = useResumeMovie({
-      userId: userData?.userId,
-   })
+   const { getHistoryData, getHistoryLoading, getHistoryRefetch } =
+      useResumeMovie({
+         userId: userData?.userId,
+      })
 
    const {
       favouriteMovieData,
@@ -124,6 +125,7 @@ export default function SeriesPage(props: PageProps) {
    const handleSelect = (season: number, id: number) => {
       setCurrentSeason(season)
       setCurrentEpisode(id)
+      getHistoryRefetch()
    }
 
    return (

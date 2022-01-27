@@ -6,15 +6,21 @@ import {
 import { useEffect } from 'react'
 export default function useUpdateHistory(
    { ...prop }: UpdateHistoryMutationVariables,
-   premiumUser: boolean
+   premiumUser: boolean,
+   historySeason?: number,
+   historyEpisode?: number
 ) {
    const [updateHistory, { data, loading, error }] = useUpdateHistoryMutation({
       variables: prop,
-      // refetchQueries: [GetWatchHistoryDocument],
-   })
-   // const useTimer = useUpdateHistoryTimer((state) => state.timer)
-   // const refProp = useRef<UpdateHistoryMutationVariables>(prop)
-   // const router = useRouter()
+      refetchQueries: [
+         historySeason &&
+         historyEpisode &&
+         prop?.season !== historySeason &&
+         prop?.episode !== historyEpisode
+            ? GetWatchHistoryDocument
+            : '',
+      ],
+   }) //refetch query purpose is not to refresh the iframe src
    useEffect(() => {
       if (!prop.movieId || !prop.movieUuid || !premiumUser) return
       console.log('updatehistory loop')

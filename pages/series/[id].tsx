@@ -50,6 +50,7 @@ export default function SeriesPage(props: PageProps) {
    const [currentEpisode, setCurrentEpisode] = useState<number>(1)
    const seasons = seriesData?.tv_sery.season
    const servers = seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
+
    useUpdateViews(seriesData?.uuid)
 
    function changeServer(server: string) {
@@ -60,6 +61,14 @@ export default function SeriesPage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop)
    }
+   const { getHistoryData, getHistoryLoading } = useResumeMovie({
+      userId: userData?.userId,
+   })
+
+   const { season: historySeason, episode: historyEpisode } =
+      getHistoryData.watchHistories[0]
+   const isSameHistoryWithCurrent =
+      historySeason === currentSeason && historyEpisode === currentEpisode
    const { updateHistoryData } = useUpdateHistory(
       {
          movieId: JSON.parse(seriesData?.id || null),
@@ -69,12 +78,10 @@ export default function SeriesPage(props: PageProps) {
             seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
                .episodeID,
       },
-      userData?.premium || null
+      userData?.premium || null,
+      historySeason,
+      historyEpisode
    )
-   const { getHistoryData, getHistoryLoading, getHistoryRefetch } =
-      useResumeMovie({
-         userId: userData?.userId,
-      })
 
    const {
       favouriteMovieData,
@@ -125,7 +132,6 @@ export default function SeriesPage(props: PageProps) {
    const handleSelect = (season: number, id: number) => {
       setCurrentSeason(season)
       setCurrentEpisode(id)
-      getHistoryRefetch()
    }
 
    return (
@@ -154,6 +160,7 @@ export default function SeriesPage(props: PageProps) {
                   premiumUser={userData?.premium}
                   isSeries={seriesData?.isSeries}
                   premiumOnly={seriesData?.premiumOnly}
+                  isSameHistoryAndCurrent={isSameHistoryWithCurrent}
                />
                <Divider />
                <Episodes

@@ -9,7 +9,6 @@ export default function useResumeMovie({ userId }: { userId: string }) {
          data: getHistoryData,
          loading: getHistoryLoading,
          error: getHistoryError,
-         refetch: getHistoryRefetch,
       },
    ] = useGetWatchHistoryLazyQuery({ fetchPolicy: 'network-only' })
    // useEffect(() => {
@@ -24,6 +23,7 @@ export default function useResumeMovie({ userId }: { userId: string }) {
    // }, [apolloClient.cache, getHistoryData?.watchHistories, router.query.id])
    useEffect(() => {
       if (!router.query.id || !userId || router.isFallback) return
+
       getHistory({
          variables: { movieUuid: router.query.id as string, user: userId },
       })
@@ -32,6 +32,5 @@ export default function useResumeMovie({ userId }: { userId: string }) {
       getHistoryData,
       getHistoryLoading,
       getHistoryError,
-      getHistoryRefetch,
    }
 }

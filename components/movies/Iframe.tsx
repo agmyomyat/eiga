@@ -52,7 +52,6 @@ const Iframe: React.FC<IframeProp> = ({
 }) => {
    const [isServer1, setIsServer1] = useState(true)
    const refer = React.useRef(null)
-   const currentVideoTime = React.useRef('')
    const notAccessPremium = premiumOnly && !premiumUser
    // const _callback = mutationCallback(currentServer, router)
    // const __observer = useMemo(() => observer(_callback), [_callback])
@@ -87,7 +86,7 @@ const Iframe: React.FC<IframeProp> = ({
 
             refer.current.src = `${
                currentServer === vipServer1 ? vipServer1 : vipServer2
-            }?token=${_token || accessToken}&ct=${currentVideoTime.current}` //variable _token could be undefined if accessToken is not expire
+            }?token=${_token || accessToken}&ct=${current_time || ''}` //variable _token could be undefined if accessToken is not expire
             return
          }
          refer.current.src = currentServer
@@ -100,10 +99,8 @@ const Iframe: React.FC<IframeProp> = ({
       notAccessPremium,
       movieName,
       getHistoryLoading,
+      current_time,
    ])
-   React.useEffect(() => {
-      currentVideoTime.current = current_time || ''
-   }, [current_time])
 
    console.log('iframe src', refer.current?.src)
 

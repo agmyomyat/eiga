@@ -20,7 +20,7 @@ export default function useUpdateHistory(
             ? ''
             : GetWatchHistoryDocument,
       ],
-   }) //refetch query purpose is not to refresh the iframe src
+   })
    useEffect(() => {
       if (!prop.movieId || !prop.movieUuid || !premiumUser) return
       console.log('updatehistory loop')
@@ -28,11 +28,11 @@ export default function useUpdateHistory(
          if (event.origin !== 'https://embed.eiga.sbs') return
          updateHistory({
             variables: {
-               movieId: prop.movieId,
-               movieUuid: prop.movieUuid,
-               season: prop.season,
-               episode: prop.episode,
-               current_time: event.data,
+               movieId: prop?.movieId,
+               movieUuid: prop?.movieUuid,
+               season: prop?.season,
+               episode: prop?.episode,
+               current_time: event.data || '',
             },
          })
       }

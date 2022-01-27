@@ -90,7 +90,7 @@ const Iframe: React.FC<IframeProp> = ({
                currentServer === vipServer1 ? vipServer1 : vipServer2
             }?token=${_token || accessToken}&ct=${
                !isSeries || (isSeries && isSameHistoryAndCurrent)
-                  ? current_time
+                  ? current_time ?? (current_time || '')
                   : '' || ''
                // if a movie or a series with same S and E with current, the current time is set
             }` //variable _token could be undefined if accessToken is not expire

@@ -13,12 +13,12 @@ export default function useUpdateHistory(
    const [updateHistory, { data, loading, error }] = useUpdateHistoryMutation({
       variables: prop,
       refetchQueries: [
-         historySeason &&
-         historyEpisode &&
-         prop?.season !== historySeason &&
-         prop?.episode !== historyEpisode
-            ? GetWatchHistoryDocument
-            : '',
+         !historySeason &&
+         !historyEpisode &&
+         prop?.season === historySeason &&
+         prop?.episode === historyEpisode
+            ? ''
+            : GetWatchHistoryDocument,
       ],
    }) //refetch query purpose is not to refresh the iframe src
    useEffect(() => {

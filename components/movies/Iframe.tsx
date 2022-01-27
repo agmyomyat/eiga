@@ -31,6 +31,7 @@ interface IframeProp {
    movieName: string
    current_time: string
    getHistoryLoading: boolean
+   isSameHistoryAndCurrent?: boolean
 }
 
 const Iframe: React.FC<IframeProp> = ({
@@ -49,6 +50,7 @@ const Iframe: React.FC<IframeProp> = ({
    movieName,
    current_time,
    getHistoryLoading,
+   isSameHistoryAndCurrent,
 }) => {
    const [isServer1, setIsServer1] = useState(true)
    const refer = React.useRef(null)
@@ -86,7 +88,12 @@ const Iframe: React.FC<IframeProp> = ({
 
             refer.current.src = `${
                currentServer === vipServer1 ? vipServer1 : vipServer2
-            }?token=${_token || accessToken}&ct=${current_time || ''}` //variable _token could be undefined if accessToken is not expire
+            }?token=${_token || accessToken}&ct=${
+               !isSeries || (isSeries && isSameHistoryAndCurrent)
+                  ? current_time
+                  : '' || ''
+               // if a movie or a series with same S and E with current, the current time is set
+            }` //variable _token could be undefined if accessToken is not expire
             return
          }
          refer.current.src = currentServer
@@ -100,6 +107,8 @@ const Iframe: React.FC<IframeProp> = ({
       movieName,
       getHistoryLoading,
       current_time,
+      isSeries,
+      isSameHistoryAndCurrent,
    ])
 
    console.log('iframe src', refer.current?.src)

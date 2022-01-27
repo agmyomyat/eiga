@@ -89,16 +89,16 @@ const Iframe: React.FC<IframeProp> = ({
             refer.current.src = `${
                currentServer === vipServer1 ? vipServer1 : vipServer2
             }?token=${_token || accessToken}&ct=${
-               !isSeries || (isSeries && isSameHistoryAndCurrent)
-                  ? current_time
-                  : '' || ''
+               current_time || ''
                // if a movie or a series with same S and E with current, the current time is set
             }` //variable _token could be undefined if accessToken is not expire
             return
          }
          refer.current.src = currentServer
       }
-      _setQueryString()
+      if (!refer.current.src) {
+         _setQueryString()
+      }
    }, [
       currentServer,
       vipServer1,

@@ -41,7 +41,7 @@ export default function SeriesPage(props: PageProps) {
    const client = useApolloClient()
    const { userData, getUserLoading } = useAuth()
    const router: NextRouter = useRouter()
-   const [currentServer, setCurrentServer] = useState<string | null>(null)
+   const [currentServer, setCurrentServer] = useState<string | null>('')
    const [loading, setLoading] = useState<boolean>(true)
    const { id } = router.query
    const serverResult = props.data
@@ -130,6 +130,10 @@ export default function SeriesPage(props: PageProps) {
    const handleSelect = (season: number, id: number) => {
       setCurrentSeason(season)
       setCurrentEpisode(id)
+      if (currentSeason === season && currentEpisode === id) return
+      setCurrentServer(
+         userData?.premium ? servers.vipServer1 : servers.freeServer1
+      )
    }
 
    return (

@@ -73,6 +73,7 @@ const Iframe: React.FC<IframeProp> = ({
       if (getHistoryLoading) return // currenttime is not available if this loading
 
       async function _setQueryString() {
+         setIsServer1(true)
          console.log('currentServer', currentServer)
          console.log('reference', refer.current)
          if (currentServer === vipServer1 || currentServer === vipServer2) {

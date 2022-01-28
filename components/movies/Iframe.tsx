@@ -52,10 +52,9 @@ const Iframe: React.FC<IframeProp> = ({
    getHistoryLoading,
    isSameHistoryAndCurrent,
 }) => {
-   const [isServer1, setIsServer1] = useState(true)
    const refer = React.useRef(null)
    const notAccessPremium = premiumOnly && !premiumUser
-   const previousSrc = React.useRef('')
+   const [isServer1, setIsServer1] = useState(true)
    // const _callback = mutationCallback(currentServer, router)
    // const __observer = useMemo(() => observer(_callback), [_callback])
    // // console.log('server1', freeServer1)
@@ -73,9 +72,14 @@ const Iframe: React.FC<IframeProp> = ({
       if (getHistoryLoading) return // currenttime is not available if this loading
 
       async function _setQueryString() {
-         setIsServer1(true)
          console.log('currentServer', currentServer)
          console.log('reference', refer.current)
+         if (currentServer === vipServer1 || freeServer1) {
+            setIsServer1(true)
+         }
+         if (currentServer === vipServer2 || freeServer2) {
+            setIsServer1(false)
+         }
          if (currentServer === vipServer1 || currentServer === vipServer2) {
             const { exp }: any = accessToken ?? jwt_decode(accessToken)
             let _token: { accessToken: string }
@@ -113,6 +117,8 @@ const Iframe: React.FC<IframeProp> = ({
       current_time,
       isSeries,
       isSameHistoryAndCurrent,
+      freeServer1,
+      freeServer2,
    ])
 
    console.log('iframe src', refer.current?.src)

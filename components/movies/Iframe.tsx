@@ -77,9 +77,6 @@ const Iframe: React.FC<IframeProp> = ({
          if (currentServer === vipServer1 || freeServer1) {
             setIsServer1(true)
          }
-         if (currentServer === vipServer2 || freeServer2) {
-            setIsServer1(false)
-         }
          if (currentServer === vipServer1 || currentServer === vipServer2) {
             const { exp }: any = accessToken ?? jwt_decode(accessToken)
             let _token: { accessToken: string }

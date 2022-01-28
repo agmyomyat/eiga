@@ -55,6 +55,7 @@ const Iframe: React.FC<IframeProp> = ({
    const [isServer1, setIsServer1] = useState(true)
    const refer = React.useRef(null)
    const notAccessPremium = premiumOnly && !premiumUser
+   const previousSrc = React.useRef('')
    // const _callback = mutationCallback(currentServer, router)
    // const __observer = useMemo(() => observer(_callback), [_callback])
    // // console.log('server1', freeServer1)
@@ -88,7 +89,7 @@ const Iframe: React.FC<IframeProp> = ({
 
             refer.current.src = `${
                currentServer === vipServer1 ? vipServer1 : vipServer2
-            }?token=${_token || accessToken}&ct=${
+            }?token=${_token || getAccessToken()}&ct=${
                !isSeries || (isSeries && isSameHistoryAndCurrent)
                   ? current_time ?? (current_time || '')
                   : '' || ''

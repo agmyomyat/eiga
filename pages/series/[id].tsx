@@ -78,9 +78,7 @@ export default function SeriesPage(props: PageProps) {
             seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
                .episodeID,
       },
-      userData?.premium || null,
-      historySeason,
-      historyEpisode
+      userData?.premium || null
    )
 
    const {

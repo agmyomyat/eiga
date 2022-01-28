@@ -6,20 +6,11 @@ import {
 import { useEffect } from 'react'
 export default function useUpdateHistory(
    { ...prop }: UpdateHistoryMutationVariables,
-   premiumUser: boolean,
-   historySeason?: number,
-   historyEpisode?: number
+   premiumUser: boolean
 ) {
    const [updateHistory, { data, loading, error }] = useUpdateHistoryMutation({
       variables: prop,
-      refetchQueries: [
-         !historySeason &&
-         !historyEpisode &&
-         prop?.season === historySeason &&
-         prop?.episode === historyEpisode
-            ? ''
-            : GetWatchHistoryDocument,
-      ],
+      refetchQueries: [GetWatchHistoryDocument],
    })
    useEffect(() => {
       if (!prop.movieId || !prop.movieUuid || !premiumUser) return

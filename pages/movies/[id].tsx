@@ -21,6 +21,7 @@ import IframeSkeleton from '@components/skeleton/IframeSkeleton'
 import MovieInfoSkeleton from '@components/skeleton/MovieInfoSkeleton'
 import RelatedMoviesSkeleton from '@components/skeleton/RelatedMoviesSkeleton'
 import useUpdateViews from '@contexts/share-hooks/useUpdateViews'
+import useResumeMovie from '@contexts/share-hooks/useResumeMovie'
 
 const client = initializeApollo()
 export interface PageProps {
@@ -38,14 +39,16 @@ export default function MoviePage(props: PageProps) {
    const serverResult = props.data
    const movieData = serverResult?.getMovie
    useUpdateViews(movieData?.uuid)
+   const { getHistoryData, getHistoryLoading } = useResumeMovie({
+      userId: userData?.userId,
+   })
 
-   useUpdateHistory(
+   const updatedHistory = useUpdateHistory(
       {
          movieId: parseInt(movieData?.id || null),
          movieUuid: movieData?.uuid || null,
       },
-      userData?.premium || null,
-      currentServer
+      userData?.premium || null
    )
 
    const {
@@ -100,9 +103,12 @@ export default function MoviePage(props: PageProps) {
             <Box>
                <Iframe
                   currentServer={currentServer}
+                  current_time={getHistoryData?.watchHistories[0]?.current_time}
+                  getHistoryLoading={getHistoryLoading}
                   loading={loading}
                   setLoading={iframeLoad}
                   id={id}
+                  movieName={movieData.uuid}
                   freeServer1={movieData.freeServer1}
                   freeServer2={movieData.freeServer2}
                   vipServer1={movieData.vipServer1}
@@ -110,6 +116,7 @@ export default function MoviePage(props: PageProps) {
                   changeServer={changeServer}
                   premiumUser={userData?.premium}
                   isSeries={movieData.isSeries}
+                  premiumOnly={movieData.premiumOnly}
                />
                <Divider />
                <MovieInfo

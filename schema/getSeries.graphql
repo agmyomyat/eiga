@@ -9,6 +9,7 @@ query getSeries($uuid: String!) {
       Imdb
       isSeries
       mmsub
+      premiumOnly
       genres {
          name
       }

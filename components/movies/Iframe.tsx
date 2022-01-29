@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { useState, Dispatch, SetStateAction } from 'react'
 import jwt_decode from 'jwt-decode'
 import { Genres } from '@graphgen'
 import {
@@ -15,31 +15,6 @@ export type TMovies<P, U> = Partial<Omit<P, 'genres'> & U>
 export type PartialGenres = { [P in keyof Genres]?: Genres[P] }[]
 export type TGenres = { genres: PartialGenres; name: string }
 
-// const config = { attributes: true, childList: true, subtree: true }
-// function mutationCallback(currentServer, router: NextRouter): MutationCallback {
-//    return function (mutationsList) {
-//       // Use traditional 'for loops' for IE 11
-
-//       for (const mutation of mutationsList) {
-//          if (
-//             (mutation.target as any).attributes?.src?.value &&
-//             (mutation.target as any).attributes?.src?.value !== currentServer
-//          )
-//             router.push('/404')
-//          if (mutation.type === 'childList') {
-//             console.log('A child node has been added or removed.')
-//          } else if (mutation.type === 'attributes') {
-//             // router.push('/404')
-//             console.log(
-//                'The ' + mutation.attributeName + ' attribute was modified.'
-//             )
-//          }
-//       }
-//    }
-// }
-// const observer = (callback: MutationCallback) =>
-//    typeof window !== 'undefined' && new MutationObserver(callback)
-
 interface IframeProp {
    currentServer: string
    loading: boolean
@@ -52,6 +27,11 @@ interface IframeProp {
    changeServer: (server: string) => void
    premiumUser: boolean
    isSeries: boolean
+   premiumOnly: boolean
+   movieName: string
+   current_time: string
+   getHistoryLoading: boolean
+   isSameHistoryAndCurrent?: boolean
 }
 
 const Iframe: React.FC<IframeProp> = ({
@@ -66,8 +46,15 @@ const Iframe: React.FC<IframeProp> = ({
    changeServer,
    premiumUser,
    isSeries,
+   premiumOnly,
+   movieName,
+   current_time,
+   getHistoryLoading,
+   isSameHistoryAndCurrent,
 }) => {
    const refer = React.useRef(null)
+   const notAccessPremium = premiumOnly && !premiumUser
+   const [isServer1, setIsServer1] = useState(true)
    // const _callback = mutationCallback(currentServer, router)
    // const __observer = useMemo(() => observer(_callback), [_callback])
    // // console.log('server1', freeServer1)
@@ -81,10 +68,16 @@ const Iframe: React.FC<IframeProp> = ({
    React.useEffect(() => {
       const accessToken = getAccessToken()
       if (!currentServer || !refer.current) return
+      if (notAccessPremium) return
+      if (getHistoryLoading) return // currenttime is not available if this loading
+
       async function _setQueryString() {
          console.log('currentServer', currentServer)
          console.log('reference', refer.current)
-         if (currentServer === vipServer1) {
+         if (currentServer === vipServer1 || freeServer1) {
+            setIsServer1(true)
+         }
+         if (currentServer === vipServer1 || currentServer === vipServer2) {
             const { exp }: any = accessToken ?? jwt_decode(accessToken)
             let _token: { accessToken: string }
             if (accessToken && Date.now() >= exp * 1000) {
@@ -95,15 +88,38 @@ const Iframe: React.FC<IframeProp> = ({
                   console.log(e.message)
                }
             }
-            refer.current.src = vipServer1 + `?token=${_token || accessToken}` //variable _token could be undefined if accessToken is not expire
+
+            refer.current.src = `${
+               currentServer === vipServer1 ? vipServer1 : vipServer2
+            }?token=${_token || getAccessToken()}&ct=${
+               !isSeries || (isSeries && isSameHistoryAndCurrent)
+                  ? current_time ?? (current_time || '')
+                  : '' || ''
+               // if a movie or a series with same S and E with current, the current time is set
+            }` //variable _token could be undefined if accessToken is not expire
             return
          }
          refer.current.src = currentServer
       }
-      _setQueryString()
-   }, [currentServer, vipServer1])
+      if (!refer.current.src) {
+         _setQueryString()
+      }
+   }, [
+      currentServer,
+      vipServer1,
+      vipServer2,
+      notAccessPremium,
+      movieName,
+      getHistoryLoading,
+      current_time,
+      isSeries,
+      isSameHistoryAndCurrent,
+      freeServer1,
+      freeServer2,
+   ])
 
    console.log('iframe src', refer.current?.src)
+
    // console.log('copy server', copy?.current)
 
    return (
@@ -160,10 +176,20 @@ const Iframe: React.FC<IframeProp> = ({
                   zIndex: 1000,
                }}
             >
-               {!currentServer ? (
-                  <Typography variant="h5">Not Available</Typography>
+               {notAccessPremium ? (
+                  <Typography variant="body2" sx={{ textAlign: 'center' }}>
+                     This movie is only available for premium users
+                  </Typography>
                ) : (
-                  loading && <CircularProgress color="inherit" />
+                  <>
+                     {!currentServer ? (
+                        <Typography variant="h5" sx={{ textAlign: 'center' }}>
+                           Not Available
+                        </Typography>
+                     ) : (
+                        loading && <CircularProgress color="inherit" />
+                     )}
+                  </>
                )}
             </Box>
             <Box
@@ -190,15 +216,18 @@ const Iframe: React.FC<IframeProp> = ({
          <Box py={1}>
             <Button
                variant={`${
-                  currentServer === freeServer1 || currentServer === vipServer1
+                  isServer1 &&
+                  (currentServer === freeServer1 ||
+                     currentServer === vipServer1)
                      ? 'contained'
                      : 'outlined'
                }`}
                size="small"
                color="primary"
-               onClick={() =>
+               onClick={() => {
+                  setIsServer1(true)
                   changeServer(premiumUser ? vipServer1 : freeServer1)
-               }
+               }}
                sx={{
                   my: 2,
                }}
@@ -207,15 +236,18 @@ const Iframe: React.FC<IframeProp> = ({
             </Button>
             <Button
                variant={`${
-                  currentServer === freeServer2 || currentServer === vipServer2
+                  !isServer1 &&
+                  (currentServer === freeServer2 ||
+                     currentServer === vipServer2)
                      ? 'contained'
                      : 'outlined'
                }`}
                size="small"
                color="primary"
-               onClick={() =>
+               onClick={() => {
+                  setIsServer1(false)
                   changeServer(premiumUser ? vipServer2 : freeServer2)
-               }
+               }}
                sx={{
                   my: 2,
                   ml: 2,

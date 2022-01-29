@@ -1,17 +1,7 @@
-import { useUpdateHistoryTimer } from '@contexts/global-states/useUpdateHistoryTimer'
 import { useGetWatchHistoryLazyQuery } from '@graphgen'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-const setTimer = useUpdateHistoryTimer.getState().setTimer
-export default function useResumeMovie({
-   userId,
-   season,
-   episode,
-}: {
-   userId: string
-   season: number
-   episode: number
-}) {
+export default function useResumeMovie({ userId }: { userId: string }) {
    const router = useRouter()
    const [
       getHistory,
@@ -20,7 +10,7 @@ export default function useResumeMovie({
          loading: getHistoryLoading,
          error: getHistoryError,
       },
-   ] = useGetWatchHistoryLazyQuery()
+   ] = useGetWatchHistoryLazyQuery({ fetchPolicy: 'network-only' })
    // useEffect(() => {
    //    if (getHistoryData?.watchHistories[0]?.id) {
    //       const normalizedId = apolloClient.cache.identify({
@@ -32,19 +22,12 @@ export default function useResumeMovie({
    //    }
    // }, [apolloClient.cache, getHistoryData?.watchHistories, router.query.id])
    useEffect(() => {
-      if (!router.query.id || !userId || !season || !episode) return
+      if (!router.query.id || !userId || router.isFallback) return
+
       getHistory({
          variables: { movieUuid: router.query.id as string, user: userId },
       })
-      return () => setTimer(true) //to update movies if route change from here
-   }, [
-      episode,
-      getHistory,
-      getHistoryData?.watchHistories,
-      router.query.id,
-      season,
-      userId,
-   ])
+   }, [getHistory, router.isFallback, router.query.id, userId])
    return {
       getHistoryData,
       getHistoryLoading,

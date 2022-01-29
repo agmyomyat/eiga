@@ -41,7 +41,7 @@ export default function SeriesPage(props: PageProps) {
    const client = useApolloClient()
    const { userData, getUserLoading } = useAuth()
    const router: NextRouter = useRouter()
-   const [currentServer, setCurrentServer] = useState<string | null>(null)
+   const [currentServer, setCurrentServer] = useState<string | null>('')
    const [loading, setLoading] = useState<boolean>(true)
    const { id } = router.query
    const serverResult = props.data
@@ -50,6 +50,7 @@ export default function SeriesPage(props: PageProps) {
    const [currentEpisode, setCurrentEpisode] = useState<number>(1)
    const seasons = seriesData?.tv_sery.season
    const servers = seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
+
    useUpdateViews(seriesData?.uuid)
 
    function changeServer(server: string) {
@@ -60,6 +61,14 @@ export default function SeriesPage(props: PageProps) {
    function iframeLoad(prop: boolean) {
       setLoading(prop)
    }
+   const { getHistoryData, getHistoryLoading } = useResumeMovie({
+      userId: userData?.userId,
+   })
+
+   const historySeason = getHistoryData?.watchHistories[0]?.season
+   const historyEpisode = getHistoryData?.watchHistories[0]?.episode
+   const isSameHistoryWithCurrent =
+      historySeason === currentSeason && historyEpisode === currentEpisode
    const { updateHistoryData } = useUpdateHistory(
       {
          movieId: JSON.parse(seriesData?.id || null),
@@ -69,15 +78,8 @@ export default function SeriesPage(props: PageProps) {
             seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
                .episodeID,
       },
-      userData?.premium || null,
-      currentServer
+      userData?.premium || null
    )
-   const { getHistoryData } = useResumeMovie({
-      userId: userData?.userId,
-      season: seasons?.[currentSeason - 1].seasonID,
-      episode:
-         seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1].episodeID,
-   })
 
    const {
       favouriteMovieData,
@@ -128,6 +130,10 @@ export default function SeriesPage(props: PageProps) {
    const handleSelect = (season: number, id: number) => {
       setCurrentSeason(season)
       setCurrentEpisode(id)
+      if (currentSeason === season && currentEpisode === id) return
+      setCurrentServer(
+         userData?.premium ? servers.vipServer1 : servers.freeServer1
+      )
    }
 
    return (
@@ -142,9 +148,12 @@ export default function SeriesPage(props: PageProps) {
             <Box>
                <Iframe
                   currentServer={currentServer}
+                  current_time={getHistoryData?.watchHistories[0]?.current_time}
+                  getHistoryLoading={getHistoryLoading}
                   loading={loading}
                   setLoading={iframeLoad}
                   id={id}
+                  movieName={seriesData?.uuid}
                   freeServer1={servers.freeServer1}
                   freeServer2={servers.freeServer2}
                   vipServer1={servers.vipServer1}
@@ -152,6 +161,8 @@ export default function SeriesPage(props: PageProps) {
                   changeServer={changeServer}
                   premiumUser={userData?.premium}
                   isSeries={seriesData?.isSeries}
+                  premiumOnly={seriesData?.premiumOnly}
+                  isSameHistoryAndCurrent={isSameHistoryWithCurrent}
                />
                <Divider />
                <Episodes

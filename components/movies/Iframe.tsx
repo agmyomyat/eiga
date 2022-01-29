@@ -187,8 +187,11 @@ const Iframe: React.FC<IframeProp> = ({
                ) : (
                   <>
                      {!currentServer ? (
-                        <Typography variant="h5" sx={{ textAlign: 'center' }}>
-                           Not Available
+                        <Typography
+                           variant="body2"
+                           sx={{ textAlign: 'center' }}
+                        >
+                           Not available, try another subtitle below
                         </Typography>
                      ) : (
                         loading && <CircularProgress color="inherit" />

@@ -74,6 +74,10 @@ const Iframe: React.FC<IframeProp> = ({
       async function _setQueryString() {
          console.log('currentServer', currentServer)
          console.log('reference', refer.current)
+         /**
+          * @toDo
+          * isServer1 not setting true because of empty strings
+          */
          if (currentServer === vipServer1 || freeServer1) {
             setIsServer1(true)
          }
@@ -183,8 +187,11 @@ const Iframe: React.FC<IframeProp> = ({
                ) : (
                   <>
                      {!currentServer ? (
-                        <Typography variant="h5" sx={{ textAlign: 'center' }}>
-                           Not Available
+                        <Typography
+                           variant="body2"
+                           sx={{ textAlign: 'center' }}
+                        >
+                           Not available, try another subtitle below
                         </Typography>
                      ) : (
                         loading && <CircularProgress color="inherit" />

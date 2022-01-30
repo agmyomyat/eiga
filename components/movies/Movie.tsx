@@ -3,10 +3,11 @@ import { Movies } from '@graphgen'
 import { Box, Card, Typography } from '@mui/material'
 import Image from 'next/image'
 
-type TMovies<P, U> = Partial<Omit<P, 'isSeries' | 'release_date'> & U>
+type TMovies<P, U> = Partial<Omit<P, 'isSeries' | 'release_date' | 'mmsub'> & U>
 type TSeriesNDate = {
    isSeries: string[] | boolean
    release_date: string[] | number
+   mmsub: string[] | boolean
 }
 export type TMovieProps = TMovies<Movies, TSeriesNDate>
 
@@ -22,9 +23,13 @@ const Movie: React.FC<TMovieProps> = ({
    const { push }: NextRouter = useRouter()
 
    const newIsSeries =
-      typeof isSeries === 'boolean' ? isSeries : isSeries[0] === 'series'
+      typeof isSeries === 'boolean' || isSeries === null
+         ? isSeries
+         : isSeries[0] === 'series'
    const newIsmmsub =
-      typeof mmsub === 'boolean' ? mmsub : mmsub[0] === 'Myanmar'
+      typeof mmsub === 'boolean' || mmsub === null
+         ? mmsub
+         : mmsub[0] === 'Myanmar'
    const newReleaseDate =
       typeof release_date === 'number'
          ? release_date

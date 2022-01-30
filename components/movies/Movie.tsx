@@ -23,6 +23,8 @@ const Movie: React.FC<TMovieProps> = ({
 
    const newIsSeries =
       typeof isSeries === 'boolean' ? isSeries : isSeries[0] === 'series'
+   const newIsmmsub =
+      typeof mmsub === 'boolean' ? mmsub : mmsub[0] === 'Myanmar'
    const newReleaseDate =
       typeof release_date === 'number'
          ? release_date
@@ -89,7 +91,7 @@ const Movie: React.FC<TMovieProps> = ({
                   borderRadius: 1,
                }}
             >
-               {mmsub ? 'MMSub' : 'EngSub'}
+               {newIsmmsub ? 'MMSub' : 'EngSub'}
             </Typography>
          </Box>
       </Box>

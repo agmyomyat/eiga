@@ -140,6 +140,9 @@ export const Search: React.FC = () => {
          setType('')
          // delete currentRefinements of isSeries and Type select box change to null.
       }
+      if (subType === value) {
+         setSubType('')
+      }
       currentRefinements(key)
    }
 

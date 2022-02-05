@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
-import { Box, Typography, Divider, Button } from '@mui/material'
+import { Box, Typography, Divider, Button, alpha } from '@mui/material'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import BlockIcon from '@mui/icons-material/Block'
 import { Plan } from '@helpers/plans'
@@ -20,30 +20,68 @@ const PricingTable: React.FC<IpricingTable> = ({
    selectedPlan,
 }) => {
    const selectPlans = (
-      <Box display="flex" justifyContent="center" sx={{ pt: 5 }}>
+      <Box
+         display="flex"
+         justifyContent="space-around"
+         onClick={() => setMonth((prev) => (prev === 1 ? 2 : 1))}
+         sx={{
+            py: 1.5,
+            my: 5,
+            position: 'relative',
+            width: 250,
+            mx: 'auto',
+            bgcolor: (theme) => alpha(theme.palette.common.white, 0.05),
+            borderRadius: 2,
+            cursor: 'pointer',
+         }}
+      >
+         <Box
+            sx={{
+               content: `''`,
+               position: 'absolute',
+               bottom: '8%',
+               height: '84%',
+               borderRadius: 2,
+               left: month === 1 ? '2%' : '50%',
+               width: '48%',
+               bgcolor: (theme) => theme.palette.primary.main,
+               transition: (theme) =>
+                  theme.transitions.create('left', {
+                     duration: theme.transitions.duration.standard,
+                  }),
+               zIndex: 5,
+            }}
+         ></Box>
          {plans.map((plan) => (
-            <Box
+            <Typography
+               variant="h6"
                key={plan.id}
-               onClick={() => setMonth(plan.id)}
                sx={{
-                  py: 2,
-                  px: 4,
-                  textAlign: 'center',
-                  borderWidth: 1,
-                  borderStyle: 'solid',
-                  borderColor: '#303030',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  '&:hover': {
-                     borderColor: 'primary.main',
-                  },
-                  color: month === plan.id ? 'black' : 'white',
-                  border: month === plan.id ? 'none' : '',
-                  bgcolor: month === plan.id ? 'primary.main' : 'transparent',
+                  zIndex: 10,
+                  color: (theme) =>
+                     month === plan.id
+                        ? theme.palette.common.black
+                        : theme.palette.common.white,
+                  transition: (theme) =>
+                     theme.transitions.create('color', {
+                        duration: theme.transitions.duration.shortest,
+                     }),
+                  // textAlign: 'center',
+                  // borderWidth: 1,
+                  // borderStyle: 'solid',
+                  // borderColor: '#303030',
+                  // fontWeight: 'bold',
+                  // cursor: 'pointer',
+                  // '&:hover': {
+                  //    borderColor: 'primary.main',
+                  // },
+                  // color: month === plan.id ? 'black' : 'white',
+                  // border: month === plan.id ? 'none' : '',
+                  // bgcolor: month === plan.id ? 'primary.main' : 'transparent',
                }}
             >
                {plan.month}
-            </Box>
+            </Typography>
          ))}
       </Box>
    )

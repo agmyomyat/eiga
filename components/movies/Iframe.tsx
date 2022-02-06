@@ -76,7 +76,7 @@ const Iframe: React.FC<IframeProp> = ({
          console.log('reference', refer.current)
          /**
           * @toDo
-          * isServer1 not setting true because of empty strings
+          * isServer1 not setting true because of empty strings is optional
           */
          if (currentServer === vipServer1 || freeServer1) {
             setIsServer1(true)

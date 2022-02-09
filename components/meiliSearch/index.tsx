@@ -2,6 +2,7 @@ import CustomHits from './Hits'
 import CustomRefinementList from './RefinementList'
 import CustomCurrentRefinements from './CurrentRefinement'
 import CustomSearchBox from './SearchBox'
+import MMsub from './Mmsub'
 import MoviesOrSeries from './MoviesOrSeries'
 import { Box, Divider, Button, Typography } from '@mui/material'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
@@ -10,17 +11,18 @@ import { FacetsDistribution, MeiliSearch } from 'meilisearch'
 import { SelectChangeEvent } from '@mui/material/Select'
 
 const meiliClient = new MeiliSearch({
-   host: 'http://localhost:7700',
+   host: process.env.MEILISEARCH_ENDPOINT,
 })
 meiliClient
    .index('movies')
-   .updateFilterableAttributes(['isSeries', 'genres', 'release_date'])
+   .updateFilterableAttributes(['isSeries', 'genres', 'release_date', 'mmsub'])
 // const CustomIsSeries = CustomRefinementList({ name: 'MovieTypes' })
 const CustomGenres = CustomRefinementList({ name: 'Genres' })
 const CustomReleaseDate = CustomRefinementList({ name: 'Release Dates' })
 
 export const Search: React.FC = () => {
    const [type, setType] = useState('')
+   const [subType, setSubType] = useState('')
    const [isGenres, setIsGenres] = useState<boolean>(true)
    const [refinementList, setRefinementList] = useState<FacetsDistribution>()
    const [meiliProp, setMeiliProp] = useState({
@@ -30,6 +32,7 @@ export const Search: React.FC = () => {
          genres: '',
          isSeries: '',
          release_date: '',
+         mmsub: '',
       },
       searchWords: '',
    })
@@ -56,6 +59,7 @@ export const Search: React.FC = () => {
                genres: '',
                isSeries: '',
                release_date: '',
+               mmsub: '',
             },
             searchWords: value,
          }))
@@ -89,6 +93,20 @@ export const Search: React.FC = () => {
          }))
       )
    }
+   function refineMmsub(value: string) {
+      return (
+         setHits([]),
+         setMeiliProp((prev) => ({
+            ...prev,
+            hasmore: true,
+            offset: 0,
+            filter: {
+               ...prev.filter,
+               mmsub: prev.filter.mmsub === value ? '' : value,
+            },
+         }))
+      )
+   }
    function refineReleaseDate(value: string) {
       return (
          setHits([]),
@@ -112,11 +130,18 @@ export const Search: React.FC = () => {
       setType(event.target.value as string)
       refineIsSeries(event.target.value)
    }
+   const subtitleHandleChange = (event: SelectChangeEvent) => {
+      setSubType(event.target.value as string)
+      refineMmsub(event.target.value)
+   }
 
    const handleDeleteRefinements = (key: string, value: string) => {
       if (type === value) {
          setType('')
          // delete currentRefinements of isSeries and Type select box change to null.
+      }
+      if (subType === value) {
+         setSubType('')
       }
       currentRefinements(key)
    }
@@ -126,7 +151,7 @@ export const Search: React.FC = () => {
          .index('movies')
          .search('', {
             limit: 0,
-            facetsDistribution: ['genres', 'isSeries', 'release_date'],
+            facetsDistribution: ['genres', 'isSeries', 'release_date', 'mmsub'],
          })
          .then((res) => setRefinementList(res.facetsDistribution))
    }, [])
@@ -143,6 +168,9 @@ export const Search: React.FC = () => {
       }
       if (meiliProp.filter.release_date) {
          _var = [..._var, `release_date = ${meiliProp.filter.release_date}`]
+      }
+      if (meiliProp.filter.mmsub) {
+         _var = [..._var, `mmsub = ${meiliProp.filter.mmsub}`]
       }
       meiliClient
          .index('movies')
@@ -162,6 +190,7 @@ export const Search: React.FC = () => {
    }, [
       meiliProp.filter.genres,
       meiliProp.filter.isSeries,
+      meiliProp.filter.mmsub,
       meiliProp.filter.release_date,
       meiliProp.offset,
       meiliProp.searchWords,
@@ -186,6 +215,11 @@ export const Search: React.FC = () => {
                items={refinementList.isSeries}
                type={type}
                onChange={handleChange}
+            />
+            <MMsub
+               onChange={subtitleHandleChange}
+               items={refinementList.mmsub}
+               type={subType}
             />
             <Divider sx={{ my: 1, display: { sm: 'none' } }} />
             <Box

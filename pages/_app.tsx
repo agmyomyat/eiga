@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useRouter, NextRouter } from 'next/router'
 import Head from 'next/head'
-import { AppProps } from 'next/app'
+import type { AppProps /*, AppContext */ } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '@apollo/index'
 import { ThemeProvider } from '@mui/material/styles'
@@ -17,6 +17,9 @@ import Progress from '@components/progressBar/Progress'
 import { useProgress } from '@contexts/global-states/useProgress'
 import LoadingModal from '@components/ui/LoadingModal'
 
+console.log = function () {
+   return null
+}
 const clientSideEmotionCache = createEmotionCache()
 
 interface MyAppProps extends AppProps {

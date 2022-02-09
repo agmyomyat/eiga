@@ -3,7 +3,16 @@ import { GetStaticProps } from 'next'
 import { useRouter, NextRouter } from 'next/router'
 import { useAuth } from '@contexts/AuthContext'
 import { createUser } from '@apollo/mutationfn/createUser'
-import { Container, Button, Stack, Box, Typography, Paper } from '@mui/material'
+import {
+   Container,
+   Button,
+   Stack,
+   Box,
+   Typography,
+   Paper,
+   InputBase,
+   alpha,
+} from '@mui/material'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '@lib'
 import { useCheckUser } from '@contexts/global-states/useCheckUser'
@@ -49,6 +58,7 @@ function popUpLogin() {
 }
 
 export default function Profile() {
+   const [value, setValue] = React.useState<string>('')
    const authLoading = useAuthLoading((state) => state.loading)
    const { getUserLoading, userData, logOut } = useAuth()
    const { push }: NextRouter = useRouter()
@@ -59,10 +69,16 @@ export default function Profile() {
       Math.abs((expireDate - currentDate) / msToDay)
    )
 
-   console.log('expire', new Date(userData?.expire))
+   // console.log('expire', new Date(userData?.expire))
 
    const handleSignOut = async () => {
       logOut()
+   }
+
+   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      console.log('value', value)
+      setValue('')
    }
 
    return (
@@ -79,7 +95,7 @@ export default function Profile() {
             <ProfileSkeleton />
          ) : (
             <>
-               {userData?.userName ? (
+               {!userData?.userName ? (
                   <Box sx={{ mt: 1 }}>
                      <Stack
                         spacing={2}
@@ -104,7 +120,7 @@ export default function Profile() {
                               Email
                            </Typography>
 
-                           <Typography>{userData.userName}</Typography>
+                           <Typography>{userData?.userName}</Typography>
                         </Paper>
 
                         <Paper
@@ -139,7 +155,7 @@ export default function Profile() {
                            </Typography>
 
                            <Typography>
-                              {userData.verify ? 'Yes' : 'No'}
+                              {userData?.verify ? 'Yes' : 'No'}
                            </Typography>
                         </Paper>
 
@@ -181,6 +197,75 @@ export default function Profile() {
                            >
                               Go Check For Pricing
                            </Button>
+                        </Paper>
+                        {/* editing */}
+                        <Paper
+                           sx={{
+                              width: 1,
+                              bgcolor: 'secondary.main',
+                              p: 2,
+                              borderRadius: 3,
+                           }}
+                           elevation={3}
+                        >
+                           <Typography color="textSecondary" sx={{ pb: 2 }}>
+                              Referral Id
+                           </Typography>
+
+                           <Box
+                              component="form"
+                              noValidate
+                              role="search"
+                              onSubmit={handleSubmit}
+                              sx={{
+                                 display: 'flex',
+                                 alignItems: 'center',
+                                 position: 'relative',
+                                 width: 1,
+                              }}
+                           >
+                              <InputBase
+                                 autoFocus
+                                 placeholder="Enter referral id"
+                                 inputProps={{ 'aria-label': 'search' }}
+                                 value={value}
+                                 onChange={(e) => setValue(e.target.value)}
+                                 sx={{
+                                    color: 'inherit',
+                                    '& .MuiInputBase-input': {
+                                       borderRadius: 1,
+                                       bgcolor: (theme) =>
+                                          alpha(
+                                             theme.palette.common.white,
+                                             0.15
+                                          ),
+                                       '&:hover': {
+                                          bgcolor: (theme) =>
+                                             alpha(
+                                                theme.palette.common.white,
+                                                0.25
+                                             ),
+                                       },
+                                       p: 1,
+                                       // vertical padding + font size from searchIcon
+                                       pl: 3,
+                                       transition: (theme) =>
+                                          theme.transitions.create('width'),
+                                       width: 1,
+                                    },
+                                 }}
+                              />
+                              <Button
+                                 color="primary"
+                                 variant="contained"
+                                 type="submit"
+                                 sx={{ ml: 2 }}
+                              >
+                                 Procced
+                              </Button>
+                           </Box>
+
+                           {/* editing */}
                         </Paper>
 
                         <Button

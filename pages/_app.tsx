@@ -17,9 +17,9 @@ import Progress from '@components/progressBar/Progress'
 import { useProgress } from '@contexts/global-states/useProgress'
 import LoadingModal from '@components/ui/LoadingModal'
 
-console.log = function () {
-   return null
-}
+// console.log = function () {
+//    return null
+// }
 const clientSideEmotionCache = createEmotionCache()
 
 interface MyAppProps extends AppProps {

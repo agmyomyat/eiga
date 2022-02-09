@@ -215,7 +215,7 @@ export default function Profile() {
                            <Box
                               component="form"
                               noValidate
-                              role="search"
+                              role="referral"
                               onSubmit={handleSubmit}
                               sx={{
                                  display: 'flex',
@@ -227,7 +227,7 @@ export default function Profile() {
                               <InputBase
                                  autoFocus
                                  placeholder="Enter referral id"
-                                 inputProps={{ 'aria-label': 'search' }}
+                                 inputProps={{ 'aria-label': 'referral' }}
                                  value={value}
                                  onChange={(e) => setValue(e.target.value)}
                                  sx={{

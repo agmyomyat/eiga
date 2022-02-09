@@ -95,7 +95,10 @@ const Iframe: React.FC<IframeProp> = ({
 
             refer.current.src = `${
                currentServer === vipServer1 ? vipServer1 : vipServer2
-            }?token=${_token || getAccessToken()}&ct=${
+               // check if url has hls query
+            }${currentServer.indexOf('?hls') > -1 ? '&' : '?'}token=${
+               _token || getAccessToken()
+            }&ct=${
                !isSeries || (isSeries && isSameHistoryAndCurrent)
                   ? current_time ?? (current_time || '')
                   : '' || ''

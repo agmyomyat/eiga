@@ -42,6 +42,7 @@ const MobileNavigation: React.FC = () => {
             height: 'auto',
             pt: 0.5,
             pb: 3,
+            zIndex: 2,
          }}
       >
          <BottomNavigationAction

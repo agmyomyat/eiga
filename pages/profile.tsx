@@ -95,7 +95,7 @@ export default function Profile() {
             <ProfileSkeleton />
          ) : (
             <>
-               {!userData?.userName ? (
+               {userData?.userName ? (
                   <Box sx={{ mt: 1 }}>
                      <Stack
                         spacing={2}

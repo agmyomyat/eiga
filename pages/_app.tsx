@@ -16,6 +16,7 @@ import ErrorHandler from '@components/modals/errorHandler'
 import Progress from '@components/progressBar/Progress'
 import { useProgress } from '@contexts/global-states/useProgress'
 import LoadingModal from '@components/ui/LoadingModal'
+import SuccessModal from '@components/modals/successModal'
 
 // console.log = function () {
 //    return null
@@ -81,6 +82,7 @@ function MyApp(props: MyAppProps) {
                      <Component {...pageProps} />
                      <DetectOtherLogin />
                      <ErrorHandler />
+                     <SuccessModal />
                      <LoadingModal open={fallbackLoading} />
                   </Layout>
                </AuthProvider>

@@ -65,18 +65,19 @@ export default function Profile() {
    const [referralCodeInboxValue, setreferralCodeInboxValue] =
       React.useState<string>('')
    const authLoading = useAuthLoading((state) => state.loading)
-   const [checkValidReferralCode] = useCheckValidReferralCodeLazyQuery({
-      fetchPolicy: 'network-only',
-      ssr: false,
-      onCompleted: (data) => {
-         if (data.checkValidReferralCode.ok) {
-            setSuccessMessage('Your Account Has upgraded')
-            setAccessToken(data.checkValidReferralCode.jwtRenewToken)
-            return useCheckUser.getState().setCheckUser(true)
-         }
-         setErrorMessageModal('Your Referral Code is invalid')
-      },
-   })
+   const [checkValidReferralCode, { loading: checkValidReferralCodeLoading }] =
+      useCheckValidReferralCodeLazyQuery({
+         fetchPolicy: 'network-only',
+         ssr: false,
+         onCompleted: (data) => {
+            if (data.checkValidReferralCode.ok) {
+               setSuccessMessage('Your Account Has upgraded')
+               setAccessToken(data.checkValidReferralCode.jwtRenewToken)
+               return useCheckUser.getState().setCheckUser(true)
+            }
+            setErrorMessageModal('Your Referral Code is invalid')
+         },
+      })
    const { getUserLoading, userData, logOut } = useAuth()
    const { push }: NextRouter = useRouter()
    const currentDate = new Date().getTime()
@@ -249,9 +250,12 @@ export default function Profile() {
                                  placeholder="Enter referral id"
                                  inputProps={{ 'aria-label': 'referral' }}
                                  value={referralCodeInboxValue}
-                                 onChange={(e) =>
+                                 onChange={(e) => {
                                     setreferralCodeInboxValue(e.target.value)
-                                 }
+                                    if (!e.target.value) return
+                                    setErrorMessageModal('')
+                                    setSuccessMessage('')
+                                 }}
                                  sx={{
                                     color: 'inherit',
                                     '& .MuiInputBase-input': {
@@ -281,6 +285,7 @@ export default function Profile() {
                                  color="primary"
                                  variant="contained"
                                  type="submit"
+                                 disabled={checkValidReferralCodeLoading}
                                  sx={{ ml: 2 }}
                               >
                                  Procced

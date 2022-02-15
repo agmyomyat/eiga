@@ -1,0 +1,6 @@
+query CheckValidReferralCode($code: String) {
+   checkValidReferralCode(input: { code: $code }) {
+      ok
+      jwtRenewToken
+   }
+}

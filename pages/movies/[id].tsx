@@ -159,6 +159,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
          data,
          title: data?.getMovie?.name,
       },
-      revalidate: 300,
+      revalidate: 10,
    }
 }

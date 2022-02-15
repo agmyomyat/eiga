@@ -253,7 +253,7 @@ export default function Profile() {
                                  onChange={(e) => {
                                     setreferralCodeInboxValue(e.target.value)
                                     if (!e.target.value) return
-                                    setErrorMessageModal('')
+                                    setErrorMessageModal('') // this two setstate is needed in order not to conflict with two modals showing on each other
                                     setSuccessMessage('')
                                  }}
                                  sx={{

@@ -3017,6 +3017,14 @@ export type EditReferralCodeInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type EditReferralCodeInput = {
+  code?: Maybe<Scalars['String']>;
+  month?: Maybe<Scalars['Int']>;
+  used_client_uuid?: Maybe<Scalars['String']>;
+  published_at?: Maybe<Scalars['DateTime']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
 
 export type EditRoleInput = {
   name?: Maybe<Scalars['String']>;

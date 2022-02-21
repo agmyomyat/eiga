@@ -6,7 +6,7 @@ export default function useUpdateViews(uuid: string) {
    })
    useEffect(() => {
       if (!uuid) return
-      const _timerRef = setTimeout(updateMovieView, 5000)
+      const _timerRef = setTimeout(updateMovieView, 18000)
       return () => clearTimeout(_timerRef)
    }, [updateMovieView, uuid])
 }

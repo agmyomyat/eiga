@@ -61,7 +61,7 @@ function MyApp(props: MyAppProps) {
             <title>{pageProps.title} | Rose Stream</title>
             <meta
                property="og:image"
-               content={pageProps?.data?.getMovie?.photo_url}
+               content={pageProps?.data?.getMovie?.wide_poster}
                key="image"
             />
             <meta property="og:image:width" content="1600" key="image-width" />

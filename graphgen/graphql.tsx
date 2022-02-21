@@ -745,7 +745,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | TypeRegisterEmbedUploader | Typeloginembeduploader | VerifyTokenPayload | OptionalMovies | ReturnSignup | ReturnUserData | UpdateMovieReturn | EmbedUploader | EmbedUploaderConnection | EmbedUploaderAggregator | EmbedUploaderAggregatorSum | EmbedUploaderAggregatorAvg | EmbedUploaderAggregatorMin | EmbedUploaderAggregatorMax | EmbedUploaderGroupBy | EmbedUploaderConnectionId | EmbedUploaderConnectionCreated_At | EmbedUploaderConnectionUpdated_At | EmbedUploaderConnectionUserName | EmbedUploaderConnectionPassword | EmbedUploaderConnectionTokenVersion | EmbedUploaderConnectionVerify | CreateEmbedUploaderPayload | UpdateEmbedUploaderPayload | DeleteEmbedUploaderPayload | EmbedVideo | EmbedVideoConnection | EmbedVideoAggregator | EmbedVideoAggregatorSum | EmbedVideoAggregatorAvg | EmbedVideoAggregatorMin | EmbedVideoAggregatorMax | EmbedVideoGroupBy | EmbedVideoConnectionId | EmbedVideoConnectionCreated_At | EmbedVideoConnectionUpdated_At | EmbedVideoConnectionMovieName | EmbedVideoConnectionSeason | EmbedVideoConnectionEpisode | EmbedVideoConnectionEigaLink | EmbedVideoConnectionOriginalLink | EmbedVideoConnectionUploadStatus | EmbedVideoConnectionUploader | EmbedVideoConnectionFileSize | EmbedVideoConnectionEng_Sub | EmbedVideoConnectionEigaLink2 | EmbedVideoConnectionMm_Sub | EmbedVideoConnectionPublished_At | CreateEmbedVideoPayload | UpdateEmbedVideoPayload | DeleteEmbedVideoPayload | EmbedVideo2 | EmbedVideo2Connection | EmbedVideo2Aggregator | EmbedVideo2AggregatorSum | EmbedVideo2AggregatorAvg | EmbedVideo2AggregatorMin | EmbedVideo2AggregatorMax | EmbedVideo2GroupBy | EmbedVideo2ConnectionId | EmbedVideo2ConnectionCreated_At | EmbedVideo2ConnectionUpdated_At | EmbedVideo2ConnectionEmbedLink | EmbedVideo2ConnectionMovie_Name | EmbedVideo2ConnectionOriginal_Link | EmbedVideo2ConnectionMm_Sub | EmbedVideo2ConnectionEng_Sub | EmbedVideo2ConnectionVideo_Size | EmbedVideo2ConnectionSeason | EmbedVideo2ConnectionEpisode | EmbedVideo2ConnectionUpload_Status | EmbedVideo2ConnectionUploader | EmbedVideo2ConnectionPublished_At | CreateEmbedVideo2Payload | UpdateEmbedVideo2Payload | DeleteEmbedVideo2Payload | FavouriteMovies | FavouriteMoviesConnection | FavouriteMoviesAggregator | FavouriteMoviesGroupBy | FavouriteMoviesConnectionId | FavouriteMoviesConnectionCreated_At | FavouriteMoviesConnectionUpdated_At | FavouriteMoviesConnectionMovie | FavouriteMoviesConnectionUser_Info | FavouriteMoviesConnectionPublished_At | CreateFavouriteMoviePayload | UpdateFavouriteMoviePayload | DeleteFavouriteMoviePayload | Genres | GenresConnection | GenresAggregator | GenresGroupBy | GenresConnectionId | GenresConnectionCreated_At | GenresConnectionUpdated_At | GenresConnectionName | GenresConnectionUuid | GenresConnectionPublished_At | CreateGenrePayload | UpdateGenrePayload | DeleteGenrePayload | Movies | MoviesConnection | MoviesAggregator | MoviesAggregatorSum | MoviesAggregatorAvg | MoviesAggregatorMin | MoviesAggregatorMax | MoviesGroupBy | MoviesConnectionId | MoviesConnectionCreated_At | MoviesConnectionUpdated_At | MoviesConnectionName | MoviesConnectionBody | MoviesConnectionUuid | MoviesConnectionFreeServer1 | MoviesConnectionPhoto_Url | MoviesConnectionFreeServer2 | MoviesConnectionVipServer1 | MoviesConnectionVipServer2 | MoviesConnectionPremiumOnly | MoviesConnectionRecommend | MoviesConnectionTv_Sery | MoviesConnectionQuality | MoviesConnectionViews | MoviesConnectionRelease_Date | MoviesConnectionDuration | MoviesConnectionIsSeries | MoviesConnectionImdb | MoviesConnectionAll_Time_Views | MoviesConnectionMmsub | MoviesConnectionSevendaysago | MoviesConnectionPublished_At | CreateMoviePayload | UpdateMoviePayload | DeleteMoviePayload | TvSeries | TvSeriesConnection | TvSeriesAggregator | TvSeriesGroupBy | TvSeriesConnectionId | TvSeriesConnectionCreated_At | TvSeriesConnectionUpdated_At | TvSeriesConnectionName | TvSeriesConnectionPublished_At | CreateTvSeryPayload | UpdateTvSeryPayload | DeleteTvSeryPayload | UserData | UserDataConnection | UserDataAggregator | UserDataAggregatorSum | UserDataAggregatorAvg | UserDataAggregatorMin | UserDataAggregatorMax | UserDataGroupBy | UserDataConnectionId | UserDataConnectionCreated_At | UserDataConnectionUpdated_At | UserDataConnectionUuid | UserDataConnectionVerify | UserDataConnectionExpire | UserDataConnectionTokenVersion | UserDataConnectionFuuid | UserDataConnectionPublished_At | CreateUserDatumPayload | UpdateUserDatumPayload | DeleteUserDatumPayload | WatchHistory | WatchHistoryConnection | WatchHistoryAggregator | WatchHistoryAggregatorSum | WatchHistoryAggregatorAvg | WatchHistoryAggregatorMin | WatchHistoryAggregatorMax | WatchHistoryGroupBy | WatchHistoryConnectionId | WatchHistoryConnectionCreated_At | WatchHistoryConnectionUpdated_At | WatchHistoryConnectionMovieName | WatchHistoryConnectionEpisode | WatchHistoryConnectionSeason | WatchHistoryConnectionUser_Data | WatchHistoryConnectionMovie | WatchHistoryConnectionLast_Updated | WatchHistoryConnectionCurrent_Time | WatchHistoryConnectionPublished_At | CreateWatchHistoryPayload | UpdateWatchHistoryPayload | DeleteWatchHistoryPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentTvSeriesEpisodes | ComponentTvSeriesSeason;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | TypeRegisterEmbedUploader | Typeloginembeduploader | VerifyTokenPayload | OptionalMovies | CheckValidReferralCodeResult | ReturnSignup | ReturnUserData | UpdateMovieReturn | EmbedUploader | EmbedUploaderConnection | EmbedUploaderAggregator | EmbedUploaderAggregatorSum | EmbedUploaderAggregatorAvg | EmbedUploaderAggregatorMin | EmbedUploaderAggregatorMax | EmbedUploaderGroupBy | EmbedUploaderConnectionId | EmbedUploaderConnectionCreated_At | EmbedUploaderConnectionUpdated_At | EmbedUploaderConnectionUserName | EmbedUploaderConnectionPassword | EmbedUploaderConnectionTokenVersion | EmbedUploaderConnectionVerify | CreateEmbedUploaderPayload | UpdateEmbedUploaderPayload | DeleteEmbedUploaderPayload | EmbedVideo | EmbedVideoConnection | EmbedVideoAggregator | EmbedVideoAggregatorSum | EmbedVideoAggregatorAvg | EmbedVideoAggregatorMin | EmbedVideoAggregatorMax | EmbedVideoGroupBy | EmbedVideoConnectionId | EmbedVideoConnectionCreated_At | EmbedVideoConnectionUpdated_At | EmbedVideoConnectionMovieName | EmbedVideoConnectionSeason | EmbedVideoConnectionEpisode | EmbedVideoConnectionEigaLink | EmbedVideoConnectionOriginalLink | EmbedVideoConnectionUploadStatus | EmbedVideoConnectionUploader | EmbedVideoConnectionFileSize | EmbedVideoConnectionEng_Sub | EmbedVideoConnectionEigaLink2 | EmbedVideoConnectionMm_Sub | EmbedVideoConnectionPublished_At | CreateEmbedVideoPayload | UpdateEmbedVideoPayload | DeleteEmbedVideoPayload | EmbedVideo2 | EmbedVideo2Connection | EmbedVideo2Aggregator | EmbedVideo2AggregatorSum | EmbedVideo2AggregatorAvg | EmbedVideo2AggregatorMin | EmbedVideo2AggregatorMax | EmbedVideo2GroupBy | EmbedVideo2ConnectionId | EmbedVideo2ConnectionCreated_At | EmbedVideo2ConnectionUpdated_At | EmbedVideo2ConnectionEmbedLink | EmbedVideo2ConnectionMovie_Name | EmbedVideo2ConnectionOriginal_Link | EmbedVideo2ConnectionMm_Sub | EmbedVideo2ConnectionEng_Sub | EmbedVideo2ConnectionVideo_Size | EmbedVideo2ConnectionSeason | EmbedVideo2ConnectionEpisode | EmbedVideo2ConnectionUpload_Status | EmbedVideo2ConnectionUploader | EmbedVideo2ConnectionPublished_At | CreateEmbedVideo2Payload | UpdateEmbedVideo2Payload | DeleteEmbedVideo2Payload | FavouriteMovies | FavouriteMoviesConnection | FavouriteMoviesAggregator | FavouriteMoviesGroupBy | FavouriteMoviesConnectionId | FavouriteMoviesConnectionCreated_At | FavouriteMoviesConnectionUpdated_At | FavouriteMoviesConnectionMovie | FavouriteMoviesConnectionUser_Info | FavouriteMoviesConnectionPublished_At | CreateFavouriteMoviePayload | UpdateFavouriteMoviePayload | DeleteFavouriteMoviePayload | Genres | GenresConnection | GenresAggregator | GenresGroupBy | GenresConnectionId | GenresConnectionCreated_At | GenresConnectionUpdated_At | GenresConnectionName | GenresConnectionUuid | GenresConnectionPublished_At | CreateGenrePayload | UpdateGenrePayload | DeleteGenrePayload | Movies | MoviesConnection | MoviesAggregator | MoviesAggregatorSum | MoviesAggregatorAvg | MoviesAggregatorMin | MoviesAggregatorMax | MoviesGroupBy | MoviesConnectionId | MoviesConnectionCreated_At | MoviesConnectionUpdated_At | MoviesConnectionName | MoviesConnectionBody | MoviesConnectionUuid | MoviesConnectionFreeServer1 | MoviesConnectionPhoto_Url | MoviesConnectionFreeServer2 | MoviesConnectionVipServer1 | MoviesConnectionVipServer2 | MoviesConnectionPremiumOnly | MoviesConnectionRecommend | MoviesConnectionTv_Sery | MoviesConnectionQuality | MoviesConnectionViews | MoviesConnectionRelease_Date | MoviesConnectionDuration | MoviesConnectionIsSeries | MoviesConnectionImdb | MoviesConnectionAll_Time_Views | MoviesConnectionMmsub | MoviesConnectionSevendaysago | MoviesConnectionWide_Poster | MoviesConnectionPublished_At | CreateMoviePayload | UpdateMoviePayload | DeleteMoviePayload | ReferralCode | ReferralCodeConnection | ReferralCodeAggregator | ReferralCodeAggregatorSum | ReferralCodeAggregatorAvg | ReferralCodeAggregatorMin | ReferralCodeAggregatorMax | ReferralCodeGroupBy | ReferralCodeConnectionId | ReferralCodeConnectionCreated_At | ReferralCodeConnectionUpdated_At | ReferralCodeConnectionCode | ReferralCodeConnectionMonth | ReferralCodeConnectionUsed_Client_Uuid | ReferralCodeConnectionPublished_At | CreateReferralCodePayload | UpdateReferralCodePayload | DeleteReferralCodePayload | TvSeries | TvSeriesConnection | TvSeriesAggregator | TvSeriesGroupBy | TvSeriesConnectionId | TvSeriesConnectionCreated_At | TvSeriesConnectionUpdated_At | TvSeriesConnectionName | TvSeriesConnectionPublished_At | CreateTvSeryPayload | UpdateTvSeryPayload | DeleteTvSeryPayload | UserData | UserDataConnection | UserDataAggregator | UserDataAggregatorSum | UserDataAggregatorAvg | UserDataAggregatorMin | UserDataAggregatorMax | UserDataGroupBy | UserDataConnectionId | UserDataConnectionCreated_At | UserDataConnectionUpdated_At | UserDataConnectionUuid | UserDataConnectionVerify | UserDataConnectionExpire | UserDataConnectionTokenVersion | UserDataConnectionFuuid | UserDataConnectionPublished_At | CreateUserDatumPayload | UpdateUserDatumPayload | DeleteUserDatumPayload | WatchHistory | WatchHistoryConnection | WatchHistoryAggregator | WatchHistoryAggregatorSum | WatchHistoryAggregatorAvg | WatchHistoryAggregatorMin | WatchHistoryAggregatorMax | WatchHistoryGroupBy | WatchHistoryConnectionId | WatchHistoryConnectionCreated_At | WatchHistoryConnectionUpdated_At | WatchHistoryConnectionMovieName | WatchHistoryConnectionEpisode | WatchHistoryConnectionSeason | WatchHistoryConnectionUser_Data | WatchHistoryConnectionMovie | WatchHistoryConnectionLast_Updated | WatchHistoryConnectionCurrent_Time | WatchHistoryConnectionPublished_At | CreateWatchHistoryPayload | UpdateWatchHistoryPayload | DeleteWatchHistoryPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentTvSeriesEpisodes | ComponentTvSeriesSeason;
 
 export type MovieInput = {
   name: Scalars['String'];
@@ -769,6 +769,7 @@ export type MovieInput = {
   all_time_views?: Maybe<Scalars['Long']>;
   mmsub?: Maybe<Scalars['Boolean']>;
   sevendaysago?: Maybe<Scalars['String']>;
+  wide_poster?: Maybe<Scalars['String']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -799,6 +800,7 @@ export type Movies = {
   all_time_views?: Maybe<Scalars['Long']>;
   mmsub?: Maybe<Scalars['Boolean']>;
   sevendaysago?: Maybe<Scalars['String']>;
+  wide_poster?: Maybe<Scalars['String']>;
   published_at?: Maybe<Scalars['DateTime']>;
   genres?: Maybe<Array<Maybe<Genres>>>;
 };
@@ -996,6 +998,12 @@ export type MoviesConnectionVipServer2 = {
   connection?: Maybe<MoviesConnection>;
 };
 
+export type MoviesConnectionWide_Poster = {
+  __typename?: 'MoviesConnectionWide_poster';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<MoviesConnection>;
+};
+
 export type MoviesGroupBy = {
   __typename?: 'MoviesGroupBy';
   id?: Maybe<Array<Maybe<MoviesConnectionId>>>;
@@ -1021,6 +1029,7 @@ export type MoviesGroupBy = {
   all_time_views?: Maybe<Array<Maybe<MoviesConnectionAll_Time_Views>>>;
   mmsub?: Maybe<Array<Maybe<MoviesConnectionMmsub>>>;
   sevendaysago?: Maybe<Array<Maybe<MoviesConnectionSevendaysago>>>;
+  wide_poster?: Maybe<Array<Maybe<MoviesConnectionWide_Poster>>>;
   published_at?: Maybe<Array<Maybe<MoviesConnectionPublished_At>>>;
 };
 
@@ -1044,6 +1053,9 @@ export type Mutation = {
   createMovie?: Maybe<CreateMoviePayload>;
   updateMovie?: Maybe<UpdateMoviePayload>;
   deleteMovie?: Maybe<DeleteMoviePayload>;
+  createReferralCode?: Maybe<CreateReferralCodePayload>;
+  updateReferralCode?: Maybe<UpdateReferralCodePayload>;
+  deleteReferralCode?: Maybe<DeleteReferralCodePayload>;
   createTvSery?: Maybe<CreateTvSeryPayload>;
   updateTvSery?: Maybe<UpdateTvSeryPayload>;
   deleteTvSery?: Maybe<DeleteTvSeryPayload>;
@@ -1171,6 +1183,21 @@ export type MutationUpdateMovieArgs = {
 
 export type MutationDeleteMovieArgs = {
   input?: Maybe<DeleteMovieInput>;
+};
+
+
+export type MutationCreateReferralCodeArgs = {
+  input?: Maybe<CreateReferralCodeInput>;
+};
+
+
+export type MutationUpdateReferralCodeArgs = {
+  input?: Maybe<UpdateReferralCodeInput>;
+};
+
+
+export type MutationDeleteReferralCodeArgs = {
+  input?: Maybe<DeleteReferralCodeInput>;
 };
 
 
@@ -1356,6 +1383,9 @@ export type Query = {
   movie?: Maybe<Movies>;
   movies?: Maybe<Array<Maybe<Movies>>>;
   moviesConnection?: Maybe<MoviesConnection>;
+  referralCode?: Maybe<ReferralCode>;
+  referralCodes?: Maybe<Array<Maybe<ReferralCode>>>;
+  referralCodesConnection?: Maybe<ReferralCodeConnection>;
   tvSery?: Maybe<TvSeries>;
   tvSeries?: Maybe<Array<Maybe<TvSeries>>>;
   tvSeriesConnection?: Maybe<TvSeriesConnection>;
@@ -1377,6 +1407,7 @@ export type Query = {
   me?: Maybe<UsersPermissionsMe>;
   search?: Maybe<Array<Maybe<OptionalMovies>>>;
   getMovie?: Maybe<Movies>;
+  checkValidReferralCode?: Maybe<CheckValidReferralCodeResult>;
   getUserData?: Maybe<ReturnUserData>;
 };
 
@@ -1512,6 +1543,29 @@ export type QueryMoviesArgs = {
 
 
 export type QueryMoviesConnectionArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryReferralCodeArgs = {
+  id: Scalars['ID'];
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryReferralCodesArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryReferralCodesConnectionArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -1659,6 +1713,121 @@ export type QuerySearchArgs = {
 
 export type QueryGetMovieArgs = {
   uuid?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryCheckValidReferralCodeArgs = {
+  input?: Maybe<ReferralQueryInput>;
+};
+
+export type ReferralCode = {
+  __typename?: 'ReferralCode';
+  id: Scalars['ID'];
+  created_at: Scalars['DateTime'];
+  updated_at: Scalars['DateTime'];
+  code?: Maybe<Scalars['String']>;
+  month?: Maybe<Scalars['Int']>;
+  used_client_uuid?: Maybe<Scalars['String']>;
+  published_at?: Maybe<Scalars['DateTime']>;
+};
+
+export type ReferralCodeAggregator = {
+  __typename?: 'ReferralCodeAggregator';
+  count?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+  sum?: Maybe<ReferralCodeAggregatorSum>;
+  avg?: Maybe<ReferralCodeAggregatorAvg>;
+  min?: Maybe<ReferralCodeAggregatorMin>;
+  max?: Maybe<ReferralCodeAggregatorMax>;
+};
+
+export type ReferralCodeAggregatorAvg = {
+  __typename?: 'ReferralCodeAggregatorAvg';
+  month?: Maybe<Scalars['Float']>;
+};
+
+export type ReferralCodeAggregatorMax = {
+  __typename?: 'ReferralCodeAggregatorMax';
+  month?: Maybe<Scalars['Float']>;
+};
+
+export type ReferralCodeAggregatorMin = {
+  __typename?: 'ReferralCodeAggregatorMin';
+  month?: Maybe<Scalars['Float']>;
+};
+
+export type ReferralCodeAggregatorSum = {
+  __typename?: 'ReferralCodeAggregatorSum';
+  month?: Maybe<Scalars['Float']>;
+};
+
+export type ReferralCodeConnection = {
+  __typename?: 'ReferralCodeConnection';
+  values?: Maybe<Array<Maybe<ReferralCode>>>;
+  groupBy?: Maybe<ReferralCodeGroupBy>;
+  aggregate?: Maybe<ReferralCodeAggregator>;
+};
+
+export type ReferralCodeConnectionCode = {
+  __typename?: 'ReferralCodeConnectionCode';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<ReferralCodeConnection>;
+};
+
+export type ReferralCodeConnectionCreated_At = {
+  __typename?: 'ReferralCodeConnectionCreated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<ReferralCodeConnection>;
+};
+
+export type ReferralCodeConnectionId = {
+  __typename?: 'ReferralCodeConnectionId';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<ReferralCodeConnection>;
+};
+
+export type ReferralCodeConnectionMonth = {
+  __typename?: 'ReferralCodeConnectionMonth';
+  key?: Maybe<Scalars['Int']>;
+  connection?: Maybe<ReferralCodeConnection>;
+};
+
+export type ReferralCodeConnectionPublished_At = {
+  __typename?: 'ReferralCodeConnectionPublished_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<ReferralCodeConnection>;
+};
+
+export type ReferralCodeConnectionUpdated_At = {
+  __typename?: 'ReferralCodeConnectionUpdated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<ReferralCodeConnection>;
+};
+
+export type ReferralCodeConnectionUsed_Client_Uuid = {
+  __typename?: 'ReferralCodeConnectionUsed_client_uuid';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<ReferralCodeConnection>;
+};
+
+export type ReferralCodeGroupBy = {
+  __typename?: 'ReferralCodeGroupBy';
+  id?: Maybe<Array<Maybe<ReferralCodeConnectionId>>>;
+  created_at?: Maybe<Array<Maybe<ReferralCodeConnectionCreated_At>>>;
+  updated_at?: Maybe<Array<Maybe<ReferralCodeConnectionUpdated_At>>>;
+  code?: Maybe<Array<Maybe<ReferralCodeConnectionCode>>>;
+  month?: Maybe<Array<Maybe<ReferralCodeConnectionMonth>>>;
+  used_client_uuid?: Maybe<Array<Maybe<ReferralCodeConnectionUsed_Client_Uuid>>>;
+  published_at?: Maybe<Array<Maybe<ReferralCodeConnectionPublished_At>>>;
+};
+
+export type ReferralCodeInput = {
+  code?: Maybe<Scalars['String']>;
+  month?: Maybe<Scalars['Int']>;
+  used_client_uuid?: Maybe<Scalars['String']>;
+  published_at?: Maybe<Scalars['DateTime']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
 };
 
 export type RoleInput = {
@@ -2476,6 +2645,12 @@ export type WatchHistoryInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type CheckValidReferralCodeResult = {
+  __typename?: 'checkValidReferralCodeResult';
+  ok?: Maybe<Scalars['Boolean']>;
+  jwtRenewToken?: Maybe<Scalars['String']>;
+};
+
 export type CreateEmbedUploaderInput = {
   data?: Maybe<EmbedUploaderInput>;
 };
@@ -2529,6 +2704,15 @@ export type CreateMovieInput = {
 export type CreateMoviePayload = {
   __typename?: 'createMoviePayload';
   movie?: Maybe<Movies>;
+};
+
+export type CreateReferralCodeInput = {
+  data?: Maybe<ReferralCodeInput>;
+};
+
+export type CreateReferralCodePayload = {
+  __typename?: 'createReferralCodePayload';
+  referralCode?: Maybe<ReferralCode>;
 };
 
 export type CreateRoleInput = {
@@ -2638,6 +2822,15 @@ export type DeleteMovieInput = {
 export type DeleteMoviePayload = {
   __typename?: 'deleteMoviePayload';
   movie?: Maybe<Movies>;
+};
+
+export type DeleteReferralCodeInput = {
+  where?: Maybe<InputId>;
+};
+
+export type DeleteReferralCodePayload = {
+  __typename?: 'deleteReferralCodePayload';
+  referralCode?: Maybe<ReferralCode>;
 };
 
 export type DeleteRoleInput = {
@@ -2809,6 +3002,16 @@ export type EditMovieInput = {
   all_time_views?: Maybe<Scalars['Long']>;
   mmsub?: Maybe<Scalars['Boolean']>;
   sevendaysago?: Maybe<Scalars['String']>;
+  wide_poster?: Maybe<Scalars['String']>;
+  published_at?: Maybe<Scalars['DateTime']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
+export type EditReferralCodeInput = {
+  code?: Maybe<Scalars['String']>;
+  month?: Maybe<Scalars['Int']>;
+  used_client_uuid?: Maybe<Scalars['String']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -2914,6 +3117,10 @@ export type OptionalMoviesGenresArgs = {
   where?: Maybe<Scalars['JSON']>;
 };
 
+export type ReferralQueryInput = {
+  code?: Maybe<Scalars['String']>;
+};
+
 export type ReturnSignup = {
   __typename?: 'returnSignup';
   ok?: Maybe<Scalars['Boolean']>;
@@ -3015,6 +3222,16 @@ export type UpdateMovieInput = {
 export type UpdateMoviePayload = {
   __typename?: 'updateMoviePayload';
   movie?: Maybe<Movies>;
+};
+
+export type UpdateReferralCodeInput = {
+  where?: Maybe<InputId>;
+  data?: Maybe<EditReferralCodeInput>;
+};
+
+export type UpdateReferralCodePayload = {
+  __typename?: 'updateReferralCodePayload';
+  referralCode?: Maybe<ReferralCode>;
 };
 
 export type UpdateRoleInput = {
@@ -3141,7 +3358,7 @@ export type GetMovieQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'Movies', id: string, freeServer1?: Maybe<string>, uuid?: Maybe<string>, freeServer2?: Maybe<string>, vipServer1?: Maybe<string>, vipServer2?: Maybe<string>, name: string, release_date: number, body: string, duration: any, Imdb: number, isSeries: boolean, mmsub?: Maybe<boolean>, premiumOnly: boolean, genres?: Maybe<Array<Maybe<{ __typename?: 'Genres', name?: Maybe<string> }>>> }> };
+export type GetMovieQuery = { __typename?: 'Query', getMovie?: Maybe<{ __typename?: 'Movies', id: string, freeServer1?: Maybe<string>, uuid?: Maybe<string>, freeServer2?: Maybe<string>, vipServer1?: Maybe<string>, vipServer2?: Maybe<string>, name: string, release_date: number, body: string, duration: any, wide_poster?: Maybe<string>, Imdb: number, isSeries: boolean, mmsub?: Maybe<boolean>, premiumOnly: boolean, genres?: Maybe<Array<Maybe<{ __typename?: 'Genres', name?: Maybe<string> }>>> }> };
 
 export type GetRelatedMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3554,6 +3771,7 @@ export const GetMovieDocument = gql`
     release_date
     body
     duration
+    wide_poster
     Imdb
     isSeries
     mmsub

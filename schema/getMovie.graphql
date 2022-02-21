@@ -10,6 +10,7 @@ query getMovie($uuid: String!) {
       release_date
       body
       duration
+      wide_poster
       Imdb
       isSeries
       mmsub

@@ -1,7 +1,7 @@
-import { NextRouter, useRouter } from 'next/router'
 import { Movies } from '@graphgen'
 import { Box, Card, Typography } from '@mui/material'
 import Image from 'next/image'
+import Link from '@components/ui/Link'
 
 type TMovies<P, U> = Partial<Omit<P, 'isSeries' | 'releaseDate'> & U>
 type TSeriesNDate<T> = { isSeries: T[]; releaseDate: T[] }
@@ -15,49 +15,22 @@ const Hit: React.FC<THitProps> = ({
    releaseDate,
    isSeries,
 }) => {
-   const { push }: NextRouter = useRouter()
-
-   const shimmer = (w: number, h: number): string => `
- <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-   <defs>
-     <linearGradient id="g">
-       <stop stop-color="#333" offset="20%" />
-       <stop stop-color="#222" offset="50%" />
-       <stop stop-color="#333" offset="70%" />
-     </linearGradient>
-   </defs>
-   <rect width="${w}" height="${h}" fill="#333" />
-   <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
-   <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
- </svg>`
-
-   const toBase64 = (str: string) =>
-      typeof window === 'undefined'
-         ? Buffer.from(str).toString('base64')
-         : window.btoa(str)
-
    return (
-      <Box
-         onClick={() =>
-            push({
-               pathname: `/${
-                  isSeries[0] === 'series' ? 'series' : 'movies'
-               }/[id]`,
-               query: { id: uuid },
-            })
-         }
+      <Link
+         href={{
+            pathname: `/${isSeries[0] === 'series' ? 'series' : 'movies'}/[id]`,
+            query: { id: uuid },
+         }}
+         underline="none"
+         color="inherit"
       >
          <Card sx={{ width: 1, cursor: 'pointer', position: 'relative' }}>
             <Image
                src={photo_url}
-               blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                  shimmer(700, 475)
-               )}`}
                layout="responsive"
                width={600}
                height={900}
                alt={name}
-               placeholder="blur"
             />
             <Typography
                component="label"
@@ -104,7 +77,7 @@ const Hit: React.FC<THitProps> = ({
                {isSeries[0] === 'series' ? 'Series' : 'Movie'}
             </Typography>
          </Box>
-      </Box>
+      </Link>
    )
 }
 

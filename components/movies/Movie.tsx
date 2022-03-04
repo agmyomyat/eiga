@@ -1,4 +1,3 @@
-import { NextRouter, useRouter } from 'next/router'
 import { Movies } from '@graphgen'
 import { Box, Card, Typography } from '@mui/material'
 import Image from 'next/image'
@@ -21,8 +20,6 @@ const Movie: React.FC<TMovieProps> = ({
    mmsub,
    Imdb,
 }) => {
-   const { push }: NextRouter = useRouter()
-
    const newIsSeries =
       typeof isSeries === 'boolean' || isSeries === null
          ? isSeries

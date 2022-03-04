@@ -21,10 +21,14 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import { useAlreadyLogin } from '@contexts/global-states/useAlreadyLogin'
 import ProfileSkeleton from '@components/movies/ProfileSkeleton'
 import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
+import { useCheckValidReferralCodeLazyQuery } from '@graphgen'
+import { setAccessToken } from '@helpers/accessToken'
+import { useSuccessMessage } from '@contexts/global-states/useSuccessMessage'
 
 const setAuthLoading = useAuthLoading.getState().setLoading
 const setAlreadyLogin = useAlreadyLogin.getState().setLogin
 const setErrorMessageModal = useErrorMessage.getState().setErrorMessage
+const setSuccessMessage = useSuccessMessage.getState().setSuccessMessage
 
 function popUpLogin() {
    const provider = new GoogleAuthProvider()
@@ -58,8 +62,22 @@ function popUpLogin() {
 }
 
 export default function Profile() {
-   const [value, setValue] = React.useState<string>('')
+   const [referralCodeInboxValue, setreferralCodeInboxValue] =
+      React.useState<string>('')
    const authLoading = useAuthLoading((state) => state.loading)
+   const [checkValidReferralCode, { loading: checkValidReferralCodeLoading }] =
+      useCheckValidReferralCodeLazyQuery({
+         fetchPolicy: 'network-only',
+         ssr: false,
+         onCompleted: (data) => {
+            if (data.checkValidReferralCode.ok) {
+               setSuccessMessage('Your Account Has upgraded')
+               setAccessToken(data.checkValidReferralCode.jwtRenewToken)
+               return useCheckUser.getState().setCheckUser(true)
+            }
+            setErrorMessageModal('Your Referral Code is invalid')
+         },
+      })
    const { getUserLoading, userData, logOut } = useAuth()
    const { push }: NextRouter = useRouter()
    const currentDate = new Date().getTime()
@@ -75,10 +93,13 @@ export default function Profile() {
       logOut()
    }
 
-   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+   const handleSubmitReferralCode = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      console.log('value', value)
-      setValue('')
+      checkValidReferralCode({
+         variables: { code: referralCodeInboxValue },
+      })
+      console.log('referralValue', referralCodeInboxValue)
+      setreferralCodeInboxValue('')
    }
 
    return (
@@ -95,7 +116,7 @@ export default function Profile() {
             <ProfileSkeleton />
          ) : (
             <>
-               {!userData?.userName ? (
+               {userData?.userName ? (
                   <Box sx={{ mt: 1 }}>
                      <Stack
                         spacing={2}
@@ -216,7 +237,7 @@ export default function Profile() {
                               component="form"
                               noValidate
                               role="referral"
-                              onSubmit={handleSubmit}
+                              onSubmit={handleSubmitReferralCode}
                               sx={{
                                  display: 'flex',
                                  alignItems: 'center',
@@ -228,8 +249,13 @@ export default function Profile() {
                                  autoFocus
                                  placeholder="Enter referral id"
                                  inputProps={{ 'aria-label': 'referral' }}
-                                 value={value}
-                                 onChange={(e) => setValue(e.target.value)}
+                                 value={referralCodeInboxValue}
+                                 onChange={(e) => {
+                                    setreferralCodeInboxValue(e.target.value)
+                                    if (!e.target.value) return
+                                    setErrorMessageModal('') // this two setstate is needed in order not to conflict with two modals showing on each other
+                                    setSuccessMessage('')
+                                 }}
                                  sx={{
                                     color: 'inherit',
                                     '& .MuiInputBase-input': {
@@ -259,6 +285,7 @@ export default function Profile() {
                                  color="primary"
                                  variant="contained"
                                  type="submit"
+                                 disabled={checkValidReferralCodeLoading}
                                  sx={{ ml: 2 }}
                               >
                                  Procced

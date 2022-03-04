@@ -2,6 +2,7 @@ import { NextRouter, useRouter } from 'next/router'
 import { Movies } from '@graphgen'
 import { Box, Card, Typography } from '@mui/material'
 import Image from 'next/image'
+import Link from '@components/ui/Link'
 
 type TMovies<P, U> = Partial<Omit<P, 'isSeries' | 'release_date' | 'mmsub'> & U>
 type TSeriesNDate = {
@@ -26,7 +27,7 @@ const Movie: React.FC<TMovieProps> = ({
       typeof isSeries === 'boolean' || isSeries === null
          ? isSeries
          : isSeries[0] === 'series'
-   const newIsmmsub =
+   const isMmsub =
       typeof mmsub === 'boolean' || mmsub === null
          ? mmsub
          : mmsub[0] === 'Myanmar'
@@ -36,13 +37,13 @@ const Movie: React.FC<TMovieProps> = ({
          : parseInt(release_date[0])
 
    return (
-      <Box
-         onClick={() =>
-            push({
-               pathname: `/${newIsSeries ? 'series' : 'movies'}/[id]`,
-               query: { id: uuid },
-            })
-         }
+      <Link
+         href={{
+            pathname: `/${newIsSeries ? 'series' : 'movies'}/[id]`,
+            query: { id: uuid },
+         }}
+         underline="none"
+         color="inherit"
       >
          <Card sx={{ width: 1, cursor: 'pointer', position: 'relative' }}>
             <Image
@@ -96,10 +97,10 @@ const Movie: React.FC<TMovieProps> = ({
                   borderRadius: 1,
                }}
             >
-               {newIsmmsub ? 'MMSub' : 'EngSub'}
+               {isMmsub ? 'MMSub' : 'EngSub'}
             </Typography>
          </Box>
-      </Box>
+      </Link>
    )
 }
 

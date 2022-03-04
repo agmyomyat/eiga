@@ -143,7 +143,7 @@ export default function Favourites() {
                )}
             </>
          )}
-         <div id="histroySentienl" ref={sentinel}></div>
+         <div id="historySentinel" ref={sentinel}></div>
       </Container>
    )
 }

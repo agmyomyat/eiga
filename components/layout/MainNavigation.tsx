@@ -20,7 +20,8 @@ import NavigationSkeleton from '@components/skeleton/NavigationSkeleton'
 import { NextLinkComposed } from 'components/ui/Link'
 import Image from 'next/image'
 import logo from '../../public/logo.png'
-
+import { meiliClient } from '@components/meiliSearch'
+import { OptionalMovies } from '@graphgen'
 interface IhideOnScroll {
    children: React.ReactElement
 }
@@ -41,6 +42,7 @@ const MainNavigation: React.FC = () => {
    const [keywords, setKeywords] = useState<string>('')
    const [searchMovie, { data: searchResults, loading: queryLoading }] =
       useSearchMovieLazyQuery()
+   const [searchRes, setSearchRes] = useState<OptionalMovies[] | []>([])
    const [isSearching, setIsSearching] = useState<boolean>(false)
    const keywordIsValid = Boolean(keywords.trim().length > 0)
    const { pathname, push, isFallback }: NextRouter = useRouter()
@@ -48,7 +50,7 @@ const MainNavigation: React.FC = () => {
    const [openSearch, setOpenSearch] = useState<boolean>(false)
    const [isTyping, setIsTyping] = useState<boolean>(false)
 
-   console.log('searchResults', searchResults)
+   // console.log('searchResults', searchResults)
 
    useEffect(() => {
       if (keywordIsValid) {
@@ -56,19 +58,28 @@ const MainNavigation: React.FC = () => {
       }
       const timeout = setTimeout(() => {
          if (keywordIsValid) {
-            searchMovie({
-               variables: { search: keywords },
-            })
-            setIsTyping(false)
+            // searchMovie({
+            //    variables: { search: keywords },
+            // })
+            meiliClient
+               .index('movies')
+               .search(keywords, {
+                  limit: 5,
+               })
+               .then((res) => {
+                  console.log(res.hits)
+                  setSearchRes(res.hits as [])
+                  setIsTyping(false)
+               })
          }
       }, 500)
 
       return () => clearTimeout(timeout)
-   }, [searchMovie, keywordIsValid, keywords])
+   }, [searchMovie, keywordIsValid, keywords, setSearchRes])
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      const results = searchResults?.search
+      const results = searchRes
       if (results?.length) {
          push({
             pathname: `/${results[0].isSeries ? 'series' : 'movies'}/[id]`,
@@ -181,7 +192,7 @@ const MainNavigation: React.FC = () => {
                                     <SearchBoxDropdown
                                        show={keywordIsValid && isSearching}
                                        loading={isTyping || queryLoading}
-                                       movies={searchResults?.search}
+                                       movies={searchRes}
                                        handleBlur={handleBlur}
                                     />
                                  </Box>
@@ -203,7 +214,7 @@ const MainNavigation: React.FC = () => {
                                     <SearchIcon fontSize="large" />
                                  </IconButton>
                                  <FullScreenSearch
-                                    movies={searchResults?.search}
+                                    movies={searchRes}
                                     value={keywords}
                                     onChange={handleChange}
                                     onSubmit={handleSubmit}

@@ -3391,13 +3391,6 @@ export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetUserQuery = { __typename?: 'Query', getUserData?: Maybe<{ __typename?: 'returnUserData', userId?: Maybe<string>, userName?: Maybe<string>, premium?: Maybe<boolean>, expire?: Maybe<string>, verify?: Maybe<boolean> }> };
 
-export type SearchMovieQueryVariables = Exact<{
-  search: Scalars['String'];
-}>;
-
-
-export type SearchMovieQuery = { __typename?: 'Query', search?: Maybe<Array<Maybe<{ __typename?: 'optionalMovies', name?: Maybe<string>, uuid?: Maybe<string>, release_date?: Maybe<number>, photo_url?: Maybe<string>, isSeries?: Maybe<boolean> }>>> };
-
 export type SignUpMutationVariables = Exact<{
   uuid: Scalars['String'];
   fuuid: Scalars['String'];
@@ -4036,45 +4029,6 @@ export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
-export const SearchMovieDocument = gql`
-    query searchMovie($search: String!) {
-  search(q: $search, limit: 5) {
-    name
-    uuid
-    release_date
-    photo_url
-    isSeries
-  }
-}
-    `;
-
-/**
- * __useSearchMovieQuery__
- *
- * To run a query within a React component, call `useSearchMovieQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchMovieQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSearchMovieQuery({
- *   variables: {
- *      search: // value for 'search'
- *   },
- * });
- */
-export function useSearchMovieQuery(baseOptions: Apollo.QueryHookOptions<SearchMovieQuery, SearchMovieQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SearchMovieQuery, SearchMovieQueryVariables>(SearchMovieDocument, options);
-      }
-export function useSearchMovieLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchMovieQuery, SearchMovieQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SearchMovieQuery, SearchMovieQueryVariables>(SearchMovieDocument, options);
-        }
-export type SearchMovieQueryHookResult = ReturnType<typeof useSearchMovieQuery>;
-export type SearchMovieLazyQueryHookResult = ReturnType<typeof useSearchMovieLazyQuery>;
-export type SearchMovieQueryResult = Apollo.QueryResult<SearchMovieQuery, SearchMovieQueryVariables>;
 export const SignUpDocument = gql`
     mutation signUp($uuid: String!, $fuuid: String!) {
   signupClient(uuid: $uuid, fuuid: $fuuid) {

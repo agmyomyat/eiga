@@ -14,8 +14,6 @@ import NavTabs from './NavTabs'
 import FullScreenSearch from '@components/layout/FullScreenSearch'
 import ProfileComponent from '@components/layout/ProfileComponent'
 import SearchBoxDropdown from './SearchBoxDropdown'
-import { useSearchMovieLazyQuery } from '@graphgen'
-import { Movies } from '@graphgen'
 import NavigationSkeleton from '@components/skeleton/NavigationSkeleton'
 import { NextLinkComposed } from 'components/ui/Link'
 import Image from 'next/image'
@@ -40,8 +38,6 @@ const SEARCH_ROUTE = '/search'
 
 const MainNavigation: React.FC = () => {
    const [keywords, setKeywords] = useState<string>('')
-   const [searchMovie, { data: searchResults, loading: queryLoading }] =
-      useSearchMovieLazyQuery()
    const [searchRes, setSearchRes] = useState<OptionalMovies[] | []>([])
    const [isSearching, setIsSearching] = useState<boolean>(false)
    const keywordIsValid = Boolean(keywords.trim().length > 0)
@@ -75,7 +71,7 @@ const MainNavigation: React.FC = () => {
       }, 500)
 
       return () => clearTimeout(timeout)
-   }, [searchMovie, keywordIsValid, keywords, setSearchRes])
+   }, [keywordIsValid, keywords, setSearchRes])
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
@@ -191,7 +187,7 @@ const MainNavigation: React.FC = () => {
 
                                     <SearchBoxDropdown
                                        show={keywordIsValid && isSearching}
-                                       loading={isTyping || queryLoading}
+                                       loading={isTyping}
                                        movies={searchRes}
                                        handleBlur={handleBlur}
                                     />
@@ -220,7 +216,7 @@ const MainNavigation: React.FC = () => {
                                     onSubmit={handleSubmit}
                                     openSearch={openSearch}
                                     handleSearchClose={handleSearchClose}
-                                    loading={isTyping || queryLoading}
+                                    loading={isTyping}
                                     show={keywordIsValid}
                                  />
                               </>

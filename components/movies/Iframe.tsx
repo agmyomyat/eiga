@@ -78,51 +78,48 @@ const Iframe: React.FC<IframeProp> = ({
           * @toDo
           * isServer1 not setting true because of empty strings is optional
           */
-         if (currentServer === vipServer1 || freeServer1) {
+         if (currentServer === vipServer1) {
             setIsServer1(true)
          }
-         if (currentServer === vipServer1 || currentServer === vipServer2) {
-            const { exp }: any = accessToken ?? jwt_decode(accessToken)
-            let _token: { accessToken: string }
-            if (accessToken && Date.now() >= exp * 1000) {
-               try {
-                  _token = await handleFetch()
-                  setAccessToken(_token.accessToken)
-               } catch (e) {
-                  console.log(e.message)
-               }
-            }
-
-            refer.current.src = `${
-               currentServer === vipServer1 ? vipServer1 : vipServer2
-               // check if url has hls query
-            }${currentServer.indexOf('?hls') > -1 ? '&' : '?'}token=${
-               _token || getAccessToken()
-            }&ct=${
-               !isSeries || (isSeries && isSameHistoryAndCurrent)
-                  ? current_time ?? (current_time || '')
-                  : '' || ''
-               // if a movie or a series with same S and E with current, the current time is set
-            }` //variable _token could be undefined if accessToken is not expire
-            return
+         if (currentServer === vipServer2) {
+            setIsServer1(false)
          }
-         refer.current.src = currentServer
+         const { exp }: any = accessToken ?? jwt_decode(accessToken)
+         let _token: { accessToken: string }
+         if (accessToken && Date.now() >= exp * 1000) {
+            try {
+               _token = await handleFetch()
+               setAccessToken(_token.accessToken)
+            } catch (e) {
+               console.log(e.message)
+            }
+         }
+
+         refer.current.src = `${
+            currentServer === vipServer1 ? vipServer1 : vipServer2
+            // check if url has hls query
+         }${currentServer.indexOf('?hls') > -1 ? '&' : '?'}token=${
+            _token?.accessToken || getAccessToken()
+         }&ct=${
+            !isSeries || (isSeries && isSameHistoryAndCurrent)
+               ? current_time ?? (current_time || '')
+               : '' || ''
+            // if a movie or a series with same S and E with current, the current time is set
+         }` //variable _token could be undefined if accessToken is not expire
       }
       if (!refer.current.src) {
          _setQueryString()
       }
    }, [
       currentServer,
+      current_time,
+      freeServer1,
+      getHistoryLoading,
+      isSameHistoryAndCurrent,
+      isSeries,
+      notAccessPremium,
       vipServer1,
       vipServer2,
-      notAccessPremium,
-      movieName,
-      getHistoryLoading,
-      current_time,
-      isSeries,
-      isSameHistoryAndCurrent,
-      freeServer1,
-      freeServer2,
    ])
 
    console.log('iframe src', refer.current?.src)
@@ -226,9 +223,7 @@ const Iframe: React.FC<IframeProp> = ({
          <Box py={1}>
             <Button
                variant={`${
-                  isServer1 &&
-                  (currentServer === freeServer1 ||
-                     currentServer === vipServer1)
+                  isServer1 && currentServer === vipServer1
                      ? 'contained'
                      : 'outlined'
                }`}
@@ -236,7 +231,7 @@ const Iframe: React.FC<IframeProp> = ({
                color="primary"
                onClick={() => {
                   setIsServer1(true)
-                  changeServer(premiumUser ? vipServer1 : freeServer1)
+                  changeServer(premiumUser ? vipServer1 : '')
                }}
                sx={{
                   my: 2,
@@ -246,9 +241,7 @@ const Iframe: React.FC<IframeProp> = ({
             </Button>
             <Button
                variant={`${
-                  !isServer1 &&
-                  (currentServer === freeServer2 ||
-                     currentServer === vipServer2)
+                  !isServer1 && currentServer === vipServer2
                      ? 'contained'
                      : 'outlined'
                }`}
@@ -256,7 +249,7 @@ const Iframe: React.FC<IframeProp> = ({
                color="primary"
                onClick={() => {
                   setIsServer1(false)
-                  changeServer(premiumUser ? vipServer2 : freeServer2)
+                  changeServer(premiumUser ? vipServer2 : '')
                }}
                sx={{
                   my: 2,

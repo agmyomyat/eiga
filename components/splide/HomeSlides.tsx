@@ -63,7 +63,7 @@ const HomeSlides: React.FC<IHomeSlide> = ({
                            rewind: true,
                            gap: '1rem',
                            fixedWidth: theme.spacing(15),
-                           arrows: 'slider',
+                           arrows: true,
                            pagination: false,
                         }}
                      >
@@ -104,7 +104,7 @@ const HomeSlides: React.FC<IHomeSlide> = ({
                         rewind: true,
                         gap: '1rem',
                         fixedWidth: theme.spacing(15),
-                        arrows: 'slider',
+                        arrows: true,
                         pagination: false,
                      }}
                   >
@@ -142,7 +142,7 @@ const HomeSlides: React.FC<IHomeSlide> = ({
                         rewind: true,
                         gap: '1rem',
                         fixedWidth: theme.spacing(15),
-                        arrows: 'slider',
+                        arrows: true,
                         pagination: false,
                      }}
                   >

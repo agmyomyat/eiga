@@ -51,7 +51,6 @@ export async function handleFetch() {
    console.log(_token)
    await fetch(`${process.env.API_URL}/refreshtoken`, {
       method: 'POST',
-      credentials: 'include',
       // prettier-ignore
       headers: { 'rt': getRefreshToken() },
    })

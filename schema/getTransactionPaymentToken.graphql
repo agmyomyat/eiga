@@ -1,0 +1,11 @@
+query GetTransactionToken($paymentMethod: Int!, $quantity: Int!) {
+   transactionPaymentToken(
+      input: { paymentMethod: $paymentMethod, quantity: $quantity }
+   ) {
+      qrCode
+      PwaToken
+      orderId
+      transactionId
+      userId
+   }
+}

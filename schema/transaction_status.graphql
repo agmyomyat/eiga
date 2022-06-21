@@ -1,0 +1,7 @@
+query Transaction_status($transactionId: String!, $orderId: String!) {
+   transaction_status(
+      input: { transactionId: $transactionId, orderId: $orderId }
+   ) {
+      transactionStatus
+   }
+}

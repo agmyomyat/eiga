@@ -20,7 +20,7 @@ import SearchedMoviesSkeleton from '@components/skeleton/SearchedMoviesSkeleton'
 
 const Transition = React.forwardRef(function Transition(
    props: TransitionProps & {
-      children?: React.ReactElement
+      children: React.ReactElement<any, any>
    },
    ref: React.Ref<unknown>
 ) {

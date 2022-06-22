@@ -1,34 +1,55 @@
 {
-   "compilerOptions": {
-      "target": "es5",
-      "lib": ["dom", "dom.iterable", "esnext"],
-      "baseUrl": ".",
-      "paths": {
-         "@graphgen": ["graphgen/graphql"],
-         "@components/*": ["components/*"],
-         "@styles/*": ["styles/*"],
-         "@apollo/*": ["apollo/*"],
-         "@helpers/*": ["helpers/*"],
-         "@lib": ["lib/firebase"],
-         "@contexts/*": ["contexts/*"]
-      },
-      "allowJs": true,
-      "skipLibCheck": true,
-      "strict": false,
-      "forceConsistentCasingInFileNames": true,
-      "noEmit": true,
-      "esModuleInterop": true,
-      "module": "esnext",
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "jsx": "preserve"
-   },
-   "include": [
-      "next-env.d.ts",
-      "**/*.ts",
-      "**/*.tsx",
-      "styles/ProfileStyles.ts"
-   ],
-   "exclude": ["node_modules"]
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@graphgen": [
+        "graphgen/graphql"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ],
+      "@apollo/*": [
+        "apollo/*"
+      ],
+      "@helpers/*": [
+        "helpers/*"
+      ],
+      "@lib": [
+        "lib/firebase"
+      ],
+      "@contexts/*": [
+        "contexts/*"
+      ]
+    },
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "styles/ProfileStyles.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

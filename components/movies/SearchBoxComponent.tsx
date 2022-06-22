@@ -27,7 +27,6 @@ const SearchBoxComponent: React.FC<IcustomSearchBox> = ({
          component="form"
          noValidate
          role="search"
-         onSubmit={onSubmit}
       >
          <InputBase
             placeholder="Search"

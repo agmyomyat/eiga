@@ -4,6 +4,7 @@
       "next/core-web-vitals",
       "eslint:recommended",
       "eslint-config-prettier",
+      "eslint-config-next",
       "prettier/prettier",
       "plugin:prettier/recommended",
       "plugin:@typescript-eslint/eslint-recommended"

@@ -10,7 +10,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { FacetsDistribution, MeiliSearch } from 'meilisearch'
 import { SelectChangeEvent } from '@mui/material/Select'
 
-const meiliClient = new MeiliSearch({
+export const meiliClient = new MeiliSearch({
    host: process.env.MEILISEARCH_ENDPOINT,
 })
 meiliClient

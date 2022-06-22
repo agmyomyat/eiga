@@ -27,7 +27,7 @@ let apolloClient: ApolloClient<NormalizedCacheObject>
 const setErrorMessage = useErrorMessage.getState().setErrorMessage
 const httpLink = createHttpLink({
    uri: `${process.env.API_URL}/graphql`,
-   credentials: 'include',
+   // credentials: 'include',
 })
 const errorLink = onError(({ graphQLErrors, networkError }) => {
    if (graphQLErrors) {

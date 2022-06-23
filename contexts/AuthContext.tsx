@@ -28,7 +28,7 @@ type User = {
 }
 interface IauthContext {
    userData: User
-   logOut: () => void
+   logOut: () => Promise<void>
    premiumUser: boolean
    getUserLoading: boolean
    getUser: (
@@ -40,6 +40,7 @@ interface IauthContext {
       >
    ) => void
 }
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const AuthContext: Context<IauthContext> = createContext(null)
 
 export function useAuth() {
@@ -73,17 +74,18 @@ export default function AuthProvider({ children }) {
    }, [apolloClient])
    useEffect(() => {
       if (shouldLogOut) {
-         logOut()
+         void logOut()
+         return
       }
       if (checkUser) {
-         getUser()
+         void getUser()
          return setCheckUser(false)
       }
       const _accessToken = getAccessToken()
       if (!_accessToken) return
       if (!router.asPath) return
       console.log('looping')
-      getUser()
+      void getUser()
    }, [checkUser, getUser, logOut, router.asPath, shouldLogOut])
 
    const authContext = {

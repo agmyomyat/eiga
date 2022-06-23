@@ -32,7 +32,7 @@ export default function Recents() {
       if (!userData?.userId) return
       console.log('user is ', userData.userId)
       if (userData?.userId) {
-         getHistories({
+         void getHistories({
             variables: {
                limit,
                start: 0,
@@ -46,7 +46,7 @@ export default function Recents() {
          entries.forEach((entry: IntersectionObserverEntry) => {
             if (entry.isIntersecting && hasMore) {
                setScrollLoading(true)
-               fetchMore({
+               void fetchMore({
                   variables: {
                      start: data?.watchHistories?.length,
                      limit: 5,

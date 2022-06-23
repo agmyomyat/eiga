@@ -40,7 +40,7 @@ function Home(props: Props) {
 
    useEffect(() => {
       if (userData?.userId) {
-         getHistories({
+         void getHistories({
             variables: {
                limit: 10,
                start: 0,

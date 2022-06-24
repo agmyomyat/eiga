@@ -195,6 +195,7 @@ export default function SeriesPage(props: PageProps) {
    )
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticPaths: GetStaticPaths = async () => {
    return {
       paths: [],

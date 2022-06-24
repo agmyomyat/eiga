@@ -24,7 +24,7 @@ const MoviesOrSeries = ({ items, type, onChange }: PRefinementList) => {
                   <em>None</em>
                </MenuItem>
                {Object.keys(items).map((item, i) => (
-                  <MenuItem key={item + i} value={item}>
+                  <MenuItem key={item + i.toString()} value={item}>
                      {transformLabels(item)}
                   </MenuItem>
                ))}

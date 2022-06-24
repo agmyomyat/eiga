@@ -108,7 +108,7 @@ const HomeSlides: React.FC<IHomeSlide> = ({
                         pagination: false,
                      }}
                   >
-                     <Slides movies={trendingMovies as Partial<Movies[]>} />
+                     <Slides movies={trendingMovies} />
                   </Splide>
                </Box>
             </Box>
@@ -146,7 +146,7 @@ const HomeSlides: React.FC<IHomeSlide> = ({
                         pagination: false,
                      }}
                   >
-                     <Slides movies={lastestMovies as Partial<Movies[]>} />
+                     <Slides movies={lastestMovies} />
                   </Splide>
                </Box>
             </Box>

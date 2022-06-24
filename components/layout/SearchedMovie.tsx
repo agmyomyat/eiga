@@ -14,7 +14,7 @@ const SearchedMovie: React.FC<IsearchedMovie> = ({ movie, handleClose }) => {
 
    const handleClick = (uuid: string) => {
       handleClose()
-      push({
+      void push({
          pathname: `/${
             movie.isSeries[0] === 'series' ? 'series' : 'movies'
          }/[id]`,

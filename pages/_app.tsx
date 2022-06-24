@@ -58,6 +58,7 @@ function MyApp(props: MyAppProps) {
       }
    }, [router, setIsAnimating])
 
+   console.log('title', (pageProps as { title: string }).title)
    return (
       <CacheProvider value={emotionCache}>
          <Head>

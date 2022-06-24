@@ -29,7 +29,7 @@ const Episodes: React.FC<Iepisodes> = ({
       setSeason(currentSeason)
    }, [currentSeason])
    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-      setSeason(+event.target.value as number)
+      setSeason(+event.target.value)
    }
 
    return (

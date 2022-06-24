@@ -13,7 +13,7 @@ import { SelectChangeEvent } from '@mui/material/Select'
 export const meiliClient = new MeiliSearch({
    host: process.env.MEILISEARCH_ENDPOINT,
 })
-meiliClient
+void meiliClient
    .index('movies')
    .updateFilterableAttributes(['isSeries', 'genres', 'release_date', 'mmsub'])
 // const CustomIsSeries = CustomRefinementList({ name: 'MovieTypes' })
@@ -127,11 +127,11 @@ export const Search: React.FC = () => {
    }, [hits.length])
 
    const handleChange = (event: SelectChangeEvent) => {
-      setType(event.target.value as string)
+      setType(event.target.value)
       refineIsSeries(event.target.value)
    }
    const subtitleHandleChange = (event: SelectChangeEvent) => {
-      setSubType(event.target.value as string)
+      setSubType(event.target.value)
       refineMmsub(event.target.value)
    }
 
@@ -154,12 +154,15 @@ export const Search: React.FC = () => {
             facetsDistribution: ['genres', 'isSeries', 'release_date', 'mmsub'],
          })
          .then((res) => setRefinementList(res.facetsDistribution))
+         .catch((e: { message: string }) => {
+            console.error(e.message)
+         })
    }, [])
    useEffect(() => {
       console.log('hits', hits)
    }, [hits])
    useEffect(() => {
-      let _var = []
+      let _var: Array<string> = []
       if (meiliProp.filter.genres) {
          _var = [..._var, `genres = ${meiliProp.filter.genres}`]
       }
@@ -184,8 +187,11 @@ export const Search: React.FC = () => {
             if (!res.hits.length)
                return setMeiliProp((prev) => ({ ...prev, hasmore: false }))
             if (meiliProp.offset)
-               return setHits((prev) => [...prev, ...res.hits])
+               return setHits((prev: Array<unknown>) => [...prev, ...res.hits])
             setHits(res.hits)
+         })
+         .catch((e: { message: string }) => {
+            console.error(e.message)
          })
    }, [
       meiliProp.filter.genres,

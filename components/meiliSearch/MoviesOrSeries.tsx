@@ -1,8 +1,8 @@
 import { Box, FormControl, InputLabel, MenuItem } from '@mui/material'
 import Select from '@mui/material/Select'
 import { transformLabels } from '@helpers/tranformGenereLabels'
-
-const MoviesOrSeries = ({ items, type, onChange }) => {
+import { PRefinementList } from './interfaces'
+const MoviesOrSeries = ({ items, type, onChange }: PRefinementList) => {
    return (
       <Box
          sx={{

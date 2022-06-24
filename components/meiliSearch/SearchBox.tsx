@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react'
 import { Box } from '@mui/material'
 import SearchBoxComponent from '@components/movies/SearchBoxComponent'
 
-const SearchBox = ({ refine, searchWords }) => {
+const SearchBox = ({
+   refine,
+   searchWords,
+}: {
+   refine: (keyWords: string) => void
+   searchWords: string
+}) => {
    const [keywords, setKeywords] = useState<string>('')
 
    useEffect(() => {

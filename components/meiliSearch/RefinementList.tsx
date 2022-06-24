@@ -56,25 +56,32 @@ function CustomRefinementList({ name }) {
       }
 
       const handleRefine = (value: string) => {
-         console.log('value is', typeof value)
-         refine(value)
+         // eslint-disable-next-line @typescript-eslint/no-extra-semi
+         ;(refine as (value: string) => void)(value)
          setAnchorEl(null)
       }
 
       const MobileFilter = (
          <>
             {show &&
-               Object.entries(items).map(([key], i) => (
-                  <Box key={key + i} sx={{ px: 0.6, display: { sm: 'none' } }}>
-                     <Chip
-                        color={`${
-                           isRefined === `${key}` ? 'primary' : 'default'
-                        }`}
-                        label={`${transformLabels(key)}`}
-                        onClick={() => refine(key)}
-                     />
-                  </Box>
-               ))}
+               Object.entries(items as { [s: string]: unknown }).map(
+                  ([key], i) => (
+                     <Box
+                        key={key + i.toString()}
+                        sx={{ px: 0.6, display: { sm: 'none' } }}
+                     >
+                        <Chip
+                           color={`${
+                              isRefined === `${key}` ? 'primary' : 'default'
+                           }`}
+                           label={`${transformLabels(key)}`}
+                           onClick={() =>
+                              (refine as (key: string) => void)(key)
+                           }
+                        />
+                     </Box>
+                  )
+               )}
          </>
       )
 
@@ -102,11 +109,13 @@ function CustomRefinementList({ name }) {
             </Button>
             {/* Will Fix Later */}
             <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
-               {Object.entries(items).map(([key]) => (
-                  <MenuItem key={key} onClick={() => handleRefine(key)}>
-                     {key}
-                  </MenuItem>
-               ))}
+               {Object.entries(items as { [s: string]: unknown }).map(
+                  ([key]) => (
+                     <MenuItem key={key} onClick={() => handleRefine(key)}>
+                        {key}
+                     </MenuItem>
+                  )
+               )}
             </StyledMenu>
          </Box>
       )

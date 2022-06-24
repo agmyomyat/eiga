@@ -17,14 +17,17 @@ const NavigationSkeleton: React.FC = () => {
                }}
             >
                <Box display="flex">
-                  {[...Array(4)].map((_arr, i) => (
-                     <Skeleton
-                        key={i}
-                        width={66}
-                        height={10}
-                        sx={{ mx: 1.5 }}
-                     />
-                  ))}
+                  {
+                     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                     [...Array(4)].map((_arr, i) => (
+                        <Skeleton
+                           key={i}
+                           width={66}
+                           height={10}
+                           sx={{ mx: 1.5 }}
+                        />
+                     ))
+                  }
                </Box>
             </Box>
          </Box>

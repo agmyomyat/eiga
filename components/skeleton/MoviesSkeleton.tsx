@@ -21,9 +21,12 @@ const Movies: React.FC<IMoviesProps> = ({ items }) => {
             },
          }}
       >
-         {[...Array(items)].map((_arr, i) => (
-            <MovieCardSkeleton key={i} />
-         ))}
+         {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            [...Array(items)].map((_arr, i) => (
+               <MovieCardSkeleton key={i} />
+            ))
+         }
       </Box>
    )
 }

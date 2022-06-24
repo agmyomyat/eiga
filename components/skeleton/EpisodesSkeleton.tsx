@@ -13,19 +13,22 @@ const EpisodesSkeleton: React.FC = () => {
                overflow="auto"
                my={2}
             >
-               {[...Array(5)].map((_arr, i) => (
-                  <Box
-                     key={i}
-                     width={1}
-                     my={1}
-                     sx={{
-                        maxWidth: { sm: 250 },
-                        mr: { sm: 2 },
-                     }}
-                  >
-                     <Skeleton height={36} variant="rectangular" />
-                  </Box>
-               ))}
+               {
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                  [...Array(5)].map((_arr, i) => (
+                     <Box
+                        key={i}
+                        width={1}
+                        my={1}
+                        sx={{
+                           maxWidth: { sm: 250 },
+                           mr: { sm: 2 },
+                        }}
+                     >
+                        <Skeleton height={36} variant="rectangular" />
+                     </Box>
+                  ))
+               }
             </Box>
          </Box>
          <Divider />

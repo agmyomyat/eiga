@@ -28,7 +28,9 @@ interface MyAppProps extends AppProps {
 }
 
 function MyApp(props: MyAppProps) {
+   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
    const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
    const apolloClient = useApollo(pageProps.initialApolloState)
 
    const setIsAnimating = useProgress((state) => state.setIsAnimating)
@@ -59,10 +61,19 @@ function MyApp(props: MyAppProps) {
    return (
       <CacheProvider value={emotionCache}>
          <Head>
-            <title>{pageProps.title} | Rose Stream</title>
+            <title>
+               {
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                  pageProps.title
+               }{' '}
+               | Rose Stream
+            </title>
             <meta
                property="og:image"
-               content={pageProps?.data?.getMovie?.wide_poster}
+               content={
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                  pageProps?.data?.getMovie?.wide_poster as string
+               }
                key="image"
             />
             <meta property="og:image:width" content="1600" key="image-width" />

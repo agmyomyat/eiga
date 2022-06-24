@@ -31,7 +31,7 @@ export default function Favourites() {
    useEffect(() => {
       if (!userData?.userId) return
       if (userData?.userId) {
-         getFavouriteMovies({
+         void getFavouriteMovies({
             variables: {
                userId: userData?.userId,
                start: 0,
@@ -47,7 +47,7 @@ export default function Favourites() {
             if (entry.isIntersecting && hasMore) {
                console.log('hello')
                setScrollLoading(true)
-               fetchMore({
+               void fetchMore({
                   variables: {
                      start: data?.favouriteMovies.length,
                      limit: 5,

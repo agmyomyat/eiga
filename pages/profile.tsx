@@ -35,28 +35,27 @@ function popUpLogin() {
    setAuthLoading(true)
    signInWithPopup(auth, provider)
       .then((result) => {
-         createUser(result).then(() => {
+         void createUser(result).then(() => {
             useCheckUser.getState().setCheckUser(true)
             setAuthLoading(false)
             setAlreadyLogin(true)
-         })
-         // This gives you a Google Access Token. You can use it to access the Google API.
+         }) // This gives you a Google Access Token. You can use it to access the Google API.
          const credential = GoogleAuthProvider.credentialFromResult(result)
          const token = credential.accessToken
          // The signed-in user info.
          const user = result.user
          // ...
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
          // Handle Errors here.
          setAuthLoading(false)
-         setErrorMessageModal(error.message)
-         const errorCode = error.code
-         const errorMessage = error.message
+         setErrorMessageModal((error as { message: string }).message)
+         // const errorCode = error.code
+         // const errorMessage = error.message
          // The email of the user's account used.
-         const email = error.email
+         // const email = error.email
          // The AuthCredential type that was used.
-         const credential = GoogleAuthProvider.credentialFromError(error)
+         // const credential = GoogleAuthProvider.credentialFromError(error)
          // ...
       })
 }
@@ -89,13 +88,15 @@ export default function Profile() {
 
    // console.log('expire', new Date(userData?.expire))
 
-   const handleSignOut = async () => {
-      logOut()
+   const handleSignOut = () => {
+      void logOut()
    }
 
-   const handleSubmitReferralCode = (e: React.FormEvent<HTMLFormElement>) => {
+   const handleSubmitReferralCode = async (
+      e: React.FormEvent<HTMLFormElement>
+   ) => {
       e.preventDefault()
-      checkValidReferralCode({
+      await checkValidReferralCode({
          variables: { code: referralCodeInboxValue },
       })
       console.log('referralValue', referralCodeInboxValue)
@@ -214,7 +215,7 @@ export default function Profile() {
                            <Button
                               color="inherit"
                               endIcon={<ArrowRightAltIcon />}
-                              onClick={() => push('/pricing')}
+                              onClick={() => void push('/pricing')}
                            >
                               Go Check For Pricing
                            </Button>
@@ -237,7 +238,9 @@ export default function Profile() {
                               component="form"
                               noValidate
                               role="referral"
-                              onSubmit={handleSubmitReferralCode}
+                              onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+                                 void handleSubmitReferralCode(e)
+                              }
                               sx={{
                                  display: 'flex',
                                  alignItems: 'center',

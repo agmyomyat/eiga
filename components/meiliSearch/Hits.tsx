@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useEffect, useRef } from 'react'
 import Movies from '@components/movies/Movies'
 
@@ -9,7 +10,6 @@ function Hits({ hits, hasMore, refineNext }) {
       const onSentinelIntersection = (entries: IntersectionObserverEntry[]) => {
          entries.forEach((entry: IntersectionObserverEntry) => {
             if (entry.isIntersecting && hasMore) {
-               // console.log('refining')
                refineNext()
             }
          })
@@ -24,7 +24,7 @@ function Hits({ hits, hasMore, refineNext }) {
 
    return (
       <>
-         <Movies movies={hits} />
+         <Movies movies={hits as []} />
          <div id="sentinel" ref={sentinel} />
       </>
    )

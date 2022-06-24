@@ -32,11 +32,11 @@ const ProfileComponent: React.FC = () => {
 
    const handleViewProfile = () => {
       setAnchorEl(null)
-      push('/profile')
+      void push('/profile')
    }
 
-   const handleSignOut = async () => {
-      await logOut()
+   const handleSignOut = () => {
+      void logOut()
    }
 
    return (

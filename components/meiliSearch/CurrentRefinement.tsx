@@ -1,7 +1,15 @@
 import { Chip, Box, Typography } from '@mui/material'
 import { transformLabels } from '@helpers/tranformGenereLabels'
-
-const CurrentRefinements = ({ items, refine }) => {
+interface RefinementsItems {
+   items: Record<string, string>
+}
+interface TypeCurrentRefinements<T> extends RefinementsItems {
+   refine: T
+}
+const CurrentRefinements = ({
+   items,
+   refine,
+}: TypeCurrentRefinements<(key: string, value: string) => void>) => {
    return (
       <Box display="flex" alignItems="center">
          {Object.keys(items).some((item) => items[item]) && (

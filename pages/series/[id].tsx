@@ -71,6 +71,7 @@ export default function SeriesPage(props: PageProps) {
       historySeason === currentSeason && historyEpisode === currentEpisode
    const { updateHistoryData } = useUpdateHistory(
       {
+         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
          movieId: JSON.parse(seriesData?.id || null),
          movieUuid: seriesData?.uuid,
          season: seasons?.[currentSeason - 1].seasonID,
@@ -194,6 +195,7 @@ export default function SeriesPage(props: PageProps) {
    )
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticPaths: GetStaticPaths = async () => {
    return {
       paths: [],

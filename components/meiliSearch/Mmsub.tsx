@@ -1,8 +1,8 @@
 import { Box, FormControl, InputLabel, MenuItem } from '@mui/material'
 import Select from '@mui/material/Select'
 import { transformLabels } from '@helpers/tranformGenereLabels'
-
-const MMsub = ({ items, type, onChange }) => {
+import { PRefinementList } from './interfaces'
+const MMsub = ({ items, type, onChange }: PRefinementList) => {
    return (
       <Box
          sx={{
@@ -24,7 +24,7 @@ const MMsub = ({ items, type, onChange }) => {
                   <em>All</em>
                </MenuItem>
                {Object.keys(items).map((item, i) => (
-                  <MenuItem key={item + i} value={item}>
+                  <MenuItem key={item + i.toString()} value={item}>
                      {transformLabels(item)}
                   </MenuItem>
                ))}

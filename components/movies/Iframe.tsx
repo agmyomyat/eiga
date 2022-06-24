@@ -52,7 +52,7 @@ const Iframe: React.FC<IframeProp> = ({
    getHistoryLoading,
    isSameHistoryAndCurrent,
 }) => {
-   const refer = React.useRef(null)
+   const refer = React.useRef<HTMLIFrameElement>(null)
    const notAccessPremium = premiumOnly && !premiumUser
    const [isServer1, setIsServer1] = useState(true)
    // const _callback = mutationCallback(currentServer, router)
@@ -84,14 +84,23 @@ const Iframe: React.FC<IframeProp> = ({
          if (currentServer === vipServer2) {
             setIsServer1(false)
          }
-         const { exp }: any = accessToken ?? jwt_decode(accessToken)
+         const { exp }: { [s: string]: number } = accessToken
+            ? jwt_decode(accessToken)
+            : null
          let _token: { accessToken: string }
          if (accessToken && Date.now() >= exp * 1000) {
             try {
                _token = await handleFetch()
                setAccessToken(_token.accessToken)
-            } catch (e) {
-               console.log(e.message)
+            } catch (e: unknown) {
+               if (typeof e === 'string') {
+                  console.error(e.toUpperCase()) // works, `e` narrowed to string
+                  return
+               }
+               if (e instanceof Error) {
+                  console.error(e.message) // works, `e` narrowed to Error
+                  return
+               }
             }
          }
 
@@ -106,7 +115,7 @@ const Iframe: React.FC<IframeProp> = ({
          }` //variable _token could be undefined if accessToken is not expire
       }
       if (!refer.current.src) {
-         _setQueryString()
+         void _setQueryString()
       }
    }, [
       currentServer,

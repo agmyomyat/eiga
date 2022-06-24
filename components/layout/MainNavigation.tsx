@@ -57,7 +57,7 @@ const MainNavigation: React.FC = () => {
             // searchMovie({
             //    variables: { search: keywords },
             // })
-            meiliClient
+            void meiliClient
                .index('movies')
                .search(keywords, {
                   limit: 5,
@@ -77,7 +77,7 @@ const MainNavigation: React.FC = () => {
       e.preventDefault()
       const results = searchRes
       if (results?.length) {
-         push({
+         void push({
             pathname: `/${results[0].isSeries ? 'series' : 'movies'}/[id]`,
             query: { id: results[0].uuid },
          })

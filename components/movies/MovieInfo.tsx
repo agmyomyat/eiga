@@ -3,9 +3,9 @@ import { Movies, GetFavouriteMovieQuery } from '@graphgen'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import { useRouter } from 'next/router'
-
+type ModifiedDuration = Omit<Movies, 'duration'> & { duration: string }
 interface ImovieInfo {
-   movie: Partial<Movies>
+   movie: Partial<ModifiedDuration>
    favouriteData?: GetFavouriteMovieQuery
    isDisabled?: boolean
    handleAddFavourite?: () => void
@@ -30,29 +30,32 @@ const MovieInfo: React.FC<ImovieInfo> = ({
       (genre) => genre.name[0].toUpperCase() + genre.name.slice(1)
    )
    const movieBody = movie.body.replace(/<\/?[^>]+(>|$)/g, '')
-
+   const tvSeriesDuration = (
+      currentSeason: number,
+      currentEpisode: number
+   ): string =>
+      movie.tv_sery.season[currentSeason - 1].episodes[currentEpisode - 1]
+         .duration as string
    const isFavourite = !!favouriteData?.favouriteMovies.length
    const durationHour =
       router.pathname.includes('series') || currentEpisode
          ? parseInt(
-              movie.tv_sery?.season[currentSeason - 1].episodes[
-                 currentEpisode - 1
-              ].duration?.split(':')[0] || null
+              tvSeriesDuration(currentSeason, currentEpisode)?.split(':')[0] ||
+                 null
            )
          : parseInt(movie.duration?.split(':')[0] || null)
    const durationMinute =
       router.pathname.includes('series') || currentSeason
          ? parseInt(
-              movie.tv_sery?.season[currentSeason - 1].episodes[
-                 currentEpisode - 1
-              ].duration?.split(':')[1] || null
+              tvSeriesDuration(currentSeason, currentEpisode)?.split(':')[1] ||
+                 null
            )
          : parseInt(movie.duration?.split(':')[1] || null)
    const duration = `${
       durationHour > 0 ? `${durationHour}hr${durationHour > 1 ? 's' : ''}` : ''
    } ${durationMinute > 0 ? `${durationMinute}min` : ''}`
 
-   async function handleClick() {
+   function handleClick() {
       isFavourite ? handleDeleteFavourite() : handleAddFavourite()
    }
 

@@ -25,8 +25,8 @@ const MobileNavigation: React.FC = () => {
       <BottomNavigation
          value={value}
          onChange={(_event, newValue) => {
-            setValue(newValue)
-            push({ pathname: newValue })
+            setValue(newValue as string)
+            void push({ pathname: newValue as string })
          }}
          showLabels
          sx={{

@@ -33,13 +33,16 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
    if (graphQLErrors) {
       graphQLErrors.map(({ message, locations, path }) =>
          console.log(
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
          )
       )
    }
    if (networkError) {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       console.log(`[Network error]: ${networkError}`)
       setErrorMessage(
+         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
          `[Network error]: ${networkError} Try Refreshing the Page`
       )
    }
@@ -55,12 +58,20 @@ export async function handleFetch() {
       headers: { 'rt': getRefreshToken() },
    })
       .then((res) => res.json())
-      .then((data) => {
-         _token = data.access
-         _status = data.status
-         setRefreshToken(data.refreshToken || '')
+      .then(
+         (data: { access: string; status: string; refreshToken: string }) => {
+            _token = data.access
+            _status = data.status
+            setRefreshToken(data.refreshToken || '')
+         }
+      )
+      .catch((e) => {
+         if (e instanceof Error) {
+            setErrorMessage(e.message)
+         } else {
+            setErrorMessage(e as string)
+         }
       })
-      .catch((e) => setErrorMessage(e.message))
    if (!_token && _status === 'tokenVersion not match') {
       throw Error(_status)
    }
@@ -84,7 +95,7 @@ const asyncRefreshTokenLink = setContext(async () => {
       return _tokens
    }
    try {
-      const { exp }: any = jwt_decode(token)
+      const { exp }: { exp: number } = jwt_decode(token)
       if (Date.now() >= exp * 1000) {
          shouldFetchOrNot = true
       } else {
@@ -105,6 +116,7 @@ const asyncRefreshTokenLink = setContext(async () => {
          // gqlInvalidToken({ shouldLogOut: true })
          setAccessToken('')
          setRefreshToken('')
+         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
          if (e.message === 'tokenVersion not match') {
             return shouldLogOut(true) //this is for another user detection
          }
@@ -118,17 +130,19 @@ const asyncRefreshTokenLink = setContext(async () => {
 })
 
 const authLink = new ApolloLink((operation, forward) => {
-   const oldToken = getAccessToken()
+   const oldToken: string = getAccessToken()
    /**
     * this line might not need here, context link await already set token but will not remove cause
     * context link only run on premiumUserCheck query UPDATE: removed context link set Token function
     */
-   const contextToken = operation.getContext().accessToken || '' //
-   const newAccessToken = contextToken ? contextToken : oldToken
+   const contextToken: string =
+      (operation.getContext().accessToken as string) || '' //
+   const newAccessToken: string = contextToken ? contextToken : oldToken
    // console.log('access', newAccessToken)
    setAccessToken(newAccessToken)
    console.log('operation', operation)
    operation.setContext(({ headers }) => ({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       headers: {
          ...headers,
          auth: newAccessToken ? `Bearer ${newAccessToken}` : '', // however you get your token
@@ -140,7 +154,13 @@ const authLink = new ApolloLink((operation, forward) => {
       return data
    })
 })
-
+type TApolloRead = {
+   args: {
+      start?: number
+      limit?: number
+      where?: { [k: string]: unknown }
+   }
+}
 function createApolloClient() {
    return new ApolloClient({
       // ssrMode: typeof window === 'undefined',
@@ -152,14 +172,14 @@ function createApolloClient() {
                   watchHistories: {
                      keyArgs: false,
                      read(
-                        existing,
+                        existing: Array<unknown>,
                         {
                            args: {
                               start,
                               limit,
                               where: { movieName },
                            },
-                        }
+                        }: TApolloRead
                      ) {
                         if (movieName) return existing && existing
                         // console.log('existing is ', existing)
@@ -173,8 +193,8 @@ function createApolloClient() {
                         return undefined
                      },
                      merge(
-                        existing,
-                        incoming,
+                        existing: Array<unknown>,
+                        incoming: Array<unknown>,
                         {
                            args: {
                               start = 0,
@@ -185,7 +205,8 @@ function createApolloClient() {
                         if (movieName) return incoming
                         const merged = existing ? existing.slice(0) : []
                         for (let i = 0; i < incoming.length; ++i) {
-                           merged[start + i] = incoming[i]
+                           const _start_plus_i: number = (start as number) + i
+                           merged[_start_plus_i] = incoming[i]
                         }
                         // console.log('meges', merged)
 
@@ -195,14 +216,14 @@ function createApolloClient() {
                   favouriteMovies: {
                      keyArgs: false,
                      read(
-                        existing,
+                        existing: Array<unknown>,
                         {
                            args: {
                               start,
                               limit,
                               where: { movie, user_info },
                            },
-                        }
+                        }: TApolloRead
                      ) {
                         if (movie && user_info) return existing && existing
                         console.log('existing is ', existing)
@@ -216,8 +237,8 @@ function createApolloClient() {
                         return undefined
                      },
                      merge(
-                        existing,
-                        incoming,
+                        existing: Array<unknown>,
+                        incoming: Array<unknown>,
                         {
                            args: {
                               start = 0,
@@ -230,7 +251,8 @@ function createApolloClient() {
                         }
                         const merged = existing ? existing.slice(0) : []
                         for (let i = 0; i < incoming.length; ++i) {
-                           merged[start + i] = incoming[i]
+                           const _start_plus_i: number = (start as number) + i
+                           merged[_start_plus_i] = incoming[i]
                         }
                         console.log('meges', merged)
 
@@ -244,7 +266,7 @@ function createApolloClient() {
    })
 }
 
-export function initializeApollo(initialState = null) {
+export function initializeApollo(initialState: NormalizedCacheObject = null) {
    const _apolloClient: ApolloClient<NormalizedCacheObject> =
       apolloClient ?? createApolloClient()
 
@@ -264,7 +286,7 @@ export function initializeApollo(initialState = null) {
    return _apolloClient
 }
 
-export function useApollo<T>(initialState: T) {
+export function useApollo(initialState: NormalizedCacheObject) {
    const store = useMemo(() => initializeApollo(initialState), [initialState])
    return store
 }

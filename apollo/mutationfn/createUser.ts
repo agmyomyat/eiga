@@ -1,8 +1,9 @@
 import { SignUpDocument, SignUpMutationResult } from '@graphgen'
 import { setAccessToken, setRefreshToken } from '@helpers/accessToken'
+import { UserCredential } from 'firebase/auth'
 import { initializeApollo } from '..'
 const client = initializeApollo()
-export async function createUser(authResult) {
+export async function createUser(authResult: UserCredential) {
    const { data, error }: Partial<SignUpMutationResult> = await client.mutate({
       mutation: SignUpDocument,
       variables: { uuid: authResult.user.email, fuuid: authResult.user.uid },

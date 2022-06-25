@@ -2,7 +2,11 @@ import React, { useEffect } from 'react'
 import { useRouter, NextRouter } from 'next/router'
 import Head from 'next/head'
 import type { AppProps /*, AppContext */ } from 'next/app'
-import { ApolloProvider } from '@apollo/client'
+import {
+   ApolloProvider,
+   NormalizedCacheObject,
+   StoreObject,
+} from '@apollo/client'
 import { useApollo } from '@apollo/index'
 import { ThemeProvider } from '@mui/material/styles'
 import AuthProvider from '@contexts/AuthContext'
@@ -70,10 +74,8 @@ function MyApp(props: MyAppProps) {
             </title>
             <meta
                property="og:image"
-               content={
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                  pageProps?.data?.getMovie?.wide_poster as string
-               }
+               /* eslint-disable */
+               content={pageProps?.data?.getMovie?.wide_poster}
                key="image"
             />
             <meta property="og:image:width" content="1600" key="image-width" />

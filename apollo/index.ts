@@ -266,7 +266,7 @@ function createApolloClient() {
    })
 }
 
-export function initializeApollo(initialState: NormalizedCacheObject = null) {
+export function initializeApollo<T>(initialState: T = null) {
    const _apolloClient: ApolloClient<NormalizedCacheObject> =
       apolloClient ?? createApolloClient()
 
@@ -286,7 +286,7 @@ export function initializeApollo(initialState: NormalizedCacheObject = null) {
    return _apolloClient
 }
 
-export function useApollo(initialState: NormalizedCacheObject) {
+export function useApollo<T>(initialState: T) {
    const store = useMemo(() => initializeApollo(initialState), [initialState])
    return store
 }

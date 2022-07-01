@@ -4,7 +4,7 @@ import { useTransaction_StatusLazyQuery } from '@graphgen'
 export default function Checkout() {
    const router = useRouter()
    const { transactionId, orderId, PWAToken, qrCode } = router.query
-   const [getTransactionStatus] = useTransaction_StatusLazyQuery({
+   const [getTransactionStatus, { data }] = useTransaction_StatusLazyQuery({
       fetchPolicy: 'no-cache',
    })
    useEffect(() => {
@@ -39,5 +39,5 @@ export default function Checkout() {
          if (getTransaction) clearInterval(getTransaction)
       }
    }, [getTransactionStatus, orderId, router, transactionId])
-   return <div>Checkout</div>
+   return <div>{data?.transaction_status?.transactionStatus}</div>
 }

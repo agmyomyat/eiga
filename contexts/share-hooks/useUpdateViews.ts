@@ -6,6 +6,7 @@ export default function useUpdateViews(uuid: string) {
    })
    useEffect(() => {
       if (!uuid) return
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       const _timerRef = setTimeout(updateMovieView, 18000)
       return () => clearTimeout(_timerRef)
    }, [updateMovieView, uuid])

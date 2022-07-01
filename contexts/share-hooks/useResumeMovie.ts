@@ -24,7 +24,7 @@ export default function useResumeMovie({ userId }: { userId: string }) {
    useEffect(() => {
       if (!router.query.id || !userId || router.isFallback) return
 
-      getHistory({
+      void getHistory({
          variables: { movieUuid: router.query.id as string, user: userId },
       })
    }, [getHistory, router.isFallback, router.query.id, userId])

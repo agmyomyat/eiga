@@ -92,7 +92,6 @@ export default function Pricing() {
          {activeStep === STEP_TWO && (
             <Voucher
                currentPlan={currentPlan}
-               handleNext={handleNext}
                handleBack={handleBack}
                isLoggedIn={!!userData}
             />

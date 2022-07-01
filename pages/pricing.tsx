@@ -1,14 +1,6 @@
 import { useState } from 'react'
 import { GetStaticProps } from 'next'
-import {
-   Container,
-   Box,
-   Stepper,
-   Step,
-   StepLabel,
-   Alert,
-   AlertTitle,
-} from '@mui/material'
+import { Container, Box, Stepper, Step, StepLabel } from '@mui/material'
 import { steps } from '@helpers/pricingSteps'
 import { useAuth } from '@contexts/AuthContext'
 import { plans, Plan } from '@helpers/plans'
@@ -34,10 +26,6 @@ export default function Pricing() {
 
    const handleBack = () => {
       setActiveStep((prevActiveStep) => prevActiveStep - 1)
-   }
-
-   const handleReset = () => {
-      setActiveStep(0)
    }
 
    const handlePurchase = () => {

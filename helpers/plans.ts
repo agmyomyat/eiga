@@ -18,6 +18,6 @@ export const plans: Plans = [
       id: 2,
       month: '3 Months',
       save: 1,
-      price: 6000,
+      price: 9000,
    },
 ]

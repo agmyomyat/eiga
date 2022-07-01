@@ -132,16 +132,6 @@ const PricingTable: React.FC<IpricingTable> = ({
                         </Typography>
                      )}
                   </Typography>
-                  {selectedPlan.save > 0 && (
-                     <Typography
-                        variant="subtitle2"
-                        component="p"
-                        color="primary"
-                        align="center"
-                     >
-                        (Save {selectedPlan.save} Month)
-                     </Typography>
-                  )}
                </Box>
                <Divider variant="middle" />
                <Box p={5}>

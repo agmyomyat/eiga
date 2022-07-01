@@ -14,11 +14,9 @@ import { useAuth } from '@contexts/AuthContext'
 import { plans, Plan } from '@helpers/plans'
 import PricingTable from '@components/movies/PricingTable'
 import Voucher from '@components/movies/Voucher'
-import HowToSubscribe from '@components/movies/HowToSubscribe'
 
 const STEP_ONE = 0
 const STEP_TWO = 1
-const STEP_THREE = 2
 
 export default function Pricing() {
    const [activeStep, setActiveStep] = useState<number>(0)
@@ -72,14 +70,6 @@ export default function Pricing() {
                })}
             </Stepper>
          </Box>
-         {activeStep === steps.length && (
-            <Box maxWidth="600px" mx="auto" my={5} py={5}>
-               <Alert severity="success" variant="filled" onClose={handleReset}>
-                  <AlertTitle>Completed</AlertTitle>
-                  Thanks for supporting us.
-               </Alert>
-            </Box>
-         )}
          {activeStep === STEP_ONE && (
             <PricingTable
                plans={plans}

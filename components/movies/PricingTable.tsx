@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 import { Box, Typography, Divider, Button, alpha } from '@mui/material'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
-import BlockIcon from '@mui/icons-material/Block'
 import { Plan } from '@helpers/plans'
 
 interface IpricingTable {

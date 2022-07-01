@@ -137,7 +137,7 @@ const Voucher: React.FC<Ivoucher> = ({
                   <Typography variant="body2">
                      <Link href="/profile" passHref>
                         <MuiLink color="inherit" underline="hover">
-                           Create Account?
+                           Log In?
                         </MuiLink>
                      </Link>
                   </Typography>

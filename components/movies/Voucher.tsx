@@ -17,7 +17,9 @@ import { Link as MuiLink } from '@mui/material'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useGetTransactionTokenLazyQuery } from '@graphgen'
+import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
 
+const setErrorMessageModal = useErrorMessage.getState().setErrorMessage
 interface Ivoucher {
    isLoggedIn: boolean
    handleBack: () => void
@@ -57,6 +59,7 @@ const Voucher: React.FC<Ivoucher> = ({
          )
          return null
       }
+      setErrorMessageModal('Something went wrong try refreshing the page')
    }
 
    return (

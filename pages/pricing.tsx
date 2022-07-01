@@ -97,9 +97,9 @@ export default function Pricing() {
                isLoggedIn={!!userData}
             />
          )}
-         {activeStep === STEP_THREE && (
+         {/* {activeStep === STEP_THREE && (
             <HowToSubscribe handleNext={handleNext} handleBack={handleBack} />
-         )}
+         )} */}
       </Container>
    )
 }

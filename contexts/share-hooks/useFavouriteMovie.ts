@@ -41,14 +41,14 @@ export default function useFavouriteMovie(
       favouriteMovieNetworkStatus === NetworkStatus.refetch
 
    function handleAddFavourite() {
-      createFavouriteMovie({
+      void createFavouriteMovie({
          variables: favVariables,
          refetchQueries: [GetFavouriteMovieDocument],
       })
    }
 
    function handleDeleteFavourite() {
-      deleteFavouriteMovie({
+      void deleteFavouriteMovie({
          variables: {
             movieId: favouriteMovieId,
          },
@@ -71,7 +71,7 @@ export default function useFavouriteMovie(
       if (!premiumUser || !favVariables?.userId || !favVariables?.movieId)
          return
 
-      getFavouriteMovie({
+      void getFavouriteMovie({
          variables: {
             userId: favVariables.userId,
             movieId: favVariables.movieId,

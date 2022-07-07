@@ -5,25 +5,62 @@ import {
    Divider,
    Alert,
    AlertTitle,
+   FormControl,
+   InputLabel,
+   MenuItem,
+   Select,
+   SelectChangeEvent,
 } from '@mui/material'
 import { Plan } from '@helpers/plans'
 import Link from 'next/link'
 import { Link as MuiLink } from '@mui/material'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useGetTransactionTokenLazyQuery } from '@graphgen'
+import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
 
+const setErrorMessageModal = useErrorMessage.getState().setErrorMessage
 interface Ivoucher {
    isLoggedIn: boolean
-   handleNext: () => void
    handleBack: () => void
    currentPlan: Plan
+}
+enum PaymentMethod {
+   QrCode = 'QrCode',
+   KBZApp = 'KBZApp',
 }
 
 const Voucher: React.FC<Ivoucher> = ({
    isLoggedIn,
-   handleNext,
    handleBack,
    currentPlan,
 }) => {
-   console.log('currentPlan', currentPlan)
+   const router = useRouter()
+   const [paymentMethod, setPaymentMethod] = useState<string>(
+      PaymentMethod.QrCode
+   )
+   /**@important no-cache policy must be set */
+   const [getTransactionToken, { loading: getTransactionTokenLoading }] =
+      useGetTransactionTokenLazyQuery({ fetchPolicy: 'no-cache' })
+   const paymentMethodHandleChange = (event: SelectChangeEvent) => {
+      setPaymentMethod(event.target.value)
+   }
+   const handleRedirect = async () => {
+      const transactionToken = await getTransactionToken({
+         variables: {
+            paymentMethod: paymentMethod === PaymentMethod.KBZApp ? 2 : 1,
+            quantity: parseInt(currentPlan.month),
+         },
+      })
+      //redirect to checkout with qr or pwa token to generate qr code or redirect link, order id and transaction id to query transaction status
+      if (transactionToken.data.transactionPaymentToken.orderId) {
+         void router.push(
+            `/checkout?transactionId=${transactionToken.data.transactionPaymentToken.transactionId}&orderId=${transactionToken.data.transactionPaymentToken.orderId}&qrCode=${transactionToken.data.transactionPaymentToken.qrCode}&PWAToken=${transactionToken.data.transactionPaymentToken.PwaToken}`
+         )
+         return null
+      }
+      setErrorMessageModal('Something went wrong try refreshing the page')
+   }
 
    return (
       <Box width={1} my={5} py={5}>
@@ -49,6 +86,25 @@ const Voucher: React.FC<Ivoucher> = ({
                <Divider />
                <Box>
                   <Box py={2}>
+                     <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                           Payment Method
+                        </InputLabel>
+                        <Select
+                           labelId="payment-select-label"
+                           id="payment-select"
+                           value={paymentMethod}
+                           label="Payment Method"
+                           onChange={paymentMethodHandleChange}
+                        >
+                           <MenuItem value={PaymentMethod.QrCode}>
+                              QrCode
+                           </MenuItem>
+                           <MenuItem value={PaymentMethod.KBZApp}>
+                              KBZApp
+                           </MenuItem>
+                        </Select>
+                     </FormControl>
                      <Typography
                         variant="subtitle2"
                         component="h3"
@@ -84,6 +140,7 @@ const Voucher: React.FC<Ivoucher> = ({
                      }}
                   >
                      <Button
+                        disabled={getTransactionTokenLoading}
                         variant="outlined"
                         size="small"
                         sx={{ mr: 2 }}
@@ -92,11 +149,14 @@ const Voucher: React.FC<Ivoucher> = ({
                         Cancel
                      </Button>
                      <Button
+                        disabled={getTransactionTokenLoading}
                         variant="contained"
                         size="small"
-                        onClick={handleNext}
+                        onClick={() => void handleRedirect()}
                      >
-                        Confirm
+                        {getTransactionTokenLoading
+                           ? 'Redirecting...'
+                           : 'Confirm'}
                      </Button>
                   </Box>
                </Box>
@@ -137,7 +197,7 @@ const Voucher: React.FC<Ivoucher> = ({
                   <Typography variant="body2">
                      <Link href="/profile" passHref>
                         <MuiLink color="inherit" underline="hover">
-                           Create Account?
+                           Log In?
                         </MuiLink>
                      </Link>
                   </Typography>

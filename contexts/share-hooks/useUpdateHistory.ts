@@ -16,14 +16,16 @@ export default function useUpdateHistory(
       if (!prop.movieId || !prop.movieUuid || !premiumUser) return
       console.log('updatehistory loop')
       const updateHistoryListener = (event) => {
-         if (event.origin !== 'https://embed.eiga.sbs') return
-         updateHistory({
+         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+         if ((event.origin as string) !== 'https://embed.eiga.sbs') return
+         void updateHistory({
             variables: {
                movieId: prop?.movieId,
                movieUuid: prop?.movieUuid,
                season: prop?.season,
                episode: prop?.episode,
-               current_time: event.data || '',
+               // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+               current_time: (event.data as string) || '',
             },
          })
       }

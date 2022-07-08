@@ -55,7 +55,7 @@ const Voucher: React.FC<Ivoucher> = ({
       //redirect to checkout with qr or pwa token to generate qr code or redirect link, order id and transaction id to query transaction status
       if (transactionToken.data.transactionPaymentToken.orderId) {
          void router.push(
-            `/checkout?transactionId=${transactionToken.data.transactionPaymentToken.transactionId}&orderId=${transactionToken.data.transactionPaymentToken.orderId}&qrCode=${transactionToken.data.transactionPaymentToken.qrCode}&PWAToken=${transactionToken.data.transactionPaymentToken.PwaToken}`
+            `/checkout?transactionId=${transactionToken.data.transactionPaymentToken.transactionId}&orderId=${transactionToken.data.transactionPaymentToken.orderId}&qrCode=${transactionToken.data.transactionPaymentToken.qrCode}&PWAToken=${transactionToken.data.transactionPaymentToken.PwaToken}&paymentMethod=${paymentMethod}`
          )
          return null
       }

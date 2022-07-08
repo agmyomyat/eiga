@@ -14,9 +14,9 @@ let theme = createTheme({
       secondary: {
          main: '#121212',
       },
-      info: {
-         main: grey[800],
-      },
+      // info: {
+      //    main: grey[800],
+      // },
       grey: {
          [700]: grey.A400,
       },

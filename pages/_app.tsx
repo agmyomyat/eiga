@@ -62,17 +62,11 @@ function MyApp(props: MyAppProps) {
       }
    }, [router, setIsAnimating])
 
-   console.log('title', (pageProps as { title: string }).title)
+   const pageTitle = `${(pageProps as { title: string }).title} | Rose Stream`
    return (
       <CacheProvider value={emotionCache}>
          <Head>
-            <title>
-               {
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                  pageProps.title
-               }{' '}
-               | Rose Stream
-            </title>
+            <title>{pageTitle}</title>
             <meta
                property="og:image"
                /* eslint-disable */

@@ -3,5 +3,6 @@ query Transaction_status($transactionId: String!, $orderId: String!) {
       input: { transactionId: $transactionId, orderId: $orderId }
    ) {
       transactionStatus
+      accessToken
    }
 }

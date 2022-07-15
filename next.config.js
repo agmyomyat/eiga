@@ -13,5 +13,6 @@ module.exports = {
       API_URL: process.env.API_URL,
       MEILISEARCH_ENDPOINT: process.env.MEILISEARCH_ENDPOINT,
       MEILISEARCH_API_KEY: process.env.MEILI_API_KEY,
+      DINGER_MERCHANT_REDIRECT_URL: process.env.DINGER_MERCHANT_REDIRECT_URL,
    },
 }

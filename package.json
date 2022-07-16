@@ -25,7 +25,6 @@
       "jwt-decode": "^3.1.2",
       "meilisearch": "^0.25.1",
       "next": "^12.1.7-canary.46",
-      "next-auth": "^4.9.0",
       "prop-types": "^15.7.2",
       "qrcode.react": "^3.1.0",
       "react": "^18.2.0",

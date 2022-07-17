@@ -15,7 +15,6 @@ import { Exact, useGetUserLazyQuery } from '@graphgen'
 import { NextRouter, useRouter } from 'next/router'
 import { useCheckUser } from './global-states/useCheckUser'
 import { useShouldLogOut } from './global-states/useShouldLogOut'
-import { auth } from '@lib'
 import { useApolloClient } from '@apollo/client'
 
 type User = {
@@ -69,7 +68,7 @@ export default function AuthProvider({ children }) {
    const logOut = useCallback(async () => {
       setAccessToken('')
       setRefreshToken('')
-      await auth.signOut()
+      // await auth.signOut()
       await apolloClient.resetStore()
    }, [apolloClient])
    useEffect(() => {

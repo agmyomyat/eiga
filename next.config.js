@@ -12,7 +12,7 @@ module.exports = {
    env: {
       API_URL: process.env.API_URL,
       MEILISEARCH_ENDPOINT: process.env.MEILISEARCH_ENDPOINT,
-      MEILISEARCH_API_KEY: process.env.MEILI_API_KEY,
       DINGER_MERCHANT_REDIRECT_URL: process.env.DINGER_MERCHANT_REDIRECT_URL,
+      GOOGLE_PROVIDER_CLIENT_ID: process.env.GOOGLE_PROVIDER_CLIENT_ID,
    },
 }

@@ -54,6 +54,15 @@ const Voucher: React.FC<Ivoucher> = ({
       })
       //redirect to checkout with qr or pwa token to generate qr code or redirect link, order id and transaction id to query transaction status
       if (transactionToken.data.transactionPaymentToken.orderId) {
+         if (
+            transactionToken.data.transactionPaymentToken.PwaToken &&
+            transactionToken.data.transactionPaymentToken.PwaToken !== 'null'
+         ) {
+            window.open(
+               `${process.env.DINGER_MERCHANT_REDIRECT_URL}?transactionNo=${transactionToken.data.transactionPaymentToken.transactionId}&formToken=${transactionToken.data.transactionPaymentToken.PwaToken}&merchantOrderId=${transactionToken.data.transactionPaymentToken.orderId}`,
+               '_blank'
+            )
+         }
          void router.push(
             `/checkout?transactionId=${transactionToken.data.transactionPaymentToken.transactionId}&orderId=${transactionToken.data.transactionPaymentToken.orderId}&qrCode=${transactionToken.data.transactionPaymentToken.qrCode}&PWAToken=${transactionToken.data.transactionPaymentToken.PwaToken}&paymentMethod=${paymentMethod}`
          )

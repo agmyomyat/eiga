@@ -32,18 +32,18 @@ export default function Checkout() {
       },
    })
 
-   useEffect(() => {
-      if (!PWAToken || PWAToken === 'null') return
-      console.log('env', process.env.DINGER_MERCHANT_REDIRECT_URL)
-      window.open(
-         `${process.env.DINGER_MERCHANT_REDIRECT_URL}?transactionNo=${
-            transactionId as string
-         }&formToken=${PWAToken as string}&merchantOrderId=${
-            orderId as string
-         }`,
-         '_blank'
-      )
-   }, [PWAToken, orderId, qrCode, transactionId])
+   // useEffect(() => {
+   //    if (!PWAToken || PWAToken === 'null') return
+   //    console.log('env', process.env.DINGER_MERCHANT_REDIRECT_URL)
+   //    window.open(
+   //       `${process.env.DINGER_MERCHANT_REDIRECT_URL}?transactionNo=${
+   //          transactionId as string
+   //       }&formToken=${PWAToken as string}&merchantOrderId=${
+   //          orderId as string
+   //       }`,
+   //       '_blank'
+   //    )
+   // }, [PWAToken, orderId, qrCode, transactionId])
    useEffect(() => {
       let getTransaction: NodeJS.Timer
       if (transactionId && orderId) {

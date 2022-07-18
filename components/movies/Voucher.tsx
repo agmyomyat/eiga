@@ -46,7 +46,10 @@ const Voucher: React.FC<Ivoucher> = ({
       setPaymentMethod(event.target.value)
    }
    const handleRedirect = async () => {
-      window.open(`https://google.com`, '_blank')
+      let kbzRedirect: Window
+      if (paymentMethod === PaymentMethod.KBZApp) {
+         kbzRedirect = window.open('', '_blank')
+      }
       const transactionToken = await getTransactionToken({
          variables: {
             paymentMethod: paymentMethod === PaymentMethod.KBZApp ? 2 : 1,
@@ -55,11 +58,12 @@ const Voucher: React.FC<Ivoucher> = ({
       })
       //redirect to checkout with qr or pwa token to generate qr code or redirect link, order id and transaction id to query transaction status
       if (transactionToken.data.transactionPaymentToken.orderId) {
-         // if (
-         //    transactionToken.data.transactionPaymentToken.PwaToken &&
-         //    transactionToken.data.transactionPaymentToken.PwaToken !== 'null'
-         // ) {
-         // }
+         if (
+            transactionToken.data.transactionPaymentToken.PwaToken &&
+            transactionToken.data.transactionPaymentToken.PwaToken !== 'null'
+         ) {
+            kbzRedirect.location.href = `${process.env.DINGER_MERCHANT_REDIRECT_URL}?transactionNo=${transactionToken.data.transactionPaymentToken.transactionId}&formToken=${transactionToken.data.transactionPaymentToken.PwaToken}&merchantOrderId=${transactionToken.data.transactionPaymentToken.orderId}`
+         }
          void router.push(
             `/checkout?transactionId=${transactionToken.data.transactionPaymentToken.transactionId}&orderId=${transactionToken.data.transactionPaymentToken.orderId}&qrCode=${transactionToken.data.transactionPaymentToken.qrCode}&PWAToken=${transactionToken.data.transactionPaymentToken.PwaToken}&paymentMethod=${paymentMethod}`
          )

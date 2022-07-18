@@ -13,7 +13,6 @@ import {
    InputBase,
    alpha,
 } from '@mui/material'
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 // import { auth } from '@lib'
 import { useCheckUser } from '@contexts/global-states/useCheckUser'
 import { useAuthLoading } from '@contexts/global-states/useAuthLoading'
@@ -25,10 +24,8 @@ import { useCheckValidReferralCodeLazyQuery } from '@graphgen'
 import { setAccessToken } from '@helpers/accessToken'
 import { useSuccessMessage } from '@contexts/global-states/useSuccessMessage'
 import { useGoogleLogin } from '@react-oauth/google'
-import { googleLogout } from '@react-oauth/google'
 
 const setAuthLoading = useAuthLoading.getState().setLoading
-const setAlreadyLogin = useAlreadyLogin.getState().setLogin
 const setErrorMessageModal = useErrorMessage.getState().setErrorMessage
 const setSuccessMessage = useSuccessMessage.getState().setSuccessMessage
 

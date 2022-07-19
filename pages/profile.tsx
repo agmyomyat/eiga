@@ -101,16 +101,12 @@ export default function Profile() {
    //check dinger callback transaction fail or success
    useEffect(() => {
       if (query.KBZ_APP_STATUS === 'SUCCESS') {
-         setSuccessMessage(
-            'Your transaction' + ' ' + (query.KBZ_APP_STATUS as string)
-         )
+         setSuccessMessage('Your transaction successful')
          void replace('/profile')
          return
       }
       if (query.KBZ_APP_STATUS === 'FAIL') {
-         setErrorMessageModal(
-            'Your transaction' + ' ' + (query.KBZ_APP_STATUS as string)
-         )
+         setErrorMessageModal('Your transaction failed')
          void replace('/profile')
          return
       }

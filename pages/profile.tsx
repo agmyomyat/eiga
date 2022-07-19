@@ -98,6 +98,23 @@ export default function Profile() {
       }
       setAuthLoading(false)
    }, [query.at, query.error, query.rt, replace])
+   //check dinger callback transaction fail or success
+   useEffect(() => {
+      if (query.KBZ_APP_STATUS === 'SUCCESS') {
+         setSuccessMessage(
+            'Your transaction' + ' ' + (query.KBZ_APP_STATUS as string)
+         )
+         void replace('/profile')
+         return
+      }
+      if (query.KBZ_APP_STATUS === 'FAIL') {
+         setErrorMessageModal(
+            'Your transaction' + ' ' + (query.KBZ_APP_STATUS as string)
+         )
+         void replace('/profile')
+         return
+      }
+   }, [query.KBZ_APP_STATUS, replace])
 
    return (
       <Container>

@@ -49,6 +49,7 @@ const Movie: React.FC<TMovieProps> = ({
                width={600}
                height={900}
                alt={name}
+               unoptimized
             />
             <Typography
                variant="caption"

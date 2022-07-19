@@ -67,7 +67,6 @@ export default function Checkout() {
          }, 3000) //run
          return
       }
-      void router.replace('/404')
       return () => {
          if (getTransaction) clearInterval(getTransaction)
       }

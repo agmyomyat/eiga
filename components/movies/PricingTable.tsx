@@ -181,27 +181,6 @@ const PricingTable: React.FC<IpricingTable> = ({
                      <CheckCircleOutlineIcon
                         sx={{ mr: 2, color: 'success.main' }}
                      />
-                     <Typography
-                        variant="body1"
-                        sx={{
-                           color: 'primary.main',
-                           position: 'relative',
-                           '&::after': {
-                              position: 'absolute',
-                              content: '"*"',
-                              top: 0,
-                              right: -10,
-                              marginLeft: 1,
-                           },
-                        }}
-                     >
-                        Download Contents
-                     </Typography>
-                  </Box>
-                  <Box display="flex" py={1}>
-                     <CheckCircleOutlineIcon
-                        sx={{ mr: 2, color: 'success.main' }}
-                     />
                      <Typography variant="body1">
                         Access Premium Contents
                      </Typography>

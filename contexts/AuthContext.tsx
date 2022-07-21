@@ -69,8 +69,10 @@ export default function AuthProvider({ children }) {
       setAccessToken('')
       setRefreshToken('')
       // await auth.signOut()
-      await apolloClient.resetStore()
-   }, [apolloClient])
+      await apolloClient.clearStore()
+      await router.push('/profile')
+      void apolloClient.resetStore()
+   }, [apolloClient, router])
    useEffect(() => {
       if (shouldLogOut) {
          void logOut()

@@ -38,7 +38,7 @@ export default function MoviePage(props: PageProps) {
    const { id } = router.query
    const serverResult = props.data
    const movieData = serverResult?.getMovie
-   useUpdateViews(movieData?.uuid)
+   useUpdateViews({ uuid: movieData?.uuid, premiumUser: userData?.premium })
    const { getHistoryData, getHistoryLoading } = useResumeMovie({
       userId: userData?.userId,
    })

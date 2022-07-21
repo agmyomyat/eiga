@@ -98,7 +98,7 @@ const Voucher: React.FC<Ivoucher> = ({
                   <Box py={2}>
                      <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">
-                           Payment Method
+                           Choose Payment Method
                         </InputLabel>
                         <Select
                            labelId="payment-select-label"

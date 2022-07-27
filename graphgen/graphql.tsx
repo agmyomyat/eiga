@@ -742,7 +742,7 @@ export type LocaleInput = {
   updated_by?: InputMaybe<Scalars['ID']>;
 };
 
-export type Morph = ComponentTvSeriesEpisodes | ComponentTvSeriesSeason | EmbedUploader | EmbedUploaderAggregator | EmbedUploaderAggregatorAvg | EmbedUploaderAggregatorMax | EmbedUploaderAggregatorMin | EmbedUploaderAggregatorSum | EmbedUploaderConnection | EmbedUploaderConnectionCreated_At | EmbedUploaderConnectionId | EmbedUploaderConnectionPassword | EmbedUploaderConnectionTokenVersion | EmbedUploaderConnectionUpdated_At | EmbedUploaderConnectionUserName | EmbedUploaderConnectionVerify | EmbedUploaderGroupBy | EmbedVideo | EmbedVideo2 | EmbedVideo2Aggregator | EmbedVideo2AggregatorAvg | EmbedVideo2AggregatorMax | EmbedVideo2AggregatorMin | EmbedVideo2AggregatorSum | EmbedVideo2Connection | EmbedVideo2ConnectionCreated_At | EmbedVideo2ConnectionEmbedLink | EmbedVideo2ConnectionEng_Sub | EmbedVideo2ConnectionEpisode | EmbedVideo2ConnectionId | EmbedVideo2ConnectionMm_Sub | EmbedVideo2ConnectionMovie_Name | EmbedVideo2ConnectionOriginal_Link | EmbedVideo2ConnectionPublished_At | EmbedVideo2ConnectionSeason | EmbedVideo2ConnectionUpdated_At | EmbedVideo2ConnectionUpload_Status | EmbedVideo2ConnectionUploader | EmbedVideo2ConnectionVideo_Size | EmbedVideo2GroupBy | EmbedVideoAggregator | EmbedVideoAggregatorAvg | EmbedVideoAggregatorMax | EmbedVideoAggregatorMin | EmbedVideoAggregatorSum | EmbedVideoConnection | EmbedVideoConnectionCreated_At | EmbedVideoConnectionEigaLink | EmbedVideoConnectionEigaLink2 | EmbedVideoConnectionEng_Sub | EmbedVideoConnectionEpisode | EmbedVideoConnectionFileSize | EmbedVideoConnectionId | EmbedVideoConnectionMm_Sub | EmbedVideoConnectionMovieName | EmbedVideoConnectionOriginalLink | EmbedVideoConnectionPublished_At | EmbedVideoConnectionSeason | EmbedVideoConnectionUpdated_At | EmbedVideoConnectionUploadStatus | EmbedVideoConnectionUploader | EmbedVideoGroupBy | FavouriteMovies | FavouriteMoviesAggregator | FavouriteMoviesConnection | FavouriteMoviesConnectionCreated_At | FavouriteMoviesConnectionId | FavouriteMoviesConnectionMovie | FavouriteMoviesConnectionPublished_At | FavouriteMoviesConnectionUpdated_At | FavouriteMoviesConnectionUser_Info | FavouriteMoviesGroupBy | Genres | GenresAggregator | GenresConnection | GenresConnectionCreated_At | GenresConnectionId | GenresConnectionName | GenresConnectionPublished_At | GenresConnectionUpdated_At | GenresConnectionUuid | GenresGroupBy | I18NLocale | Movies | MoviesAggregator | MoviesAggregatorAvg | MoviesAggregatorMax | MoviesAggregatorMin | MoviesAggregatorSum | MoviesConnection | MoviesConnectionAll_Time_Views | MoviesConnectionBody | MoviesConnectionCreated_At | MoviesConnectionDuration | MoviesConnectionFreeServer1 | MoviesConnectionFreeServer2 | MoviesConnectionId | MoviesConnectionImdb | MoviesConnectionIsSeries | MoviesConnectionMmsub | MoviesConnectionName | MoviesConnectionPhoto_Url | MoviesConnectionPremiumOnly | MoviesConnectionPublished_At | MoviesConnectionQuality | MoviesConnectionRecommend | MoviesConnectionRelease_Date | MoviesConnectionSevendaysago | MoviesConnectionTv_Sery | MoviesConnectionUpdated_At | MoviesConnectionUuid | MoviesConnectionViews | MoviesConnectionVipServer1 | MoviesConnectionVipServer2 | MoviesConnectionWide_Poster | MoviesGroupBy | ReferralCode | ReferralCodeAggregator | ReferralCodeAggregatorAvg | ReferralCodeAggregatorMax | ReferralCodeAggregatorMin | ReferralCodeAggregatorSum | ReferralCodeConnection | ReferralCodeConnectionCode | ReferralCodeConnectionCreated_At | ReferralCodeConnectionId | ReferralCodeConnectionMonth | ReferralCodeConnectionPublished_At | ReferralCodeConnectionUpdated_At | ReferralCodeConnectionUsed_Client_Uuid | ReferralCodeGroupBy | Transactions | TransactionsAggregator | TransactionsConnection | TransactionsConnectionCreatedAt | TransactionsConnectionCreated_At | TransactionsConnectionCustomerName | TransactionsConnectionId | TransactionsConnectionMerchantOrderId | TransactionsConnectionMethodName | TransactionsConnectionProviderName | TransactionsConnectionPublished_At | TransactionsConnectionQuantity | TransactionsConnectionTotalAmount | TransactionsConnectionTransactionId | TransactionsConnectionTransactionStatus | TransactionsConnectionUpdated_At | TransactionsGroupBy | TvSeries | TvSeriesAggregator | TvSeriesConnection | TvSeriesConnectionCreated_At | TvSeriesConnectionId | TvSeriesConnectionName | TvSeriesConnectionPublished_At | TvSeriesConnectionUpdated_At | TvSeriesGroupBy | UpdateMovieReturn | UploadFile | UploadFileAggregator | UploadFileAggregatorAvg | UploadFileAggregatorMax | UploadFileAggregatorMin | UploadFileAggregatorSum | UploadFileConnection | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionCreated_At | UploadFileConnectionExt | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionHeight | UploadFileConnectionId | UploadFileConnectionMime | UploadFileConnectionName | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionSize | UploadFileConnectionUpdated_At | UploadFileConnectionUrl | UploadFileConnectionWidth | UploadFileGroupBy | UserData | UserDataAggregator | UserDataAggregatorAvg | UserDataAggregatorMax | UserDataAggregatorMin | UserDataAggregatorSum | UserDataConnection | UserDataConnectionCreated_At | UserDataConnectionExpire | UserDataConnectionFuuid | UserDataConnectionId | UserDataConnectionPublished_At | UserDataConnectionTokenVersion | UserDataConnectionUpdated_At | UserDataConnectionUuid | UserDataConnectionVerify | UserDataGroupBy | UserPermissionsPasswordPayload | UsersPermissionsLoginPayload | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleAggregator | UsersPermissionsRoleConnection | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionType | UsersPermissionsRoleGroupBy | UsersPermissionsUser | UsersPermissionsUserAggregator | UsersPermissionsUserConnection | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserGroupBy | WatchHistory | WatchHistoryAggregator | WatchHistoryAggregatorAvg | WatchHistoryAggregatorMax | WatchHistoryAggregatorMin | WatchHistoryAggregatorSum | WatchHistoryConnection | WatchHistoryConnectionCreated_At | WatchHistoryConnectionCurrent_Time | WatchHistoryConnectionEpisode | WatchHistoryConnectionId | WatchHistoryConnectionLast_Updated | WatchHistoryConnectionMovie | WatchHistoryConnectionMovieName | WatchHistoryConnectionPublished_At | WatchHistoryConnectionSeason | WatchHistoryConnectionUpdated_At | WatchHistoryConnectionUser_Data | WatchHistoryGroupBy | CheckValidReferralCodeResult | CreateEmbedUploaderPayload | CreateEmbedVideo2Payload | CreateEmbedVideoPayload | CreateFavouriteMoviePayload | CreateGenrePayload | CreateMoviePayload | CreateReferralCodePayload | CreateRolePayload | CreateTransactionPayload | CreateTvSeryPayload | CreateUserDatumPayload | CreateUserPayload | CreateWatchHistoryPayload | DeleteEmbedUploaderPayload | DeleteEmbedVideo2Payload | DeleteEmbedVideoPayload | DeleteFavouriteMoviePayload | DeleteFilePayload | DeleteGenrePayload | DeleteMoviePayload | DeleteReferralCodePayload | DeleteRolePayload | DeleteTransactionPayload | DeleteTvSeryPayload | DeleteUserDatumPayload | DeleteUserPayload | DeleteWatchHistoryPayload | OptionalMovies | ReturnSignup | ReturnUserData | TransactionPaymentTokenResponse | Transaction_Status_Response | TypeRegisterEmbedUploader | Typeloginembeduploader | UpdateEmbedUploaderPayload | UpdateEmbedVideo2Payload | UpdateEmbedVideoPayload | UpdateFavouriteMoviePayload | UpdateGenrePayload | UpdateMoviePayload | UpdateReferralCodePayload | UpdateRolePayload | UpdateTransactionPayload | UpdateTvSeryPayload | UpdateUserDatumPayload | UpdateUserPayload | UpdateWatchHistoryPayload | VerifyTokenPayload;
+export type Morph = ComponentTvSeriesEpisodes | ComponentTvSeriesSeason | EmbedUploader | EmbedUploaderAggregator | EmbedUploaderAggregatorAvg | EmbedUploaderAggregatorMax | EmbedUploaderAggregatorMin | EmbedUploaderAggregatorSum | EmbedUploaderConnection | EmbedUploaderConnectionCreated_At | EmbedUploaderConnectionId | EmbedUploaderConnectionPassword | EmbedUploaderConnectionTokenVersion | EmbedUploaderConnectionUpdated_At | EmbedUploaderConnectionUserName | EmbedUploaderConnectionVerify | EmbedUploaderGroupBy | EmbedVideo | EmbedVideo2 | EmbedVideo2Aggregator | EmbedVideo2AggregatorAvg | EmbedVideo2AggregatorMax | EmbedVideo2AggregatorMin | EmbedVideo2AggregatorSum | EmbedVideo2Connection | EmbedVideo2ConnectionCreated_At | EmbedVideo2ConnectionEmbedLink | EmbedVideo2ConnectionEng_Sub | EmbedVideo2ConnectionEpisode | EmbedVideo2ConnectionId | EmbedVideo2ConnectionMm_Sub | EmbedVideo2ConnectionMovie_Name | EmbedVideo2ConnectionOriginal_Link | EmbedVideo2ConnectionPublished_At | EmbedVideo2ConnectionSeason | EmbedVideo2ConnectionUpdated_At | EmbedVideo2ConnectionUpload_Status | EmbedVideo2ConnectionUploader | EmbedVideo2ConnectionVideo_Size | EmbedVideo2GroupBy | EmbedVideoAggregator | EmbedVideoAggregatorAvg | EmbedVideoAggregatorMax | EmbedVideoAggregatorMin | EmbedVideoAggregatorSum | EmbedVideoConnection | EmbedVideoConnectionCreated_At | EmbedVideoConnectionEigaLink | EmbedVideoConnectionEigaLink2 | EmbedVideoConnectionEng_Sub | EmbedVideoConnectionEpisode | EmbedVideoConnectionFileSize | EmbedVideoConnectionId | EmbedVideoConnectionMm_Sub | EmbedVideoConnectionMovieName | EmbedVideoConnectionOriginalLink | EmbedVideoConnectionPublished_At | EmbedVideoConnectionSeason | EmbedVideoConnectionUpdated_At | EmbedVideoConnectionUploadStatus | EmbedVideoConnectionUploader | EmbedVideoGroupBy | FavouriteMovies | FavouriteMoviesAggregator | FavouriteMoviesConnection | FavouriteMoviesConnectionCreated_At | FavouriteMoviesConnectionId | FavouriteMoviesConnectionMovie | FavouriteMoviesConnectionPublished_At | FavouriteMoviesConnectionUpdated_At | FavouriteMoviesConnectionUser_Info | FavouriteMoviesGroupBy | Genres | GenresAggregator | GenresConnection | GenresConnectionCreated_At | GenresConnectionId | GenresConnectionName | GenresConnectionPublished_At | GenresConnectionUpdated_At | GenresConnectionUuid | GenresGroupBy | I18NLocale | Movies | MoviesAggregator | MoviesAggregatorAvg | MoviesAggregatorMax | MoviesAggregatorMin | MoviesAggregatorSum | MoviesConnection | MoviesConnectionAll_Time_Views | MoviesConnectionBody | MoviesConnectionCreated_At | MoviesConnectionDuration | MoviesConnectionFreeServer1 | MoviesConnectionFreeServer2 | MoviesConnectionId | MoviesConnectionImdb | MoviesConnectionIsSeries | MoviesConnectionMmsub | MoviesConnectionName | MoviesConnectionPhoto_Url | MoviesConnectionPremiumOnly | MoviesConnectionPublished_At | MoviesConnectionQuality | MoviesConnectionRecommend | MoviesConnectionRelease_Date | MoviesConnectionSevendaysago | MoviesConnectionTv_Sery | MoviesConnectionUpdated_At | MoviesConnectionUuid | MoviesConnectionViews | MoviesConnectionVipServer1 | MoviesConnectionVipServer2 | MoviesConnectionWide_Poster | MoviesGroupBy | ReferralCode | ReferralCodeAggregator | ReferralCodeAggregatorAvg | ReferralCodeAggregatorMax | ReferralCodeAggregatorMin | ReferralCodeAggregatorSum | ReferralCodeConnection | ReferralCodeConnectionCode | ReferralCodeConnectionCreated_At | ReferralCodeConnectionId | ReferralCodeConnectionMonth | ReferralCodeConnectionPublished_At | ReferralCodeConnectionUpdated_At | ReferralCodeConnectionUsed_Client_Uuid | ReferralCodeGroupBy | Transactions | TransactionsAggregator | TransactionsConnection | TransactionsConnectionCreatedAt | TransactionsConnectionCreated_At | TransactionsConnectionCustomerName | TransactionsConnectionId | TransactionsConnectionMerchantOrderId | TransactionsConnectionMethodName | TransactionsConnectionProviderName | TransactionsConnectionPublished_At | TransactionsConnectionQuantity | TransactionsConnectionTotalAmount | TransactionsConnectionTransactionId | TransactionsConnectionTransactionStatus | TransactionsConnectionUpdated_At | TransactionsGroupBy | TvSeries | TvSeriesAggregator | TvSeriesConnection | TvSeriesConnectionCreated_At | TvSeriesConnectionId | TvSeriesConnectionName | TvSeriesConnectionPublished_At | TvSeriesConnectionUpdated_At | TvSeriesGroupBy | UpdateMovieReturn | UploadFile | UploadFileAggregator | UploadFileAggregatorAvg | UploadFileAggregatorMax | UploadFileAggregatorMin | UploadFileAggregatorSum | UploadFileConnection | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionCreated_At | UploadFileConnectionExt | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionHeight | UploadFileConnectionId | UploadFileConnectionMime | UploadFileConnectionName | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionSize | UploadFileConnectionUpdated_At | UploadFileConnectionUrl | UploadFileConnectionWidth | UploadFileGroupBy | UserData | UserDataAggregator | UserDataAggregatorAvg | UserDataAggregatorMax | UserDataAggregatorMin | UserDataAggregatorSum | UserDataConnection | UserDataConnectionCreated_At | UserDataConnectionExpire | UserDataConnectionFuuid | UserDataConnectionId | UserDataConnectionPublished_At | UserDataConnectionTokenVersion | UserDataConnectionUpdated_At | UserDataConnectionUuid | UserDataConnectionVerify | UserDataGroupBy | UserPermissionsPasswordPayload | UsersPermissionsLoginPayload | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleAggregator | UsersPermissionsRoleConnection | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionType | UsersPermissionsRoleGroupBy | UsersPermissionsUser | UsersPermissionsUserAggregator | UsersPermissionsUserConnection | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserGroupBy | WatchHistory | WatchHistoryAggregator | WatchHistoryAggregatorAvg | WatchHistoryAggregatorMax | WatchHistoryAggregatorMin | WatchHistoryAggregatorSum | WatchHistoryConnection | WatchHistoryConnectionCreated_At | WatchHistoryConnectionCurrent_Time | WatchHistoryConnectionEpisode | WatchHistoryConnectionId | WatchHistoryConnectionLast_Updated | WatchHistoryConnectionMovie | WatchHistoryConnectionMovieName | WatchHistoryConnectionPublished_At | WatchHistoryConnectionSeason | WatchHistoryConnectionUpdated_At | WatchHistoryConnectionUser_Data | WatchHistoryGroupBy | CheckValidReferralCodeResult | CreateEmbedUploaderPayload | CreateEmbedVideo2Payload | CreateEmbedVideoPayload | CreateFavouriteMoviePayload | CreateGenrePayload | CreateMoviePayload | CreateReferralCodePayload | CreateRolePayload | CreateTransactionPayload | CreateTvSeryPayload | CreateUserDatumPayload | CreateUserPayload | CreateWatchHistoryPayload | DeleteEmbedUploaderPayload | DeleteEmbedVideo2Payload | DeleteEmbedVideoPayload | DeleteFavouriteMoviePayload | DeleteFilePayload | DeleteGenrePayload | DeleteMoviePayload | DeleteReferralCodePayload | DeleteRolePayload | DeleteTransactionPayload | DeleteTvSeryPayload | DeleteUserDatumPayload | DeleteUserPayload | DeleteWatchHistoryPayload | GetSuggestedMoviesResult | OptionalMovies | ReturnSignup | ReturnUserData | TransactionPaymentTokenResponse | Transaction_Status_Response | TypeRegisterEmbedUploader | Typeloginembeduploader | UpdateEmbedUploaderPayload | UpdateEmbedVideo2Payload | UpdateEmbedVideoPayload | UpdateFavouriteMoviePayload | UpdateGenrePayload | UpdateMoviePayload | UpdateReferralCodePayload | UpdateRolePayload | UpdateTransactionPayload | UpdateTvSeryPayload | UpdateUserDatumPayload | UpdateUserPayload | UpdateWatchHistoryPayload | VerifyTokenPayload;
 
 export type MovieInput = {
   Imdb: Scalars['Float'];
@@ -1399,6 +1399,7 @@ export type Query = {
   genres?: Maybe<Array<Maybe<Genres>>>;
   genresConnection?: Maybe<GenresConnection>;
   getMovie?: Maybe<Movies>;
+  getSuggestedMovies?: Maybe<Array<Maybe<GetSuggestedMoviesResult>>>;
   getUserData?: Maybe<ReturnUserData>;
   me?: Maybe<UsersPermissionsMe>;
   movie?: Maybe<Movies>;
@@ -1571,6 +1572,12 @@ export type QueryGenresConnectionArgs = {
 
 export type QueryGetMovieArgs = {
   uuid?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetSuggestedMoviesArgs = {
+  genres_limit: Scalars['Int'];
+  movies_limit: Scalars['Int'];
 };
 
 
@@ -3299,6 +3306,12 @@ export type EditWatchHistoryInput = {
   user_data?: InputMaybe<Scalars['ID']>;
 };
 
+export type GetSuggestedMoviesResult = {
+  __typename?: 'getSuggestedMoviesResult';
+  genreName?: Maybe<Scalars['String']>;
+  movies?: Maybe<Array<Maybe<OptionalMovies>>>;
+};
+
 export type LoginEmbedInput = {
   password: Scalars['String'];
   userName: Scalars['String'];
@@ -3637,6 +3650,14 @@ export type GetSeriesQueryVariables = Exact<{
 
 
 export type GetSeriesQuery = { __typename?: 'Query', getMovie?: { __typename?: 'Movies', id: string, uuid?: string | null, name: string, release_date: number, body: string, duration: any, Imdb: number, isSeries: boolean, mmsub?: boolean | null, premiumOnly: boolean, genres?: Array<{ __typename?: 'Genres', name?: string | null } | null> | null, tv_sery?: { __typename?: 'TvSeries', season?: Array<{ __typename?: 'ComponentTvSeriesSeason', seasonID?: number | null, episodes?: Array<{ __typename?: 'ComponentTvSeriesEpisodes', duration?: any | null, episodeID: number, freeServer1?: string | null, freeServer2?: string | null, vipServer1?: string | null, vipServer2?: string | null } | null> | null } | null> | null } | null } | null };
+
+export type GetSuggestedMoviesQueryVariables = Exact<{
+  genres_limit: Scalars['Int'];
+  movies_limit: Scalars['Int'];
+}>;
+
+
+export type GetSuggestedMoviesQuery = { __typename?: 'Query', getSuggestedMovies?: Array<{ __typename?: 'getSuggestedMoviesResult', genreName?: string | null, movies?: Array<{ __typename?: 'optionalMovies', id?: string | null, freeServer1?: string | null, uuid?: string | null, freeServer2?: string | null, vipServer1?: string | null, vipServer2?: string | null, name?: string | null, release_date?: number | null, body?: string | null, duration?: any | null, Imdb?: number | null, isSeries?: boolean | null, mmsub?: boolean | null, premiumOnly?: boolean | null } | null> | null } | null> | null };
 
 export type GetTransactionTokenQueryVariables = Exact<{
   paymentMethod: Scalars['Int'];
@@ -4223,6 +4244,58 @@ export function useGetSeriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetSeriesQueryHookResult = ReturnType<typeof useGetSeriesQuery>;
 export type GetSeriesLazyQueryHookResult = ReturnType<typeof useGetSeriesLazyQuery>;
 export type GetSeriesQueryResult = Apollo.QueryResult<GetSeriesQuery, GetSeriesQueryVariables>;
+export const GetSuggestedMoviesDocument = gql`
+    query GetSuggestedMovies($genres_limit: Int!, $movies_limit: Int!) {
+  getSuggestedMovies(genres_limit: $genres_limit, movies_limit: $movies_limit) {
+    genreName
+    movies {
+      id
+      freeServer1
+      uuid
+      freeServer2
+      vipServer1
+      vipServer2
+      name
+      release_date
+      body
+      duration
+      Imdb
+      isSeries
+      mmsub
+      premiumOnly
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSuggestedMoviesQuery__
+ *
+ * To run a query within a React component, call `useGetSuggestedMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSuggestedMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSuggestedMoviesQuery({
+ *   variables: {
+ *      genres_limit: // value for 'genres_limit'
+ *      movies_limit: // value for 'movies_limit'
+ *   },
+ * });
+ */
+export function useGetSuggestedMoviesQuery(baseOptions: Apollo.QueryHookOptions<GetSuggestedMoviesQuery, GetSuggestedMoviesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSuggestedMoviesQuery, GetSuggestedMoviesQueryVariables>(GetSuggestedMoviesDocument, options);
+      }
+export function useGetSuggestedMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSuggestedMoviesQuery, GetSuggestedMoviesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSuggestedMoviesQuery, GetSuggestedMoviesQueryVariables>(GetSuggestedMoviesDocument, options);
+        }
+export type GetSuggestedMoviesQueryHookResult = ReturnType<typeof useGetSuggestedMoviesQuery>;
+export type GetSuggestedMoviesLazyQueryHookResult = ReturnType<typeof useGetSuggestedMoviesLazyQuery>;
+export type GetSuggestedMoviesQueryResult = Apollo.QueryResult<GetSuggestedMoviesQuery, GetSuggestedMoviesQueryVariables>;
 export const GetTransactionTokenDocument = gql`
     query GetTransactionToken($paymentMethod: Int!, $quantity: Int!) {
   transactionPaymentToken(

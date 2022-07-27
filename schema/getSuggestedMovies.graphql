@@ -5,6 +5,7 @@ query GetSuggestedMovies($genres_limit: Int!, $movies_limit: Int!) {
    ) {
       genreName
       movies {
+         photo_url
          id
          freeServer1
          uuid

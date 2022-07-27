@@ -22,6 +22,7 @@ import { useAuth } from '@contexts/AuthContext'
 import { Container, Box, Typography } from '@mui/material'
 import Movies from '@components/movies/Movies'
 import HomeSlides from '@components/splide/HomeSlides'
+import SuggestedMoviesSlides from '@components/splide/suggetedMovies'
 
 const apolloClient = initializeApollo()
 
@@ -40,7 +41,7 @@ function Home(props: Props) {
    ] = useWatchHistoriesLazyQuery()
    const { movies: trendingMovies } = props.trendingMovies
    const { movies: lastestMovies } = props.lastestMovies
-   const suggestedMovies = props.suggestedMovies.getSuggestedMovies
+   const suggestedMovies = props.suggestedMovies
    const historyMovies = watchHistoriesData?.watchHistories
    useEffect(() => {
       console.log('suggest', suggestedMovies)
@@ -65,18 +66,10 @@ function Home(props: Props) {
             historyMovies={historyMovies as Partial<WatchHistory[]>}
             loading={watchHistoriesLoading}
          />
-         <Box mt={5}>
-            <Typography
-               variant="h6"
-               fontWeight="bold"
-               sx={{
-                  mb: 3,
-               }}
-            >
-               Recommended
-            </Typography>
-            <Movies movies={data.movies as typeMovies[]} />
-         </Box>
+         <SuggestedMoviesSlides
+            loading={false}
+            suggestedMovies={suggestedMovies}
+         />
       </Container>
    )
 }
@@ -88,9 +81,6 @@ export const getStaticProps: GetStaticProps = async () => {
    const sevenDaysAgo = new Date(today)
 
    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
-   await apolloClient.query({
-      query: GetAllMoviesDocument,
-   })
    const { data: trendingMovies }: Partial<GetTrendingMoviesQueryResult> =
       await apolloClient.query({
          query: GetTrendingMoviesDocument,
@@ -112,7 +102,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
    return {
       props: {
-         initialApolloState: apolloClient.cache.extract(),
          trendingMovies,
          suggestedMovies,
          lastestMovies,

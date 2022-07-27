@@ -3657,7 +3657,7 @@ export type GetSuggestedMoviesQueryVariables = Exact<{
 }>;
 
 
-export type GetSuggestedMoviesQuery = { __typename?: 'Query', getSuggestedMovies?: Array<{ __typename?: 'getSuggestedMoviesResult', genreName?: string | null, movies?: Array<{ __typename?: 'optionalMovies', id?: string | null, freeServer1?: string | null, uuid?: string | null, freeServer2?: string | null, vipServer1?: string | null, vipServer2?: string | null, name?: string | null, release_date?: number | null, body?: string | null, duration?: any | null, Imdb?: number | null, isSeries?: boolean | null, mmsub?: boolean | null, premiumOnly?: boolean | null } | null> | null } | null> | null };
+export type GetSuggestedMoviesQuery = { __typename?: 'Query', getSuggestedMovies?: Array<{ __typename?: 'getSuggestedMoviesResult', genreName?: string | null, movies?: Array<{ __typename?: 'optionalMovies', photo_url?: string | null, id?: string | null, freeServer1?: string | null, uuid?: string | null, freeServer2?: string | null, vipServer1?: string | null, vipServer2?: string | null, name?: string | null, release_date?: number | null, body?: string | null, duration?: any | null, Imdb?: number | null, isSeries?: boolean | null, mmsub?: boolean | null, premiumOnly?: boolean | null } | null> | null } | null> | null };
 
 export type GetTransactionTokenQueryVariables = Exact<{
   paymentMethod: Scalars['Int'];
@@ -4249,6 +4249,7 @@ export const GetSuggestedMoviesDocument = gql`
   getSuggestedMovies(genres_limit: $genres_limit, movies_limit: $movies_limit) {
     genreName
     movies {
+      photo_url
       id
       freeServer1
       uuid

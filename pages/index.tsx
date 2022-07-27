@@ -33,7 +33,6 @@ interface Props {
 }
 
 function Home(props: Props) {
-   const { data } = useGetAllMoviesQuery()
    const { userData } = useAuth()
    const [
       getHistories,

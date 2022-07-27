@@ -3,10 +3,8 @@ import { useEffect } from 'react'
 import { initializeApollo } from '@apollo/index'
 import {
    GetSuggestedMoviesDocument,
-   useGetAllMoviesQuery,
    Movies as typeMovies,
    WatchHistory,
-   GetAllMoviesDocument,
    GetTrendingMoviesDocument,
    GetTrendingMoviesQuery,
    GetTrendingMoviesQueryResult,
@@ -19,10 +17,17 @@ import {
 } from '@graphgen'
 import { GetStaticProps } from 'next'
 import { useAuth } from '@contexts/AuthContext'
-import { Container, Box, Typography } from '@mui/material'
-import Movies from '@components/movies/Movies'
-import HomeSlides from '@components/splide/HomeSlides'
-import SuggestedMoviesSlides from '@components/splide/suggetedMovies'
+import { Container } from '@mui/material'
+import dynamic from 'next/dynamic'
+const HomeSlides = dynamic(() => import('@components/splide/HomeSlides'), {
+   ssr: false,
+})
+const SuggestedMoviesSlides = dynamic(
+   () => import('@components/splide/suggetedMovies'),
+   {
+      ssr: false,
+   }
+)
 
 const apolloClient = initializeApollo()
 

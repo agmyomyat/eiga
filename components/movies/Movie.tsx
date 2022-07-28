@@ -21,6 +21,7 @@ const Movie: React.FC<TMovieProps> = ({
    Imdb,
    published_at,
 }) => {
+   if (!published_at) return null
    const newIsSeries =
       typeof isSeries === 'boolean' || isSeries === null
          ? isSeries
@@ -33,7 +34,6 @@ const Movie: React.FC<TMovieProps> = ({
       typeof release_date === 'number'
          ? release_date
          : parseInt(release_date[0])
-   if (!published_at) return null
    return (
       <Link
          href={{

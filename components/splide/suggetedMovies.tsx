@@ -64,12 +64,14 @@ const SuggestedMoviesSlides: React.FC<IHomeSlide> = ({
                                  pagination: false,
                               }}
                            >
-                              {genre.movies.map((r) => (
-                                 <Slide
-                                    key={r.uuid}
-                                    movie={r as unknown as Partial<Movies>}
-                                 />
-                              ))}
+                              {genre.movies.map((r) => {
+                                 return (
+                                    <Slide
+                                       key={r.uuid}
+                                       movie={r as unknown as Partial<Movies>}
+                                    />
+                                 )
+                              })}
                            </Splide>
                         </Box>
                      </Box>

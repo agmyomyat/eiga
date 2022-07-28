@@ -9,5 +9,6 @@ query getAllMovies {
       isSeries
       mmsub
       Imdb
+      published_at
    }
 }

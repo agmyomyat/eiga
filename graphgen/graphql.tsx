@@ -3591,7 +3591,7 @@ export type DeleteFavouriteMovieMutation = { __typename?: 'Mutation', deleteFavo
 export type GetAllMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Array<{ __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: boolean | null, Imdb: number } | null> | null };
+export type GetAllMoviesQuery = { __typename?: 'Query', movies?: Array<{ __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: boolean | null, Imdb: number, published_at?: any | null } | null> | null };
 
 export type GetFavouriteMovieQueryVariables = Exact<{
   userId: Scalars['ID'];
@@ -3637,7 +3637,7 @@ export type GetMovieQueryVariables = Exact<{
 }>;
 
 
-export type GetMovieQuery = { __typename?: 'Query', getMovie?: { __typename?: 'Movies', id: string, freeServer1?: string | null, uuid?: string | null, freeServer2?: string | null, vipServer1?: string | null, vipServer2?: string | null, name: string, release_date: number, body: string, duration: any, wide_poster?: string | null, Imdb: number, isSeries: boolean, mmsub?: boolean | null, premiumOnly: boolean, genres?: Array<{ __typename?: 'Genres', name?: string | null } | null> | null } | null };
+export type GetMovieQuery = { __typename?: 'Query', getMovie?: { __typename?: 'Movies', id: string, freeServer1?: string | null, uuid?: string | null, freeServer2?: string | null, vipServer1?: string | null, vipServer2?: string | null, name: string, release_date: number, body: string, duration: any, wide_poster?: string | null, Imdb: number, isSeries: boolean, mmsub?: boolean | null, premiumOnly: boolean, published_at?: any | null, genres?: Array<{ __typename?: 'Genres', name?: string | null } | null> | null } | null };
 
 export type GetRelatedMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3829,6 +3829,7 @@ export const GetAllMoviesDocument = gql`
     isSeries
     mmsub
     Imdb
+    published_at
   }
 }
     `;
@@ -4108,6 +4109,7 @@ export const GetMovieDocument = gql`
     isSeries
     mmsub
     premiumOnly
+    published_at
     genres {
       name
     }

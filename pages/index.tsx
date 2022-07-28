@@ -102,12 +102,14 @@ export const getStaticProps: GetStaticProps = async () => {
       query: GetSuggestedMoviesDocument,
       variables: { genres_limit: 5, movies_limit: 10 },
    })
-   console.log('suggested', suggestedMovies)
 
+   const sortedSugestedMovies = suggestedMovies.getSuggestedMovies
+      .map((movie) => movie)
+      .sort((a, b) => b.movies.length - a.movies.length)
    return {
       props: {
          trendingMovies,
-         suggestedMovies,
+         suggestedMovies: { getSuggestedMovies: sortedSugestedMovies },
          lastestMovies,
          title: `Home Page`,
       },

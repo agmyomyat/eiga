@@ -1,4 +1,3 @@
-import Slides from '@components/splide/Slides'
 import Slide from '@components/splide/Slide'
 import { Box, Typography, useTheme, CircularProgress } from '@mui/material'
 import { Splide } from '@splidejs/react-splide'

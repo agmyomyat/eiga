@@ -19,7 +19,6 @@ const Movie: React.FC<TMovieProps> = ({
    isSeries,
    mmsub,
    Imdb,
-   published_at,
 }) => {
    const newIsSeries =
       typeof isSeries === 'boolean' || isSeries === null

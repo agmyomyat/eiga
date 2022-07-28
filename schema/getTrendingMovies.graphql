@@ -9,5 +9,6 @@ query getTrendingMovies($last7day: String) {
       isSeries
       mmsub
       Imdb
+      published_at
    }
 }

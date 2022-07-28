@@ -16,6 +16,7 @@ query getFavouriteMovies($userId: ID!, $start: Int, $limit: Int) {
          isSeries
          mmsub
          Imdb
+         published_at
       }
    }
 }

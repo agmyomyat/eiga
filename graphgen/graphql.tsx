@@ -3599,7 +3599,7 @@ export type GetFavouriteMovieQueryVariables = Exact<{
 }>;
 
 
-export type GetFavouriteMovieQuery = { __typename?: 'Query', favouriteMovies?: Array<{ __typename?: 'FavouriteMovies', id: string, movie?: { __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean } | null } | null> | null };
+export type GetFavouriteMovieQuery = { __typename?: 'Query', favouriteMovies?: Array<{ __typename?: 'FavouriteMovies', id: string, movie?: { __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, published_at?: any | null } | null } | null> | null };
 
 export type GetFavouriteMoviesQueryVariables = Exact<{
   userId: Scalars['ID'];
@@ -3608,7 +3608,7 @@ export type GetFavouriteMoviesQueryVariables = Exact<{
 }>;
 
 
-export type GetFavouriteMoviesQuery = { __typename?: 'Query', favouriteMovies?: Array<{ __typename?: 'FavouriteMovies', id: string, movie?: { __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: boolean | null, Imdb: number } | null } | null> | null };
+export type GetFavouriteMoviesQuery = { __typename?: 'Query', favouriteMovies?: Array<{ __typename?: 'FavouriteMovies', id: string, movie?: { __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: boolean | null, Imdb: number, published_at?: any | null } | null } | null> | null };
 
 export type WatchHistoriesQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -3617,7 +3617,7 @@ export type WatchHistoriesQueryVariables = Exact<{
 }>;
 
 
-export type WatchHistoriesQuery = { __typename?: 'Query', watchHistories?: Array<{ __typename?: 'WatchHistory', movie?: { __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: boolean | null, Imdb: number } | null } | null> | null };
+export type WatchHistoriesQuery = { __typename?: 'Query', watchHistories?: Array<{ __typename?: 'WatchHistory', movie?: { __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: boolean | null, Imdb: number, published_at?: any | null } | null } | null> | null };
 
 export type GetWatchHistoryQueryVariables = Exact<{
   user: Scalars['ID'];
@@ -3642,14 +3642,14 @@ export type GetMovieQuery = { __typename?: 'Query', getMovie?: { __typename?: 'M
 export type GetRelatedMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetRelatedMoviesQuery = { __typename?: 'Query', movies?: Array<{ __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: boolean | null, Imdb: number } | null> | null };
+export type GetRelatedMoviesQuery = { __typename?: 'Query', movies?: Array<{ __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: boolean | null, Imdb: number, published_at?: any | null } | null> | null };
 
 export type GetSeriesQueryVariables = Exact<{
   uuid: Scalars['String'];
 }>;
 
 
-export type GetSeriesQuery = { __typename?: 'Query', getMovie?: { __typename?: 'Movies', id: string, uuid?: string | null, name: string, release_date: number, body: string, duration: any, Imdb: number, isSeries: boolean, mmsub?: boolean | null, premiumOnly: boolean, genres?: Array<{ __typename?: 'Genres', name?: string | null } | null> | null, tv_sery?: { __typename?: 'TvSeries', season?: Array<{ __typename?: 'ComponentTvSeriesSeason', seasonID?: number | null, episodes?: Array<{ __typename?: 'ComponentTvSeriesEpisodes', duration?: any | null, episodeID: number, freeServer1?: string | null, freeServer2?: string | null, vipServer1?: string | null, vipServer2?: string | null } | null> | null } | null> | null } | null } | null };
+export type GetSeriesQuery = { __typename?: 'Query', getMovie?: { __typename?: 'Movies', id: string, uuid?: string | null, name: string, release_date: number, body: string, duration: any, Imdb: number, isSeries: boolean, mmsub?: boolean | null, premiumOnly: boolean, published_at?: any | null, genres?: Array<{ __typename?: 'Genres', name?: string | null } | null> | null, tv_sery?: { __typename?: 'TvSeries', season?: Array<{ __typename?: 'ComponentTvSeriesSeason', seasonID?: number | null, episodes?: Array<{ __typename?: 'ComponentTvSeriesEpisodes', duration?: any | null, episodeID: number, freeServer1?: string | null, freeServer2?: string | null, vipServer1?: string | null, vipServer2?: string | null } | null> | null } | null> | null } | null } | null };
 
 export type GetSuggestedMoviesQueryVariables = Exact<{
   genres_limit: Scalars['Int'];
@@ -3672,7 +3672,7 @@ export type GetTrendingMoviesQueryVariables = Exact<{
 }>;
 
 
-export type GetTrendingMoviesQuery = { __typename?: 'Query', movies?: Array<{ __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: boolean | null, Imdb: number } | null> | null };
+export type GetTrendingMoviesQuery = { __typename?: 'Query', movies?: Array<{ __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: boolean | null, Imdb: number, published_at?: any | null } | null> | null };
 
 export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3872,6 +3872,7 @@ export const GetFavouriteMovieDocument = gql`
       quality
       photo_url
       isSeries
+      published_at
     }
   }
 }
@@ -3924,6 +3925,7 @@ export const GetFavouriteMoviesDocument = gql`
       isSeries
       mmsub
       Imdb
+      published_at
     }
   }
 }
@@ -3976,6 +3978,7 @@ export const WatchHistoriesDocument = gql`
       isSeries
       mmsub
       Imdb
+      published_at
     }
   }
 }
@@ -4156,6 +4159,7 @@ export const GetRelatedMoviesDocument = gql`
     isSeries
     mmsub
     Imdb
+    published_at
   }
 }
     `;
@@ -4199,6 +4203,7 @@ export const GetSeriesDocument = gql`
     isSeries
     mmsub
     premiumOnly
+    published_at
     genres {
       name
     }
@@ -4354,6 +4359,7 @@ export const GetTrendingMoviesDocument = gql`
     isSeries
     mmsub
     Imdb
+    published_at
   }
 }
     `;

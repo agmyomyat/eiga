@@ -9,5 +9,6 @@ query getRelatedMovies {
       isSeries
       mmsub
       Imdb
+      published_at
    }
 }

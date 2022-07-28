@@ -9,6 +9,7 @@ query getFavouriteMovie($userId: ID!, $movieId: ID) {
          quality
          photo_url
          isSeries
+         published_at
       }
    }
 }

@@ -65,6 +65,7 @@ const SuggestedMoviesSlides: React.FC<IHomeSlide> = ({
                               }}
                            >
                               {genre.movies.map((r) => {
+                                 if (!r.published_at) return null
                                  return (
                                     <Slide
                                        key={r.uuid}

@@ -3630,7 +3630,7 @@ export type GetWatchHistoryQuery = { __typename?: 'Query', watchHistories?: Arra
 export type GetLastestMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLastestMoviesQuery = { __typename?: 'Query', movies?: Array<{ __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: boolean | null, Imdb: number } | null> | null };
+export type GetLastestMoviesQuery = { __typename?: 'Query', movies?: Array<{ __typename?: 'Movies', name: string, uuid?: string | null, id: string, release_date: number, quality: string, photo_url: string, isSeries: boolean, mmsub?: boolean | null, Imdb: number, published_at?: any | null } | null> | null };
 
 export type GetMovieQueryVariables = Exact<{
   uuid: Scalars['String'];
@@ -4064,6 +4064,7 @@ export const GetLastestMoviesDocument = gql`
     isSeries
     mmsub
     Imdb
+    published_at
   }
 }
     `;

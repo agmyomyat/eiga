@@ -20,6 +20,7 @@ query GetSuggestedMovies($genres_limit: Int!, $movies_limit: Int!) {
          isSeries
          mmsub
          premiumOnly
+         published_at
       }
    }
 }

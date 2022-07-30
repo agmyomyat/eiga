@@ -17,7 +17,7 @@ import SearchBoxDropdown from './SearchBoxDropdown'
 import NavigationSkeleton from '@components/skeleton/NavigationSkeleton'
 import { NextLinkComposed } from 'components/ui/Link'
 import Image from 'next/image'
-import logo from '../../public/logo.png'
+import logo from '../../public/kassette.png'
 import { meiliClient } from '@components/meiliSearch'
 import { OptionalMovies } from '@graphgen'
 interface IhideOnScroll {
@@ -143,15 +143,17 @@ const MainNavigation: React.FC = () => {
                            >
                               <Box
                                  component={NextLinkComposed}
+                                 paddingTop={1.5}
                                  to={{ pathname: '/' }}
                               >
                                  <Image
                                     src={logo}
                                     layout="fixed"
-                                    width={80}
-                                    height={30}
+                                    width={72.9}
+                                    height={50}
                                     alt="logo"
                                     priority
+                                    style={{ objectFit: 'cover' }}
                                  />
                               </Box>
                            </Box>

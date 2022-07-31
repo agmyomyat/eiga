@@ -21,6 +21,7 @@ import Progress from '@components/progressBar/Progress'
 import { useProgress } from '@contexts/global-states/useProgress'
 import LoadingModal from '@components/ui/LoadingModal'
 import SuccessModal from '@components/modals/successModal'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 // console.log = function () {
 //    return null
@@ -83,17 +84,21 @@ function MyApp(props: MyAppProps) {
          <ApolloProvider client={apolloClient}>
             <ThemeProvider theme={theme}>
                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-               <AuthProvider>
-                  <CssBaseline />
-                  <Progress isAnimating={isAnimating} />
-                  <Layout>
-                     <Component {...pageProps} />
-                     <DetectOtherLogin />
-                     <ErrorHandler />
-                     <SuccessModal />
-                     <LoadingModal open={fallbackLoading} />
-                  </Layout>
-               </AuthProvider>
+               <GoogleOAuthProvider
+                  clientId={process.env.GOOGLE_PROVIDER_CLIENT_ID}
+               >
+                  <AuthProvider>
+                     <CssBaseline />
+                     <Progress isAnimating={isAnimating} />
+                     <Layout>
+                        <Component {...pageProps} />
+                        <DetectOtherLogin />
+                        <ErrorHandler />
+                        <SuccessModal />
+                        <LoadingModal open={fallbackLoading} />
+                     </Layout>
+                  </AuthProvider>
+               </GoogleOAuthProvider>
             </ThemeProvider>
          </ApolloProvider>
       </CacheProvider>

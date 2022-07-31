@@ -15,6 +15,7 @@ query watchHistories($limit: Int!, $start: Int!, $user: ID!) {
          isSeries
          mmsub
          Imdb
+         published_at
       }
    }
 }

@@ -51,7 +51,7 @@ export default function SeriesPage(props: PageProps) {
    const seasons = seriesData?.tv_sery.season
    const servers = seasons?.[currentSeason - 1].episodes?.[currentEpisode - 1]
 
-   useUpdateViews(seriesData?.uuid)
+   useUpdateViews({ uuid: seriesData?.uuid, premiumUser: userData?.premium })
 
    function changeServer(server: string) {
       setCurrentServer(server)
@@ -113,20 +113,9 @@ export default function SeriesPage(props: PageProps) {
       // console.log('user', premiumUser);
       // console.log('fallback', router.isFallback);
       if (!router.isFallback && userData?.premium) {
-         return setCurrentServer(servers.vipServer1)
-      } else if (!router.isFallback && !userData?.premium) {
-         return setCurrentServer(servers.freeServer1)
-      } else {
-         return
+         return setCurrentServer(servers.vipServer2)
       }
-   }, [
-      router.isFallback,
-      servers?.vipServer1,
-      servers?.freeServer1,
-      router.query.id,
-      client,
-      userData?.premium,
-   ])
+   }, [router.isFallback, userData?.premium, servers?.vipServer2])
 
    const handleSelect = (season: number, id: number) => {
       setCurrentSeason(season)
@@ -155,9 +144,6 @@ export default function SeriesPage(props: PageProps) {
                   setLoading={iframeLoad}
                   id={id}
                   movieName={seriesData?.uuid}
-                  freeServer1={servers.freeServer1}
-                  freeServer2={servers.freeServer2}
-                  vipServer1={servers.vipServer1}
                   vipServer2={servers.vipServer2}
                   changeServer={changeServer}
                   premiumUser={userData?.premium}

@@ -36,7 +36,7 @@ export const Search: React.FC = () => {
       },
       searchWords: '',
    })
-   const [hits, setHits] = useState<null | Array<any>>([])
+   const [hits, setHits] = useState<null | Array<unknown>>([])
    function currentRefinements(value) {
       setHits([])
       setMeiliProp((prev) => ({

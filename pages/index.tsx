@@ -1,11 +1,10 @@
 // import Carousel from '../components/carousel/Carousel';
 import { useEffect } from 'react'
-import { useGetAllMoviesQuery } from '@graphgen'
 import { initializeApollo } from '@apollo/index'
 import {
+   GetSuggestedMoviesDocument,
    Movies as typeMovies,
    WatchHistory,
-   GetAllMoviesDocument,
    GetTrendingMoviesDocument,
    GetTrendingMoviesQuery,
    GetTrendingMoviesQueryResult,
@@ -13,31 +12,44 @@ import {
    GetLastestMoviesQuery,
    GetLastestMoviesQueryResult,
    useWatchHistoriesLazyQuery,
+   GetSuggestedMoviesQuery,
+   GetSuggestedMoviesQueryVariables,
 } from '@graphgen'
 import { GetStaticProps } from 'next'
 import { useAuth } from '@contexts/AuthContext'
-import { Container, Box, Typography } from '@mui/material'
-import Movies from '@components/movies/Movies'
-import HomeSlides from '@components/splide/HomeSlides'
+import { Container } from '@mui/material'
+import dynamic from 'next/dynamic'
+const HomeSlides = dynamic(() => import('@components/splide/HomeSlides'), {
+   ssr: false,
+})
+const SuggestedMoviesSlides = dynamic(
+   () => import('@components/splide/suggetedMovies'),
+   {
+      ssr: false,
+   }
+)
 
 const apolloClient = initializeApollo()
 
 interface Props {
-   data: GetTrendingMoviesQuery
+   trendingMovies: GetTrendingMoviesQuery
    lastestMovies: GetLastestMoviesQuery
+   suggestedMovies: GetSuggestedMoviesQuery
 }
 
 function Home(props: Props) {
-   const { data } = useGetAllMoviesQuery()
    const { userData } = useAuth()
    const [
       getHistories,
       { data: watchHistoriesData, loading: watchHistoriesLoading },
    ] = useWatchHistoriesLazyQuery()
-   const { movies: trendingMovies } = props.data
+   const { movies: trendingMovies } = props.trendingMovies
    const { movies: lastestMovies } = props.lastestMovies
+   const suggestedMovies = props.suggestedMovies
    const historyMovies = watchHistoriesData?.watchHistories
-
+   useEffect(() => {
+      console.log('suggest', suggestedMovies)
+   }, [suggestedMovies])
    useEffect(() => {
       if (userData?.userId) {
          void getHistories({
@@ -58,18 +70,10 @@ function Home(props: Props) {
             historyMovies={historyMovies as Partial<WatchHistory[]>}
             loading={watchHistoriesLoading}
          />
-         <Box mt={5}>
-            <Typography
-               variant="h6"
-               fontWeight="bold"
-               sx={{
-                  mb: 3,
-               }}
-            >
-               Recommended
-            </Typography>
-            <Movies movies={data.movies as typeMovies[]} />
-         </Box>
+         <SuggestedMoviesSlides
+            loading={false}
+            suggestedMovies={suggestedMovies}
+         />
       </Container>
    )
 }
@@ -81,10 +85,7 @@ export const getStaticProps: GetStaticProps = async () => {
    const sevenDaysAgo = new Date(today)
 
    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
-   await apolloClient.query({
-      query: GetAllMoviesDocument,
-   })
-   const { data }: Partial<GetTrendingMoviesQueryResult> =
+   const { data: trendingMovies }: Partial<GetTrendingMoviesQueryResult> =
       await apolloClient.query({
          query: GetTrendingMoviesDocument,
          variables: { last7day: sevenDaysAgo.toISOString() },
@@ -94,11 +95,21 @@ export const getStaticProps: GetStaticProps = async () => {
       await apolloClient.query({
          query: GetLastestMoviesDocument,
       })
+   const { data: suggestedMovies } = await apolloClient.query<
+      GetSuggestedMoviesQuery,
+      GetSuggestedMoviesQueryVariables
+   >({
+      query: GetSuggestedMoviesDocument,
+      variables: { genres_limit: 5, movies_limit: 10 },
+   })
 
+   const sortedSugestedMovies = suggestedMovies.getSuggestedMovies
+      .map((movie) => movie)
+      .sort((a, b) => b.movies.length - a.movies.length)
    return {
       props: {
-         initialApolloState: apolloClient.cache.extract(),
-         data,
+         trendingMovies,
+         suggestedMovies: { getSuggestedMovies: sortedSugestedMovies },
          lastestMovies,
          title: `Home Page`,
       },

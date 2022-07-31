@@ -10,22 +10,40 @@ import {
    CircularProgress,
    Typography,
 } from '@mui/material'
+import { GetStaticProps } from 'next'
+import { useCheckUser } from '@contexts/global-states/useCheckUser'
+import { setAccessToken } from '@helpers/accessToken'
+import { useSuccessMessage } from '@contexts/global-states/useSuccessMessage'
+import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
+const setErrorMessageModal = useErrorMessage.getState().setErrorMessage
+const setSuccessMessage = useSuccessMessage.getState().setSuccessMessage
 export default function Checkout() {
    const router = useRouter()
    const { transactionId, orderId, PWAToken, qrCode, paymentMethod } =
       router.query
    const [getTransactionStatus, { data }] = useTransaction_StatusLazyQuery({
       fetchPolicy: 'no-cache',
+      onCompleted: (data) => {
+         if (data.transaction_status.accessToken) {
+            setSuccessMessage('Your Account Has upgraded')
+            setAccessToken(data.transaction_status.accessToken)
+            return useCheckUser.getState().setCheckUser(true)
+         }
+      },
    })
 
-   console.log('query', router.query)
-   useEffect(() => {
-      console.count('reRender count')
-      console.log('trasactionid', transactionId)
-      console.log('orderid', orderId)
-      console.log('qrcode', qrCode)
-      console.log('pwaToken', PWAToken)
-   }, [PWAToken, orderId, qrCode, transactionId])
+   // useEffect(() => {
+   //    if (!PWAToken || PWAToken === 'null') return
+   //    console.log('env', process.env.DINGER_MERCHANT_REDIRECT_URL)
+   //    window.open(
+   //       `${process.env.DINGER_MERCHANT_REDIRECT_URL}?transactionNo=${
+   //          transactionId as string
+   //       }&formToken=${PWAToken as string}&merchantOrderId=${
+   //          orderId as string
+   //       }`,
+   //       '_blank'
+   //    )
+   // }, [PWAToken, orderId, qrCode, transactionId])
    useEffect(() => {
       let getTransaction: NodeJS.Timer
       if (transactionId && orderId) {
@@ -38,15 +56,17 @@ export default function Checkout() {
                      orderId: orderId as string,
                   },
                })
-               // console.log(
-               //    'transaction_status',
-               //    _transaction_status.data.transaction_status.transactionStatus
-               // )
+               //should clear interval if transaction is completed to prevent querying again
+               if (
+                  _transaction_status.data.transaction_status
+                     .transactionStatus === 'SUCCESS'
+               ) {
+                  clearInterval(getTransaction)
+               }
             })()
          }, 3000) //run
          return
       }
-      void router.replace('/404')
       return () => {
          if (getTransaction) clearInterval(getTransaction)
       }
@@ -83,8 +103,7 @@ export default function Checkout() {
             {data?.transaction_status?.transactionStatus === 'SUCCESS' && (
                <Stack justifyContent="center" alignItems="center" mt={10}>
                   <Alert variant="filled" severity="success">
-                     Transaction succeeded. You are now promoted to premium
-                     user.
+                     Transaction succeeded.
                   </Alert>
                </Stack>
             )}
@@ -108,4 +127,11 @@ export default function Checkout() {
          </Stack>
       </Box>
    )
+}
+export const getStaticProps: GetStaticProps = () => {
+   return {
+      props: {
+         title: `Checkout`,
+      },
+   }
 }

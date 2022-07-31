@@ -9,5 +9,6 @@ query getLastestMovies {
       isSeries
       mmsub
       Imdb
+      published_at
    }
 }

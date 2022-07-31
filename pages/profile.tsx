@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { GetStaticProps } from 'next'
 import { useRouter, NextRouter } from 'next/router'
 import { useAuth } from '@contexts/AuthContext'
@@ -13,8 +13,7 @@ import {
    InputBase,
    alpha,
 } from '@mui/material'
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import { auth } from '@lib'
+// import { auth } from '@lib'
 import { useCheckUser } from '@contexts/global-states/useCheckUser'
 import { useAuthLoading } from '@contexts/global-states/useAuthLoading'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
@@ -24,41 +23,11 @@ import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
 import { useCheckValidReferralCodeLazyQuery } from '@graphgen'
 import { setAccessToken } from '@helpers/accessToken'
 import { useSuccessMessage } from '@contexts/global-states/useSuccessMessage'
+import { useGoogleLogin } from '@react-oauth/google'
 
 const setAuthLoading = useAuthLoading.getState().setLoading
-const setAlreadyLogin = useAlreadyLogin.getState().setLogin
 const setErrorMessageModal = useErrorMessage.getState().setErrorMessage
 const setSuccessMessage = useSuccessMessage.getState().setSuccessMessage
-
-function popUpLogin() {
-   const provider = new GoogleAuthProvider()
-   setAuthLoading(true)
-   signInWithPopup(auth, provider)
-      .then((result) => {
-         void createUser(result).then(() => {
-            useCheckUser.getState().setCheckUser(true)
-            setAuthLoading(false)
-            setAlreadyLogin(true)
-         }) // This gives you a Google Access Token. You can use it to access the Google API.
-         const credential = GoogleAuthProvider.credentialFromResult(result)
-         const token = credential.accessToken
-         // The signed-in user info.
-         const user = result.user
-         // ...
-      })
-      .catch((error: unknown) => {
-         // Handle Errors here.
-         setAuthLoading(false)
-         setErrorMessageModal((error as { message: string }).message)
-         // const errorCode = error.code
-         // const errorMessage = error.message
-         // The email of the user's account used.
-         // const email = error.email
-         // The AuthCredential type that was used.
-         // const credential = GoogleAuthProvider.credentialFromError(error)
-         // ...
-      })
-}
 
 export default function Profile() {
    const [referralCodeInboxValue, setreferralCodeInboxValue] =
@@ -78,7 +47,7 @@ export default function Profile() {
          },
       })
    const { getUserLoading, userData, logOut } = useAuth()
-   const { push }: NextRouter = useRouter()
+   const { push, query, replace }: NextRouter = useRouter()
    const currentDate = new Date().getTime()
    const msToDay = 24 * 60 * 60 * 1000
    const expireDate = new Date(userData?.expire).getTime()
@@ -87,6 +56,13 @@ export default function Profile() {
    )
 
    // console.log('expire', new Date(userData?.expire))
+   const login = useGoogleLogin({
+      onSuccess: (tokenResponse) => console.log(tokenResponse),
+      flow: 'auth-code',
+      redirect_uri: `${process.env.API_URL}/user-data/auth/google/callback`,
+      ux_mode: 'redirect',
+      scope: 'https://www.googleapis.com/auth/userinfo.profile',
+   })
 
    const handleSignOut = () => {
       void logOut()
@@ -102,6 +78,39 @@ export default function Profile() {
       console.log('referralValue', referralCodeInboxValue)
       setreferralCodeInboxValue('')
    }
+   // why use replace method is i dont want to remain profile history with token query
+   useEffect(() => {
+      setAuthLoading(true)
+      if (query.at && query.rt) {
+         localStorage.setItem('eg0192', query.at as string)
+         localStorage.setItem('egrt', query.rt as string)
+         replace('/profile')
+            .then(() => {
+               setAuthLoading(false)
+            })
+            .catch((e) => console.log(e))
+         return
+      }
+      if (query.error) {
+         setErrorMessageModal(query.error as string)
+         void replace('/profile')
+         return
+      }
+      setAuthLoading(false)
+   }, [query.at, query.error, query.rt, replace])
+   //check dinger callback transaction fail or success
+   useEffect(() => {
+      if (query.KBZ_APP_STATUS === 'SUCCESS') {
+         setSuccessMessage('Your transaction successful')
+         void replace('/profile')
+         return
+      }
+      if (query.KBZ_APP_STATUS === 'FAIL') {
+         setErrorMessageModal('Your transaction failed')
+         void replace('/profile')
+         return
+      }
+   }, [query.KBZ_APP_STATUS, replace])
 
    return (
       <Container>
@@ -330,7 +339,11 @@ export default function Profile() {
                            width: 1,
                            py: 1,
                         }}
-                        onClick={() => popUpLogin()}
+                        onClick={() => {
+                           // void fetch('/api/callback?logOut=true')
+                           // googleLogout()
+                           login()
+                        }}
                      >
                         Contiune with Google
                      </Button>

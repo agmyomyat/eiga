@@ -1,0 +1,26 @@
+query GetSuggestedMovies($genres_limit: Int!, $movies_limit: Int!) {
+   getSuggestedMovies(
+      genres_limit: $genres_limit
+      movies_limit: $movies_limit
+   ) {
+      genreName
+      movies {
+         photo_url
+         id
+         freeServer1
+         uuid
+         freeServer2
+         vipServer1
+         vipServer2
+         name
+         release_date
+         body
+         duration
+         Imdb
+         isSeries
+         mmsub
+         premiumOnly
+         published_at
+      }
+   }
+}

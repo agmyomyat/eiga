@@ -31,6 +31,7 @@ const Hit: React.FC<THitProps> = ({
                width={600}
                height={900}
                alt={name}
+               unoptimized
             />
             <Typography
                component="label"

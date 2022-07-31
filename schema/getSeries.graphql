@@ -10,6 +10,7 @@ query getSeries($uuid: String!) {
       isSeries
       mmsub
       premiumOnly
+      published_at
       genres {
          name
       }

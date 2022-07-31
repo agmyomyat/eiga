@@ -32,7 +32,6 @@ const Movie: React.FC<TMovieProps> = ({
       typeof release_date === 'number'
          ? release_date
          : parseInt(release_date[0])
-
    return (
       <Link
          href={{
@@ -49,6 +48,7 @@ const Movie: React.FC<TMovieProps> = ({
                width={600}
                height={900}
                alt={name}
+               unoptimized
             />
             <Typography
                variant="caption"

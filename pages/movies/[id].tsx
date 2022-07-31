@@ -38,7 +38,7 @@ export default function MoviePage(props: PageProps) {
    const { id } = router.query
    const serverResult = props.data
    const movieData = serverResult?.getMovie
-   useUpdateViews(movieData?.uuid)
+   useUpdateViews({ uuid: movieData?.uuid, premiumUser: userData?.premium })
    const { getHistoryData, getHistoryLoading } = useResumeMovie({
       userId: userData?.userId,
    })
@@ -76,18 +76,9 @@ export default function MoviePage(props: PageProps) {
 
    useEffect(() => {
       if (!router.isFallback && userData?.premium) {
-         return setCurrentServer(movieData.vipServer1)
-      } else if (!router.isFallback && !userData?.premium) {
-         return setCurrentServer(movieData.freeServer1)
-      } else {
-         return
+         return setCurrentServer(movieData.vipServer2)
       }
-   }, [
-      router.isFallback,
-      movieData?.vipServer1,
-      movieData?.freeServer1,
-      userData?.premium,
-   ])
+   }, [router.isFallback, userData?.premium, movieData?.vipServer2])
 
    // console.log('fav data', favouriteMovieData?.favouriteMovies)
 
@@ -109,9 +100,6 @@ export default function MoviePage(props: PageProps) {
                   setLoading={iframeLoad}
                   id={id}
                   movieName={movieData.uuid}
-                  freeServer1={movieData.freeServer1}
-                  freeServer2={movieData.freeServer2}
-                  vipServer1={movieData.vipServer1}
                   vipServer2={movieData.vipServer2}
                   changeServer={changeServer}
                   premiumUser={userData?.premium}

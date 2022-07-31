@@ -20,9 +20,6 @@ interface IframeProp {
    loading: boolean
    setLoading: Dispatch<SetStateAction<boolean>>
    id: string | string[]
-   freeServer1: string
-   freeServer2: string
-   vipServer1: string
    vipServer2: string
    changeServer: (server: string) => void
    premiumUser: boolean
@@ -39,11 +36,7 @@ const Iframe: React.FC<IframeProp> = ({
    loading,
    setLoading,
    id,
-   freeServer1,
-   freeServer2,
-   vipServer1,
    vipServer2,
-   changeServer,
    premiumUser,
    isSeries,
    premiumOnly,
@@ -54,7 +47,6 @@ const Iframe: React.FC<IframeProp> = ({
 }) => {
    const refer = React.useRef<HTMLIFrameElement>(null)
    const notAccessPremium = premiumOnly && !premiumUser
-   const [isServer1, setIsServer1] = useState(true)
    // const _callback = mutationCallback(currentServer, router)
    // const __observer = useMemo(() => observer(_callback), [_callback])
    // // console.log('server1', freeServer1)
@@ -78,12 +70,6 @@ const Iframe: React.FC<IframeProp> = ({
           * @toDo
           * isServer1 not setting true because of empty strings is optional
           */
-         if (currentServer === vipServer1) {
-            setIsServer1(true)
-         }
-         if (currentServer === vipServer2) {
-            setIsServer1(false)
-         }
          const { exp }: { [s: string]: number } = accessToken
             ? jwt_decode(accessToken)
             : null
@@ -104,10 +90,7 @@ const Iframe: React.FC<IframeProp> = ({
             }
          }
 
-         refer.current.src = `${
-            currentServer === vipServer1 ? vipServer1 : vipServer2
-            // check if url has hls query
-         }?token=${getAccessToken()}&ct=${
+         refer.current.src = `${currentServer}?token=${getAccessToken()}&ct=${
             !isSeries || (isSeries && isSameHistoryAndCurrent)
                ? current_time ?? (current_time || '')
                : '' || ''
@@ -120,12 +103,10 @@ const Iframe: React.FC<IframeProp> = ({
    }, [
       currentServer,
       current_time,
-      freeServer1,
       getHistoryLoading,
       isSameHistoryAndCurrent,
       isSeries,
       notAccessPremium,
-      vipServer1,
       vipServer2,
    ])
 
@@ -226,45 +207,6 @@ const Iframe: React.FC<IframeProp> = ({
                allowFullScreen
                key={currentServer}
             ></Box>
-         </Box>
-         <Box py={1}>
-            <Button
-               variant={`${
-                  isServer1 && currentServer === vipServer1
-                     ? 'contained'
-                     : 'outlined'
-               }`}
-               size="small"
-               color="primary"
-               onClick={() => {
-                  setIsServer1(true)
-                  changeServer(premiumUser ? vipServer1 : '')
-               }}
-               sx={{
-                  my: 2,
-               }}
-            >
-               MMSub
-            </Button>
-            <Button
-               variant={`${
-                  !isServer1 && currentServer === vipServer2
-                     ? 'contained'
-                     : 'outlined'
-               }`}
-               size="small"
-               color="primary"
-               onClick={() => {
-                  setIsServer1(false)
-                  changeServer(premiumUser ? vipServer2 : '')
-               }}
-               sx={{
-                  my: 2,
-                  ml: 2,
-               }}
-            >
-               EngSub
-            </Button>
          </Box>
       </>
    )

@@ -14,13 +14,10 @@ import { GetStaticProps } from 'next'
 import { useCheckUser } from '@contexts/global-states/useCheckUser'
 import { setAccessToken } from '@helpers/accessToken'
 import { useSuccessMessage } from '@contexts/global-states/useSuccessMessage'
-import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
-const setErrorMessageModal = useErrorMessage.getState().setErrorMessage
 const setSuccessMessage = useSuccessMessage.getState().setSuccessMessage
 export default function Checkout() {
    const router = useRouter()
-   const { transactionId, orderId, PWAToken, qrCode, paymentMethod } =
-      router.query
+   const { transactionId, orderId, qrCode, paymentMethod } = router.query
    const [getTransactionStatus, { data }] = useTransaction_StatusLazyQuery({
       fetchPolicy: 'no-cache',
       onCompleted: (data) => {

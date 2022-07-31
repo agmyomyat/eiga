@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { GetStaticProps } from 'next'
 import { useRouter, NextRouter } from 'next/router'
 import { useAuth } from '@contexts/AuthContext'
-import { createUser } from '@apollo/mutationfn/createUser'
 import {
    Container,
    Button,
@@ -17,7 +16,6 @@ import {
 import { useCheckUser } from '@contexts/global-states/useCheckUser'
 import { useAuthLoading } from '@contexts/global-states/useAuthLoading'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
-import { useAlreadyLogin } from '@contexts/global-states/useAlreadyLogin'
 import ProfileSkeleton from '@components/movies/ProfileSkeleton'
 import { useErrorMessage } from '@contexts/global-states/useErrorMessage'
 import { useCheckValidReferralCodeLazyQuery } from '@graphgen'

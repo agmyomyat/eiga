@@ -1,13 +1,7 @@
-import React, { useState, Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import jwt_decode from 'jwt-decode'
 import { Genres } from '@graphgen'
-import {
-   CircularProgress,
-   Box,
-   Breadcrumbs,
-   Typography,
-   Button,
-} from '@mui/material'
+import { CircularProgress, Box, Breadcrumbs, Typography } from '@mui/material'
 import Link from '../ui/Link'
 import { getAccessToken, setAccessToken } from '@helpers/accessToken'
 import { handleFetch } from '@apollo/index'
@@ -40,7 +34,6 @@ const Iframe: React.FC<IframeProp> = ({
    premiumUser,
    isSeries,
    premiumOnly,
-   movieName,
    current_time,
    getHistoryLoading,
    isSameHistoryAndCurrent,

@@ -14,7 +14,6 @@ interface IcustomSearchBox {
 const SearchBoxComponent: React.FC<IcustomSearchBox> = ({
    value,
    onChange,
-   onSubmit,
    onFocus,
    onBlur,
 }) => {

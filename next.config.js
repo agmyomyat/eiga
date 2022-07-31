@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
    swcMinify: true,
+   compiler: {
+      removeConsole: true,
+   },
    images: {
       domains: [
          'cdn.themovieseries.net',

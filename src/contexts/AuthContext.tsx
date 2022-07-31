@@ -51,17 +51,11 @@ export default function AuthProvider({ children }) {
    const apolloClient = useApolloClient()
    const shouldLogOut = useShouldLogOut((state) => state.logOut)
    const checkUser = useCheckUser((state) => state.checkUser)
-   const [
-      getUser,
-      {
-         data: gqlCurrentUser,
-         loading: getUserLoading,
-         refetch: getUserRefetch,
-      },
-   ] = useGetUserLazyQuery({
-      fetchPolicy: 'network-only',
-      ssr: false,
-   })
+   const [getUser, { data: gqlCurrentUser, loading: getUserLoading }] =
+      useGetUserLazyQuery({
+         fetchPolicy: 'network-only',
+         ssr: false,
+      })
    const premiumUser: boolean = gqlCurrentUser?.getUserData?.premium || false
    const userData = gqlCurrentUser?.getUserData
    const router: NextRouter = useRouter()
@@ -70,7 +64,12 @@ export default function AuthProvider({ children }) {
       setRefreshToken('')
       // await auth.signOut()
       await apolloClient.clearStore()
-      await router.push('/profile')
+      // to prevent loop in profile
+      if (router.pathname !== '/profile') {
+         await router.push('/profile')
+         void apolloClient.resetStore()
+         return
+      }
       void apolloClient.resetStore()
    }, [apolloClient, router])
    useEffect(() => {

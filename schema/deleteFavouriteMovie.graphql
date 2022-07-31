@@ -1,5 +1,0 @@
-mutation deleteFavouriteMovie($movieId: ID!) {
-   deleteFavouriteMovie(input: { where: { id: $movieId } }) {
-      status
-   }
-}

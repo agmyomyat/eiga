@@ -1,7 +1,0 @@
-mutation createFavouriteMovie($movieId: ID!, $userId: ID!) {
-   createFavouriteMovie(
-      input: { data: { movie: $movieId, user_info: $userId } }
-   ) {
-      status
-   }
-}

@@ -1,4 +1,4 @@
-import { GetWatchHistoryDocument } from './../../graphgen/graphql'
+import { GetWatchHistoryDocument } from '@graphgen'
 import {
    useUpdateHistoryMutation,
    UpdateHistoryMutationVariables,

@@ -90,8 +90,7 @@ export default function SeriesPage(props: PageProps) {
          movieId: seriesData?.id,
          userId: userData?.userId,
       },
-      userData?.premium,
-      router
+      userData?.premium
    )
 
    useEffect(() => {

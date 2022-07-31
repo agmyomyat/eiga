@@ -2,7 +2,7 @@
 module.exports = {
    swcMinify: true,
    compiler: {
-      removeConsole: true,
+      removeConsole: false,
    },
    images: {
       domains: [

@@ -24,6 +24,6 @@
       "@typescript-eslint/no-unused-vars": ["error"],
       "prettier/prettier": "warn"
    },
-   "plugins": ["@typescript-eslint"],
+   "plugins": ["@typescript-eslint", "@typescript-eslint/tslint"],
    "parser": "@typescript-eslint/parser"
 }

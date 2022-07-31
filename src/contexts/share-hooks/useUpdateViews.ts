@@ -7,7 +7,7 @@ export default function useUpdateViews({
    uuid: string
    premiumUser: boolean
 }) {
-   const [updateMovieView, { data }] = useUpdateMovieViewMutation({
+   const [updateMovieView] = useUpdateMovieViewMutation({
       variables: { uuid },
    })
    useEffect(() => {

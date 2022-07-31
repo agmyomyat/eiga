@@ -43,7 +43,7 @@ export default function MoviePage(props: PageProps) {
       userId: userData?.userId,
    })
 
-   const updatedHistory = useUpdateHistory(
+   useUpdateHistory(
       {
          movieId: parseInt(movieData?.id || null),
          movieUuid: movieData?.uuid || null,

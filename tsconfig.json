@@ -5,12 +5,12 @@
       "baseUrl": ".",
       "paths": {
          "@graphgen": ["graphgen/graphql"],
-         "@components/*": ["components/*"],
-         "@styles/*": ["styles/*"],
-         "@apollo/*": ["apollo/*"],
-         "@helpers/*": ["helpers/*"],
+         "@components/*": ["src/components/*"],
+         "@styles/*": ["src/styles/*"],
+         "@apollo/*": ["src/apollo/*"],
+         "@helpers/*": ["src/helpers/*"],
          "@lib": ["lib/firebase"],
-         "@contexts/*": ["contexts/*"]
+         "@contexts/*": ["src/contexts/*"]
       },
       "allowJs": true,
       "skipLibCheck": true,

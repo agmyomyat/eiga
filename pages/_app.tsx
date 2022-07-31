@@ -2,11 +2,7 @@ import React, { useEffect } from 'react'
 import { useRouter, NextRouter } from 'next/router'
 import Head from 'next/head'
 import type { AppProps /*, AppContext */ } from 'next/app'
-import {
-   ApolloProvider,
-   NormalizedCacheObject,
-   StoreObject,
-} from '@apollo/client'
+import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '@apollo/index'
 import { ThemeProvider } from '@mui/material/styles'
 import AuthProvider from '@contexts/AuthContext'

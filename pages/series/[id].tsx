@@ -14,7 +14,6 @@ import MovieInfo from '@components/movies/MovieInfo'
 import Iframe from '@components/movies/Iframe'
 import Episodes from '@components/movies/Episodes'
 import { useAuth } from '@contexts/AuthContext'
-import { useApolloClient } from '@apollo/client'
 import useUpdateHistory from '@contexts/share-hooks/useUpdateHistory'
 import useResumeMovie from '@contexts/share-hooks/useResumeMovie'
 import useFavouriteMovie from '@contexts/share-hooks/useFavouriteMovie'
@@ -38,7 +37,6 @@ export default function SeriesPage(props: PageProps) {
    // const containerRef = useRef(null);
    const { data: relatedMoviesData, loading: relatedMoviesLoading } =
       useGetRelatedMoviesQuery()
-   const client = useApolloClient()
    const { userData, getUserLoading } = useAuth()
    const router: NextRouter = useRouter()
    const [currentServer, setCurrentServer] = useState<string | null>('')
@@ -69,7 +67,7 @@ export default function SeriesPage(props: PageProps) {
    const historyEpisode = getHistoryData?.watchHistories[0]?.episode
    const isSameHistoryWithCurrent =
       historySeason === currentSeason && historyEpisode === currentEpisode
-   const { updateHistoryData } = useUpdateHistory(
+   useUpdateHistory(
       {
          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
          movieId: JSON.parse(seriesData?.id || null),
@@ -92,8 +90,7 @@ export default function SeriesPage(props: PageProps) {
          movieId: seriesData?.id,
          userId: userData?.userId,
       },
-      userData?.premium,
-      router
+      userData?.premium
    )
 
    useEffect(() => {

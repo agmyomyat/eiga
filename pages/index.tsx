@@ -113,6 +113,6 @@ export const getStaticProps: GetStaticProps = async () => {
          lastestMovies,
          title: `Home Page`,
       },
-      revalidate: 10,
+      revalidate: 60,
    }
 }

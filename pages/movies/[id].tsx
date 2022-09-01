@@ -61,8 +61,7 @@ export default function MoviePage(props: PageProps) {
          movieId: movieData?.id,
          userId: userData?.userId,
       },
-      userData?.premium,
-      router
+      userData?.premium
    )
 
    function changeServer(server: string) {

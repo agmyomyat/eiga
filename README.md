@@ -22,4 +22,4 @@ Eiga offers a range of features to explore and engage with film content. Some ke
 
 ## License
 
-the project is no longer active. so there is no license just you can browsed around, learn or fork. just do whatever you want
+the project is no longer active. so there is no license just you can browse around, learn or fork. just do whatever you want
